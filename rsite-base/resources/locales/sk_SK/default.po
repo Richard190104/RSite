@@ -723,3 +723,31 @@ msgstr "Nahraný súbor sa nepodarilo spracovať."
 #: ./templates/Admin/Banners/add.php
 msgid "Title"
 msgstr "Názov"
+
+#: ./templates/Admin/NavbarCategories/index.php
+msgid "Add category"
+msgstr "Pridať kategóriu"
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Category deleted."
+msgstr "Kategória bola zmazaná."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Category saved."
+msgstr "Kategória bola uložená."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Could not delete the category."
+msgstr "Kategóriu sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Could not save the category, check the errors below."
+msgstr "Kategóriu sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./templates/Admin/NavbarCategories/edit.php
+msgid "Edit category"
+msgstr "Upraviť kategóriu"
+
+#: ./templates/Admin/NavbarCategories/edit.php
+msgid "Pages in this category"
+msgstr "Stránky v tejto kategórii"

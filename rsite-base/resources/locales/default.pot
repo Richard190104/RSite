@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-04 21:25+0000\n"
+"POT-Creation-Date: 2026-08-04 21:42+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -48,6 +48,24 @@ msgstr ""
 msgid "The background image must be smaller than 5 MB."
 msgstr ""
 
+#: ./src/Controller/Admin/NavbarCategoriesController.php:28
+#: ./src/Controller/Admin/NavbarCategoriesController.php:64
+msgid "Category saved."
+msgstr ""
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php:33
+#: ./src/Controller/Admin/NavbarCategoriesController.php:69
+msgid "Could not save the category, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php:93
+msgid "Category deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php:95
+msgid "Could not delete the category."
+msgstr ""
+
 #: ./src/Controller/Admin/PagesController.php:52
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
@@ -76,6 +94,9 @@ msgstr ""
 #: ./templates/Admin/Banners/add.php:11
 #: ./templates/Admin/Banners/edit.php:12
 #: ./templates/Admin/Banners/index.php:15
+#: ./templates/Admin/NavbarCategories/add.php:10
+#: ./templates/Admin/NavbarCategories/edit.php:16
+#: ./templates/Admin/NavbarCategories/index.php:15
 #: ./templates/Admin/Pages/index.php:12
 msgid "Title"
 msgstr ""
@@ -102,6 +123,8 @@ msgstr ""
 
 #: ./templates/Admin/Banners/add.php:16
 #: ./templates/Admin/Banners/edit.php:17
+#: ./templates/Admin/NavbarCategories/add.php:11
+#: ./templates/Admin/NavbarCategories/edit.php:26
 #: ./templates/Admin/Pages/edit_home.php:27
 msgid "Save"
 msgstr ""
@@ -128,6 +151,7 @@ msgid "Status"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:19
+#: ./templates/Admin/NavbarCategories/index.php:17
 #: ./templates/Admin/Pages/index.php:14
 msgid "Actions"
 msgstr ""
@@ -141,15 +165,18 @@ msgid "Hidden"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:30
+#: ./templates/Admin/NavbarCategories/index.php:26
 #: ./templates/Admin/Pages/index.php:23
 msgid "Edit"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:32
+#: ./templates/Admin/NavbarCategories/index.php:28
 msgid "Delete"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:34
+#: ./templates/Admin/NavbarCategories/index.php:30
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr ""
 
@@ -184,10 +211,28 @@ msgstr ""
 msgid "Galleries"
 msgstr ""
 
-#: ./templates/Admin/NavbarCategories/index.php:5
-#: ./templates/Admin/NavbarCategories/index.php:7
+#: ./templates/Admin/NavbarCategories/add.php:6
+#: ./templates/Admin/NavbarCategories/index.php:10
+msgid "Add category"
+msgstr ""
+
+#: ./templates/Admin/NavbarCategories/edit.php:8
+msgid "Edit category"
+msgstr ""
+
+#: ./templates/Admin/NavbarCategories/edit.php:21
+msgid "Pages in this category"
+msgstr ""
+
+#: ./templates/Admin/NavbarCategories/index.php:6
 #: ./templates/element/Admin/sidebar.php:11
 msgid "Navbar categories"
+msgstr ""
+
+#: ./templates/Admin/NavbarCategories/index.php:16
+#: ./templates/Admin/Pages/index.php:6
+#: ./templates/element/Admin/sidebar.php:12
+msgid "Pages"
 msgstr ""
 
 #: ./templates/Admin/News/index.php:5
@@ -218,11 +263,6 @@ msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:32
 msgid "Manage banners"
-msgstr ""
-
-#: ./templates/Admin/Pages/index.php:6
-#: ./templates/element/Admin/sidebar.php:12
-msgid "Pages"
 msgstr ""
 
 #: ./templates/Admin/Pages/index.php:13
