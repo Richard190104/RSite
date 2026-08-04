@@ -1,0 +1,12 @@
+{
+  "name": "rsite-base",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "sass:build": "sass resources/scss:webroot/css --style=compressed --no-source-map",
+    "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded"
+  },
+  "devDependencies": {
+    "sass": "^1.102.0"
+  }
+}

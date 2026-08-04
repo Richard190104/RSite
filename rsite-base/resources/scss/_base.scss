@@ -1,0 +1,280 @@
+@use 'variables' as v;
+
+// Milligram overrides
+:root {
+    --color-cakephp-red: #{v.$color-cakephp-red};
+    --color-cakephp-gray: #{v.$color-cakephp-gray};
+    --color-cakephp-blue: #{v.$color-cakephp-blue};
+    --color-cakephp-lightblue: #{v.$color-cakephp-lightblue};
+
+    --color-lightgray: #{v.$color-lightgray};
+    --color-white: #{v.$color-white};
+
+    --color-main-bg: #{v.$color-main-bg};
+    --color-links: #{v.$color-links};
+    --color-links-active: #{v.$color-links-active};
+    --color-headings: #{v.$color-headings};
+
+    --color-message-success-bg: #{v.$color-message-success-bg};
+    --color-message-success-text: #{v.$color-message-success-text};
+    --color-message-success-border: #{v.$color-message-success-border};
+
+    --color-message-warning-bg: #{v.$color-message-warning-bg};
+    --color-message-warning-text: #{v.$color-message-warning-text};
+    --color-message-warning-border: #{v.$color-message-warning-border};
+
+    --color-message-error-bg: #{v.$color-message-error-bg};
+    --color-message-error-text: #{v.$color-message-error-text};
+    --color-message-error-border: #{v.$color-message-error-border};
+
+    --color-message-info-bg: #{v.$color-message-info-bg};
+    --color-message-info-text: #{v.$color-message-info-text};
+    --color-message-info-border: #{v.$color-message-info-border};
+}
+
+.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+    background-color: var(--color-cakephp-red);
+    border-color: var(--color-cakephp-red);
+}
+
+body {
+    font-family: v.$font-body;
+    font-weight: 400;
+    background: var(--color-main-bg);
+}
+
+.top-nav-links,
+.side-nav,
+h1, h2, h3, h4, h5, h6 {
+    font-family: v.$font-heading;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    color: var(--color-headings);
+}
+
+a {
+    color: var(--color-links);
+    transition: color 0.2s linear;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: var(--color-links-active);
+        transition: color 0.2s ease-out;
+    }
+}
+
+.side-nav a,
+.top-nav-links a,
+th a,
+.actions a {
+    color: var(--color-lightgray);
+
+    &:hover,
+    &:focus {
+        color: var(--color-links-active);
+    }
+}
+
+// Utility
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+// Main
+.content {
+    padding: 2rem;
+    background: var(--color-white);
+    border-radius: 0.4rem;
+    // Thanks Stripe
+    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+
+    form {
+        margin: 0;
+    }
+}
+
+.actions a {
+    font-weight: bold;
+    padding: 0 0.4rem;
+
+    &:first-child {
+        padding-left: 0;
+    }
+}
+
+th {
+    white-space: nowrap;
+}
+
+.side-nav-item {
+    display: block;
+    padding: 0.5rem 0;
+}
+
+// View action
+.view.content .text {
+    margin-top: 1.2rem;
+}
+.related {
+    margin-top: 2rem;
+}
+
+// Flash messages
+.message {
+    padding: .5rem 1rem;
+    background: var(--color-message-info-bg);
+    color: var(--color-message-info-text);
+    border-color: var(--color-message-info-border);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+
+    &.hidden {
+        display: none;
+    }
+    &.success {
+        background: var(--color-message-success-bg);
+        color: var(--color-message-success-text);
+        border-color: var(--color-message-success-border);
+    }
+    &.warning {
+        background: var(--color-message-warning-bg);
+        color: var(--color-message-warning-text);
+        border-color: var(--color-message-warning-border);
+    }
+    &.error {
+        background: var(--color-message-error-bg);
+        color: var(--color-message-error-text);
+        border-color: var(--color-message-error-border);
+    }
+}
+
+// Forms
+.input.radio,
+.input.checkbox,
+.input.multicheckbox {
+    margin-bottom: 2.0rem;
+
+    input {
+        margin: 0;
+    }
+    label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        > input {
+            margin-right: 1.0rem;
+        }
+    }
+}
+input[type='color'] {
+    max-width: 4rem;
+    padding: 0.3rem .5rem 0.3rem;
+}
+
+// Paginator
+.paginator {
+    text-align: right;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 0 1rem 0;
+    padding: 0;
+
+    li {
+        display: inline-block;
+        margin: 0.25em;
+        text-align: center;
+
+        &.active a {
+            text-decoration: underline;
+        }
+        &.disabled a {
+            cursor: not-allowed;
+            color: var(--color-lightgray);
+            text-decoration: none;
+
+            &:hover {
+                background: initial;
+                color: initial;
+            }
+        }
+    }
+
+    a {
+        color: var(--color-cakephp-blue);
+        display: inline-block;
+        font-size: 1.25rem;
+        line-height: 3rem;
+        min-width: 3rem;
+        padding: 0;
+        position: relative;
+        text-decoration: none;
+        transition: background .3s, color .3s;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+.first a,
+.prev a,
+.next a,
+.last a {
+    padding: 0 .75rem;
+}
+.asc:after {
+    content: " \2193";
+}
+.desc:after {
+    content: " \2191";
+}
+
+// Error in non debug mode
+.error-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    // Fix milligram not having a responsive column system
+    .row .column[class*='column-'] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .side-nav {
+        margin-bottom: 1rem;
+    }
+    .heading {
+        margin-bottom: 1rem;
+    }
+    .side-nav-item {
+        display: inline;
+        margin: 0 1.5rem 0 0;
+    }
+    .asc:after {
+        content: " \2192";
+    }
+    .desc:after {
+        content: " \2190";
+    }
+}

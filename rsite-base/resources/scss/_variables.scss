@@ -1,0 +1,38 @@
+// Official CakePHP colors
+$color-cakephp-red: #d33c43;
+$color-cakephp-gray: #404041;
+$color-cakephp-blue: #2f85ae;
+$color-cakephp-lightblue: #34bdd7;
+
+// Additional colors
+$color-lightgray: #606c76;
+$color-white: #fff;
+
+$color-main-bg: #f5f7fa;
+$color-links: $color-cakephp-blue;
+$color-links-active: #2a6496;
+$color-headings: #363637;
+
+$color-message-success-bg: #e3fcec;
+$color-message-success-text: #1f9d55;
+$color-message-success-border: #51d88a;
+
+$color-message-warning-bg: #fffabc;
+$color-message-warning-text: #8d7b00;
+$color-message-warning-border: #d3b800;
+
+$color-message-error-bg: #fcebea;
+$color-message-error-text: #cc1f1a;
+$color-message-error-border: #ef5753;
+
+$color-message-info-bg: #eff8ff;
+$color-message-info-text: #2779bd;
+$color-message-info-border: #6cb2eb;
+
+$font-heading: "Raleway", sans-serif;
+$font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$breakpoint-sm: 640px;
+
+// Admin shell
+$admin-sidebar-width: 22rem;

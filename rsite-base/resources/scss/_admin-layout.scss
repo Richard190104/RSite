@@ -1,0 +1,64 @@
+@use 'variables' as v;
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: v.$admin-sidebar-width;
+    flex-shrink: 0;
+    background: v.$color-cakephp-gray;
+    color: v.$color-white;
+    padding: 2rem 1.5rem;
+
+    nav a {
+        display: block;
+        padding: 0.6rem 0;
+        color: rgba(255, 255, 255, 0.75);
+
+        &:hover,
+        &:focus,
+        &.is-active {
+            color: v.$color-white;
+        }
+    }
+}
+
+.admin-sidebar__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+
+    a {
+        color: v.$color-white;
+    }
+}
+
+.admin-main {
+    flex: 1;
+    background: v.$color-main-bg;
+    padding: 2rem;
+    min-width: 0;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    h1 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .admin-shell {
+        flex-direction: column;
+    }
+    .admin-sidebar {
+        width: 100%;
+    }
+}
