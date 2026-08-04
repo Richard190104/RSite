@@ -29,6 +29,12 @@
 .admin-sidebar__nav {
     display: flex;
     flex-direction: column;
+
+    &--bottom {
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+    }
 }
 
 .admin-sidebar__category {
@@ -76,5 +82,23 @@
     }
     .admin-sidebar {
         width: 100%;
+    }
+}
+
+.admin-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: v.$color-main-bg;
+}
+
+.admin-login__box {
+    width: 100%;
+    max-width: 36rem;
+    margin: 2rem;
+
+    h1 {
+        margin-top: 0;
     }
 }

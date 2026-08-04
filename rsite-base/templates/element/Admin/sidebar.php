@@ -28,4 +28,10 @@ $currentController = $this->getRequest()->getParam('controller');
             ><?= $label ?></a>
         <?php endforeach; ?>
     </nav>
+    <nav class="admin-sidebar__nav admin-sidebar__nav--bottom">
+        <a
+            href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'logout']) ?>"
+            class="admin-sidebar__category"
+        ><?= __('Log out') ?></a>
+    </nav>
 </aside>

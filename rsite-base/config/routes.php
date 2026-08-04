@@ -101,6 +101,8 @@ return function (RouteBuilder $routes): void {
      */
     $routes->prefix('Admin', function (RouteBuilder $routes): void {
         $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
+        $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
         $routes->fallbacks();
     });
 };
