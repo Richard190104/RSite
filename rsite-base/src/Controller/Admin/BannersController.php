@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Model\Table\BannersTable;
 use Cake\Utility\Text;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -130,12 +131,14 @@ class BannersController extends AppController
      */
     private function pageOptions(): array
     {
-        return $this->fetchTable('Pages')
+        $pages = $this->fetchTable('Pages')
             ->find()
             ->orderBy(['title' => 'ASC'])
             ->all()
             ->combine('slug', 'title')
             ->toArray();
+
+        return $pages + BannersTable::VIRTUAL_LOCATIONS;
     }
 
     /**

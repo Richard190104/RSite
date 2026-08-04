@@ -3,14 +3,10 @@
  * @var \App\View\AppView $this
  *
  * Renders the hero banner configured for the current page's location
- * (see Admin\BannersController). Controlled globally by Banner.enabled.
+ * (see Admin\BannersController). Whether a banner shows is a per-banner
+ * setting (Banner::is_enabled), not a global switch.
  */
-use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-
-if (!Configure::read('Banner.enabled', true)) {
-    return;
-}
 
 $controller = strtolower((string)$this->getRequest()->getParam('controller'));
 $pass = $this->getRequest()->getParam('pass') ?? [];
@@ -18,7 +14,7 @@ $location = $controller === 'pages' && ($pass[0] ?? null) === 'home' ? 'home' : 
 
 $banner = TableRegistry::getTableLocator()->get('Banners')
     ->find()
-    ->where(['location' => $location])
+    ->where(['location' => $location, 'is_enabled' => true])
     ->first();
 
 if ($banner === null) {

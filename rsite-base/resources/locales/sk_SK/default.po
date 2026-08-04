@@ -575,3 +575,151 @@ msgstr "Odhlásiť sa"
 #: ./templates/element/Admin/sidebar.php
 msgid "Navbar categories"
 msgstr "Kategórie navigácie"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "About us text"
+msgstr "Text O nás"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Actions"
+msgstr "Akcie"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Add banner"
+msgstr "Pridať banner"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Are you sure you want to delete \"{0}\"?"
+msgstr "Naozaj chcete zmazať \"{0}\"?"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Background"
+msgstr "Pozadie"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Background image"
+msgstr "Obrázok na pozadie"
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Banner deleted."
+msgstr "Banner bol zmazaný."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Banner saved."
+msgstr "Banner bol uložený."
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Banners"
+msgstr "Bannery"
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Could not delete the banner."
+msgstr "Banner sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Could not save the banner, check the errors below."
+msgstr "Banner sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Could not save the homepage."
+msgstr "Domovskú stránku sa nepodarilo uložiť."
+
+#: ./templates/Admin/Banners/index.php
+msgid "Delete"
+msgstr "Zmazať"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Edit"
+msgstr "Upraviť"
+
+#: ./templates/Admin/Banners/edit.php
+msgid "Edit banner"
+msgstr "Upraviť banner"
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Edit homepage"
+msgstr "Upraviť domovskú stránku"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Hidden"
+msgstr "Skrytý"
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Homepage saved."
+msgstr "Domovská stránka bola uložená."
+
+#: ./templates/Admin/Banners/add.php
+msgid "Location"
+msgstr "Umiestnenie"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Manage banners"
+msgstr "Spravovať bannery"
+
+#: ./templates/Admin/Pages/edit.php
+msgid "No page-specific settings are defined for this page yet."
+msgstr "Pre túto stránku zatiaľ nie sú definované žiadne špecifické nastavenia."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Please choose a background image."
+msgstr "Prosím, vyberte obrázok na pozadie."
+
+#: ./src/Model/Table/BannersTable.php
+msgid "Please select a valid location."
+msgstr "Prosím, vyberte platné umiestnenie."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Please select at most {0} pages for quick access."
+msgstr "Prosím, vyberte najviac {0} stránok pre rýchly prístup."
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Quick access (max 5 pages)"
+msgstr "Rýchly prístup (max. 5 stránok)"
+
+#: ./templates/Admin/Banners/edit.php
+msgid "Replace background image (optional)"
+msgstr "Nahradiť obrázok na pozadie (voliteľné)"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Save"
+msgstr "Uložiť"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Show on the page"
+msgstr "Zobraziť na stránke"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Shown"
+msgstr "Zobrazený"
+
+#: ./templates/Admin/Pages/index.php
+msgid "Slug"
+msgstr "Slug"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Status"
+msgstr "Stav"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Subtitle"
+msgstr "Podnadpis"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "The \"about us\" feature tiles are managed separately as banners with the \"Home — mini banner\" location."
+msgstr "Dlaždice \"o nás\" sa spravujú samostatne ako bannery s umiestnením \"Home — mini banner\"."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The background image must be a JPEG, PNG or WEBP file."
+msgstr "Obrázok na pozadie musí byť súbor typu JPEG, PNG alebo WEBP."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The background image must be smaller than 5 MB."
+msgstr "Obrázok na pozadie musí byť menší ako 5 MB."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The uploaded file could not be processed."
+msgstr "Nahraný súbor sa nepodarilo spracovať."
+
+#: ./templates/Admin/Banners/add.php
+msgid "Title"
+msgstr "Názov"

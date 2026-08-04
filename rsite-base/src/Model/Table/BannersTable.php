@@ -9,6 +9,14 @@ use Cake\Validation\Validator;
 
 class BannersTable extends Table
 {
+    /**
+     * Locations that aren't real pages but a reserved placement for a group
+     * of small banners (e.g. the homepage "about us" feature tiles).
+     */
+    public const VIRTUAL_LOCATIONS = [
+        'home_mini' => 'Home — mini banner (about us tile)',
+    ];
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -31,10 +39,17 @@ class BannersTable extends Table
             ->notEmptyString('location')
             ->add('location', 'validPage', [
                 'rule' => function (string $value): bool {
+                    if (array_key_exists($value, self::VIRTUAL_LOCATIONS)) {
+                        return true;
+                    }
+
                     return TableRegistry::getTableLocator()->get('Pages')->exists(['slug' => $value]);
                 },
-                'message' => __('Please select a valid page.'),
-            ]);
+                'message' => __('Please select a valid location.'),
+            ])
+
+            ->boolean('is_enabled')
+            ->allowEmptyString('is_enabled');
 
         // 'background' is handled entirely in the controller: the raw
         // uploaded file never reaches the marshaller (it can't be cast to

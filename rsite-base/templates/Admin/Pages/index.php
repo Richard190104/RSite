@@ -1,7 +1,29 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var iterable<\App\Model\Entity\Page> $pages
  */
 $this->assign('title', __('Pages'));
 ?>
-<h1><?= __('Pages') ?></h1>
+<div class="content">
+    <table class="table-responsive">
+        <thead>
+            <tr>
+                <th><?= __('Title') ?></th>
+                <th><?= __('Slug') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($pages as $page): ?>
+                <tr>
+                    <td><?= h($page->title) ?></td>
+                    <td><?= h($page->slug) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $page->slug]) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
