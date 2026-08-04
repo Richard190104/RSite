@@ -18,6 +18,15 @@ return [
     'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /*
+     * Global kill switch for the page banner (hero image under the navbar).
+     * Individual pages still only show a banner if one is configured for
+     * their location in the admin (see Admin\BannersController).
+     */
+    'Banner' => [
+        'enabled' => filter_var(env('SHOW_BANNER', true), FILTER_VALIDATE_BOOLEAN),
+    ],
+
+    /*
      * Configure basic information about the application.
      *
      * - namespace - The namespace to find app classes under.

@@ -19,6 +19,7 @@ class AppController extends BaseController
         parent::initialize();
 
         $this->viewBuilder()->setLayout('admin');
+        // zisti, ci je prihlaseny admin user, ak nie, presmeruj na login
         $this->loadComponent('Authentication.Authentication');
     }
 

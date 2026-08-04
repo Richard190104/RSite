@@ -123,6 +123,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
      * @return \Authentication\AuthenticationServiceInterface
      */
+    
+    // zisti, ako je nastavena autentifikacia, ci je nastavena na admin alebo user
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
         $service = new AuthenticationService([

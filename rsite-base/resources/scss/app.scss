@@ -30,3 +30,24 @@
         margin: 0 auto;
     }
 }
+
+.page-banner {
+    background-color: v.$color-cakephp-gray;
+    background-size: cover;
+    background-position: center;
+    min-height: 24rem;
+    display: flex;
+    align-items: center;
+}
+
+.page-banner__overlay {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 3rem 2rem;
+}
+
+.page-banner__title {
+    max-width: 112rem;
+    margin: 0 auto;
+    color: v.$color-white;
+}

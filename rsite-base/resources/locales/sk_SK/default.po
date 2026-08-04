@@ -547,3 +547,31 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+
+#: ./templates/Admin/Users/login.php
+msgid "Admin log in"
+msgstr "Prihlásenie do administrácie"
+
+#: ./templates/Admin/Users/login.php
+msgid "Log in"
+msgstr "Prihlásiť sa"
+
+#: ./templates/Admin/Users/login.php
+msgid "Username"
+msgstr "Používateľské meno"
+
+#: ./templates/Admin/Users/login.php
+msgid "Password"
+msgstr "Heslo"
+
+#: ./src/Controller/Admin/UsersController.php
+msgid "Invalid username or password."
+msgstr "Nesprávne používateľské meno alebo heslo."
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Log out"
+msgstr "Odhlásiť sa"
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Navbar categories"
+msgstr "Kategórie navigácie"
