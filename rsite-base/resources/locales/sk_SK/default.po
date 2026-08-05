@@ -811,3 +811,11 @@ msgstr "Obrázok musí byť menší ako 5 MB."
 #: ./templates/Admin/News/add.php
 msgid "— none —"
 msgstr "— žiadna —"
+
+#: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
+msgid "Home"
+msgstr "Domov"
+
+#: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
+msgid "Gallery"
+msgstr "Galéria"

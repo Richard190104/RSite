@@ -32,6 +32,18 @@ use Cake\View\Exception\MissingTemplateException;
 class PagesController extends AppController
 {
     /**
+     * The homepage. For now just fetches the fixed "home" page row (title +
+     * content: about_us_text / quick_access) — see Admin\PagesController::
+     * editHome() for how the content is edited. Rendering comes later.
+     */
+    public function home(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'home'])->firstOrFail();
+
+        $this->set(compact('page'));
+    }
+
+    /**
      * Displays a view
      *
      * @param string ...$path Path segments.

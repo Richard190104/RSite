@@ -18,7 +18,7 @@ $this->assign('title', __('Pages'));
             <tbody>
                 <?php foreach ($pages as $page): ?>
                     <tr>
-                        <td><?= h($page->title) ?></td>
+                        <td><?= h(__($page->title)) ?></td>
                         <td><?= h($page->slug) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $page->slug]) ?>
