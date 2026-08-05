@@ -10,6 +10,7 @@ $this->assign('title', __('Add event'));
     <?= $this->Form->create($event) ?>
         <?= $this->Form->control('title', ['label' => __('Title')]) ?>
         <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description')]) ?>
+        <?= $this->Form->control('date', ['label' => __('Date')]) ?>
         <?= $this->Form->control('category_id', [
             'type' => 'select',
             'options' => $categories,

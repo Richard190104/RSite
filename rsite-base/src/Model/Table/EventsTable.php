@@ -33,6 +33,10 @@ class EventsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmptyString('description')
 
+            ->date('date')
+            ->requirePresence('date', 'create')
+            ->notEmptyDate('date')
+
             ->allowEmptyString('category_id');
 
         return $validator;

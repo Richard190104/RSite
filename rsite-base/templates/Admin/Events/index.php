@@ -14,6 +14,7 @@ $this->assign('title', __('Events'));
             <thead>
                 <tr>
                     <th><?= __('Title') ?></th>
+                    <th><?= __('Date') ?></th>
                     <th><?= __('Category') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -22,6 +23,7 @@ $this->assign('title', __('Events'));
                 <?php foreach ($events as $event): ?>
                     <tr>
                         <td><?= h($event->title) ?></td>
+                        <td><?= $event->date !== null ? h($event->date->format('d.m.Y')) : '' ?></td>
                         <td><?= h($event->category->title ?? '') ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>

@@ -10,7 +10,7 @@ class EventsController extends AppController
         $events = $this->fetchTable('Events')
             ->find()
             ->contain(['Categories'])
-            ->orderBy(['Events.title' => 'ASC'])
+            ->orderBy(['Events.date' => 'DESC'])
             ->all();
 
         $this->set(compact('events'));
