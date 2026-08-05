@@ -20,7 +20,14 @@ Ked preskumas DB zistis co kde je ako ulozene, no malo by to byt vsetko ready na
 Potrebujeme redizajn stranky mosrz. Tu je nejaky base: https://www.figma.com/design/XHigFbZix9yKc4G9sRv92l/Untitled?node-id=1-124&t=H8jiT1mQ4w2ACthJ-0
 Je to not ideal ale nieco z toho vymyslime. Ked identifikujes ze potrebujeme nieco pridat do admina - napr. vela krat sa tam opakuje nazov stranky, pridame tam konfiguracne pole a pouzijeme to, nech pri zmene nedojde k tomu ze to musime prepisovat na 100 miestach.
 
-Je to cele nasadene na free hosting stranke, ktora ma urcite obmedzenia:
+### Je to cele nasadene na free hosting stranke, ktora ma urcite obmedzenia:
 1. Ako pushovat na prod? - Bud ti nastavim sam tuto vec, alebo jednoducho pushnes na github a povies mi nech to nasadim. Nastavil som si FreeZilla ktory dokaze uploadovat na prod s tym, ze sa nedaju spustat migracky. Ked spravis migracku a chces nasadit tak mi povedz, pripadne steps su taket - das na prod script vo webrooote ktory sa vola run-migrations, otrovis url https://rsite.great-site.net/run-migrations.php?token=TVOJ_TAJNY_TOKEN - token si definujes v subore. potom hned zmazat kvoli security.
 2. Vsetky zmeny klasicky na github - vytvaraj branches pre kazdu zmenu (napr. fix- xxx, feature- xxx, update- xxx). Pojdeme v code review style - pushnes branch na github, vytvoris PR, pozriem sa na to a poviem ci to mozes mergnut prip. dat nejake upravy. To iste plati pre mna - base features pojdu PR na teba. Po urcitych zmenach ked to bude na mastri ja to nahram na prod.
 
+### Preklady
+Kazdy text ktory piseme je v ANGLICTINE. Preklady funguju tak, ze text zaobalis do __("text"). Nasledne sa z toho pomocou commandu vytvori prekladovy subor. To ked tak hod claudovi aby to zapisal. Ten subor sa normalne pushuje. V projekte existuje premenna $locale ktora definuje jazyk stranky. en_US je default - anglictina. sk_SK je SK. Toto ked tak prejdeme niekedy.
+
+### ADMIN TODOS
+1. Urcite bude treba vytvorit dalsie polia v admine napr na files - zarybnenie/ulovky, administracia. Toto mozno pojde len cez pages samotne, no treba to prejst.
+2. Dalsie texty.
+3. Urcite daco este bude treba, kontakt, quick navigation...
