@@ -36,3 +36,12 @@ $breakpoint-sm: 640px;
 
 // Admin shell
 $admin-sidebar-width: 22rem;
+
+// Admin theme — flatter and closer to grayscale than the public site.
+// Only 2 non-gray colors: a dark neutral accent, and the semantic flash
+// message colors (kept for readability of success/warning/error state).
+$admin-color-text: #2a2c30;
+$admin-color-accent: #23252a;
+$admin-color-accent-hover: #3a3d43;
+$admin-color-border: #d5d9de;
+$admin-color-sidebar-active: #ffffff;

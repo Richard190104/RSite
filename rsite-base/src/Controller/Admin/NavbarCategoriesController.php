@@ -10,7 +10,7 @@ class NavbarCategoriesController extends AppController
         $categories = $this->fetchTable('NavbarCategories')
             ->find()
             ->contain(['Pages'])
-            ->orderBy(['title' => 'ASC'])
+            ->orderBy(['NavbarCategories.title' => 'ASC'])
             ->all();
 
         $this->set(compact('categories'));

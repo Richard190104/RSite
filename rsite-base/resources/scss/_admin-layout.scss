@@ -1,5 +1,74 @@
 @use 'variables' as v;
 
+// Technical admin theme: overrides the CSS custom properties that _base.scss
+// defines on :root. Everything under .admin-shell / .admin-login already
+// reads colors via var(--color-...), so re-declaring them here re-themes the
+// whole admin without touching the public site's styles.
+.admin-shell,
+.admin-login {
+    --color-cakephp-red: #{v.$admin-color-accent};
+    --color-cakephp-blue: #{v.$admin-color-accent};
+    --color-links: #{v.$admin-color-text};
+    --color-links-active: #{v.$admin-color-accent};
+    --color-headings: #{v.$admin-color-text};
+
+    .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+        border-radius: 2px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        height: auto;
+        line-height: 1.4;
+        padding: 0.8rem 1.6rem;
+
+        &:hover,
+        &:focus {
+            background-color: v.$admin-color-accent-hover;
+            border-color: v.$admin-color-accent-hover;
+        }
+    }
+
+    .content {
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
+        padding: 0;
+    }
+
+    .message {
+        border-radius: 2px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 0.7rem 1rem;
+        border: 0;
+        border-bottom: 1px solid v.$admin-color-border;
+    }
+
+    thead th {
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+        color: v.$color-lightgray;
+        border-bottom: 1px solid v.$admin-color-text;
+    }
+
+    tbody tr:hover {
+        background: rgba(0, 0, 0, 0.02);
+    }
+
+    .actions {
+        text-align: right;
+    }
+}
+
 .admin-shell {
     display: flex;
     min-height: 100vh;
@@ -52,8 +121,8 @@
     &.is-active {
         color: v.$color-white;
         background: rgba(255, 255, 255, 0.08);
-        border-left-color: v.$color-cakephp-lightblue;
-        font-weight: bold;
+        border-left-color: v.$admin-color-sidebar-active;
+        font-weight: 400;
     }
 }
 

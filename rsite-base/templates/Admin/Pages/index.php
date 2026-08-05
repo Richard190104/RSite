@@ -6,24 +6,26 @@
 $this->assign('title', __('Pages'));
 ?>
 <div class="content">
-    <table class="table-responsive">
-        <thead>
-            <tr>
-                <th><?= __('Title') ?></th>
-                <th><?= __('Slug') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($pages as $page): ?>
+    <div class="table-responsive">
+        <table>
+            <thead>
                 <tr>
-                    <td><?= h($page->title) ?></td>
-                    <td><?= h($page->slug) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $page->slug]) ?>
-                    </td>
+                    <th><?= __('Title') ?></th>
+                    <th><?= __('Slug') ?></th>
+                    <th class="actions"><?= __('Actions') ?></th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($pages as $page): ?>
+                    <tr>
+                        <td><?= h($page->title) ?></td>
+                        <td><?= h($page->slug) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $page->slug]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>

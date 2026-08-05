@@ -751,3 +751,63 @@ msgstr "Upraviť kategóriu"
 #: ./templates/Admin/NavbarCategories/edit.php
 msgid "Pages in this category"
 msgstr "Stránky v tejto kategórii"
+
+#: ./templates/Admin/News/index.php
+msgid "Add article"
+msgstr "Pridať článok"
+
+#: ./templates/Admin/News/add.php
+msgid "Category"
+msgstr "Kategória"
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "Could not delete the article."
+msgstr "Článok sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "Could not save the article, check the errors below."
+msgstr "Článok sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./templates/Admin/News/add.php
+msgid "Date"
+msgstr "Dátum"
+
+#: ./templates/Admin/News/add.php
+msgid "Description"
+msgstr "Popis"
+
+#: ./templates/Admin/News/edit.php
+msgid "Edit article"
+msgstr "Upraviť článok"
+
+#: ./templates/Admin/News/add.php
+msgid "Image"
+msgstr "Obrázok"
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "News article deleted."
+msgstr "Článok bol zmazaný."
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "News article saved."
+msgstr "Článok bol uložený."
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "Please choose an image."
+msgstr "Prosím, vyberte obrázok."
+
+#: ./templates/Admin/News/edit.php
+msgid "Replace image (optional)"
+msgstr "Nahradiť obrázok (voliteľné)"
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "The image must be a JPEG, PNG or WEBP file."
+msgstr "Obrázok musí byť súbor typu JPEG, PNG alebo WEBP."
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "The image must be smaller than 5 MB."
+msgstr "Obrázok musí byť menší ako 5 MB."
+
+#: ./templates/Admin/News/add.php
+msgid "— none —"
+msgstr "— žiadna —"
