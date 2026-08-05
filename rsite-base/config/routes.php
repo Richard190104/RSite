@@ -22,6 +22,7 @@
  */
 
 use Cake\Routing\Route\DashedRoute;
+use Cake\Routing\Route\RedirectRoute;
 use Cake\Routing\RouteBuilder;
 
 /*
@@ -56,6 +57,13 @@ return function (RouteBuilder $routes): void {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'home']);
+
+        /*
+         * The 'home' page's slug is 'home', but the actual homepage lives at
+         * '/' — treat '/home' as the same URL via a permanent redirect,
+         * rather than rendering it as a separate page.
+         */
+        $builder->connect('/home', ['redirect' => '/'], ['routeClass' => RedirectRoute::class]);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.

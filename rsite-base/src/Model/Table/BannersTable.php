@@ -24,6 +24,10 @@ class BannersTable extends Table
         $this->setTable('banners');
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
+
+        // Force 'settings' to be treated as JSON — see PagesTable for why
+        // this can't be left to automatic detection on some hosts.
+        $this->getSchema()->setColumnType('settings', 'json');
     }
 
     public function validationDefault(Validator $validator): Validator

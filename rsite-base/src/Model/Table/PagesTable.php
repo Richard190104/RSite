@@ -19,6 +19,13 @@ class PagesTable extends Table
         $this->belongsTo('NavbarCategories', [
             'foreignKey' => 'navbar_category_id',
         ]);
+
+        // Force 'content' to be treated as JSON regardless of what the
+        // database reports for the column — some MySQL/MariaDB versions
+        // (seen on shared hosting) don't reflect a JSON column type
+        // reliably, which makes the ORM try to bind a PHP array as a plain
+        // string and fail.
+        $this->getSchema()->setColumnType('content', 'json');
     }
 
     public function validationDefault(Validator $validator): Validator

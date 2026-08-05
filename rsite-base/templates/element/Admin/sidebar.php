@@ -7,6 +7,7 @@
 // Kluc je nazov controllera (pre routing), hodnota je prelozitelny popisok.
 $adminCategories = [
     'Dashboard' => __('Dashboard'),
+    'Texts' => __('Texts'),
     'Banners' => __('Banners'),
     'NavbarCategories' => __('Navbar categories'),
     'Pages' => __('Pages'),

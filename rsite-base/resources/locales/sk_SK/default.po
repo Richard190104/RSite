@@ -819,3 +819,115 @@ msgstr "Domov"
 #: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
 msgid "Gallery"
 msgstr "Galéria"
+
+#: ./templates/Admin/Events/index.php
+msgid "Add event"
+msgstr "Pridať podujatie"
+
+#: ./templates/Admin/Galleries/index.php
+msgid "Add photo"
+msgstr "Pridať fotku"
+
+#: ./templates/Admin/Galleries/index.php
+msgid "Are you sure you want to delete this photo?"
+msgstr "Naozaj chcete zmazať túto fotku?"
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Could not delete the event."
+msgstr "Podujatie sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Could not delete the photo."
+msgstr "Fotku sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Could not save the event, check the errors below."
+msgstr "Podujatie sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Could not save the photo, check the errors below."
+msgstr "Fotku sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Could not save the texts."
+msgstr "Texty sa nepodarilo uložiť."
+
+#: ./templates/Admin/Events/edit.php
+msgid "Edit event"
+msgstr "Upraviť podujatie"
+
+#: ./templates/Admin/Galleries/edit.php
+msgid "Edit photo"
+msgstr "Upraviť fotku"
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Event deleted."
+msgstr "Podujatie bolo zmazané."
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Event saved."
+msgstr "Podujatie bolo uložené."
+
+#: ./templates/Admin/Categories/index.php
+msgid "No"
+msgstr "Nie"
+
+#: ./templates/Admin/Categories/index.php
+msgid "Parent category"
+msgstr "Rodičovská kategória"
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Photo deleted."
+msgstr "Fotka bola zmazaná."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Photo saved."
+msgstr "Fotka bola uložená."
+
+#: ./templates/Admin/Categories/add.php
+msgid "Show in gallery"
+msgstr "Zobraziť v galérii"
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Texts"
+msgstr "Texty"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Texts saved."
+msgstr "Texty boli uložené."
+
+#: ./templates/Admin/Categories/index.php
+msgid "Yes"
+msgstr "Áno"
+
+#: ./templates/Admin/Categories/add.php
+msgid "— none (top-level) —"
+msgstr "— žiadna (najvyššia úroveň) —"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Name"
+msgstr "Meno"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation"
+msgstr "Organizácia"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "City"
+msgstr "Mesto"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Could not save the text."
+msgstr "Text sa nepodarilo uložiť."
+
+#: ./templates/Admin/Texts/index.php
+msgid "Text"
+msgstr "Text"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Text saved."
+msgstr "Text bol uložený."
+
+#: ./templates/Admin/Texts/edit.php
+msgid "Value"
+msgstr "Hodnota"
