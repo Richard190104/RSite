@@ -14,7 +14,7 @@ $adminCategories = [
     'News' => __('News'),
     'Categories' => __('Categories'),
     'Events' => __('Events'),
-    'Galleries' => __('Galleries'),
+    'Galleries' => __('Galleries')
 ];
 $currentController = $this->getRequest()->getParam('controller');
 ?>

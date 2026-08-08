@@ -40,9 +40,6 @@ class CreateTexts extends BaseMigration
         ]);
         $table->create();
 
-        // New texts are added here, via a migration — never through the
-        // admin UI. Admin only edits the value of texts that already exist.
-        // Safe inside change(): rolling back drops the whole table anyway.
         $now = date('Y-m-d H:i:s');
         $table->insert([
             ['slug' => 'title', 'value' => null, 'created' => $now, 'modified' => $now],
