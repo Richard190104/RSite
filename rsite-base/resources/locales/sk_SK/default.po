@@ -648,6 +648,18 @@ msgstr "Skrytý"
 msgid "Homepage saved."
 msgstr "Domovská stránka bola uložená."
 
+#: ./src/Controller/Admin/PagesController.php
+msgid "Page saved."
+msgstr "Stránka bola uložená."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Could not save the page."
+msgstr "Stránku sa nepodarilo uložiť."
+
+#: ./templates/Admin/Pages/edit.php
+msgid "Shown under the page name in the homepage quick access cards."
+msgstr "Zobrazí sa pod názvom stránky v dlaždiciach rýchleho prístupu na domovskej stránke."
+
 #: ./templates/Admin/Banners/add.php
 msgid "Location"
 msgstr "Umiestnenie"

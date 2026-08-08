@@ -24,6 +24,29 @@ class PagesController extends AppController
             return $this->editHome($Pages, $page);
         }
 
+        if ($this->request->is(['post', 'put'])) {
+            $data = (array)$this->request->getData('content');
+            $description = trim((string)($data['description'] ?? ''));
+
+            $content = (array)$page->content;
+
+            if ($description === '') {
+                unset($content['description']);
+            } else {
+                $content['description'] = $description;
+            }
+
+            $page->content = $content;
+
+            if ($Pages->save($page)) {
+                $this->Flash->success(__('Page saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $this->Flash->error(__('Could not save the page.'));
+        }
+
         $this->set(compact('page'));
 
         return null;
@@ -54,7 +77,7 @@ class PagesController extends AppController
                 $page->content = [
                     'about_us_text' => (string)($data['about_us_text'] ?? ''),
                     'quick_access' => $quickAccess,
-                ];
+                ] + (array)$page->content;
 
                 if ($Pages->save($page)) {
                     $this->Flash->success(__('Homepage saved.'));
