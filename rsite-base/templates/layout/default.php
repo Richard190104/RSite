@@ -37,10 +37,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->element('navbar') ?>
     <?= $this->element('banner') ?>
     <main class="main">
-        <div class="container">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
-        </div>
     </main>
     <footer>
     </footer>

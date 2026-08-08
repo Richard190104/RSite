@@ -2,9 +2,10 @@
 @use 'fonts';
 @use 'base';
 @use 'navbar';
+@use 'quick-access';
+@use 'home';
 
 .page-banner {
-    background-color: v.$color-cakephp-gray;
     background-size: cover;
     background-position: center;
     min-height: 24rem;
