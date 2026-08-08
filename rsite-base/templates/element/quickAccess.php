@@ -35,7 +35,7 @@ $icons = [
 ];
 ?>
 <section class="quick-access">
-    <span class="quick-access__heading"><?= __('Quick Access') ?></span>
+    <span class="quick-access__heading"><?= __('Quick access') ?></span>
 
     <div class="quick-access__grid">
         <?php foreach ($pageIds as $pageId): ?>

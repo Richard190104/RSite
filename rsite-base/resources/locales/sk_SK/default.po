@@ -676,6 +676,11 @@ msgstr "Prosím, vyberte najviac {0} stránok pre rýchly prístup."
 msgid "Quick access (max 5 pages)"
 msgstr "Rýchly prístup (max. 5 stránok)"
 
+#: ./templates/Admin/Pages/edit_home.php
+#: ./templates/element/quickAccess.php
+msgid "Quick access"
+msgstr "Rýchly prístup"
+
 #: ./templates/Admin/Banners/edit.php
 msgid "Replace background image (optional)"
 msgstr "Nahradiť obrázok na pozadie (voliteľné)"
@@ -905,12 +910,24 @@ msgid "— none (top-level) —"
 msgstr "— žiadna (najvyššia úroveň) —"
 
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
-msgid "Name"
-msgstr "Meno"
+msgid "Footer Description"
+msgstr "Text v pätičke"
 
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
-msgid "Organisation"
-msgstr "Organizácia"
+msgid "Organisation Name"
+msgstr "Názov organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation ICO"
+msgstr "IČO organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation Gmail"
+msgstr "E-mail organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation Address"
+msgstr "Adresa organizácie"
 
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
 msgid "City"

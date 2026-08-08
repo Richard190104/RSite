@@ -20,4 +20,19 @@ class TextsTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
     }
+
+    /**
+     * Value of a single text, for templates that need one string (navbar
+     * brand, footer contact...). Returns $default when the row is missing or
+     * its value was never filled in, so a half-configured site still renders.
+     */
+    public function value(string $slug, string $default = ''): string
+    {
+        $value = $this->find()
+            ->select(['value'])
+            ->where(['slug' => $slug])
+            ->first()?->value;
+
+        return $value === null || $value === '' ? $default : $value;
+    }
 }
