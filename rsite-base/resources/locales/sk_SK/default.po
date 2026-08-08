@@ -931,3 +931,40 @@ msgstr "Text bol uložený."
 #: ./templates/Admin/Texts/edit.php
 msgid "Value"
 msgstr "Hodnota"
+
+#: ./templates/element/Admin/sidebar.php
+#: ./templates/Admin/Logos/index.php
+msgid "Logos"
+msgstr "Logá"
+
+#: ./templates/Admin/Logos/index.php
+msgid "Logo"
+msgstr "Logo"
+
+#: ./templates/Admin/Logos/index.php
+msgid "No image yet"
+msgstr "Zatiaľ bez obrázka"
+
+#: ./templates/Admin/Logos/edit.php
+msgid "Upload image"
+msgstr "Nahrať obrázok"
+
+#: ./templates/Admin/Logos/edit.php
+msgid "Replace image"
+msgstr "Nahradiť obrázok"
+
+#: ./src/Controller/Admin/LogosController.php
+msgid "Logo saved."
+msgstr "Logo bolo uložené."
+
+#: ./src/Controller/Admin/LogosController.php
+msgid "Could not save the logo."
+msgstr "Logo sa nepodarilo uložiť."
+
+#: ./templates/Admin/Logos/index.php (dynamic __($logo->name), not auto-extracted)
+msgid "Header logo"
+msgstr "Logo v hlavičke"
+
+#: ./templates/Admin/Logos/index.php (dynamic __($logo->name), not auto-extracted)
+msgid "Footer logo"
+msgstr "Logo v pätičke"
