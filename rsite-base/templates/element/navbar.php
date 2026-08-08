@@ -13,10 +13,12 @@ $navbarCategories = TableRegistry::getTableLocator()->get('NavbarCategories')
     ->contain(['Pages'])
     ->orderBy(['NavbarCategories.title' => 'ASC'])
     ->all();
+
+$organisationName = TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
 ?>
 <nav class="site-nav">
     <div class="site-nav__brand">
-        <a href="<?= $this->Url->build('/') ?>">MO SRZ Medzilaborce</a>
+        <a href="<?= $this->Url->build('/') ?>"><?= h($organisationName) ?></a>
     </div>
     <ul class="site-nav__categories">
         <?php foreach ($navbarCategories as $category): ?>
