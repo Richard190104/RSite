@@ -24,4 +24,14 @@ class LogosTable extends Table
     // 'path' is handled entirely in the controller: the raw uploaded file
     // never reaches the marshaller (it can't be cast to the string column),
     // so it's not validated here either — see ImageUploadTrait.
+
+    public function path(string $name): string
+    {
+        $path = $this->find()
+            ->select(['path'])
+            ->where(['name' => $name])
+            ->first()?->path;
+
+        return (string)$path;
+    }
 }
