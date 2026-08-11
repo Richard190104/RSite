@@ -46,6 +46,7 @@ class PagesController extends AppController
     /**
      * Displays a view
      *
+     *
      * @param string ...$path Path segments.
      * @return \Cake\Http\Response|null
      * @throws \Cake\Http\Exception\ForbiddenException When a directory traversal attempt.
@@ -71,6 +72,12 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
+
+        $pageEntity = $this->fetchTable('Pages')->find()->where(['slug' => $page])->first();
+        if ($pageEntity !== null) {
+            $page = $pageEntity;
+        }
+
         $this->set(compact('page', 'subpage'));
 
         try {

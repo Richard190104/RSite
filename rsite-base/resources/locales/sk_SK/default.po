@@ -921,6 +921,10 @@ msgstr "Áno"
 msgid "— none (top-level) —"
 msgstr "— žiadna (najvyššia úroveň) —"
 
+#: ./templates/element/navbar.php
+msgid "Local organisation"
+msgstr "Mestská organizácia"
+
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
 msgid "Footer Description"
 msgstr "Text v pätičke"
@@ -928,6 +932,10 @@ msgstr "Text v pätičke"
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
 msgid "Organisation Name"
 msgstr "Názov organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "MainContact"
+msgstr "Kontaktné telefónne číslo"
 
 #: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
 msgid "Organisation ICO"
