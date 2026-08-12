@@ -11,6 +11,8 @@
 /.vendor-deployed-hash
 /.deploy-build/
 /.deploy-archive.tar
+/.deploy-translations-build/
+/.deploy-translations-archive.tar
 
 # OS generated files #
 ######################

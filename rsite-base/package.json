@@ -5,7 +5,8 @@
   "scripts": {
     "sass:build": "sass resources/scss:webroot/css --style=compressed --no-source-map",
     "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded",
-    "deploy": "node bin/deploy.mjs"
+    "deploy": "node bin/deploy.mjs",
+    "deploy:translations": "node bin/deploy-translations.mjs"
   },
   "devDependencies": {
     "basic-ftp": "^6.2.0",
