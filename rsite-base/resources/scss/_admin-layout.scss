@@ -52,7 +52,7 @@
     }
 
     thead th {
-        font-size: 1.1rem;
+        font-size: v.$font-size-md;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05rem;
@@ -85,7 +85,7 @@
 }
 
 .admin-sidebar__title {
-    font-size: 1.8rem;
+    font-size: v.$font-size-3xl;
     font-weight: bold;
     margin-bottom: 1rem;
     padding: 0 1.5rem;
@@ -141,7 +141,7 @@
 
     h1 {
         margin: 0;
-        font-size: 1.8rem;
+        font-size: v.$font-size-3xl;
     }
 }
 

@@ -12,7 +12,7 @@
  */
 
 // Change this to something only you know before uploading.
-const SECRET_TOKEN = '123456789';
+const SECRET_TOKEN = '7I9v6ubGXKcHmvuJmZUa9TO1tG1798pd';
 
 if (!hash_equals(SECRET_TOKEN, $_GET['token'] ?? '')) {
     http_response_code(404);

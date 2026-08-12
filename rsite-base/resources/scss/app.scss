@@ -3,24 +3,75 @@
 @use 'base';
 @use 'navbar';
 @use 'quick-access';
+@use 'mini-banner';
 @use 'home';
 
 .page-banner {
+    position: relative;
     background-size: cover;
     background-position: center;
-    min-height: 24rem;
+    min-height: 32rem;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .page-banner__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+        90deg,
+        rgba(11, 25, 46, 0.88) 0%,
+        rgba(11, 25, 46, 0.72) 35%,
+        rgba(11, 25, 46, 0.25) 75%,
+        rgba(11, 25, 46, 0) 100%
+    );
+}
+
+.page-banner__content {
+    max-width: 112rem;
     width: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    padding: 3rem 2rem;
+    margin: 0 auto;
+    padding: 3rem 0rem;
 }
 
 .page-banner__title {
-    max-width: 112rem;
-    margin: 0 auto;
+    max-width: 56rem;
+    margin: 0;
+    font-family: v.$font-heading;
+    font-weight: 800;
+    font-size: v.$font-size-6xl;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: v.$color-white;
+}
+
+.page-banner__subtitle {
+    max-width: 48rem;
+    margin: 1.2rem 0 0;
+    font-size: v.$font-size-xl;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .page-banner {
+        min-height: 26rem;
+    }
+
+    .page-banner__overlay {
+        // A left-to-right fade leaves no legible ground for text once the
+        // image itself is narrower than the fade distance — go uniform.
+        background: rgba(11, 25, 46, 0.72);
+    }
+
+    .page-banner__title {
+        font-size: v.$font-size-4xl;
+    }
+
+    .page-banner__subtitle {
+        font-size: v.$font-size-base;
+    }
 }

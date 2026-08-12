@@ -7,6 +7,82 @@
     width: 100%;
     flex-direction: column;
 
+    &__about-us {
+        display: flex;
+        align-items: stretch;
+        gap: 3rem;
+        width: 100%;
+        max-width: 112rem;
+        padding: 4rem 0rem;
+    }
+
+    &__about-us-left {
+        flex: 1 1 32rem;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__about-us-heading {
+        font-family: v.$font-heading;
+        font-weight: 700;
+        font-size: v.$font-size-5xl;
+        line-height: 1.3;
+        margin: 0 0 1.5rem;
+        color: v.$color-navy;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 4rem;
+            height: 0.4rem;
+            background-color: v.$color-yellow;
+            margin-top: 0.8rem;
+        }
+    }
+
+    &__about-us-text {
+        margin: 0 0 2rem;
+        color: v.$color-lightgray;
+        font-size: v.$font-size-lg;
+        line-height: 1.6;
+        white-space: pre-line;
+    }
+
+    &__about-us-cta {
+        // Flex items in a column default to align-self: stretch — without
+        // this, the CTA (meant to size to its own content) would stretch
+        // to the full width of the column instead.
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.9rem 1.6rem;
+        border-radius: 0.5rem;
+        background: v.$color-navy;
+        color: v.$color-white;
+        font-family: v.$font-heading;
+        font-weight: 700;
+        font-size: v.$font-size-sm;
+        text-decoration: none;
+        transition: background-color 0.15s ease;
+
+        &:hover,
+        &:focus-visible {
+            background: v.$color-links-active;
+            color: v.$color-white;
+        }
+    }
+
+    &__about-us-right {
+        flex: 1 1 28rem;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
     &__quick-access {
         display: flex;
         flex-direction: column;
@@ -14,5 +90,17 @@
         justify-items: center;
         width: 100%;
         background-color: v.$color-main-bg;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-home__about-us {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 3.5rem 1.5rem;
+    }
+
+    .p-home__about-us-right {
+        grid-template-columns: 1fr;
     }
 }

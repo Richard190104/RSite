@@ -219,7 +219,7 @@ input[type='color'] {
     a {
         color: var(--color-cakephp-blue);
         display: inline-block;
-        font-size: 1.25rem;
+        font-size: v.$font-size-lg;
         line-height: 3rem;
         min-width: 3rem;
         padding: 0;
