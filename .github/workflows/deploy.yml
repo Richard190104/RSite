@@ -1,0 +1,60 @@
+name: Deploy to production
+
+# Runs on every push to main: builds the app (composer deps + compiled CSS)
+# and uploads it over FTPS to InfinityFree. Database migrations stay manual —
+# run webroot/run-migrations.php by hand after a deploy that includes one.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Install PHP dependencies (production only)
+        working-directory: rsite-base
+        run: composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        working-directory: rsite-base
+        run: npm ci
+
+      - name: Compile SCSS
+        working-directory: rsite-base
+        run: npm run sass:build
+
+      - name: Deploy over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: rsite-base/
+          server-dir: /htdocs/
+          # Never touch server-side config or logs — those hold the live DB
+          # credentials/salt and aren't tracked in git in the first place.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/config/app_local.php
+            **/config/.env
+            **/logs/**
+            **/tmp/**
+            **/webroot/run-migrations.php

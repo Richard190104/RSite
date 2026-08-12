@@ -18,7 +18,7 @@ $logo-size: 6.4rem;
     display: flex;
     align-items: center;
     min-height: 5.6rem;
-    padding: 1.6rem 2rem 1.6rem calc(2rem + #{$logo-size} + 1.4rem);
+    padding: 1.6rem 2rem 1.6rem calc(2rem + #{$logo-size});
 }
 
 .site-nav__brand {
@@ -30,7 +30,7 @@ $logo-size: 6.4rem;
     display: block;
     font-family: v.$font-heading;
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: v.$font-size-xs;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: v.$color-yellow;
@@ -40,7 +40,7 @@ $logo-size: 6.4rem;
     display: block;
     font-family: v.$font-heading;
     font-weight: 800;
-    font-size: 2.1rem;
+    font-size: v.$font-size-4xl;
     line-height: 1.15;
     letter-spacing: -0.01em;
     color: v.$color-navy;
@@ -63,13 +63,13 @@ $logo-size: 6.4rem;
     align-items: center;
     gap: 1rem;
     padding: 0 2rem;
-    padding-left: calc(2rem + #{$logo-size} + 1.4rem);
+    padding-left: calc(2rem + #{$logo-size});
     min-height: 4.4rem;
 }
 
 .site-nav__logo {
     position: absolute;
-    left: 2rem;
+    left: 0rem;
     top: -$logo-size * 0.62;
     width: $logo-size;
     height: $logo-size;
@@ -126,7 +126,7 @@ $logo-size: 6.4rem;
         padding: 1.4rem 1.6rem;
         font-family: v.$font-heading;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: v.$font-size-base;
         letter-spacing: 0.03em;
         text-transform: uppercase;
         color: v.$color-white;

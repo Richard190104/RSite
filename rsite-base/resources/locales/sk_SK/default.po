@@ -693,6 +693,14 @@ msgstr "Rýchly prístup (max. 5 stránok)"
 msgid "Quick access"
 msgstr "Rýchly prístup"
 
+#: ./templates/Pages/home.php
+msgid "About us"
+msgstr "O nás"
+
+#: ./templates/Pages/home.php
+msgid "More about the organisation"
+msgstr "Viac o organizácii"
+
 #: ./templates/Admin/Banners/edit.php
 msgid "Replace background image (optional)"
 msgstr "Nahradiť obrázok na pozadie (voliteľné)"

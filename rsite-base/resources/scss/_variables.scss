@@ -6,6 +6,7 @@ $color-cakephp-lightblue: #34bdd7;
 
 // Additional colors
 $color-lightgray: #606c76;
+$color-light-lightgray: #606c7625;
 $color-white: #fff;
 $color-navy: #143a6b;
 $color-yellow: #f9d71c;
@@ -33,6 +34,21 @@ $color-message-info-border: #6cb2eb;
 
 $font-heading: "Raleway", sans-serif;
 $font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// Font size scale — every value here is one already in use somewhere in
+// the app; new call sites should reach for one of these instead of a new
+// literal, so type sizes stay a small, shared set rather than one-offs.
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.95rem;
+$font-size-base: 1rem;
+$font-size-md: 1.1rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.4rem;
+$font-size-2xl: 1.6rem;
+$font-size-3xl: 1.8rem;
+$font-size-4xl: 2.1rem;
+$font-size-5xl: 2.4rem;
+$font-size-6xl: 4rem;
 
 $breakpoint-sm: 640px;
 

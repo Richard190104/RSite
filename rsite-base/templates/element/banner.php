@@ -10,8 +10,7 @@ use Cake\ORM\TableRegistry;
 
 $controller = strtolower((string)$this->getRequest()->getParam('controller'));
 $pass = $this->getRequest()->getParam('pass') ?? [];
-$location = $controller === 'pages' && ($pass[0] ?? null) === 'home' ? 'home' : $controller;
-
+$location = $controller === 'pages' && ($pass[0] ?? null) === null ? 'home' : $controller;
 $banner = TableRegistry::getTableLocator()->get('Banners')
     ->find()
     ->where(['location' => $location, 'is_enabled' => true])
@@ -21,8 +20,14 @@ if ($banner === null) {
     return;
 }
 ?>
+<?php $subtitle = $banner->settings['subtitle'] ?? ''; ?>
 <div class="page-banner" style="background-image: url('<?= h($this->Url->build('/img/banners/' . $banner->background)) ?>');">
     <div class="page-banner__overlay">
-        <h1 class="page-banner__title"><?= h($banner->title) ?></h1>
+        <div class="page-banner__content">
+            <h1 class="page-banner__title"><?= h($banner->title) ?></h1>
+            <?php if ($subtitle !== ''): ?>
+                <p class="page-banner__subtitle"><?= h($subtitle) ?></p>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
