@@ -14,10 +14,17 @@
  *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... MIGRATION_TOKEN=... node bin/deploy.mjs --migrate https://rsite.great-site.net
  *
  * --migrate <site-url> additionally uploads webroot/run-migrations.php
- * (with its token placeholder swapped for MIGRATION_TOKEN), hits it once
- * over HTTPS to run pending migrations, then deletes it from the server —
- * opt-in, since a routine deploy shouldn't touch the database without
- * being asked to.
+ * (with its token placeholder swapped for MIGRATION_TOKEN), prints the URL
+ * for you to open and check yourself (this host's anti-bot challenge blocks
+ * a plain Node request — see runMigrations() below), waits for Enter, then
+ * deletes it from the server — opt-in, since a routine deploy shouldn't
+ * touch the database without being asked to.
+ *
+ * Deploys ONLY what's committed on `main` — never the working tree. main's
+ * HEAD is exported with `git archive` into a clean throwaway directory
+ * first, so uncommitted edits (staged or not, on any branch) never reach
+ * the server, and neither does anything from a feature branch that hasn't
+ * been merged yet.
  *
  * Credentials are read from the environment only — never hardcode them
  * here, this file is committed to git.
@@ -25,19 +32,24 @@
 import { Client } from 'basic-ftp';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
-import https from 'node:https';
 import { Readable } from 'node:stream';
+import readline from 'node:readline/promises';
+import { stdin, stdout } from 'node:process';
+import * as tar from 'tar';
 
+// ROOT is the working copy this script lives in — used only to locate the
+// git repo and to persist local state (VENDOR_MARKER). Everything that
+// actually gets uploaded is read from SOURCE_DIR instead (see below).
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const REPO_ROOT = join(ROOT, '..');
 
-// composer install --no-dev is run in this throwaway copy, never in ROOT's
-// own vendor/ — running it there would strip dev-only packages (DebugKit,
-// PHPUnit...) from the vendor/ this machine also uses for local
-// development, breaking `bin/cake server` until you re-run `composer
-// install` yourself. Deleted and recreated fresh on every deploy.
-const BUILD_DIR = join(ROOT, '.deploy-build');
+// Fresh export of main's HEAD (via `git archive`) plus a --no-dev vendor/
+// built inside it — recreated from scratch on every deploy, so it can
+// never end up containing a leftover uncommitted edit from a previous run.
+// This is what actually gets uploaded; ROOT's own working tree never is.
+const SOURCE_DIR = join(ROOT, '.deploy-build');
 
 // Tracks the composer.lock hash from the last deploy that uploaded vendor/,
 // so a deploy with no dependency changes can skip re-uploading it — vendor/
@@ -45,19 +57,15 @@ const BUILD_DIR = join(ROOT, '.deploy-build');
 // local marker of what THIS machine last pushed, not project state.
 const VENDOR_MARKER = join(ROOT, '.vendor-deployed-hash');
 
-// Same exclusions as the GitHub Actions workflow (.github/workflows/deploy.yml)
-// — config/app_local.php and config/.env hold live DB credentials and are
-// gitignored for the same reason. run-migrations.php is excluded from this
+// config/app_local.php and config/.env hold live DB credentials and are
+// gitignored, so git archive never includes them regardless — listed here
+// too as a second line of defense. run-migrations.php is excluded from this
 // regular upload on purpose: it only ever goes up as part of runMigrations()
 // below (--migrate), which deletes it again right after — it must never be
 // left sitting on the server between deploys.
 const EXCLUDE = [
-    /^\.git($|[\\/])/,
-    /^node_modules($|[\\/])/,
     /^config[\\/]app_local\.php$/,
     /^config[\\/]\.env$/,
-    /^logs($|[\\/])/,
-    /^tmp($|[\\/])/,
     /^webroot[\\/]run-migrations\.php$/,
 ];
 
@@ -69,6 +77,44 @@ function isExcluded(relPath) {
 function run(command, args, cwd = ROOT) {
     console.log(`\n$ ${command} ${args.join(' ')}`);
     execFileSync(command, args, { cwd, stdio: 'inherit', shell: true });
+}
+
+function capture(command, args, cwd = ROOT) {
+    return execFileSync(command, args, { cwd, encoding: 'utf8' }).trim();
+}
+
+// Exports main's HEAD — as actually committed, ignoring whatever's in the
+// working tree or index right now — into SOURCE_DIR. `git archive` reads
+// straight from the object database, so this is immune to uncommitted
+// edits, staged-but-uncommitted changes, and being on the wrong branch, all
+// at once; there's no "clean working tree" precondition to get wrong.
+//
+// Goes through the `tar` npm package rather than piping to a shell `tar`
+// binary — cross-platform without relying on the parent shell's own
+// path/quoting rules for the target directory (Windows paths with
+// backslashes through Git Bash's tar broke this the naive way).
+async function exportMainToSourceDir() {
+    const mainRef = capture('git', ['rev-parse', 'main'], REPO_ROOT);
+    const currentRef = capture('git', ['rev-parse', 'HEAD'], REPO_ROOT);
+    if (mainRef !== currentRef) {
+        console.log(`\nDeploying main@${mainRef.slice(0, 7)} (current checkout is at ${currentRef.slice(0, 7)}) — working tree is not touched.`);
+    }
+
+    if (existsSync(SOURCE_DIR)) {
+        rmSync(SOURCE_DIR, { recursive: true, force: true });
+    }
+    mkdirSync(SOURCE_DIR, { recursive: true });
+
+    const archiveDir = relative(REPO_ROOT, ROOT).split(sep).join('/');
+    const tarPath = join(ROOT, '.deploy-archive.tar');
+    execFileSync('git', ['archive', '--format=tar', '-o', tarPath, 'main', '--', archiveDir], { cwd: REPO_ROOT });
+
+    await tar.x({
+        file: tarPath,
+        cwd: SOURCE_DIR,
+        strip: archiveDir.split('/').length,
+    });
+    rmSync(tarPath);
 }
 
 // Yields every {full, rel} under `dir`, with `rel` always relative to
@@ -89,51 +135,58 @@ function* walkDir(dir, base, { exclude = () => false } = {}) {
     }
 }
 
-// Everything from ROOT (excluding vendor/, which is never uploaded from
-// here — see BUILD_DIR above) plus, unless skipVendor, vendor/ from
-// vendorDir (BUILD_DIR/vendor, built with --no-dev).
-function* walk(vendorDir, { skipVendor }) {
-    yield* walkDir(ROOT, ROOT, {
+// Everything from SOURCE_DIR (main's exported HEAD; excludes its own
+// vendor/, which doesn't exist until buildVendor() runs, plus whatever's
+// in EXCLUDE) plus, unless skipVendor, vendor/ itself.
+function* walk({ skipVendor }) {
+    yield* walkDir(SOURCE_DIR, SOURCE_DIR, {
         exclude: (rel) => isExcluded(rel) || rel === 'vendor',
     });
 
     if (!skipVendor) {
-        for (const { full, rel } of walkDir(vendorDir, vendorDir)) {
-            yield { full, rel: 'vendor/' + rel };
-        }
+        yield* walkDir(join(SOURCE_DIR, 'vendor'), SOURCE_DIR);
     }
 }
 
 function lockHash() {
-    return createHash('sha256').update(readFileSync(join(ROOT, 'composer.lock'))).digest('hex');
+    return createHash('sha256').update(readFileSync(join(SOURCE_DIR, 'composer.lock'))).digest('hex');
 }
 
-// Reads webroot/run-migrations.php and substitutes its token placeholder
-// with the real value — in memory only. The file on disk (and in git) always
-// keeps the placeholder; the real token lives only in the MIGRATION_TOKEN
-// environment variable, same as the FTP password.
+// Reads webroot/run-migrations.php (from SOURCE_DIR, so this always
+// reflects what main actually has) and substitutes its token placeholder
+// with the real value — in memory only. The file on disk (and in git)
+// always keeps the placeholder; the real token lives only in the
+// MIGRATION_TOKEN environment variable, same as the FTP password.
 function migrationScriptWithToken(token) {
-    const source = readFileSync(join(ROOT, 'webroot', 'run-migrations.php'), 'utf8');
+    const source = readFileSync(join(SOURCE_DIR, 'webroot', 'run-migrations.php'), 'utf8');
     if (!source.includes('__MIGRATION_TOKEN__')) {
         throw new Error("Couldn't find the __MIGRATION_TOKEN__ placeholder in webroot/run-migrations.php");
     }
     return source.replace('__MIGRATION_TOKEN__', token);
 }
 
-function httpsGet(url) {
-    return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
-            let body = '';
-            res.on('data', (chunk) => (body += chunk));
-            res.on('end', () => resolve({ status: res.statusCode, body }));
-        }).on('error', reject);
-    });
+// composer install --no-dev, run directly inside SOURCE_DIR (main's
+// exported HEAD) — never in ROOT's own working-tree vendor/, so this
+// machine's local dev vendor/ (DebugKit, PHPUnit...) is never touched.
+//
+// --no-scripts is required here, not just an optimization: composer.json's
+// post-install-cmd runs Installer::postInstall, which — finding no
+// config/app_local.php in this fresh export (git archive never includes
+// it) — would create one from the placeholder template, with a dummy DB
+// password and salt. That file would then get uploaded and silently
+// overwrite the real production config.
+function buildVendor() {
+    run('composer', ['install', '--no-dev', '--no-scripts', '--optimize-autoloader', '--no-interaction', '--no-progress'], SOURCE_DIR);
 }
 
-// Uploads run-migrations.php, hits it once to run pending migrations, then
-// deletes it from the server — so the window where that URL is live (with a
-// working token, on a host with no login) is only as long as this one
-// request, not however long someone remembers to delete it by hand.
+// Uploads run-migrations.php, then waits for you to open the URL yourself
+// and confirm it ran, before deleting it from the server.
+//
+// This host serves a one-time JS/cookie anti-bot challenge to new clients
+// before letting a request through — fine in a real browser, but a plain
+// Node https.get() can't run the JS or persist the resulting cookie, so it
+// only ever sees the challenge page, never the migration output. A real
+// browser (which already solved that challenge before) gets through fine.
 async function runMigrations(client, migrationSiteUrl, token) {
     const remotePath = '/htdocs/webroot/run-migrations.php';
 
@@ -141,16 +194,14 @@ async function runMigrations(client, migrationSiteUrl, token) {
     await client.uploadFrom(Readable.from([migrationScriptWithToken(token)]), remotePath);
 
     const url = `${migrationSiteUrl.replace(/\/$/, '')}/run-migrations.php?token=${token}`;
-    console.log(`GET ${url}`);
-    const { status, body } = await httpsGet(url);
-    console.log(body);
+    console.log(`\nOpen this URL in your browser and confirm the migration output looks right:\n  ${url}`);
+
+    const rl = readline.createInterface({ input: stdin, output: stdout });
+    await rl.question('\nPress Enter once you\'ve checked it (this deletes run-migrations.php from the server)... ');
+    rl.close();
 
     await client.remove(remotePath);
     console.log('run-migrations.php removed from the server.');
-
-    if (status !== 200) {
-        throw new Error(`Migration request returned HTTP ${status}`);
-    }
 }
 
 async function main() {
@@ -175,6 +226,9 @@ async function main() {
         process.exit(1);
     }
 
+    console.log('=== Exporting main ===');
+    await exportMainToSourceDir();
+
     const currentHash = lockHash();
     let previousHash = null;
     try {
@@ -184,26 +238,16 @@ async function main() {
     }
     const skipVendor = currentHash === previousHash;
     const forceVendor = process.argv.includes('--force-vendor');
-    const buildVendor = !skipVendor || forceVendor;
+    const needsVendor = !skipVendor || forceVendor;
 
-    console.log('=== Building ===');
-    run('npm', ['run', 'sass:build']);
+    console.log('\n=== Building ===');
+    // sass:build writes into SOURCE_DIR's webroot/css, using ROOT's own
+    // node_modules (sass is only a devDependency, so it's never installed
+    // into SOURCE_DIR, which is deliberately --no-dev).
+    run('npx', ['sass', `${relative(ROOT, join(SOURCE_DIR, 'resources', 'scss'))}:${relative(ROOT, join(SOURCE_DIR, 'webroot', 'css'))}`, '--style=compressed', '--no-source-map']);
 
-    if (buildVendor) {
-        // Built in a throwaway copy, never in ROOT's own vendor/ — see
-        // BUILD_DIR's definition above for why.
-        if (existsSync(BUILD_DIR)) {
-            rmSync(BUILD_DIR, { recursive: true, force: true });
-        }
-        mkdirSync(BUILD_DIR, { recursive: true });
-        cpSync(join(ROOT, 'composer.json'), join(BUILD_DIR, 'composer.json'));
-        cpSync(join(ROOT, 'composer.lock'), join(BUILD_DIR, 'composer.lock'));
-        // --no-scripts: composer.json's post-install-cmd calls
-        // App\Console\Installer::postInstall, which BUILD_DIR (composer.json
-        // + composer.lock only, no src/) can't resolve. That hook is
-        // first-scaffold-only logic (copying .env.example, generating a
-        // salt) — nothing a deploy build needs.
-        run('composer', ['install', '--no-dev', '--no-scripts', '--optimize-autoloader', '--no-interaction', '--no-progress'], BUILD_DIR);
+    if (needsVendor) {
+        buildVendor();
     } else {
         console.log('\ncomposer.lock unchanged since last deploy — skipping vendor/ upload.');
         console.log('(pass --force-vendor to upload it anyway, e.g. if the server copy was ever wiped)');
@@ -227,7 +271,7 @@ async function main() {
         });
 
         let uploaded = 0;
-        for (const { full, rel } of walk(join(BUILD_DIR, 'vendor'), { skipVendor: !buildVendor })) {
+        for (const { full, rel } of walk({ skipVendor: !needsVendor })) {
             const remotePath = '/htdocs/' + rel.split(sep).join('/');
             await client.ensureDir('/htdocs/' + rel.split(sep).slice(0, -1).join('/') || '/htdocs');
             await client.uploadFrom(full, remotePath);

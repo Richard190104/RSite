@@ -10,6 +10,7 @@
 # last uploaded, not project state.
 /.vendor-deployed-hash
 /.deploy-build/
+/.deploy-archive.tar
 
 # OS generated files #
 ######################
