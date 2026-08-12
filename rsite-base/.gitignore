@@ -9,6 +9,7 @@
 # Manual deploy script state (bin/deploy.mjs) — tracks what this machine
 # last uploaded, not project state.
 /.vendor-deployed-hash
+/.deploy-build/
 
 # OS generated files #
 ######################

@@ -6,13 +6,17 @@
  * use. Anyone who finds this URL (with the right token) can run pending
  * migrations against the production database.
  *
+ * The placeholder below is swapped for the real value (from MIGRATION_TOKEN
+ * in the environment) by bin/deploy.mjs's --migrate flow at upload time —
+ * the real token is never committed. Uploading this file by hand instead?
+ * Replace the placeholder yourself before uploading.
+ *
  * Usage: upload to webroot/, visit
  *   https://yourdomain/run-migrations.php?token=YOUR_SECRET
  * then DELETE this file from the server right away.
  */
 
-// Change this to something only you know before uploading.
-const SECRET_TOKEN = '7I9v6ubGXKcHmvuJmZUa9TO1tG1798pd';
+const SECRET_TOKEN = '__MIGRATION_TOKEN__';
 
 if (!hash_equals(SECRET_TOKEN, $_GET['token'] ?? '')) {
     http_response_code(404);
