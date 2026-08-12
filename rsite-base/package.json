@@ -4,9 +4,11 @@
   "version": "1.0.0",
   "scripts": {
     "sass:build": "sass resources/scss:webroot/css --style=compressed --no-source-map",
-    "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded"
+    "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded",
+    "deploy": "node bin/deploy.mjs"
   },
   "devDependencies": {
+    "basic-ftp": "^6.2.0",
     "sass": "^1.102.0"
   }
 }
