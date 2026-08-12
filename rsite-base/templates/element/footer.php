@@ -5,4 +5,6 @@
  * Site-wide footer. Placeholder box for now — layout/content still TBD.
  */
 ?>
-<div class="site-footer"></div>
+<div class="site-footer">
+    ahojdsadsadsadsadsadasdsa
+</div>

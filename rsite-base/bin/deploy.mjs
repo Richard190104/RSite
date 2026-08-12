@@ -83,6 +83,36 @@ function capture(command, args, cwd = ROOT) {
     return execFileSync(command, args, { cwd, encoding: 'utf8' }).trim();
 }
 
+// Fetches origin and fast-forwards the local `main` ref to match
+// origin/main — without this, a local `main` that's behind (you forgot to
+// pull) would deploy stale code and never say so. Fast-forward only: if
+// local main has commits origin/main doesn't (diverged history), this
+// refuses rather than guessing which side is "right". Uses a ref update
+// (git fetch origin main:main), not a checkout — works from any branch,
+// never touches the working tree.
+function syncMainWithOrigin() {
+    console.log('\nFetching origin/main...');
+    run('git', ['fetch', 'origin', 'main'], REPO_ROOT);
+
+    const localMain = capture('git', ['rev-parse', 'main'], REPO_ROOT);
+    const remoteMain = capture('git', ['rev-parse', 'origin/main'], REPO_ROOT);
+    if (localMain === remoteMain) {
+        return;
+    }
+
+    const mergeBase = capture('git', ['merge-base', 'main', 'origin/main'], REPO_ROOT);
+    if (mergeBase !== localMain) {
+        console.error(
+            `Local 'main' (${localMain.slice(0, 7)}) has commits origin/main (${remoteMain.slice(0, 7)}) doesn't — ` +
+            "these have diverged. Resolve manually (rebase/merge/push) before deploying."
+        );
+        process.exit(1);
+    }
+
+    console.log(`Fast-forwarding local 'main': ${localMain.slice(0, 7)} -> ${remoteMain.slice(0, 7)}`);
+    run('git', ['fetch', 'origin', 'main:main'], REPO_ROOT);
+}
+
 // Exports main's HEAD — as actually committed, ignoring whatever's in the
 // working tree or index right now — into SOURCE_DIR. `git archive` reads
 // straight from the object database, so this is immune to uncommitted
@@ -94,6 +124,8 @@ function capture(command, args, cwd = ROOT) {
 // path/quoting rules for the target directory (Windows paths with
 // backslashes through Git Bash's tar broke this the naive way).
 async function exportMainToSourceDir() {
+    syncMainWithOrigin();
+
     const mainRef = capture('git', ['rev-parse', 'main'], REPO_ROOT);
     const currentRef = capture('git', ['rev-parse', 'HEAD'], REPO_ROOT);
     if (mainRef !== currentRef) {
