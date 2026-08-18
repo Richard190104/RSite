@@ -1,0 +1,1015 @@
+# Slovak translation of CakePHP Application
+msgid ""
+msgstr ""
+"Project-Id-Version: rsite-base\n"
+"POT-Creation-Date: 2026-08-04 18:37+0000\n"
+"PO-Revision-Date: 2026-08-04 18:37+0000\n"
+"Language: sk_SK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ./templates/Admin/Dashboard/index.php:5
+#: ./templates/element/Admin/sidebar.php:9
+msgid "Dashboard"
+msgstr "Prehľad"
+
+#: ./templates/Admin/Dashboard/index.php:7
+msgid "Admin dashboard"
+msgstr "Administrátorský prehľad"
+
+#: ./templates/Admin/Dashboard/index.php:8
+msgid "This is the admin section of the application, available only at /admin."
+msgstr "Toto je administrátorská časť aplikácie, dostupná len na /admin."
+
+#: ./templates/element/Admin/sidebar.php:10
+msgid "Pages"
+msgstr "Stránky"
+
+#: ./templates/element/Admin/sidebar.php:11
+msgid "News"
+msgstr "Novinky"
+
+#: ./templates/element/Admin/sidebar.php:12
+msgid "Categories"
+msgstr "Kategórie"
+
+#: ./templates/element/Admin/sidebar.php:13
+msgid "Events"
+msgstr "Podujatia"
+
+#: ./templates/element/Admin/sidebar.php:14
+msgid "Galleries"
+msgstr "Galérie"
+
+#: ./templates/layout/error.php:36
+msgid "Back"
+msgstr "Späť"
+
+#: ./vendor/cakephp/cakephp/src/View/Helper/PaginatorHelper.php:1225
+msgid "View"
+msgstr ""
+
+#: ./templates/Error/error400.php:40
+#: ./templates/Error/error500.php:45
+msgid "Error"
+msgstr "Chyba"
+
+#: ./templates/Error/error400.php:41
+msgid "The requested address {0} was not found on this server."
+msgstr "Požadovaná adresa {0} sa na tomto serveri nenašla."
+
+#: ./templates/Error/error500.php:43
+#: ./vendor/cakephp/cakephp/src/Error/Renderer/WebExceptionRenderer.php:355
+msgid "An Internal Error Has Occurred."
+msgstr "Nastala interná chyba."
+
+#: ./vendor/cakephp/cakephp/src/Command/PluginListCommand.php:65
+msgid "No plugins have been found."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Error/Renderer/WebExceptionRenderer.php:353
+msgid "Not Found"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:354
+msgid "Missing or incorrect CSRF cookie type."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:358
+msgid "Missing or invalid CSRF cookie."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:381
+#: ./vendor/cakephp/cakephp/src/Http/Middleware/SessionCsrfProtectionMiddleware.php:267
+msgid "CSRF token from either the request body or request headers did not match or is missing."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Middleware/SessionCsrfProtectionMiddleware.php:249
+msgid "Missing or incorrect CSRF session key"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Response.php:1262
+msgid "The requested file contains `..` and will not be read."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Http/Response.php:1270
+msgid "The requested file was not found"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/Number.php:125
+#: ./vendor/cakephp/cakephp/src/I18n/Number.php:127
+#: ./vendor/cakephp/cakephp/src/I18n/Number.php:129
+#: ./vendor/cakephp/cakephp/src/I18n/Number.php:130
+msgid "{0,number,#,###.##} {1}"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/Number.php:124
+msgid "{0,number,integer} Byte"
+msgid_plural "{0,number,integer} Bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:95
+msgid "{0} from now"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:95
+msgid "{0} ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:98
+msgid "{0} after"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:98
+msgid "{0} before"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:131
+msgid "just now"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:168
+msgid "about a second ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:169
+msgid "about a minute ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:170
+msgid "about an hour ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:171
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:389
+msgid "about a day ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:172
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:390
+msgid "about a week ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:173
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:391
+msgid "about a month ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:174
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:392
+msgid "about a year ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:185
+msgid "in about a second"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:186
+msgid "in about a minute"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:187
+msgid "in about an hour"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:188
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:403
+msgid "in about a day"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:189
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:404
+msgid "in about a week"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:190
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:405
+msgid "in about a month"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:191
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:406
+msgid "in about a year"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:361
+msgid "today"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:427
+msgid "%s ago"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:428
+msgid "on %s"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:62
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:143
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:373
+msgid "{0} year"
+msgid_plural "{0} years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:66
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:146
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:376
+msgid "{0} month"
+msgid_plural "{0} months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:72
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:149
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:379
+msgid "{0} week"
+msgid_plural "{0} weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:74
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:152
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:382
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:79
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:155
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:83
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:158
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:87
+#: ./vendor/cakephp/cakephp/src/I18n/RelativeTimeFormatter.php:161
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./vendor/cakephp/cakephp/src/ORM/RulesChecker.php:65
+msgid "This value is already in use"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/ORM/RulesChecker.php:116
+#: ./vendor/cakephp/cakephp/src/ORM/RulesChecker.php:168
+msgid "This value does not exist"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/ORM/RulesChecker.php:292
+msgid "Cannot modify row: a constraint for the `{0}` association fails."
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/ORM/RulesChecker.php:330
+msgid "The count does not match {0}{1}"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Utility/Text.php:926
+msgid "and"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1080
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:3067
+#: ./vendor/cakephp/cakephp/src/View/Form/ArrayContext.php:232
+msgid "This field cannot be left empty"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1107
+msgid "The provided value must be alphanumeric"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1134
+msgid "The provided value must not be alphanumeric"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1161
+msgid "The provided value must be ASCII-alphanumeric"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1188
+msgid "The provided value must not be ASCII-alphanumeric"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1231
+msgid "The length of the provided value must be between `{0}` and `{1}`, inclusively"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1282
+msgid "The provided value must be a valid credit card number of any type"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1287
+msgid "The provided value must be a valid credit card number of these types: `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1323
+msgid "The provided value must be greater than `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1355
+msgid "The provided value must be greater than or equal to `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1387
+msgid "The provided value must be less than `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1419
+msgid "The provided value must be less than or equal to `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1451
+msgid "The provided value must be equal to `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1483
+msgid "The provided value must not be equal to `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1517
+msgid "The provided value must be same as `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1550
+msgid "The provided value must not be same as `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1583
+msgid "The provided value must be equal to the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1620
+msgid "The provided value must not be equal to the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1657
+msgid "The provided value must be greater than the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1697
+msgid "The provided value must be greater than or equal to the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1734
+msgid "The provided value must be less than the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1774
+msgid "The provided value must be less than or equal to the one of field `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1829
+msgid "The provided value must be a date of one of these formats: `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1891
+msgid "The provided value must be a date and time of one of these formats: `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1922
+msgid "The provided value must be a time"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1954
+msgid "The provided value must be a localized time, date or date and time"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:1981
+msgid "The provided value must be a boolean"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2017
+msgid "The provided value must be decimal with any number of decimal places, including none"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2022
+msgid "The provided value must be decimal with `{0}` decimal places"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2058
+msgid "The provided value must be an e-mail address"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2099
+msgid "The provided value must be one of `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2128
+msgid "The provided value must be an IP address"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2155
+msgid "The provided value must be an IPv4 address"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2182
+msgid "The provided value must be an IPv6 address"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2210
+msgid "The provided value must be at least `{0}` characters long"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2238
+msgid "The provided value must be at least `{0}` bytes long"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2266
+msgid "The provided value must be at most `{0}` characters long"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2294
+msgid "The provided value must be at most `{0}` bytes long"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2321
+msgid "The provided value must be numeric"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2348
+msgid "The provided value must be a natural number"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2375
+msgid "The provided value must be a non-negative integer"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2414
+msgid "The provided value must be between `{0}` and `{1}`, inclusively"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2448
+msgid "The provided value must be a URL"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2477
+msgid "The provided value must be a URL with protocol"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2507
+msgid "The provided value must be one of: `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2538
+msgid "The provided value must be a UUID"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2570
+msgid "The provided value must be an uploaded file"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2599
+msgid "The provided value must be a latitude/longitude coordinate"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2626
+msgid "The provided value must be a latitude"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2653
+msgid "The provided value must be a longitude"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2680
+msgid "The provided value must be ASCII bytes only"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2707
+msgid "The provided value must be UTF-8 bytes only"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2736
+msgid "The provided value must be 3 and 4 byte UTF-8 sequences only"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2763
+msgid "The provided value must be an integer"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2790
+msgid "The provided value must be an array"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2816
+msgid "The provided value must be scalar"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2842
+msgid "The provided value must be a hex color"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2874
+msgid "The provided value must be a set of multiple options"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2905
+msgid "The provided value must have at least `{0}` elements"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:2940
+msgid "The provided value must have at most `{0}` elements"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:3007
+msgid "The provided value must match against the pattern `{0}`"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:3038
+msgid "This field is required"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/Validation/Validator.php:3196
+msgid "The provided value is invalid"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/View/Helper/FormHelper.php:1037
+msgid "Edit {0}"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/View/Helper/FormHelper.php:1039
+msgid "New {0}"
+msgstr ""
+
+#: ./vendor/cakephp/cakephp/src/View/Helper/FormHelper.php:2073
+msgid "Submit"
+msgstr ""
+
+
+#: ./templates/Admin/Users/login.php
+msgid "Admin log in"
+msgstr "Prihlásenie do administrácie"
+
+#: ./templates/Admin/Users/login.php
+msgid "Log in"
+msgstr "Prihlásiť sa"
+
+#: ./templates/Admin/Users/login.php
+msgid "Username"
+msgstr "Používateľské meno"
+
+#: ./templates/Admin/Users/login.php
+msgid "Password"
+msgstr "Heslo"
+
+#: ./src/Controller/Admin/UsersController.php
+msgid "Invalid username or password."
+msgstr "Nesprávne používateľské meno alebo heslo."
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Log out"
+msgstr "Odhlásiť sa"
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Navbar categories"
+msgstr "Kategórie navigácie"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "About us text"
+msgstr "Text O nás"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Actions"
+msgstr "Akcie"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Add banner"
+msgstr "Pridať banner"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Are you sure you want to delete \"{0}\"?"
+msgstr "Naozaj chcete zmazať \"{0}\"?"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Background"
+msgstr "Pozadie"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Background image"
+msgstr "Obrázok na pozadie"
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Banner deleted."
+msgstr "Banner bol zmazaný."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Banner saved."
+msgstr "Banner bol uložený."
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Banners"
+msgstr "Bannery"
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Could not delete the banner."
+msgstr "Banner sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Could not save the banner, check the errors below."
+msgstr "Banner sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Could not save the homepage."
+msgstr "Domovskú stránku sa nepodarilo uložiť."
+
+#: ./templates/Admin/Banners/index.php
+msgid "Delete"
+msgstr "Zmazať"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Edit"
+msgstr "Upraviť"
+
+#: ./templates/Admin/Banners/edit.php
+msgid "Edit banner"
+msgstr "Upraviť banner"
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Edit homepage"
+msgstr "Upraviť domovskú stránku"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Hidden"
+msgstr "Skrytý"
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Homepage saved."
+msgstr "Domovská stránka bola uložená."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Page saved."
+msgstr "Stránka bola uložená."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Could not save the page."
+msgstr "Stránku sa nepodarilo uložiť."
+
+#: ./templates/Admin/Pages/edit.php
+msgid "Shown under the page name in the homepage quick access cards."
+msgstr "Zobrazí sa pod názvom stránky v dlaždiciach rýchleho prístupu na domovskej stránke."
+
+#: ./templates/Admin/Banners/add.php
+msgid "Location"
+msgstr "Umiestnenie"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Manage banners"
+msgstr "Spravovať bannery"
+
+#: ./templates/Admin/Pages/edit.php
+msgid "No page-specific settings are defined for this page yet."
+msgstr "Pre túto stránku zatiaľ nie sú definované žiadne špecifické nastavenia."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "Please choose a background image."
+msgstr "Prosím, vyberte obrázok na pozadie."
+
+#: ./src/Model/Table/BannersTable.php
+msgid "Please select a valid location."
+msgstr "Prosím, vyberte platné umiestnenie."
+
+#: ./src/Controller/Admin/PagesController.php
+msgid "Please select at most {0} pages for quick access."
+msgstr "Prosím, vyberte najviac {0} stránok pre rýchly prístup."
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Quick access (max 5 pages)"
+msgstr "Rýchly prístup (max. 5 stránok)"
+
+#: ./templates/Admin/Pages/edit_home.php
+#: ./templates/element/quickAccess.php
+msgid "Quick access"
+msgstr "Rýchly prístup"
+
+#: ./templates/Pages/home.php
+msgid "About us"
+msgstr "O nás"
+
+#: ./templates/Pages/home.php
+msgid "More about the organisation"
+msgstr "Viac o organizácii"
+
+#: ./templates/Admin/Banners/edit.php
+msgid "Replace background image (optional)"
+msgstr "Nahradiť obrázok na pozadie (voliteľné)"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "Save"
+msgstr "Uložiť"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Show on the page"
+msgstr "Zobraziť na stránke"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Shown"
+msgstr "Zobrazený"
+
+#: ./templates/Admin/Pages/index.php
+msgid "Slug"
+msgstr "Slug"
+
+#: ./templates/Admin/Banners/index.php
+msgid "Status"
+msgstr "Stav"
+
+#: ./templates/Admin/Banners/add.php
+msgid "Subtitle"
+msgstr "Podnadpis"
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "The \"about us\" feature tiles are managed separately as banners with the \"Home — mini banner\" location."
+msgstr "Dlaždice \"o nás\" sa spravujú samostatne ako bannery s umiestnením \"Home — mini banner\"."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The background image must be a JPEG, PNG or WEBP file."
+msgstr "Obrázok na pozadie musí byť súbor typu JPEG, PNG alebo WEBP."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The background image must be smaller than 5 MB."
+msgstr "Obrázok na pozadie musí byť menší ako 5 MB."
+
+#: ./src/Controller/Admin/BannersController.php
+msgid "The uploaded file could not be processed."
+msgstr "Nahraný súbor sa nepodarilo spracovať."
+
+#: ./templates/Admin/Banners/add.php
+msgid "Title"
+msgstr "Názov"
+
+#: ./templates/Admin/NavbarCategories/index.php
+msgid "Add category"
+msgstr "Pridať kategóriu"
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Category deleted."
+msgstr "Kategória bola zmazaná."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Category saved."
+msgstr "Kategória bola uložená."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Could not delete the category."
+msgstr "Kategóriu sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/NavbarCategoriesController.php
+msgid "Could not save the category, check the errors below."
+msgstr "Kategóriu sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./templates/Admin/NavbarCategories/edit.php
+msgid "Edit category"
+msgstr "Upraviť kategóriu"
+
+#: ./templates/Admin/NavbarCategories/edit.php
+msgid "Pages in this category"
+msgstr "Stránky v tejto kategórii"
+
+#: ./templates/Admin/News/index.php
+msgid "Add article"
+msgstr "Pridať článok"
+
+#: ./templates/Admin/News/add.php
+msgid "Category"
+msgstr "Kategória"
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "Could not delete the article."
+msgstr "Článok sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "Could not save the article, check the errors below."
+msgstr "Článok sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./templates/Admin/News/add.php
+msgid "Date"
+msgstr "Dátum"
+
+#: ./templates/Admin/News/add.php
+msgid "Description"
+msgstr "Popis"
+
+#: ./templates/Admin/News/edit.php
+msgid "Edit article"
+msgstr "Upraviť článok"
+
+#: ./templates/Admin/News/add.php
+msgid "Image"
+msgstr "Obrázok"
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "News article deleted."
+msgstr "Článok bol zmazaný."
+
+#: ./src/Controller/Admin/NewsController.php
+msgid "News article saved."
+msgstr "Článok bol uložený."
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "Please choose an image."
+msgstr "Prosím, vyberte obrázok."
+
+#: ./templates/Admin/News/edit.php
+msgid "Replace image (optional)"
+msgstr "Nahradiť obrázok (voliteľné)"
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "The image must be a JPEG, PNG or WEBP file."
+msgstr "Obrázok musí byť súbor typu JPEG, PNG alebo WEBP."
+
+#: ./src/Controller/Admin/ImageUploadTrait.php
+msgid "The image must be smaller than 5 MB."
+msgstr "Obrázok musí byť menší ako 5 MB."
+
+#: ./templates/Admin/News/add.php
+msgid "— none —"
+msgstr "— žiadna —"
+
+#: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
+msgid "Home"
+msgstr "Domov"
+
+#: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
+msgid "Gallery"
+msgstr "Galéria"
+
+#: ./templates/Admin/Events/index.php
+msgid "Add event"
+msgstr "Pridať podujatie"
+
+#: ./templates/Admin/Galleries/index.php
+msgid "Add photo"
+msgstr "Pridať fotku"
+
+#: ./templates/Admin/Galleries/index.php
+msgid "Are you sure you want to delete this photo?"
+msgstr "Naozaj chcete zmazať túto fotku?"
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Could not delete the event."
+msgstr "Podujatie sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Could not delete the photo."
+msgstr "Fotku sa nepodarilo zmazať."
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Could not save the event, check the errors below."
+msgstr "Podujatie sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Could not save the photo, check the errors below."
+msgstr "Fotku sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Could not save the texts."
+msgstr "Texty sa nepodarilo uložiť."
+
+#: ./templates/Admin/Events/edit.php
+msgid "Edit event"
+msgstr "Upraviť podujatie"
+
+#: ./templates/Admin/Galleries/edit.php
+msgid "Edit photo"
+msgstr "Upraviť fotku"
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Event deleted."
+msgstr "Podujatie bolo zmazané."
+
+#: ./src/Controller/Admin/EventsController.php
+msgid "Event saved."
+msgstr "Podujatie bolo uložené."
+
+#: ./templates/Admin/Categories/index.php
+msgid "No"
+msgstr "Nie"
+
+#: ./templates/Admin/Categories/index.php
+msgid "Parent category"
+msgstr "Rodičovská kategória"
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Photo deleted."
+msgstr "Fotka bola zmazaná."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Photo saved."
+msgstr "Fotka bola uložená."
+
+#: ./templates/Admin/Categories/add.php
+msgid "Show in gallery"
+msgstr "Zobraziť v galérii"
+
+#: ./templates/element/Admin/sidebar.php
+msgid "Texts"
+msgstr "Texty"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Texts saved."
+msgstr "Texty boli uložené."
+
+#: ./templates/Admin/Categories/index.php
+msgid "Yes"
+msgstr "Áno"
+
+#: ./templates/Admin/Categories/add.php
+msgid "— none (top-level) —"
+msgstr "— žiadna (najvyššia úroveň) —"
+
+#: ./templates/element/navbar.php
+msgid "Local organisation"
+msgstr "Mestská organizácia"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Footer Description"
+msgstr "Text v pätičke"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation Name"
+msgstr "Názov organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "MainContact"
+msgstr "Kontaktné telefónne číslo"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation ICO"
+msgstr "IČO organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation Gmail"
+msgstr "E-mail organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "Organisation Address"
+msgstr "Adresa organizácie"
+
+#: ./templates/Admin/Texts/index.php (dynamic __(ucfirst($text->slug)), not auto-extracted)
+msgid "City"
+msgstr "Mesto"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Could not save the text."
+msgstr "Text sa nepodarilo uložiť."
+
+#: ./templates/Admin/Texts/index.php
+msgid "Text"
+msgstr "Text"
+
+#: ./src/Controller/Admin/TextsController.php
+msgid "Text saved."
+msgstr "Text bol uložený."
+
+#: ./templates/Admin/Texts/edit.php
+msgid "Value"
+msgstr "Hodnota"
+
+#: ./templates/element/Admin/sidebar.php
+#: ./templates/Admin/Logos/index.php
+msgid "Logos"
+msgstr "Logá"
+
+#: ./templates/Admin/Logos/index.php
+msgid "Logo"
+msgstr "Logo"
+
+#: ./templates/Admin/Logos/index.php
+msgid "No image yet"
+msgstr "Zatiaľ bez obrázka"
+
+#: ./templates/Admin/Logos/edit.php
+msgid "Upload image"
+msgstr "Nahrať obrázok"
+
+#: ./templates/Admin/Logos/edit.php
+msgid "Replace image"
+msgstr "Nahradiť obrázok"
+
+#: ./src/Controller/Admin/LogosController.php
+msgid "Logo saved."
+msgstr "Logo bolo uložené."
+
+#: ./src/Controller/Admin/LogosController.php
+msgid "Could not save the logo."
+msgstr "Logo sa nepodarilo uložiť."
+
+#: ./templates/Admin/Logos/index.php (dynamic __($logo->name), not auto-extracted)
+msgid "Header logo"
+msgstr "Logo v hlavičke"
+
+#: ./templates/Admin/Logos/index.php (dynamic __($logo->name), not auto-extracted)
+msgid "Footer logo"
+msgstr "Logo v pätičke"

@@ -2,6 +2,9 @@
 
 // Placeholder — layout/content still TBD.
 .site-footer {
-    height: 150px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
     background-color: v.$color-navy;
 }
