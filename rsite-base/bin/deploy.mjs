@@ -322,9 +322,17 @@ async function main() {
 
         let uploaded = 0;
         for (const { full, rel } of walk({ skipVendor: !needsVendor })) {
-            const remotePath = '/htdocs/' + rel.split(sep).join('/');
-            await client.ensureDir('/htdocs/' + rel.split(sep).slice(0, -1).join('/') || '/htdocs');
-            await client.uploadFrom(full, remotePath);
+            const parts = rel.split(sep).join('/').split('/');
+            const filename = parts.pop();
+            // ensureDir() changes the connection's cwd to the given
+            // directory as a side effect — uploadFrom() is then given just
+            // the filename, relative to that cwd, rather than a full
+            // absolute path. This host's FTP server was returning
+            // "553 Can't open that file" on the absolute-path form; some
+            // shared-hosting FTP implementations only resolve STOR
+            // correctly relative to cwd.
+            await client.ensureDir('/htdocs/' + parts.join('/'));
+            await client.uploadFrom(full, filename);
             uploaded += 1;
             if (uploaded % 50 === 0) {
                 console.log(`  ${uploaded} files uploaded...`);
