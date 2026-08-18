@@ -9,12 +9,32 @@
 
 .page-banner {
     position: relative;
+    overflow: hidden;
+
+    // Swiper needs a fixed-ish container height — it doesn't size itself
+    // to slide content the way a plain flex/block flow would.
+    min-height: 38rem;
+
+    // Swiper's own pagination dots, restyled to the site's palette instead
+    // of its default blue/white.
+    .swiper-pagination-bullet {
+        background: v.$color-white;
+        opacity: 0.6;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: v.$color-yellow;
+        opacity: 1;
+    }
+}
+
+.page-banner__slide {
+    position: relative;
     background-size: cover;
     background-position: center;
-    min-height: 32rem;
+    min-height: 38rem;
     display: flex;
     align-items: center;
-    overflow: hidden;
 }
 
 .page-banner__overlay {
@@ -58,8 +78,9 @@
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
-    .page-banner {
-        min-height: 26rem;
+    .page-banner,
+    .page-banner__slide {
+        min-height: 30rem;
     }
 
     .page-banner__overlay {
