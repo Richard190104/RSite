@@ -1013,11 +1013,3 @@ msgstr "Logo v hlavičke"
 #: ./templates/Admin/Logos/index.php (dynamic __($logo->name), not auto-extracted)
 msgid "Footer logo"
 msgstr "Logo v pätičke"
-
-#: ./templates/element/footer.php
-msgid "Contact"
-msgstr "Kontakt"
-
-#: ./templates/element/footer.php
-msgid "ID No."
-msgstr "IČO"

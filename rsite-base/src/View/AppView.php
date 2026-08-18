@@ -26,6 +26,8 @@ use Cake\View\View;
  */
 class AppView extends View
 {
+    use SiteInfoTrait;
+
     /**
      * Initialization hook method.
      *
