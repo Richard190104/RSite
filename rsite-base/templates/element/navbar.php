@@ -2,6 +2,12 @@
 /**
  * @var \App\View\AppView $this
  *
+ * Site-wide navbar: fetches its own NavbarCategories/Pages data since it
+ * renders on every public page via the shared layout, not just one
+ * controller action. Organisation name/city/logo/contact page come from
+ * AppView::SiteInfoTrait, shared with any other element that needs them
+ * (e.g. footer.php) so the lookup logic and per-request caching live in
+ * one place instead of being copied into every element.
  */
 use Cake\ORM\TableRegistry;
 
@@ -11,25 +17,15 @@ $navbarCategories = TableRegistry::getTableLocator()->get('NavbarCategories')
     ->orderBy(['NavbarCategories.title' => 'ASC'])
     ->all();
 
-$Texts = TableRegistry::getTableLocator()->get('Texts');
-$organisationName = $Texts->value('Organisation Name');
-$city = $Texts->value('City');
-
-$logoPath = TableRegistry::getTableLocator()->get('Logos')->path('Main logo');
-
-$contactPage = TableRegistry::getTableLocator()->get('Pages')
-    ->find()
-    ->select(['title', 'slug'])
-    ->where(['slug' => 'kontakt'])
-    ->first();
+$organisationName = $this->organisationName();
+$city = $this->city();
+$logoPath = $this->logoPath();
+$contactPage = $this->contactPage();
 ?>
 <nav class="site-nav">
     <div class="site-nav__identity">
         <div class="site-nav__identity-inner">
             <a class="site-nav__brand" href="<?= $this->Url->build('/') ?>">
-                <?php if ($city !== ''): ?>
-                    <span class="site-nav__city"><?= h(__('Local organisation')) ?> <?= h($city) ?></span>
-                <?php endif; ?>
                 <span class="site-nav__org"><?= h($organisationName) ?></span>
             </a>
         </div>
