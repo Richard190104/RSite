@@ -16,9 +16,13 @@
  * --migrate <site-url> additionally uploads webroot/run-migrations.php
  * (with its token placeholder swapped for MIGRATION_TOKEN), prints the URL
  * for you to open and check yourself (this host's anti-bot challenge blocks
- * a plain Node request — see runMigrations() below), waits for Enter, then
+ * a plain Node request — see runOneOffScript() below), waits for Enter, then
  * deletes it from the server — opt-in, since a routine deploy shouldn't
  * touch the database without being asked to.
+ *
+ * --clear-cache <site-url> does the same with webroot/clear-cache.php and
+ * CACHE_TOKEN — for when only the translation/schema cache needs a kick
+ * (e.g. after deploy-translations.mjs) and a real migration isn't needed.
  *
  * Deploys ONLY what's committed on `main` — never the working tree. main's
  * HEAD is exported with `git archive` into a clean throwaway directory
@@ -59,14 +63,16 @@ const VENDOR_MARKER = join(ROOT, '.vendor-deployed-hash');
 
 // config/app_local.php and config/.env hold live DB credentials and are
 // gitignored, so git archive never includes them regardless — listed here
-// too as a second line of defense. run-migrations.php is excluded from this
-// regular upload on purpose: it only ever goes up as part of runMigrations()
-// below (--migrate), which deletes it again right after — it must never be
-// left sitting on the server between deploys.
+// too as a second line of defense. run-migrations.php and clear-cache.php
+// are excluded from this regular upload on purpose: they only ever go up
+// as part of runOneOffScript() below (--migrate / --clear-cache), which
+// deletes them again right after — neither must ever be left sitting on
+// the server between deploys.
 const EXCLUDE = [
     /^config[\\/]app_local\.php$/,
     /^config[\\/]\.env$/,
     /^webroot[\\/]run-migrations\.php$/,
+    /^webroot[\\/]clear-cache\.php$/,
 ];
 
 function isExcluded(relPath) {
@@ -184,17 +190,17 @@ function lockHash() {
     return createHash('sha256').update(readFileSync(join(SOURCE_DIR, 'composer.lock'))).digest('hex');
 }
 
-// Reads webroot/run-migrations.php (from SOURCE_DIR, so this always
-// reflects what main actually has) and substitutes its token placeholder
-// with the real value — in memory only. The file on disk (and in git)
-// always keeps the placeholder; the real token lives only in the
-// MIGRATION_TOKEN environment variable, same as the FTP password.
-function migrationScriptWithToken(token) {
-    const source = readFileSync(join(SOURCE_DIR, 'webroot', 'run-migrations.php'), 'utf8');
-    if (!source.includes('__MIGRATION_TOKEN__')) {
-        throw new Error("Couldn't find the __MIGRATION_TOKEN__ placeholder in webroot/run-migrations.php");
+// Reads a one-off script from SOURCE_DIR (so this always reflects what
+// main actually has) and substitutes its token placeholder with the real
+// value — in memory only. The file on disk (and in git) always keeps the
+// placeholder; the real token lives only in an environment variable, same
+// as the FTP password.
+function oneOffScriptWithToken(filename, placeholder, token) {
+    const source = readFileSync(join(SOURCE_DIR, 'webroot', filename), 'utf8');
+    if (!source.includes(placeholder)) {
+        throw new Error(`Couldn't find the ${placeholder} placeholder in webroot/${filename}`);
     }
-    return source.replace('__MIGRATION_TOKEN__', token);
+    return source.replace(placeholder, token);
 }
 
 // composer install --no-dev, run directly inside SOURCE_DIR (main's
@@ -211,29 +217,30 @@ function buildVendor() {
     run('composer', ['install', '--no-dev', '--no-scripts', '--optimize-autoloader', '--no-interaction', '--no-progress'], SOURCE_DIR);
 }
 
-// Uploads run-migrations.php, then waits for you to open the URL yourself
-// and confirm it ran, before deleting it from the server.
+// Uploads a one-off script (run-migrations.php or clear-cache.php), then
+// waits for you to open the URL yourself and confirm it ran, before
+// deleting it from the server.
 //
 // This host serves a one-time JS/cookie anti-bot challenge to new clients
 // before letting a request through — fine in a real browser, but a plain
 // Node https.get() can't run the JS or persist the resulting cookie, so it
-// only ever sees the challenge page, never the migration output. A real
+// only ever sees the challenge page, never the script's output. A real
 // browser (which already solved that challenge before) gets through fine.
-async function runMigrations(client, migrationSiteUrl, token) {
-    const remotePath = '/htdocs/webroot/run-migrations.php';
+async function runOneOffScript(client, { label, filename, placeholder, token, siteUrl }) {
+    const remotePath = `/htdocs/webroot/${filename}`;
 
-    console.log('\n=== Running migrations ===');
-    await client.uploadFrom(Readable.from([migrationScriptWithToken(token)]), remotePath);
+    console.log(`\n=== Running ${label} ===`);
+    await client.uploadFrom(Readable.from([oneOffScriptWithToken(filename, placeholder, token)]), remotePath);
 
-    const url = `${migrationSiteUrl.replace(/\/$/, '')}/run-migrations.php?token=${token}`;
-    console.log(`\nOpen this URL in your browser and confirm the migration output looks right:\n  ${url}`);
+    const url = `${siteUrl.replace(/\/$/, '')}/${filename}?token=${token}`;
+    console.log(`\nOpen this URL in your browser and confirm the output looks right:\n  ${url}`);
 
     const rl = readline.createInterface({ input: stdin, output: stdout });
-    await rl.question('\nPress Enter once you\'ve checked it (this deletes run-migrations.php from the server)... ');
+    await rl.question(`\nPress Enter once you've checked it (this deletes ${filename} from the server)... `);
     rl.close();
 
     await client.remove(remotePath);
-    console.log('run-migrations.php removed from the server.');
+    console.log(`${filename} removed from the server.`);
 }
 
 async function main() {
@@ -243,9 +250,9 @@ async function main() {
         process.exit(1);
     }
 
-    // Migrations are opt-in per run: --migrate <https://site> uploads
-    // run-migrations.php, hits it once, and deletes it — but only when
-    // asked, since running migrations isn't something a routine CSS/text
+    // Migrations and cache-clearing are opt-in per run: --migrate / --clear-cache
+    // <https://site> upload their one-off script, hit it once, and delete it —
+    // but only when asked, since neither is something a routine CSS/text
     // deploy should trigger by accident.
     const migrateFlagIndex = process.argv.indexOf('--migrate');
     const migrationSiteUrl = migrateFlagIndex !== -1 ? process.argv[migrateFlagIndex + 1] : null;
@@ -255,6 +262,17 @@ async function main() {
     }
     if (migrationSiteUrl && !process.env.MIGRATION_TOKEN) {
         console.error('--migrate also requires MIGRATION_TOKEN in the environment (must match the value in webroot/run-migrations.php once deployed).');
+        process.exit(1);
+    }
+
+    const clearCacheFlagIndex = process.argv.indexOf('--clear-cache');
+    const clearCacheSiteUrl = clearCacheFlagIndex !== -1 ? process.argv[clearCacheFlagIndex + 1] : null;
+    if (clearCacheFlagIndex !== -1 && !clearCacheSiteUrl) {
+        console.error('--clear-cache requires a URL, e.g. --clear-cache https://rsite.great-site.net');
+        process.exit(1);
+    }
+    if (clearCacheSiteUrl && !process.env.CACHE_TOKEN) {
+        console.error('--clear-cache also requires CACHE_TOKEN in the environment (must match the value in webroot/clear-cache.php once deployed).');
         process.exit(1);
     }
 
@@ -304,9 +322,17 @@ async function main() {
 
         let uploaded = 0;
         for (const { full, rel } of walk({ skipVendor: !needsVendor })) {
-            const remotePath = '/htdocs/' + rel.split(sep).join('/');
-            await client.ensureDir('/htdocs/' + rel.split(sep).slice(0, -1).join('/') || '/htdocs');
-            await client.uploadFrom(full, remotePath);
+            const parts = rel.split(sep).join('/').split('/');
+            const filename = parts.pop();
+            // ensureDir() changes the connection's cwd to the given
+            // directory as a side effect — uploadFrom() is then given just
+            // the filename, relative to that cwd, rather than a full
+            // absolute path. This host's FTP server was returning
+            // "553 Can't open that file" on the absolute-path form; some
+            // shared-hosting FTP implementations only resolve STOR
+            // correctly relative to cwd.
+            await client.ensureDir('/htdocs/' + parts.join('/'));
+            await client.uploadFrom(full, filename);
             uploaded += 1;
             if (uploaded % 50 === 0) {
                 console.log(`  ${uploaded} files uploaded...`);
@@ -317,7 +343,23 @@ async function main() {
         console.log(`\nDone. ${uploaded} files uploaded.`);
 
         if (migrationSiteUrl) {
-            await runMigrations(client, migrationSiteUrl, process.env.MIGRATION_TOKEN);
+            await runOneOffScript(client, {
+                label: 'migrations',
+                filename: 'run-migrations.php',
+                placeholder: '__MIGRATION_TOKEN__',
+                token: process.env.MIGRATION_TOKEN,
+                siteUrl: migrationSiteUrl,
+            });
+        }
+
+        if (clearCacheSiteUrl) {
+            await runOneOffScript(client, {
+                label: 'cache clear',
+                filename: 'clear-cache.php',
+                placeholder: '__CACHE_TOKEN__',
+                token: process.env.CACHE_TOKEN,
+                siteUrl: clearCacheSiteUrl,
+            });
         }
     } finally {
         client.close();

@@ -28,15 +28,15 @@
 
 .quick-access__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: 1.6rem;
 }
 
 .quick-access__card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 0.9rem;
     padding: 2rem 1.8rem;
     background: var(--color-white);
     border-radius: 0.8rem;
@@ -71,6 +71,7 @@
 
 .quick-access__description {
     color: v.$color-lightgray;
+    text-align: center;
     font-size: v.$font-size-xl;
     line-height: 1.4;
 }

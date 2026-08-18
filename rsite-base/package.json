@@ -5,11 +5,15 @@
   "scripts": {
     "sass:build": "sass resources/scss:webroot/css --style=compressed --no-source-map",
     "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded",
-    "deploy": "node bin/deploy.mjs"
+    "deploy": "node bin/deploy.mjs",
+    "deploy:translations": "node bin/deploy-translations.mjs"
   },
   "devDependencies": {
     "basic-ftp": "^6.2.0",
     "sass": "^1.102.0",
     "tar": "^7.5.22"
+  },
+  "dependencies": {
+    "swiper": "^14.1.0"
   }
 }

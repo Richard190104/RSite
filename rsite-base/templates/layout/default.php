@@ -31,7 +31,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
     <?= $this->element('navbar') ?>
@@ -41,5 +40,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?= $this->fetch('content') ?>
     </main>
     <?= $this->element('footer') ?>
+    <?= $this->fetch('script') ?>
 </body>
 </html>

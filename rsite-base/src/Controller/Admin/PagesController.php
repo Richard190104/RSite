@@ -7,7 +7,7 @@ use App\Model\Entity\Page;
 
 class PagesController extends AppController
 {
-    private const HOME_MAX_QUICK_ACCESS = 5;
+    private const HOME_MAX_QUICK_ACCESS = 6;
 
     public function index(): void
     {
