@@ -15,6 +15,8 @@ class BannersTable extends Table
      */
     public const VIRTUAL_LOCATIONS = [
         'home_mini' => 'Home — mini banner (about us tile)',
+        'grounds-mini' => 'Home — fishing grounds tile',
+        'grounds-mini-main' => 'Home — fishing grounds main image',
     ];
 
     public function initialize(array $config): void

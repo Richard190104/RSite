@@ -7,9 +7,6 @@ use Cake\ORM\TableRegistry;
 
 $this->assign('title', __($page->title));
 
-// The "about us" feature tiles are regular Banners with the reserved
-// 'home_mini' location (see BannersTable::VIRTUAL_LOCATIONS) — capped at 4
-// since that's what the grid next to the about-us text is laid out for.
 $miniBanners = TableRegistry::getTableLocator()->get('Banners')
     ->find()
     ->where(['location' => 'home_mini', 'is_enabled' => true])
@@ -32,5 +29,11 @@ $miniBanners = TableRegistry::getTableLocator()->get('Banners')
     </div>
     <div class="p-home__quick-access">  
         <?= $this->element('quickAccess', ['pageIds' => $page->content['quick_access'] ?? []]) ?>
+    </div>
+    <div class="p-home__news">
+        <?= $this->element('news', ['pageIds' => $page->content['news'] ?? []]) ?>
+    </div>
+    <div class="p-home__fishing-grounds">
+        <?= $this->element('fishing-grounds') ?>
     </div>
 </div>

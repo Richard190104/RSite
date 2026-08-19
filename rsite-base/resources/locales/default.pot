@@ -458,7 +458,7 @@ msgid "About us text"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:22
-msgid "Quick access (max 5 pages)"
+msgid "Quick access (max 6 pages)"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:31
