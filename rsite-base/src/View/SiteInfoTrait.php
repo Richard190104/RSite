@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View;
 
+use App\Model\Entity\News;
 use App\Model\Entity\Page;
 use Cake\ORM\TableRegistry;
 
@@ -26,6 +27,7 @@ trait SiteInfoTrait
     private bool $contactPageLoaded = false;
     private ?Page $contactPage = null;
     private ?array $quickAccessPageIds = null;
+    private ?array $news = null;
     private ?string $organisationAddress = null;
     private ?string $organisationEmail = null;
     private ?string $organisationIco = null;
@@ -101,5 +103,25 @@ trait SiteInfoTrait
             ->first();
 
         return $this->quickAccessPageIds = (array)($home?->content['quick_access'] ?? []);
+    }
+
+    /**
+     * Newest news articles for the homepage's "Aktuálne novinky" section.
+     *
+     * @return array<int, \App\Model\Entity\News>
+     */
+    public function getNews(int $limit = 10): array
+    {
+        if ($this->news !== null) {
+            return $this->news;
+        }
+
+        return $this->news = TableRegistry::getTableLocator()->get('News')
+            ->find()
+            ->contain(['Categories'])
+            ->orderBy(['date' => 'DESC'])
+            ->limit($limit)
+            ->all()
+            ->toList();
     }
 }

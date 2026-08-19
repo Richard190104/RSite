@@ -100,6 +100,24 @@
         width: 100%;
         background-color: v.$color-main-bg;
     }
+
+    &__news{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        justify-items: center;
+        width: 100%;
+        background-color: v.$color-main-bg;
+
+    }
+
+    &__fishing-grounds{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        justify-items: center;
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {

@@ -19,7 +19,7 @@ $quickAccess = $page->content['quick_access'] ?? [];
         <?= $this->Form->control('content.quick_access', [
             'type' => 'select',
             'multiple' => 'checkbox',
-            'label' => __('Quick access (max 5 pages)'),
+            'label' => __('Quick access (max 6 pages)'),
             'options' => $otherPages,
             'value' => $quickAccess,
         ]) ?>
@@ -29,6 +29,11 @@ $quickAccess = $page->content['quick_access'] ?? [];
 
     <p>
         <?= __('The "about us" feature tiles are managed separately as banners with the "Home — mini banner" location.') ?>
+        <?= $this->Html->link(__('Manage banners'), ['prefix' => 'Admin', 'controller' => 'Banners', 'action' => 'index']) ?>
+    </p>
+
+    <p>
+        <?= __('The "fishing grounds and activities" section is also managed separately as banners: the main photo uses the "Home — fishing grounds main image" location, and its cards use the "Home — fishing grounds tile" location.') ?>
         <?= $this->Html->link(__('Manage banners'), ['prefix' => 'Admin', 'controller' => 'Banners', 'action' => 'index']) ?>
     </p>
 </div>

@@ -685,8 +685,8 @@ msgid "Please select at most {0} pages for quick access."
 msgstr "Prosím, vyberte najviac {0} stránok pre rýchly prístup."
 
 #: ./templates/Admin/Pages/edit_home.php
-msgid "Quick access (max 5 pages)"
-msgstr "Rýchly prístup (max. 5 stránok)"
+msgid "Quick access (max 6 pages)"
+msgstr "Rýchly prístup (max. 6 stránok)"
 
 #: ./templates/Admin/Pages/edit_home.php
 #: ./templates/element/quickAccess.php
@@ -732,6 +732,10 @@ msgstr "Podnadpis"
 #: ./templates/Admin/Pages/edit_home.php
 msgid "The \"about us\" feature tiles are managed separately as banners with the \"Home — mini banner\" location."
 msgstr "Dlaždice \"o nás\" sa spravujú samostatne ako bannery s umiestnením \"Home — mini banner\"."
+
+#: ./templates/Admin/Pages/edit_home.php
+msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
+msgstr "Sekcia \"revíry a aktivity\" sa tiež spravuje samostatne ako bannery: hlavná fotka používa umiestnenie \"Home — fishing grounds main image\" a jej dlaždice umiestnenie \"Home — fishing grounds tile\"."
 
 #: ./src/Controller/Admin/BannersController.php
 msgid "The background image must be a JPEG, PNG or WEBP file."
@@ -1021,3 +1025,35 @@ msgstr "Kontakt"
 #: ./templates/element/footer.php
 msgid "ID No."
 msgstr "IČO"
+
+#: ./templates/element/news.php
+msgid "Latest news"
+msgstr "Aktuálne novinky"
+
+#: ./templates/element/news.php
+msgid "Read more"
+msgstr "Čítať viac"
+
+#: ./templates/element/news.php
+msgid "All news"
+msgstr "Všetky novinky"
+
+#: ./templates/element/fishing-grounds.php
+msgid "Fishing grounds and activities"
+msgstr "Revíry a aktivity"
+
+#: ./templates/element/fishing-grounds.php
+msgid "View all fishing grounds"
+msgstr "Zobraziť všetky revíry"
+
+#: ./templates/element/fishing-grounds.php
+msgid "More information"
+msgstr "Viac informácií"
+
+#: ./templates/element/news.php
+msgid "Previous"
+msgstr "Predchádzajúce"
+
+#: ./templates/element/news.php
+msgid "Next"
+msgstr "Ďalšie"
