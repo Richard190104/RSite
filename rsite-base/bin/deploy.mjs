@@ -77,12 +77,16 @@ const VENDOR_MARKER = join(ROOT, '.vendor-deployed-hash');
 // are excluded from this regular upload on purpose: they only ever go up
 // as part of runOneOffScript() below (--migrate / --clear-cache), which
 // deletes them again right after — neither must ever be left sitting on
-// the server between deploys.
+// the server between deploys. .vendor-deployed-hash is tracked in git (see
+// above) so it travels with main between machines, but it's a deploy-tool
+// bookkeeping file, not something the server needs — excluded here so it
+// never actually gets uploaded.
 const EXCLUDE = [
     /^config[\\/]app_local\.php$/,
     /^config[\\/]\.env$/,
     /^webroot[\\/]run-migrations\.php$/,
     /^webroot[\\/]clear-cache\.php$/,
+    /^\.vendor-deployed-hash$/,
 ];
 
 function isExcluded(relPath) {
