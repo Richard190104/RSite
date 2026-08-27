@@ -57,8 +57,18 @@ const SOURCE_DIR = join(ROOT, '.deploy-build');
 
 // Tracks the composer.lock hash from the last deploy that uploaded vendor/,
 // so a deploy with no dependency changes can skip re-uploading it — vendor/
-// is large and almost never changes between deploys. Gitignored: this is a
-// local marker of what THIS machine last pushed, not project state.
+// is large and almost never changes between deploys.
+//
+// Tracked in git, NOT gitignored — with two people deploying from
+// different machines, a local-only marker would just be wrong half the
+// time (whichever machine didn't do the last vendor upload has a stale or
+// missing hash, and would re-upload vendor/ unnecessarily on its next
+// deploy). Committing it means main always reflects what's actually on
+// the server. This script only ever writes the file locally after a
+// successful upload — it does NOT commit or push it for you. Whoever
+// deploys after a composer.lock change (i.e. after this script decides
+// needsVendor) is responsible for committing and pushing the updated
+// .vendor-deployed-hash afterwards, same as any other change to main.
 const VENDOR_MARKER = join(ROOT, '.vendor-deployed-hash');
 
 // config/app_local.php and config/.env hold live DB credentials and are
