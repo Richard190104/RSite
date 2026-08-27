@@ -65,6 +65,8 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/home', ['redirect' => '/'], ['routeClass' => RedirectRoute::class]);
 
+        $builder->connect('/kontakt', ['controller' => 'Pages', 'action' => 'kontakt']);
+
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */

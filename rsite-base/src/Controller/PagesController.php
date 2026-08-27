@@ -44,6 +44,17 @@ class PagesController extends AppController
     }
 
     /**
+     * Public contact page. Contact fields come from Texts (admin); the page
+     * row itself is the fixed "kontakt" slug used by the navbar button.
+     */
+    public function kontakt(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'kontakt'])->firstOrFail();
+
+        $this->set(compact('page'));
+    }
+
+    /**
      * Displays a view
      *
      *
