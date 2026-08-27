@@ -12,8 +12,18 @@
 use Cake\ORM\TableRegistry;
 
 $controller = strtolower((string)$this->getRequest()->getParam('controller'));
+$action = strtolower((string)$this->getRequest()->getParam('action'));
 $pass = $this->getRequest()->getParam('pass') ?? [];
-$location = $controller === 'pages' && ($pass[0] ?? null) === null ? 'home' : $controller;
+
+if ($controller === 'pages' && $action === 'home') {
+    $location = 'home';
+} elseif ($controller === 'pages' && $action === 'kontakt') {
+    $location = 'kontakt';
+} elseif ($controller === 'pages' && ($pass[0] ?? null) !== null) {
+    $location = (string)$pass[0];
+} else {
+    $location = $controller;
+}
 $banners = TableRegistry::getTableLocator()->get('Banners')
     ->find()
     ->where(['location' => $location, 'is_enabled' => true])

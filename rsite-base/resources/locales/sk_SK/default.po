@@ -1026,6 +1026,70 @@ msgstr "Kontakt"
 msgid "ID No."
 msgstr "IČO"
 
+#: ./templates/Pages/kontakt.php
+msgid "Address"
+msgstr "Adresa"
+
+#: ./templates/Pages/kontakt.php
+msgid "Email"
+msgstr "Email"
+
+#: ./templates/Pages/kontakt.php
+msgid "Send an email"
+msgstr "Napísať email"
+
+#: ./templates/Pages/kontakt.php
+msgid "Social media"
+msgstr "Sociálne siete"
+
+#: ./templates/Pages/kontakt.php
+msgid "Follow our updates, events and catches. Links can be filled in under Texts in admin."
+msgstr "Sledujte novinky, podujatia a úlovky. Odkazy doplníte v admin Texts."
+
+#: ./templates/Pages/kontakt.php
+msgid "Coming soon"
+msgstr "Čoskoro"
+
+#: ./templates/Pages/kontakt.php
+msgid "Open page"
+msgstr "Otvoriť stránku"
+
+#: ./templates/Pages/kontakt.php
+msgid "Open profile"
+msgstr "Otvoriť profil"
+
+#: ./templates/Pages/kontakt.php
+msgid "Find us"
+msgstr "Kde nás nájdete"
+
+#: ./templates/Pages/kontakt.php
+msgid "Medzilaborce — visit us at the address above."
+msgstr "Medzilaborce — navštívte nás na adrese vyššie."
+
+#: ./templates/Pages/kontakt.php
+msgid "Map of Medzilaborce"
+msgstr "Mapa Medzilaboriec"
+
+#: ./templates/Pages/kontakt.php
+msgid "Open larger map"
+msgstr "Otvoriť väčšiu mapu"
+
+#: ./templates/Pages/kontakt.php
+msgid "Write to us, stop by, or follow what we are up to. We are happy to hear from members and visitors alike."
+msgstr "Napíšte nám, zastavte sa alebo sledujte, čo robíme. Radi počujeme od členov aj návštevníkov."
+
+#: ./templates/Pages/kontakt.php
+msgid "Address will appear here once set in admin."
+msgstr "Adresa sa zobrazí po nastavení v admine."
+
+#: ./templates/Pages/kontakt.php
+msgid "Email will appear here once set in admin."
+msgstr "Email sa zobrazí po nastavení v admine."
+
+#: ./templates/Pages/kontakt.php
+msgid "Company ID will appear here once set in admin."
+msgstr "IČO sa zobrazí po nastavení v admine."
+
 #: ./templates/element/news.php
 msgid "Latest news"
 msgstr "Aktuálne novinky"

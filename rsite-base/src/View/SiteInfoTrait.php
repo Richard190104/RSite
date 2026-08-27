@@ -31,6 +31,8 @@ trait SiteInfoTrait
     private ?string $organisationAddress = null;
     private ?string $organisationEmail = null;
     private ?string $organisationIco = null;
+    private ?string $facebookUrl = null;
+    private ?string $instagramUrl = null;
 
     public function organisationName(): string
     {
@@ -79,6 +81,16 @@ trait SiteInfoTrait
     public function organisationIco(): string
     {
         return $this->organisationIco ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation ICO');
+    }
+
+    public function facebookUrl(): string
+    {
+        return $this->facebookUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Facebook URL');
+    }
+
+    public function instagramUrl(): string
+    {
+        return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Instagram URL');
     }
 
     /**
