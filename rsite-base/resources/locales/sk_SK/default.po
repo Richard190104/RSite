@@ -1124,8 +1124,17 @@ msgstr "Ďalšie"
 
 #: ./templates/element/navbar.php
 msgid "Notifications"
-msgstr "Notifikácie"
+msgstr "Upozornenia"
 
 #: ./templates/element/navbar.php
 msgid "No active notifications."
 msgstr "Žiadne aktívne notifikácie."
+
+#: ./templates/element/notificationPopup.php
+msgid "Close"
+msgstr "Zavrieť"
+
+#: ./templates/Admin/Notifications/add.php
+#: ./templates/Admin/Notifications/edit.php
+msgid "Show as popup"
+msgstr "Zobraziť ako popup"

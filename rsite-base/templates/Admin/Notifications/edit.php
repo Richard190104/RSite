@@ -18,6 +18,11 @@ $this->assign('title', __('Edit notification'));
             'label' => __('Is active'),
             'checked' => (bool)($notification->settings['is_active'] ?? true),
         ]) ?>
+        <?= $this->Form->control('settings.show_as_popup', [
+            'type' => 'checkbox',
+            'label' => __('Show as popup'),
+            'checked' => (bool)($notification->settings['show_as_popup'] ?? false),
+        ]) ?>
         <?= $this->Form->button(__('Save')) ?>
     <?= $this->Form->end() ?>
 </div>

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as v;
 
 .p-contact {
@@ -16,7 +17,7 @@
 }
 
 .p-contact__hero-inner {
-    max-width: 112rem;
+    max-width: v.$content-width;
     margin: 0 auto;
     padding: 4.5rem 2rem 4rem;
 }
@@ -26,7 +27,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-sm;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -37,8 +38,7 @@
     font-size: v.$font-size-6xl;
     font-weight: 700;
     line-height: 1.1;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.01em;
     color: v.$color-white;
 
     &::after {
@@ -60,7 +60,7 @@
 }
 
 .p-contact__body {
-    max-width: 112rem;
+    max-width: v.$content-width;
     margin: 0 auto;
     padding: 3.5rem 2rem 5rem;
 }
@@ -117,7 +117,7 @@
     }
 
     &--muted {
-        color: rgba(96, 108, 118, 0.75);
+        color: color.adjust(v.$color-lightgray, $alpha: -0.2);
         font-style: italic;
     }
 }
@@ -138,7 +138,7 @@
 .p-contact__card-meta {
     margin: auto 0 0;
     font-size: v.$font-size-md;
-    color: rgba(96, 108, 118, 0.9);
+    color: color.adjust(v.$color-lightgray, $alpha: -0.05);
 }
 
 .p-contact__btn {

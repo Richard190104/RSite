@@ -34,6 +34,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <?= $this->element('navbar') ?>
+    <?= $this->element('notificationPopup') ?>
     <?= $this->element('banner') ?>
     <main class="main">
             <?= $this->Flash->render() ?>

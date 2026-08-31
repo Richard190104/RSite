@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Model\Entity\News;
+use App\Model\Entity\Notification;
 use App\Model\Entity\Page;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
@@ -30,6 +31,8 @@ trait SiteInfoTrait
     private ?array $quickAccessPageIds = null;
     private ?array $news = null;
     private ?array $activeNotifications = null;
+    private bool $popupNotificationLoaded = false;
+    private ?Notification $popupNotification = null;
     private ?string $organisationAddress = null;
     private ?string $organisationEmail = null;
     private ?string $organisationIco = null;
@@ -166,5 +169,30 @@ trait SiteInfoTrait
             ->toList();
 
         return $this->activeNotifications = $notifications;
+    }
+
+    /**
+     * One random active notification flagged settings.show_as_popup, shown
+     * as a small popup on page load — a different one may be picked on
+     * each request/page since the choice isn't sticky across requests.
+     * Null when no active notification has the flag set.
+     */
+    public function popupNotification(): ?Notification
+    {
+        if ($this->popupNotificationLoaded) {
+            return $this->popupNotification;
+        }
+        $this->popupNotificationLoaded = true;
+
+        $candidates = array_values(array_filter(
+            $this->activeNotifications(),
+            fn ($notification) => (bool)($notification->settings['show_as_popup'] ?? false),
+        ));
+
+        if (!$candidates) {
+            return $this->popupNotification = null;
+        }
+
+        return $this->popupNotification = $candidates[array_rand($candidates)];
     }
 }

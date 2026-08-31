@@ -5,7 +5,7 @@ $color-cakephp-blue: #2f85ae;
 $color-cakephp-lightblue: #34bdd7;
 
 // Additional colors
-$color-lightgray: #606c76;
+$color-lightgray: #454e56;
 $color-light-lightgray: #606c7625;
 $color-white: #fff;
 $color-navy: #143a6b;
@@ -52,11 +52,17 @@ $font-size-lg: 1.3rem;
 $font-size-xl: 1.5rem;
 $font-size-2xl: 1.7rem;
 $font-size-3xl: 1.95rem;
-$font-size-4xl: 2.35rem;
+$font-size-4xl: 2.3rem;
 $font-size-5xl: 2.7rem;
-$font-size-6xl: 4rem;
+$font-size-6xl: 3.9rem;
 
 $breakpoint-sm: 640px;
+
+// Shared content width cap for every full-width section (navbar, hero,
+// homepage sections, footer, contact page) — keep them all on this one
+// value so the page reads as a single aligned column, not sections that
+// drift in/out slightly from each other.
+$content-width: 128rem;
 
 // Admin shell
 $admin-sidebar-width: 22rem;

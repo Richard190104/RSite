@@ -9,6 +9,7 @@
 @use 'quick-news';
 @use 'fishing-grounds';
 @use 'contact';
+@use 'notification-popup';
 
 .page-banner {
     position: relative;
@@ -55,7 +56,7 @@
 }
 
 .page-banner__content {
-    max-width: 112rem;
+    max-width: v.$content-width;
     width: 100%;
     margin: 0 auto;
     padding: 3rem 0rem;
