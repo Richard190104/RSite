@@ -5,6 +5,7 @@ namespace App\View;
 
 use App\Model\Entity\News;
 use App\Model\Entity\Page;
+use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -28,6 +29,7 @@ trait SiteInfoTrait
     private ?Page $contactPage = null;
     private ?array $quickAccessPageIds = null;
     private ?array $news = null;
+    private ?array $activeNotifications = null;
     private ?string $organisationAddress = null;
     private ?string $organisationEmail = null;
     private ?string $organisationIco = null;
@@ -135,5 +137,34 @@ trait SiteInfoTrait
             ->limit($limit)
             ->all()
             ->toList();
+    }
+
+    /**
+     * Notifications currently shown in the navbar's bell dropdown: only
+     * those marked active (settings.is_active — a free-form JSON flag, not
+     * its own column, see NotificationsTable) whose valid_from/valid_to
+     * window includes today. is_active can't be filtered in SQL since it
+     * lives inside the JSON settings column, so it's checked in PHP after
+     * the date range has already narrowed the query.
+     *
+     * @return array<int, \App\Model\Entity\Notification>
+     */
+    public function activeNotifications(): array
+    {
+        if ($this->activeNotifications !== null) {
+            return $this->activeNotifications;
+        }
+
+        $today = Date::now();
+
+        $notifications = TableRegistry::getTableLocator()->get('Notifications')
+            ->find()
+            ->where(['valid_from <=' => $today, 'valid_to >=' => $today])
+            ->orderBy(['valid_from' => 'DESC'])
+            ->all()
+            ->filter(fn ($notification) => (bool)($notification->settings['is_active'] ?? true))
+            ->toList();
+
+        return $this->activeNotifications = $notifications;
     }
 }

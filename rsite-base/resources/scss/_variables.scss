@@ -38,16 +38,22 @@ $font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 // Font size scale — every value here is one already in use somewhere in
 // the app; new call sites should reach for one of these instead of a new
 // literal, so type sizes stay a small, shared set rather than one-offs.
-$font-size-xs: 0.75rem;
-$font-size-sm: 0.95rem;
-$font-size-base: 1rem;
-$font-size-md: 1.1rem;
-$font-size-lg: 1.25rem;
-$font-size-xl: 1.4rem;
-$font-size-2xl: 1.6rem;
-$font-size-3xl: 1.8rem;
-$font-size-4xl: 2.1rem;
-$font-size-5xl: 2.4rem;
+//
+// Semantic assignment (keep new call sites on this, not just "closest
+// number"): meta/badge text -> sm; body copy, card descriptions, nav
+// links -> base/md/lg (base=default paragraph, md=nav links, lg=card
+// body copy); card titles -> xl; section/panel headings -> 2xl-5xl by
+// importance; page hero H1 -> 6xl (5xl on mobile).
+$font-size-xs: 0.8rem;
+$font-size-sm: 0.9rem;
+$font-size-base: 1.05rem;
+$font-size-md: 1.15rem;
+$font-size-lg: 1.3rem;
+$font-size-xl: 1.5rem;
+$font-size-2xl: 1.7rem;
+$font-size-3xl: 1.95rem;
+$font-size-4xl: 2.35rem;
+$font-size-5xl: 2.7rem;
 $font-size-6xl: 4rem;
 
 $breakpoint-sm: 640px;

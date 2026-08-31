@@ -20,7 +20,7 @@ $navbarCategories = TableRegistry::getTableLocator()->get('NavbarCategories')
 $organisationName = $this->organisationName();
 $city = $this->city();
 $logoPath = $this->logoPath();
-$contactPage = $this->contactPage();
+$activeNotifications = $this->activeNotifications();
 ?>
 <nav class="site-nav">
     <div class="site-nav__identity">
@@ -60,12 +60,46 @@ $contactPage = $this->contactPage();
                     </li>
                 <?php endforeach; ?>
 
-                <?php if ($contactPage !== null): ?>
-                    <li class="site-nav__category site-nav__category--end">
-                        <a href="/<?= h($contactPage->slug) ?>"><?= h(__($contactPage->title)) ?></a>
-                    </li>
-                <?php endif; ?>
+                <li class="site-nav__category site-nav__category--end site-nav__news-icon">
+                    <button type="button" class="site-nav__notifications-toggle" aria-label="<?= __('Notifications') ?>" aria-expanded="false">
+                        <span class="site-nav__notifications-label<?= $activeNotifications ? ' site-nav__notifications-label--has-active' : '' ?>"><?= __('Notifications') ?></span>
+                        <img src="<?= h($this->Url->build('/img/icons/newsIcon.svg')) ?>" alt="">
+                        <?php if ($activeNotifications): ?>
+                            <span class="site-nav__notifications-badge"><?= count($activeNotifications) ?></span>
+                        <?php endif; ?>
+                    </button>
+
+                    <div class="site-nav__notifications-panel">
+                        <span class="site-nav__notifications-title"><?= __('Notifications') ?></span>
+
+                        <?php if ($activeNotifications): ?>
+                            <ul class="site-nav__notifications-list">
+                                <?php foreach ($activeNotifications as $notification): ?>
+                                    <li class="site-nav__notification">
+                                        <img src="<?= h($this->Url->build('/img/notifications/' . $notification->image)) ?>" alt="">
+                                        <div class="site-nav__notification-text">
+                                            <span class="site-nav__notification-title"><?= h($notification->title) ?></span>
+                                            <p class="site-nav__notification-description"><?= h($notification->description) ?></p>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <div class="site-nav__notifications-empty">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M12 11v5"/>
+                                    <path d="M12 8h.01"/>
+                                </svg>
+                                <p><?= __('No active notifications.') ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="site-nav__notifications-overlay"></div>
+<?= $this->Html->script('navbar-notifications') ?>

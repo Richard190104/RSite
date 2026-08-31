@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>notification_bell</title>
+    <path d="M12 3C9.23858 3 7 5.23858 7 8V11.5359C7 12.0084 6.82902 12.4649 6.51859 12.8214L5.20706 14.3285C4.16995 15.5197 5.01560 17.4142 6.59564 17.4142H17.4044C18.9844 17.4142 19.8300 15.5197 18.7929 14.3285L17.4814 12.8214C17.1710 12.4649 17 12.0084 17 11.5359V8C17 5.23858 14.7614 3 12 3Z"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.5 20C10.0341 20.6247 10.9391 21 12 21C13.0609 21 13.9659 20.6247 14.5 20"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

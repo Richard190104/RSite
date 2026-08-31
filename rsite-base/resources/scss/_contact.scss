@@ -34,7 +34,7 @@
 .p-contact__title {
     margin: 0 0 1.2rem;
     font-family: v.$font-heading;
-    font-size: clamp(2.8rem, 4vw, 4.4rem);
+    font-size: v.$font-size-6xl;
     font-weight: 700;
     line-height: 1.1;
     text-transform: uppercase;
@@ -101,7 +101,7 @@
 .p-contact__card-title {
     margin: 0.4rem 0 0;
     font-family: v.$font-heading;
-    font-size: v.$font-size-2xl;
+    font-size: v.$font-size-xl;
     font-weight: 700;
     color: v.$color-navy;
 }
@@ -151,7 +151,7 @@
     background: v.$color-navy;
     color: v.$color-white !important;
     font-family: v.$font-heading;
-    font-size: v.$font-size-sm;
+    font-size: v.$font-size-md;
     font-weight: 700;
     text-decoration: none !important;
     transition: background 0.15s ease, transform 0.15s ease;
@@ -233,7 +233,7 @@
 
 .p-contact__social-label {
     font-family: v.$font-heading;
-    font-size: v.$font-size-2xl;
+    font-size: v.$font-size-xl;
     font-weight: 700;
 }
 
@@ -289,6 +289,10 @@
     .p-contact__body {
         padding-left: 1.6rem;
         padding-right: 1.6rem;
+    }
+
+    .p-contact__title {
+        font-size: v.$font-size-5xl;
     }
 
     .p-contact__panel {

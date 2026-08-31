@@ -1121,3 +1121,11 @@ msgstr "Predchádzajúce"
 #: ./templates/element/news.php
 msgid "Next"
 msgstr "Ďalšie"
+
+#: ./templates/element/navbar.php
+msgid "Notifications"
+msgstr "Notifikácie"
+
+#: ./templates/element/navbar.php
+msgid "No active notifications."
+msgstr "Žiadne aktívne notifikácie."

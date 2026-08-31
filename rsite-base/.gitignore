@@ -6,6 +6,11 @@
 /tmp/*
 /vendor/*
 
+# CakePHP Migrations plugin's local schema cache — regenerated
+# automatically on every `bin/cake migrations` run, reflects whatever DB
+# this machine last talked to, not a shared/required project state.
+/config/Migrations/schema-dump-*.lock
+
 # Manual deploy script state (bin/deploy.mjs). .vendor-deployed-hash is
 # tracked in git (not ignored) on purpose: it records the composer.lock
 # hash of what's actually on the server, shared via main so anyone
