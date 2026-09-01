@@ -3,60 +3,7 @@
 
 .p-contact {
     width: 100%;
-    background:
-        radial-gradient(circle at top right, rgba(249, 215, 28, 0.12), transparent 36%),
-        linear-gradient(180deg, #f7f9fc 0%, v.$color-main-bg 100%);
-}
-
-.p-contact__hero {
-    background:
-        linear-gradient(135deg, rgba(20, 58, 107, 0.96), rgba(15, 47, 88, 0.92)),
-        radial-gradient(circle at 20% 20%, rgba(249, 215, 28, 0.22), transparent 40%);
-    color: v.$color-white;
-    border-bottom: 3px solid v.$color-yellow;
-}
-
-.p-contact__hero-inner {
-    max-width: v.$content-width;
-    margin: 0 auto;
-    padding: 4.5rem 2rem 4rem;
-}
-
-.p-contact__eyebrow {
-    margin: 0 0 0.8rem;
-    font-family: v.$font-heading;
-    font-size: v.$font-size-sm;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.p-contact__title {
-    margin: 0 0 1.2rem;
-    font-family: v.$font-heading;
-    font-size: v.$font-size-6xl;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    color: v.$color-white;
-
-    &::after {
-        content: '';
-        display: block;
-        width: 4.5rem;
-        height: 0.4rem;
-        margin-top: 1rem;
-        background: v.$color-yellow;
-    }
-}
-
-.p-contact__lead {
-    max-width: 54rem;
-    margin: 0;
-    font-size: v.$font-size-xl;
-    line-height: 1.55;
-    color: rgba(255, 255, 255, 0.82);
+    background: v.$color-main-bg;
 }
 
 .p-contact__body {
@@ -65,29 +12,69 @@
     padding: 3.5rem 2rem 5rem;
 }
 
-.p-contact__grid {
+.p-contact__layout {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.6rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: 2rem;
+    align-items: stretch;
 }
 
-.p-contact__card {
+.p-contact__info,
+.p-contact__map-block {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    min-height: 22rem;
-    padding: 2.2rem 2rem;
+    height: 100%;
+    padding: 2.4rem;
     border-radius: 1.2rem;
     background: v.$color-white;
-    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 10px 28px rgba(20, 58, 107, 0.08);
+    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 8px 24px rgba(20, 58, 107, 0.06);
     border: 1px solid rgba(20, 58, 107, 0.06);
 }
 
-.p-contact__card-icon {
+.p-contact__section-title {
+    margin: 0 0 2rem;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-4xl;
+    font-weight: 700;
+    color: v.$color-navy;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-yellow;
+    }
+}
+
+.p-contact__details {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.p-contact__detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4rem;
+    padding: 1.8rem 0;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid rgba(20, 58, 107, 0.08);
+    }
+
+    &:first-child {
+        padding-top: 0;
+    }
+}
+
+.p-contact__detail-icon {
+    flex: 0 0 auto;
     display: grid;
     place-items: center;
-    width: 4.2rem;
-    height: 4.2rem;
+    width: 4.4rem;
+    height: 4.4rem;
     border-radius: 50%;
     background: rgba(249, 215, 28, 0.18);
     color: v.$color-navy;
@@ -98,15 +85,22 @@
     }
 }
 
-.p-contact__card-title {
-    margin: 0.4rem 0 0;
+.p-contact__detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+}
+
+.p-contact__detail-title {
+    margin: 0;
     font-family: v.$font-heading;
     font-size: v.$font-size-xl;
     font-weight: 700;
     color: v.$color-navy;
 }
 
-.p-contact__card-text {
+.p-contact__detail-text {
     margin: 0;
     font-size: v.$font-size-lg;
     line-height: 1.5;
@@ -122,7 +116,7 @@
     }
 }
 
-.p-contact__card-link {
+.p-contact__detail-link {
     font-size: v.$font-size-lg;
     font-weight: 600;
     color: v.$color-navy;
@@ -135,15 +129,15 @@
     }
 }
 
-.p-contact__card-meta {
-    margin: auto 0 0;
+.p-contact__detail-meta {
+    margin: 0.2rem 0 0;
     font-size: v.$font-size-md;
     color: color.adjust(v.$color-lightgray, $alpha: -0.05);
 }
 
 .p-contact__btn {
     align-self: flex-start;
-    margin-top: auto;
+    margin-top: 0.6rem;
     display: inline-flex;
     align-items: center;
     padding: 0.85rem 1.4rem;
@@ -154,100 +148,90 @@
     font-size: v.$font-size-md;
     font-weight: 700;
     text-decoration: none !important;
-    transition: background 0.15s ease, transform 0.15s ease;
+    transition: background 0.15s ease;
 
     &:hover,
     &:focus-visible {
         background: v.$color-links-active;
-        transform: translateY(-1px);
     }
 }
 
-.p-contact__panels {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 1.6rem;
-    margin-top: 1.6rem;
+.p-contact__social-block {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(20, 58, 107, 0.08);
 }
 
-.p-contact__panel {
-    padding: 2.4rem;
-    border-radius: 1.2rem;
-    background: v.$color-white;
-    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 10px 28px rgba(20, 58, 107, 0.08);
-    border: 1px solid rgba(20, 58, 107, 0.06);
-}
-
-.p-contact__panel-title {
-    margin: 0 0 0.8rem;
+.p-contact__social-heading {
+    margin: 0 0 0.5rem;
     font-family: v.$font-heading;
-    font-size: v.$font-size-3xl;
+    font-size: v.$font-size-2xl;
     font-weight: 700;
     color: v.$color-navy;
 }
 
-.p-contact__panel-text {
-    margin: 0 0 1.6rem;
+.p-contact__social-lead {
+    margin: 0 0 1.2rem;
     font-size: v.$font-size-lg;
-    line-height: 1.5;
+    line-height: 1.45;
     color: v.$color-lightgray;
 }
 
 .p-contact__socials {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
 .p-contact__social {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding: 1.5rem 1.4rem;
-    border-radius: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 10rem;
+    padding: 0.9rem 1.5rem;
+    border-radius: 999px;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-md;
+    font-weight: 700;
     text-decoration: none;
     color: v.$color-white;
-    min-height: 9rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: background 0.15s ease, opacity 0.15s ease;
 
     &--facebook {
-        background: linear-gradient(145deg, #1877f2, #0f5fcc);
+        background: #1877f2;
     }
 
     &--instagram {
-        background: linear-gradient(145deg, #f58529, #dd2a7b 45%, #8134af);
+        background: linear-gradient(135deg, #f58529, #dd2a7b);
     }
 
     &--placeholder {
-        background: linear-gradient(145deg, #2a3f5f, #1a2b45);
-        opacity: 0.92;
+        background: #2a3f5f;
+        opacity: 0.75;
+        cursor: default;
     }
 
     &:hover,
     &:focus-visible {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(20, 58, 107, 0.18);
         color: v.$color-white;
+        opacity: 0.92;
     }
 }
 
-.p-contact__social-label {
-    font-family: v.$font-heading;
-    font-size: v.$font-size-xl;
-    font-weight: 700;
-}
-
-.p-contact__social-hint {
-    font-size: v.$font-size-md;
-    opacity: 0.85;
+.p-contact__map-lead {
+    margin: -0.8rem 0 1.4rem;
+    font-size: v.$font-size-lg;
+    line-height: 1.45;
+    color: v.$color-lightgray;
 }
 
 .p-contact__map {
+    flex: 1;
+    min-height: 24rem;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 0.9rem;
     border: 1px solid rgba(20, 58, 107, 0.1);
     background: #dfe7f1;
-    aspect-ratio: 16 / 10;
 
     iframe {
         display: block;
@@ -259,9 +243,9 @@
 
 .p-contact__map-link {
     display: inline-flex;
-    margin-top: 1rem;
+    margin-top: 1.2rem;
     font-family: v.$font-heading;
-    font-size: v.$font-size-md;
+    font-size: v.$font-size-lg;
     font-weight: 700;
     color: v.$color-navy;
     text-decoration: none;
@@ -273,29 +257,43 @@
 }
 
 @media screen and (max-width: 960px) {
-    .p-contact__grid,
-    .p-contact__panels,
-    .p-contact__socials {
+    .p-contact__layout {
         grid-template-columns: 1fr;
     }
 
-    .p-contact__card {
-        min-height: 0;
+    .p-contact__info,
+    .p-contact__map-block {
+        height: auto;
+    }
+
+    .p-contact__social-block {
+        margin-top: 2rem;
+    }
+
+    .p-contact__map {
+        min-height: 20rem;
     }
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
-    .p-contact__hero-inner,
     .p-contact__body {
-        padding-left: 1.6rem;
-        padding-right: 1.6rem;
+        padding: 2rem 1.6rem 3.5rem;
     }
 
-    .p-contact__title {
-        font-size: v.$font-size-5xl;
-    }
-
-    .p-contact__panel {
+    .p-contact__info,
+    .p-contact__map-block {
         padding: 1.8rem 1.5rem;
+    }
+
+    .p-contact__section-title {
+        font-size: v.$font-size-3xl;
+    }
+
+    .p-contact__socials {
+        flex-direction: column;
+    }
+
+    .p-contact__social {
+        width: 100%;
     }
 }

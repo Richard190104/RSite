@@ -1071,6 +1071,18 @@ msgid "Map of Medzilaborce"
 msgstr "Mapa Medzilaboriec"
 
 #: ./templates/Pages/kontakt.php
+msgid "Contact details"
+msgstr "Kontaktné údaje"
+
+#: ./templates/Pages/kontakt.php
+msgid "Follow our updates, events and catches."
+msgstr "Sledujte novinky, podujatia a úlovky."
+
+#: ./templates/Pages/kontakt.php
+msgid "Open in Google Maps"
+msgstr "Otvoriť v Google Maps"
+
+#: ./templates/Pages/kontakt.php
 msgid "Open larger map"
 msgstr "Otvoriť väčšiu mapu"
 

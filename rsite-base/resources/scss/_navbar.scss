@@ -287,6 +287,10 @@
     }
 }
 
+.site-nav__category--end {
+    margin-left: auto;
+}
+
 .site-nav__category {
     position: relative;
     &:not(:first-child)::before {
@@ -419,6 +423,10 @@
     .site-nav__category {
         &:not(:first-child)::before {
             display: none;
+        }
+
+        &--end {
+            margin-left: 0;
         }
 
         &:not(:last-child) {
