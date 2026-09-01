@@ -71,9 +71,6 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                             <?php else: ?>
                                 <p class="p-contact__detail-text p-contact__detail-text--muted"><?= __('Company ID will appear here once set in admin.') ?></p>
                             <?php endif; ?>
-                            <?php if ($city !== ''): ?>
-                                <p class="p-contact__detail-meta"><?= h($city) ?></p>
-                            <?php endif; ?>
                         </div>
                     </li>
                 </ul>
@@ -105,12 +102,9 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
 
             <div class="p-contact__map-block">
                 <h2 class="p-contact__section-title"><?= __('Find us') ?></h2>
-                <p class="p-contact__map-lead">
-                    <?= __('Medzilaborce — visit us at the address above.') ?>
-                </p>
                 <div class="p-contact__map">
                     <iframe
-                        title="<?= h(__('Map of Medzilaborce')) ?>"
+                        title="<?= h(__('Location map')) ?>"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         src="<?= h($mapEmbedUrl) ?>"

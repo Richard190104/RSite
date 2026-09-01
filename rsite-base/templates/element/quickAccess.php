@@ -49,11 +49,8 @@ $icons = [
 
             $description = $page->content['description'] ?? null;
             $icon = $icons[$page->slug] ?? $icons['default'];
-            $href = $page->slug === 'kontakt'
-                ? $this->Url->build('/kontakt')
-                : $this->Url->build('/' . $page->slug);
             ?>
-            <a class="quick-access__card" href="<?= h($href) ?>">
+            <a class="quick-access__card" href="/<?= h($page->slug) ?>">
                 <svg class="quick-access__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <?= $icon ?>

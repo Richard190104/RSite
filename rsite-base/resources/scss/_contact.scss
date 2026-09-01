@@ -129,12 +129,6 @@
     }
 }
 
-.p-contact__detail-meta {
-    margin: 0.2rem 0 0;
-    font-size: v.$font-size-md;
-    color: color.adjust(v.$color-lightgray, $alpha: -0.05);
-}
-
 .p-contact__btn {
     align-self: flex-start;
     margin-top: 0.6rem;
@@ -216,13 +210,6 @@
         color: v.$color-white;
         opacity: 0.92;
     }
-}
-
-.p-contact__map-lead {
-    margin: -0.8rem 0 1.4rem;
-    font-size: v.$font-size-lg;
-    line-height: 1.45;
-    color: v.$color-lightgray;
 }
 
 .p-contact__map {
