@@ -25,6 +25,7 @@ $navbarCategories = TableRegistry::getTableLocator()->get('NavbarCategories')
 $organisationName = $this->organisationName();
 $city = $this->city();
 $logoPath = $this->logoPath();
+$contactPage = $this->contactPage();
 $activeNotifications = $this->activeNotifications();
 ?>
 <nav class="site-nav">
@@ -106,6 +107,12 @@ $activeNotifications = $this->activeNotifications();
                         <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
+
+                <?php if ($contactPage !== null): ?>
+                    <li class="site-nav__category site-nav__category--end">
+                        <a href="<?= h($this->Url->build('/kontakt')) ?>"><?= h(__($contactPage->title)) ?></a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
