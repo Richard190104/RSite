@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $title
  * @property string $description
+ * @property string|null $content
  * @property string $image
  * @property \Cake\I18n\Date $date
  * @property int|null $category_id
@@ -21,6 +22,7 @@ class News extends Entity
     protected array $_accessible = [
         'title' => true,
         'description' => true,
+        'content' => true,
         'image' => true,
         'date' => true,
         'category_id' => true,

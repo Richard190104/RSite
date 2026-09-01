@@ -5,10 +5,15 @@
  * @var array<int, string> $parentOptions
  */
 $this->assign('title', __('Add category'));
+$this->set('aiChatFields', [
+    'targetField' => 'title',
+    'titleField' => 'title',
+    'fieldLabel' => 'short category title',
+]);
 ?>
 <div class="content">
     <?= $this->Form->create($category) ?>
-        <?= $this->Form->control('title', ['label' => __('Title')]) ?>
+        <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title']) ?>
         <?= $this->Form->control('parent_id', [
             'type' => 'select',
             'options' => $parentOptions,

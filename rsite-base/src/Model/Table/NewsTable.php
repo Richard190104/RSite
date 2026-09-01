@@ -33,6 +33,9 @@ class NewsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmptyString('description')
 
+            ->scalar('content')
+            ->allowEmptyString('content')
+
             ->date('date')
             ->requirePresence('date', 'create')
             ->notEmptyDate('date')

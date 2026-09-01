@@ -3,21 +3,13 @@
  * @var \App\View\AppView $this
  */
 
-// Tu sa pridavaju admin kategorie do sidebaru. Later mozno by to mohli byt v db, aj nejaky admin config na pridavanie. Zatial staci toto
-// Kluc je nazov controllera (pre routing), hodnota je prelozitelny popisok.
-$adminCategories = [
-    'Dashboard' => __('Dashboard'),
-    'Texts' => __('Texts'),
-    'Banners' => __('Banners'),
-    'NavbarCategories' => __('Navbar categories'),
-    'Pages' => __('Pages'),
-    'News' => __('News'),
-    'Categories' => __('Categories'),
-    'Events' => __('Events'),
-    'Galleries' => __('Galleries'),
-    'Logos' => __('Logos'),
-    'Notifications' => __('Notifications'),
-];
+use App\Controller\Admin\AppController;
+
+// The section list itself lives in AppController::adminCategories() — the
+// single source of truth also read by Admin\AiController, so the chat
+// assistant's list of "where can I do X" sections never drifts from what's
+// actually in this sidebar. Update that method, not this file, to add one.
+$adminCategories = AppController::adminCategories();
 $currentController = $this->getRequest()->getParam('controller');
 ?>
 <aside class="admin-sidebar">
@@ -25,11 +17,11 @@ $currentController = $this->getRequest()->getParam('controller');
         <a href="<?= $this->Url->build('/admin') ?>">Admin</a>
     </div>
     <nav class="admin-sidebar__nav">
-        <?php foreach ($adminCategories as $controller => $label): ?>
+        <?php foreach ($adminCategories as $controller => $category): ?>
             <a
                 href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => $controller, 'action' => 'index']) ?>"
                 class="admin-sidebar__category<?= $currentController === $controller ? ' is-active' : '' ?>"
-            ><?= $label ?></a>
+            ><?= $category['label'] ?></a>
         <?php endforeach; ?>
     </nav>
     <nav class="admin-sidebar__nav admin-sidebar__nav--bottom">

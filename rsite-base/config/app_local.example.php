@@ -91,4 +91,15 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
+
+    /*
+     * Google Gemini API key, used by the admin "AI assistant" text-suggest
+     * feature (Admin\AiController). Free tier — get a key at
+     * https://aistudio.google.com/apikey, no payment card required.
+     * Leave unset to disable the feature entirely (the button/endpoint
+     * degrades to a clear "not configured" error instead of failing oddly).
+     */
+    'Ai' => [
+        'geminiApiKey' => env('GEMINI_API_KEY', null),
+    ],
 ];

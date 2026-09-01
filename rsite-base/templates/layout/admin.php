@@ -8,10 +8,12 @@
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<?= h($this->request->getAttribute('csrfToken')) ?>">
     <title>Admin: <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'admin']) ?>
+    <?= $this->Html->script('admin-ai-chat') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -29,5 +31,6 @@
             <?= $this->fetch('content') ?>
         </main>
     </div>
+    <?= $this->element('Admin/aiChat', $this->get('aiChatFields', [])) ?>
 </body>
 </html>

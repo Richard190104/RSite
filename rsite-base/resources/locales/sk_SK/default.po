@@ -750,6 +750,7 @@ msgid "The uploaded file could not be processed."
 msgstr "Nahraný súbor sa nepodarilo spracovať."
 
 #: ./templates/Admin/Banners/add.php
+#: ./templates/element/Admin/aiChat.php
 msgid "Title"
 msgstr "Názov"
 
@@ -802,6 +803,7 @@ msgid "Date"
 msgstr "Dátum"
 
 #: ./templates/Admin/News/add.php
+#: ./templates/element/Admin/aiChat.php
 msgid "Description"
 msgstr "Popis"
 
@@ -1138,3 +1140,123 @@ msgstr "Zavrieť"
 #: ./templates/Admin/Notifications/edit.php
 msgid "Show as popup"
 msgstr "Zobraziť ako popup"
+
+#: ./src/Controller/Admin/AiController.php
+msgid "The AI assistant is not configured (missing Ai.geminiApiKey in app_local.php)."
+msgstr "AI asistent nie je nakonfigurovaný (chýba Ai.geminiApiKey v app_local.php)."
+
+#: ./src/Controller/Admin/AiController.php
+msgid "Say something first."
+msgstr "Najprv niečo napíš."
+
+#: ./src/Controller/Admin/AiController.php
+msgid "The AI assistant could not be reached right now."
+msgstr "AI asistenta sa práve nepodarilo osloviť."
+
+#: ./src/Controller/Admin/AiController.php
+msgid "The AI assistant returned an empty suggestion."
+msgstr "AI asistent vrátil prázdny návrh."
+
+#: ./templates/element/Admin/aiChat.php
+#: ./templates/element/Admin/aiChat.php
+msgid "AI assistant"
+msgstr "AI asistent"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Rybárik"
+msgstr "Rybárik"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Ask me to draft or rewrite the text on this page — pick a field above and I'll write a ready-to-use suggestion for it."
+msgstr "Popros ma, nech ti navrhnem alebo prepíšem text na tejto stránke — vyber si pole vyššie a pripravím ti návrh, ktorý môžeš rovno použiť."
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Ask me where to find something or how to do it in this admin panel, and I'll point you to the right place."
+msgstr "Opýtaj sa ma, kde niečo nájdeš alebo ako to urobiť v administrácii, a ukážem ti, kam presne treba ísť."
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Open Rybárik, the AI assistant"
+msgstr "Otvoriť Rybárika, AI asistenta"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Ask the assistant to draft or edit this text…"
+msgstr "Popros asistenta o návrh alebo úpravu tohto textu…"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Ask where to find or how to do something…"
+msgstr "Opýtaj sa, kde niečo nájdeš alebo ako niečo urobiť…"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "HTML poster"
+msgstr "HTML plagát"
+
+#: ./src/Controller/Admin/AppController.php
+msgid "The admin landing page — a short overview, no editable content here."
+msgstr "Úvodná stránka administrácie — stručný prehľad, nie sú tu žiadne upraviteľné údaje."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Key/value site-wide text snippets (organisation name, city, address, email, ICO, footer description, social media URLs...) used throughout the public site. Rows already exist — this section only edits existing values, it does not create new ones."
+msgstr "Textové úseky použité naprieč verejnou stránkou (názov organizácie, mesto, adresa, e-mail, IČO, popis v pätičke, odkazy na sociálne siete...). Riadky už existujú — táto sekcia iba upravuje existujúce hodnoty, nevytvára nové."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Images shown on the site: the homepage/page hero carousel, the \"about us\" mini-banner tiles, and the \"fishing grounds\" section image + tiles. Each banner has a location that decides where it appears, and a title/subtitle."
+msgstr "Obrázky zobrazené na stránke: hlavný karusel na úvodnej/podstránkach, dlaždice sekcie \"o nás\" a obrázok + dlaždice sekcie \"revíry\". Každý banner má umiestnenie, ktoré určuje, kde sa zobrazí, a nadpis/podnadpis."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "The dropdown categories shown in the site's top navigation menu, each grouping a set of pages."
+msgstr "Rozbaľovacie kategórie zobrazené v hornom navigačnom menu stránky, z ktorých každá zoskupuje sadu stránok."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "The site's static content pages (e.g. kontakt, homepage content) — edits an existing page's text/content; the homepage specifically also has its quick-access shortcuts configured here."
+msgstr "Statické obsahové stránky webu (napr. kontakt, obsah úvodnej stránky) — upravujú text/obsah existujúcej stránky; úvodná stránka má tu naviac nastavené aj rýchle odkazy."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "News articles shown in the \"Latest news\" section on the homepage. Each article has a title, a short plain-text description (shown on the homepage card), an image, a date, an optional category, and an HTML poster field with an AI assistant that can generate a notice-board-style graphic from the title/description."
+msgstr "Novinky zobrazené v sekcii \"Najnovšie novinky\" na úvodnej stránke. Každá novinka má nadpis, krátky textový popis (zobrazený na karte na úvodnej stránke), obrázok, dátum, voliteľnú kategóriu a pole HTML plagátu s AI asistentom, ktorý dokáže z nadpisu/popisu vygenerovať grafiku v štýle nástenky."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Categories used to group news articles and gallery items."
+msgstr "Kategórie použité na zoskupovanie noviniek a položiek galérie."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Events listed on the site."
+msgstr "Udalosti zobrazené na stránke."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Photo galleries shown on the site, grouped by category."
+msgstr "Fotogalérie zobrazené na stránke, zoskupené podľa kategórie."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "The site's logo images (e.g. the main header logo, footer logo)."
+msgstr "Logá stránky (napr. hlavné logo v hlavičke, logo v pätičke)."
+
+#: ./src/Controller/Admin/AppController.php
+msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
+msgstr "Notifikácie zobrazené v zvončeku v navigácii, keď sú aktívne a v rámci rozsahu dátumov valid_from/valid_to. Notifikácia môže byť tiež označená na zobrazenie ako jednorazové vyskakovacie okno v rohu stránky pri načítaní."
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Send"
+msgstr "Odoslať"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "Use this"
+msgstr "Použiť"
+
+#: ./templates/element/Admin/aiChat.php
+msgid "HTML poster"
+msgstr "HTML plagát"
+
+#: ./templates/Admin/News/add.php
+#: ./templates/Admin/News/edit.php
+msgid "Poster (HTML)"
+msgstr "Plagát (HTML)"
+
+#: ./templates/Admin/News/add.php
+#: ./templates/Admin/News/edit.php
+msgid "Show preview"
+msgstr "Zobraziť náhľad"
+
+#: ./templates/Admin/News/add.php
+#: ./templates/Admin/News/edit.php
+msgid "Poster preview"
+msgstr "Náhľad plagátu"
