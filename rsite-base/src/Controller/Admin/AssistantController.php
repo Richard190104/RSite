@@ -14,19 +14,25 @@ use Cake\ORM\TableRegistry;
  *
  * Every reply carries two parts: a `message` (always shown as the chat
  * bubble text) and an optional `suggestion` — a ready-to-use draft for the
- * target field. The "Use this" button in the UI (admin-ai-chat.js) only
- * appears when `suggestion` is present, so a reply that's just an answer
- * or clarification (e.g. "what tone should I use?") never gets mistaken
- * for something meant to overwrite the field. The model itself decides
- * which replies count as a suggestion vs. plain conversation — see the
- * response schema in callGemini().
+ * target field. The "Use this" button in the UI (admin-assistant-chat.js)
+ * only appears when `suggestion` is present, so a reply that's just an
+ * answer or clarification (e.g. "what tone should I use?") never gets
+ * mistaken for something meant to overwrite the field. The model itself
+ * decides which replies count as a suggestion vs. plain conversation — see
+ * the response schema in callGemini().
  *
  * Deliberately stateless server-side: the full message history is sent by
- * the client on every request (see webroot/js/admin-ai-chat.js) and
+ * the client on every request (see webroot/js/admin-assistant-chat.js) and
  * nothing is persisted — closing/reloading the page drops the
  * conversation, same as the chat never happened.
+ *
+ * Named "Assistant" (not "Ai") on purpose — this host's WAF (InfinityFree /
+ * Cloudflare) returns a 403 for any URL path containing "ai", which broke
+ * both this controller's route and the admin-ai-chat.js asset under their
+ * old names. Keep "ai" out of any new public-facing path under this
+ * feature (URLs, filenames) to avoid re-triggering the same block.
  */
-class AiController extends AppController
+class AssistantController extends AppController
 {
     use HtmlSanitizeTrait;
 

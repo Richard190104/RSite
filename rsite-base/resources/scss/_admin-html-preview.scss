@@ -1,7 +1,7 @@
 @use 'variables' as v;
 
 // Preview modal for the News "content" field, which holds raw poster HTML
-// (see Admin\AiController::chat() HTML mode) rather than rich text —
+// (see Admin\AssistantController::chat() HTML mode) rather than rich text —
 // opened on demand via the "Show preview" button instead of always being
 // visible inline, so the form stays compact. An iframe renders the poster
 // in full isolation from the admin theme's own CSS, so what's shown here

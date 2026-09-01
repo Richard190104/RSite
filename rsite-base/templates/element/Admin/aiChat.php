@@ -4,7 +4,7 @@
  * @var string|null $targetField Optional: DOM id of the plain-text "description"-style field the "Use this" button
  *   writes into. When omitted (together with $titleField), the widget has no fields to draft for and instead acts
  *   as a pure navigation helper — answering "where do I do X" questions using AppController::adminCategories() as
- *   its source of truth (see Admin\AiController::buildNavigationPrompt()). This is the default on every admin page
+ *   its source of truth (see Admin\AssistantController::buildNavigationPrompt()). This is the default on every admin page
  *   the layout adds the widget to; add/edit pages opt into field mode by calling $this->set() with these vars
  *   before the layout renders (see templates/Admin/News/edit.php for an example).
  * @var string|null $titleField Optional: DOM id of the field used as the record's title/context. Required together
@@ -20,11 +20,11 @@
  *   from an empty/still-being-written rich-text field has nothing concrete to work from and falls back to generic
  *   copy.
  * @var string|null $imageUrl Optional: the public URL of an already-uploaded image for this record (e.g. News::image).
- *   When set, Admin\AiController::chat() can offer to use it as a full photo background (with a dark overlay) for
+ *   When set, Admin\AssistantController::chat() can offer to use it as a full photo background (with a dark overlay) for
  *   an HTML-mode poster instead of the plain white/light-gray card.
  *
  * Floating chat bubble for the AI writing assistant — see
- * Admin\AiController::chat() and webroot/js/admin-ai-chat.js for the
+ * Admin\AssistantController::chat() and webroot/js/admin-assistant-chat.js for the
  * actual request/reply wiring. Included once, globally, from the admin
  * layout (templates/layout/admin.php) so it's available on every admin
  * page; individual add/edit pages opt into field-drafting mode by
@@ -52,7 +52,7 @@ $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !==
 ?>
 <div
     class="admin-ai-chat"
-    data-ai-chat-url="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Ai', 'action' => 'chat']) ?>"
+    data-ai-chat-url="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Assistant', 'action' => 'chat']) ?>"
     data-ai-chat-title-from="<?= h((string)$titleField) ?>"
     data-ai-chat-description-from="<?= h((string)$descriptionField) ?>"
     data-ai-chat-image-url="<?= h((string)$imageUrl) ?>"

@@ -19,7 +19,7 @@ class AppController extends BaseController
      * the controller name (for routing), value has a translatable label
      * plus a short description of what the section is for and which
      * actions it supports. Read by templates/element/Admin/sidebar.php to
-     * render the nav (label only), and by Admin\AiController to tell the
+     * render the nav (label only), and by Admin\AssistantController to tell the
      * chat assistant what sections exist and where to point an admin who
      * asks e.g. "where do I add a news article?". Update this list (not
      * sidebar.php directly, and not by duplicating it elsewhere) when

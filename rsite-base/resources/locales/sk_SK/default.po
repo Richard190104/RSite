@@ -1149,19 +1149,19 @@ msgstr "Zavrieť"
 msgid "Show as popup"
 msgstr "Zobraziť ako popup"
 
-#: ./src/Controller/Admin/AiController.php
+#: ./src/Controller/Admin/AssistantController.php
 msgid "The AI assistant is not configured (missing Ai.geminiApiKey in app_local.php)."
 msgstr "AI asistent nie je nakonfigurovaný (chýba Ai.geminiApiKey v app_local.php)."
 
-#: ./src/Controller/Admin/AiController.php
+#: ./src/Controller/Admin/AssistantController.php
 msgid "Say something first."
 msgstr "Najprv niečo napíš."
 
-#: ./src/Controller/Admin/AiController.php
+#: ./src/Controller/Admin/AssistantController.php
 msgid "The AI assistant could not be reached right now."
 msgstr "AI asistenta sa práve nepodarilo osloviť."
 
-#: ./src/Controller/Admin/AiController.php
+#: ./src/Controller/Admin/AssistantController.php
 msgid "The AI assistant returned an empty suggestion."
 msgstr "AI asistent vrátil prázdny návrh."
 

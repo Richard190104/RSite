@@ -6,7 +6,7 @@
 use App\Controller\Admin\AppController;
 
 // The section list itself lives in AppController::adminCategories() — the
-// single source of truth also read by Admin\AiController, so the chat
+// single source of truth also read by Admin\AssistantController, so the chat
 // assistant's list of "where can I do X" sections never drifts from what's
 // actually in this sidebar. Update that method, not this file, to add one.
 $adminCategories = AppController::adminCategories();

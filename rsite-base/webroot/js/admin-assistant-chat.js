@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // No mode buttons at all means this page isn't an add/edit form
         // with a field to draft — the widget acts as a pure navigation
-        // helper instead (see Admin\AiController::buildNavigationPrompt()),
+        // helper instead (see Admin\AssistantController::buildNavigationPrompt()),
         // answering "where do I do X" questions instead of drafting text.
         // On a field-mode page where no mode is picked yet, it still chats
         // normally (mode "text") — it just has no field to write "Use this"

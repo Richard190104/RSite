@@ -13,7 +13,7 @@
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'admin']) ?>
-    <?= $this->Html->script('admin-ai-chat') ?>
+    <?= $this->Html->script('admin-assistant-chat') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
