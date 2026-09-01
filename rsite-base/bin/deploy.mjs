@@ -346,7 +346,12 @@ async function main() {
             // shared-hosting FTP implementations only resolve STOR
             // correctly relative to cwd.
             await client.ensureDir('/htdocs/' + parts.join('/'));
-            await client.uploadFrom(full, filename);
+            try {
+                await client.uploadFrom(full, filename);
+            } catch (error) {
+                error.message = `Failed uploading ${rel}: ${error.message}`;
+                throw error;
+            }
             uploaded += 1;
             if (uploaded % 50 === 0) {
                 console.log(`  ${uploaded} files uploaded...`);
