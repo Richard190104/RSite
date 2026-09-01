@@ -1063,12 +1063,20 @@ msgid "Find us"
 msgstr "Kde nás nájdete"
 
 #: ./templates/Pages/kontakt.php
-msgid "Medzilaborce — visit us at the address above."
-msgstr "Medzilaborce — navštívte nás na adrese vyššie."
+msgid "Location map"
+msgstr "Mapa polohy"
 
 #: ./templates/Pages/kontakt.php
-msgid "Map of Medzilaborce"
-msgstr "Mapa Medzilaboriec"
+msgid "Contact details"
+msgstr "Kontaktné údaje"
+
+#: ./templates/Pages/kontakt.php
+msgid "Follow our updates, events and catches."
+msgstr "Sledujte novinky, podujatia a úlovky."
+
+#: ./templates/Pages/kontakt.php
+msgid "Open in Google Maps"
+msgstr "Otvoriť v Google Maps"
 
 #: ./templates/Pages/kontakt.php
 msgid "Open larger map"
