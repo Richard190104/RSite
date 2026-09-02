@@ -1,0 +1,368 @@
+@use 'variables' as v;
+
+.p-gallery {
+    width: 100%;
+    background: v.$color-main-bg;
+}
+
+.p-gallery__body {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 3.5rem 2rem 5rem;
+}
+
+.p-gallery__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-md;
+    font-weight: 600;
+    color: v.$color-navy;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        color: v.$color-links-active;
+    }
+}
+
+.p-gallery__title {
+    margin: 0 0 2.5rem;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-4xl;
+    font-weight: 700;
+    color: v.$color-navy;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-yellow;
+    }
+}
+
+.p-gallery__description {
+    margin: -1.5rem 0 2.5rem;
+    max-width: 60rem;
+    font-size: v.$font-size-lg;
+    line-height: 1.6;
+    color: v.$color-lightgray;
+}
+
+.p-gallery__empty {
+    font-size: v.$font-size-lg;
+    color: v.$color-lightgray;
+}
+
+.p-gallery__section-title {
+    margin: 0 0 1.4rem;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-4xl;
+    font-weight: 700;
+    color: v.$color-navy;
+}
+
+.p-gallery__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 2.4rem 1.6rem;
+}
+
+.p-gallery__card {
+    display: block;
+    position: relative;
+    text-decoration: none;
+}
+
+.p-gallery__card-image {
+    aspect-ratio: 4 / 3;
+    border-radius: 0.6rem;
+    background-color: transparent;
+    background-image: linear-gradient(135deg, rgba(20, 58, 107, 0.16), rgba(20, 58, 107, 0.06));
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    .p-gallery__card:hover &,
+    .p-gallery__card:focus-visible & {
+        transform: scale(1.01);
+    }
+}
+
+.p-gallery__card-badge {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: -0.9rem;
+    // Long titles must wrap and stay within the card's own width rather
+    // than overflow past its right edge — an overflowing badge gets
+    // silently clipped by ancestors with overflow:hidden (e.g. the
+    // subcategory Swiper container), making part of the text vanish.
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: normal;
+    line-height: 1.25;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    background: v.$color-yellow;
+    color: v.$color-navy;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-base;
+    font-weight: 700;
+}
+
+.p-gallery__subcats {
+    margin-bottom: 2.5rem;
+}
+
+.p-gallery__subcats-carousel {
+    // Swiper's own CSS sets `.swiper { overflow: hidden; padding: 0; ... }`
+    // — same specificity as `.p-gallery__subcats-carousel` alone, and it
+    // loads after app.scss, so both properties would win the cascade: the
+    // overflow clips .p-gallery__card-badge's intentional overflow below
+    // each card (design calls for it to hang off the bottom edge, same as
+    // outside the carousel — see .p-gallery__card-badge), and the padding
+    // shorthand would zero out any padding-bottom set to make room for it.
+    // (Note: overflow-x:hidden + overflow-y:visible does NOT work here —
+    // per the CSS overflow spec, a visible value paired with a non-visible
+    // value on the other axis computes to auto instead, which just turns
+    // the clip into a scrollbar rather than removing it.) The fix is a real
+    // overflow:hidden on both axes, with enough padding-bottom reserved
+    // inside that hidden box to fully contain the badge's fixed ~0.9rem
+    // overflow past the card's edge — content within an element's padding
+    // is never clipped by its own overflow:hidden, only content extending
+    // past it is. The compound selector (&.swiper) out-specifies the
+    // vendor rule for both properties regardless of load order.
+    &.swiper {
+        overflow: hidden;
+        padding-bottom: 1.2rem;
+    }
+
+    // Swiper's own CSS (loaded after app.scss, so it wins on source order
+    // alone at equal specificity) sets .swiper-wrapper as a stretching flex
+    // container and .swiper-slide to height:100% — that stretches every
+    // card to the tallest slide's height, breaking .p-gallery__card-image's
+    // aspect-ratio. Both overrides are scoped under this carousel and use
+    // an extra class-on-self selector to out-specificity the vendor rules.
+    .swiper-wrapper {
+        align-items: flex-start;
+    }
+
+    // slidesPerView: 'auto' (see gallery-subcats-swiper.js) relies on each
+    // slide's own CSS width rather than Swiper dividing the container width
+    // by a fixed count. The width here is deliberately a bit above
+    // .p-gallery__cards' 20rem minimum: that grid's minmax(20rem, 1fr)
+    // stretches columns to fill the row, so its actual rendered card width
+    // is normally noticeably more than 20rem — this approximates that
+    // typical stretched size so the two don't look mismatched side by side.
+    .swiper-slide.p-gallery__card--sub {
+        flex-shrink: 0;
+        width: 16rem;
+        height: auto;
+    }
+}
+
+.p-gallery__subcats-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.p-gallery__subcats-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: v.$color-navy;
+    font-size: v.$font-size-xl;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible,
+    &:focus {
+        background: none;
+        color: v.$color-links-active;
+    }
+
+    &.swiper-button-disabled {
+        opacity: 0.3;
+        cursor: default;
+
+        &:hover,
+        &:focus-visible {
+            background: none;
+            color: v.$color-navy;
+        }
+    }
+}
+
+.p-gallery__divider {
+    margin: 0 0 2.5rem;
+    border: none;
+    border-top: 1px solid rgba(20, 58, 107, 0.12);
+}
+
+.p-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    gap: 2rem;
+}
+
+.p-gallery__photo-card {
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background: v.$color-white;
+    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 8px 24px rgba(20, 58, 107, 0.06);
+    border: 1px solid rgba(20, 58, 107, 0.06);
+}
+
+.p-gallery__item {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.p-gallery__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+
+    .p-gallery__item:hover &,
+    .p-gallery__item:focus-visible & {
+        transform: scale(1.04);
+    }
+}
+
+.p-gallery__photo-caption {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+}
+
+.p-gallery__photo-badge {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.7rem;
+    border-radius: 0.4rem;
+    background: v.$color-yellow;
+    color: v.$color-navy;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xs;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.p-gallery__photo-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-base;
+    font-weight: 700;
+    color: v.$color-navy;
+}
+
+.p-gallery__lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: rgba(20, 22, 26, 0.774);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    &.is-open {
+        display: flex;
+    }
+}
+
+.p-gallery__lightbox-frame {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.p-gallery__lightbox-image {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 15rem);
+    border-radius: 0.6rem;
+}
+
+.p-gallery__lightbox-caption {
+    margin: 0;
+    max-width: 40rem;
+    text-align: center;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-lg;
+    font-weight: 600;
+    color: v.$color-white;
+}
+
+.p-gallery__lightbox-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border: none;
+    color: v.$color-white;
+    background: none;
+    font-size: v.$font-size-2xl;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: none;
+        border: none;
+        color: v.$color-white;
+        outline: 0;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-gallery__body {
+        padding: 2rem 1.6rem 3.5rem;
+    }
+
+    .p-gallery__title {
+        font-size: v.$font-size-3xl;
+    }
+
+    .p-gallery__cards,
+    .p-gallery__grid {
+        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+        gap: 2rem 1.2rem;
+    }
+
+    .p-gallery__subcats-carousel .swiper-slide.p-gallery__card--sub {
+        width: 11.5rem;
+    }
+}

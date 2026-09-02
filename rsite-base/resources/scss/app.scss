@@ -11,6 +11,7 @@
 @use 'contact';
 @use 'aktivity';
 @use 'notification-popup';
+@use 'gallery';
 
 .page-banner {
     position: relative;
@@ -19,6 +20,24 @@
     // Swiper needs a fixed-ish container height — it doesn't size itself
     // to slide content the way a plain flex/block flow would.
     min-height: 38rem;
+
+    // Vendor Swiper CSS sets `.swiper { margin-left: auto; margin-right:
+    // auto; }` (meant to center a swiper that has its own intrinsic
+    // width). Inside .site-wrapper's flex column, those auto margins on
+    // the cross axis override the default align-items:stretch — instead of
+    // stretching to fill the row, the item shrinks to its content width
+    // and gets centered by the auto margins. Since .swiper-wrapper inside
+    // needs width:100% of THIS element to size itself, that produces a
+    // circular/indefinite sizing case that collapses to 0 width — a known,
+    // documented Swiper-inside-flex/grid issue. &.swiper (compound
+    // selector, higher specificity than vendor's plain .swiper, and wins
+    // regardless of load order) resets the margins and pins the width so
+    // the flex stretch behaves as if the auto margins were never there.
+    &.swiper {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     // Swiper's own pagination dots, restyled to the site's palette instead
     // of its default blue/white.

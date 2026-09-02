@@ -25,8 +25,18 @@ class GalleriesTable extends Table
     {
         $validator->allowEmptyString('category_id');
 
-        // 'image' is handled entirely in the controller, same as
-        // Banners::background / News::image.
+        // 'image' and 'delete_url' are handled entirely in the controller
+        // (see Admin\ImgBbUploadTrait) — 'image' holds the ImgBB-hosted
+        // URL, 'delete_url' the matching link needed to remove it later.
+        $validator->allowEmptyString('delete_url');
+
+        // Optional per-photo caption, shown instead of the parent category
+        // name on the public gallery (see templates/Gallery/cards.php) —
+        // capped short so it always fits the caption bar on one line.
+        $validator
+            ->scalar('text')
+            ->maxLength('text', 80)
+            ->allowEmptyString('text');
 
         return $validator;
     }

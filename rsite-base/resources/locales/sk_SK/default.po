@@ -831,6 +831,14 @@ msgstr "Prosím, vyberte obrázok."
 msgid "Replace image (optional)"
 msgstr "Nahradiť obrázok (voliteľné)"
 
+#: ./templates/Admin/Galleries/edit.php
+msgid "Caption"
+msgstr "Popis fotky"
+
+#: ./templates/Admin/Galleries/edit.php
+msgid "Shown instead of the category name on the public gallery"
+msgstr "Zobrazí sa namiesto názvu kategórie vo verejnej galérii"
+
 #: ./src/Controller/Admin/ImageUploadTrait.php
 msgid "The image must be a JPEG, PNG or WEBP file."
 msgstr "Obrázok musí byť súbor typu JPEG, PNG alebo WEBP."
@@ -850,6 +858,22 @@ msgstr "Domov"
 #: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
 msgid "Gallery"
 msgstr "Galéria"
+
+#: ./templates/Gallery/cards.php
+msgid "Gallery categories"
+msgstr "Kategórie galérie"
+
+#: ./templates/Gallery/cards.php
+msgid "Photographs"
+msgstr "Fotografie"
+
+#: ./templates/Gallery/index.php
+msgid "No categories have been added yet."
+msgstr "Zatiaľ neboli pridané žiadne kategórie."
+
+#: ./templates/Gallery/index.php
+msgid "No subcategories in this category yet."
+msgstr "V tejto kategórii zatiaľ nie sú žiadne podkategórie."
 
 #: ./templates/Admin/Events/index.php
 msgid "Add event"
@@ -914,6 +938,29 @@ msgstr "Fotka bola zmazaná."
 #: ./src/Controller/Admin/GalleriesController.php
 msgid "Photo saved."
 msgstr "Fotka bola uložená."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Please choose at least one image."
+msgstr "Vyberte aspoň jeden obrázok."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "Could not save one of the photos."
+msgstr "Jednu z fotiek sa nepodarilo uložiť."
+
+#: ./src/Controller/Admin/GalleriesController.php
+msgid "{0} photo saved."
+msgid_plural "{0} photos saved."
+msgstr[0] "{0} fotka bola uložená."
+msgstr[1] "{0} fotky boli uložené."
+msgstr[2] "{0} fotiek bolo uložených."
+
+#: ./templates/Admin/Galleries/add.php
+msgid "Images"
+msgstr "Obrázky"
+
+#: ./templates/Admin/Galleries/add.php
+msgid "Select multiple files to add several photos at once — they will all be saved under the category picked below."
+msgstr "Vyber viacero súborov naraz, ak chceš pridať viac fotiek — všetky sa uložia pod kategóriu vybranú nižšie."
 
 #: ./templates/Admin/Categories/add.php
 msgid "Show in gallery"

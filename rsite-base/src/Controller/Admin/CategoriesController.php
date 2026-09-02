@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 
 class CategoriesController extends AppController
 {
+    use ImageUploadTrait;
+
     public function index(): void
     {
         $categories = $this->fetchTable('Categories')
@@ -22,14 +24,31 @@ class CategoriesController extends AppController
         $category = $Categories->newEmptyEntity();
 
         if ($this->request->is('post')) {
-            $category = $Categories->patchEntity($category, $this->request->getData());
+            $data = $this->request->getData();
+            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
+            $upload = $data['image'] ?? null;
+            unset($data['image']);
 
-            if ($Categories->save($category)) {
-                $this->Flash->success(__('Category saved.'));
+            $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
+            $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
 
-                return $this->redirect(['action' => 'index']);
+            $category = $Categories->patchEntity($category, $data);
+
+            if (!$category->getErrors() && $uploadError === null) {
+                if ($hasFile) {
+                    $category->image = $this->storeImageUpload($upload, 'categories');
+                }
+
+                if ($Categories->save($category)) {
+                    $this->Flash->success(__('Category saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
             }
 
+            if ($uploadError !== null) {
+                $this->Flash->error($uploadError);
+            }
             $this->Flash->error(__('Could not save the category, check the errors below.'));
         }
 
@@ -45,14 +64,36 @@ class CategoriesController extends AppController
         $category = $Categories->get($id);
 
         if ($this->request->is(['post', 'put'])) {
-            $category = $Categories->patchEntity($category, $this->request->getData());
+            $data = $this->request->getData();
+            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
+            $upload = $data['image'] ?? null;
+            unset($data['image']);
 
-            if ($Categories->save($category)) {
-                $this->Flash->success(__('Category saved.'));
+            $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
+            $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
 
-                return $this->redirect(['action' => 'index']);
+            $oldImage = $category->image;
+            $category = $Categories->patchEntity($category, $data);
+
+            if (!$category->getErrors() && $uploadError === null) {
+                if ($hasNewFile) {
+                    $category->image = $this->storeImageUpload($upload, 'categories');
+                }
+
+                if ($Categories->save($category)) {
+                    if ($hasNewFile && $oldImage) {
+                        $this->deleteImageUpload('categories', $oldImage);
+                    }
+
+                    $this->Flash->success(__('Category saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
             }
 
+            if ($uploadError !== null) {
+                $this->Flash->error($uploadError);
+            }
             $this->Flash->error(__('Could not save the category, check the errors below.'));
         }
 
@@ -70,6 +111,10 @@ class CategoriesController extends AppController
         $category = $Categories->get($id);
 
         if ($Categories->delete($category)) {
+            if ($category->image) {
+                $this->deleteImageUpload('categories', $category->image);
+            }
+
             $this->Flash->success(__('Category deleted.'));
         } else {
             $this->Flash->error(__('Could not delete the category.'));

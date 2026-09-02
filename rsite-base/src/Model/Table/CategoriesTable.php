@@ -46,7 +46,13 @@ class CategoriesTable extends Table
             ->allowEmptyString('parent_id')
 
             ->boolean('show_in_gallery')
-            ->allowEmptyString('show_in_gallery');
+            ->allowEmptyString('show_in_gallery')
+
+            // 'image' is handled entirely in the controller, same as
+            // Banners::background / Galleries::image.
+            ->allowEmptyString('image')
+
+            ->allowEmptyString('description');
 
         return $validator;
     }
