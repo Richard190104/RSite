@@ -21,7 +21,9 @@ $this->assign('title', __('Pages'));
                         <td><?= h(__($page->title)) ?></td>
                         <td><?= h($page->slug) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $page->slug]) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $page->slug],
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

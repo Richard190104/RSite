@@ -24,12 +24,11 @@ $this->assign('title', __('Galleries'));
                         <td><?= $this->Html->image('/img/galleries/' . $photo->image, ['alt' => '', 'width' => 80]) ?></td>
                         <td><?= h($photo->category->title ?? '') ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $photo->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $photo->id],
-                                ['confirm' => __('Are you sure you want to delete this photo?')],
-                            ) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $photo->id],
+                                'deleteUrl' => ['action' => 'delete', $photo->id],
+                                'confirmMessage' => __('Are you sure you want to delete this photo?'),
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

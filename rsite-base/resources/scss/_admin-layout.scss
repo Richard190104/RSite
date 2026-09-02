@@ -46,9 +46,19 @@
     }
 
     td, th {
-        padding: 0.7rem 1rem;
+        padding: 0 1rem;
         border: 0;
         border-bottom: 1px solid v.$admin-color-border;
+    }
+
+    tbody tr {
+        height: 50px;
+    }
+
+    tbody td img {
+        display: block;
+        max-height: 40px;
+        width: auto;
     }
 
     thead th {
@@ -173,5 +183,148 @@
             margin-top: 0;
         }
     }
-    
+
+}
+
+// Card-style form layout for add/edit screens — a 2-column grid where each
+// field opts into full width (title, textarea, HTML poster) or half width
+// (date, select, short text) via a modifier class, instead of every field
+// stacking full-width one after another regardless of how short its
+// content is.
+.admin-shell {
+    .form-card {
+        max-width: 90rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 2rem;
+    }
+
+    .form-grid__full {
+        grid-column: 1 / -1;
+    }
+
+    .form-grid .input {
+        margin-bottom: 1.6rem;
+    }
+
+    .form-card__preview {
+        margin-bottom: 1.6rem;
+
+        img {
+            border-radius: 0.4rem;
+            border: 1px solid v.$admin-color-border;
+        }
+    }
+
+    .form-card__actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        padding-top: 1.6rem;
+        border-top: 1px solid v.$admin-color-border;
+    }
+
+    @media screen and (max-width: v.$breakpoint-sm) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // Toggle-switch checkbox look, shared by two markup shapes:
+    // - .input.checkbox label > input (add/edit forms, e.g. "Show in gallery")
+    // - a bare input.js-toggle-checkbox with no label (index-listing toggle
+    //   cell, see Banners/Notifications index — no text next to the switch)
+    .input.checkbox label {
+        cursor: pointer;
+    }
+
+    .input.checkbox input[type='checkbox'],
+    .js-toggle-checkbox {
+        -webkit-appearance: none;
+        appearance: none;
+        display: inline-block;
+        position: relative;
+        width: 3.4rem;
+        height: 1.9rem;
+        border-radius: 999px;
+        background: v.$admin-color-border;
+        border: 0;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out;
+        flex-shrink: 0;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0.2rem;
+            left: 0.2rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: v.$color-white;
+            transition: transform 0.15s ease-in-out;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        &:checked {
+            background: v.$admin-color-accent;
+
+            &::before {
+                transform: translateX(1.5rem);
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid v.$admin-color-accent;
+            outline-offset: 2px;
+        }
+    }
+
+    .js-toggle-checkbox {
+        margin: 0;
+    }
+
+    // Wraps a single js-toggle-checkbox in a listing cell (Banners/Notifications
+    // index) — flex + center so the switch sits vertically centered in the
+    // fixed-height row instead of following the form element's own baseline.
+    .banner-toggle-form,
+    .notification-toggle-form {
+        display: flex;
+        align-items: center;
+    }
+
+    // Icon-only Edit/Delete row actions (templates/element/Admin/rowActions.php)
+    // — replaces plain text links in listing tables.
+    .row-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        padding: 0;
+        margin-left: 0.5rem;
+        border-radius: 0.4rem;
+        color: v.$color-lightgray;
+
+        svg {
+            width: 1.4rem;
+            height: 1.4rem;
+        }
+
+        &:hover,
+        &:focus {
+            background: v.$admin-color-border;
+            color: v.$admin-color-text;
+        }
+
+        &--delete:hover,
+        &--delete:focus {
+            background: v.$color-message-error-bg;
+            color: v.$color-message-error-text;
+        }
+    }
 }

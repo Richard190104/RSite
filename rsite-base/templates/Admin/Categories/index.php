@@ -26,12 +26,11 @@ $this->assign('title', __('Categories'));
                         <td><?= h($category->parent_category->title ?? '') ?></td>
                         <td><?= $category->show_in_gallery ? __('Yes') : __('No') ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $category->id],
-                                ['confirm' => __('Are you sure you want to delete "{0}"?', $category->title)],
-                            ) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $category->id],
+                                'deleteUrl' => ['action' => 'delete', $category->id],
+                                'confirmMessage' => __('Are you sure you want to delete "{0}"?', $category->title),
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

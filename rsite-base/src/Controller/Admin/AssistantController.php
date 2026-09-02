@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /**
  * Floating chat assistant for admin forms (News/Notifications description
@@ -44,6 +45,12 @@ class AssistantController extends AppController
     // gemini-flash-latest, which was timing out/503-ing under load.
     private const GEMINI_MODEL = 'gemini-flash-lite-latest';
     private const GEMINI_URL_TEMPLATE = 'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s';
+
+    // How many of the most recent News articles buildNavigationPrompt()
+    // includes so an admin can be pointed straight at one by content — kept
+    // small and bounded so the prompt's token cost doesn't grow with the
+    // site's article count.
+    private const NEWS_CONTEXT_LIMIT = 20;
     private const MAX_HISTORY_MESSAGES = 20;
 
     public function chat()
@@ -51,7 +58,7 @@ class AssistantController extends AppController
         $this->request->allowMethod(['post']);
         $this->viewBuilder()->setClassName('Json');
 
-        $this->viewBuilder()->setOption('serialize', ['error', 'message', 'suggestion']);
+        $this->viewBuilder()->setOption('serialize', ['error', 'message', 'suggestion', 'link']);
 
         $apiKey = Configure::read('Ai.geminiApiKey');
         if (!$apiKey) {
@@ -91,7 +98,7 @@ class AssistantController extends AppController
             );
 
         try {
-            $reply = $this->callGemini($apiKey, $systemPrompt, $history);
+            $reply = $this->callGemini($apiKey, $systemPrompt, $history, $mode === 'nav');
         } catch (\RuntimeException $e) {
             $this->set(['error' => $e->getMessage()]);
 
@@ -103,9 +110,12 @@ class AssistantController extends AppController
             $suggestion = $this->sanitizeHtml($suggestion);
         }
 
+        $link = $mode === 'nav' ? $this->resolveNavigationLink($reply['target']) : null;
+
         $this->set([
             'message' => $reply['message'],
             'suggestion' => $suggestion,
+            'link' => $link,
         ]);
 
         return null;
@@ -140,6 +150,14 @@ class AssistantController extends AppController
      * AppController::adminCategories() as the single source of truth for
      * what sections/actions actually exist, so this never drifts out of
      * sync with the real sidebar.
+     *
+     * Also tells the model about every Texts row (id + slug) and every News
+     * article (id + title + description) — these are the two sections where
+     * an admin plausibly asks about one specific existing item by name/
+     * content ("where do I change the organisation name", "where's the
+     * article about the lake cleanup") rather than just the section as a
+     * whole. Other sections (Events, Galleries...) only ever resolve to the
+     * section itself — see the "target" field below.
      */
     private function buildNavigationPrompt(): string
     {
@@ -150,20 +168,75 @@ class AssistantController extends AppController
                 . " {$category['description']}";
         }
 
+        $textRows = TableRegistry::getTableLocator()->get('Texts')
+            ->find()
+            ->select(['id', 'slug'])
+            ->orderBy(['slug' => 'ASC'])
+            ->all();
+        $textLines = [];
+        foreach ($textRows as $text) {
+            $textLines[] = "- text:{$text->id} — \"{$text->slug}\"";
+        }
+
+        // Capped to the most recent NEWS_CONTEXT_LIMIT articles — without a
+        // limit this list (and the prompt's token cost) would grow forever
+        // as the site accumulates articles. An admin asking about an older
+        // article the bot doesn't have here just gets an honest "couldn't
+        // find it" instead of a wrong answer (see the final instruction
+        // below), which is an acceptable trade-off for keeping every
+        // nav-mode message's cost bounded.
+        $newsRows = TableRegistry::getTableLocator()->get('News')
+            ->find()
+            ->select(['id', 'title', 'description'])
+            ->orderBy(['date' => 'DESC'])
+            ->limit(self::NEWS_CONTEXT_LIMIT)
+            ->all();
+        $newsLines = [];
+        foreach ($newsRows as $article) {
+            $newsLines[] = "- news:{$article->id} — \"{$article->title}\": {$article->description}";
+        }
+
         return implode("\n", [
             'You are a navigation helper built into the admin panel of a CakePHP website for a local fishing'
                 . ' association (MO SRZ). An admin is asking where to find something or how to do something in this'
                 . ' admin panel — you are NOT drafting or editing any field content right now.',
             'Reply in Slovak, plain text, no markdown.',
-            'You must always respond with the two fields in the response schema:',
+            'You must always respond with the three fields in the response schema:',
             '- "message": your answer — point the admin to the right sidebar section and the specific action (e.g.'
                 . ' "add" to create a new one, "edit" to change an existing one). Be concise and concrete: name the'
                 . ' exact sidebar section (in Slovak, using its label below) and what to click there.',
             '- "suggestion": always leave this as null. This mode never drafts or fills in a field — it only gives'
                 . ' directions. Even if the admin asks you to write something, explain that you can only do that from'
                 . ' the assistant inside the relevant add/edit page, and tell them how to get there.',
-            'Here is the complete, authoritative list of admin sections and what each one is for:',
+            '- "target": a machine-readable pointer to where the message sends the admin, so the UI can render an'
+                . ' actual clickable link — one of these exact shapes, or null:'
+                . "\n  1. \"text:<id>\" — ONLY when the admin is asking about one specific named item from the Texts"
+                . ' list below (e.g. organisation name, city, email) and you can identify exactly which row it is.'
+                . "\n  2. \"news:<id>\" — ONLY when the admin is asking about one specific existing News article (by"
+                . ' title or by something mentioned in its description) and you can identify exactly which one from'
+                . ' the News list below.'
+                . "\n  3. \"<controller>:add\" — when the admin is asking how to CREATE a new item in a section that"
+                . ' supports "add" (per its actions list below) — e.g. "how do I add a news article", "where do I'
+                . ' add an event".'
+                . "\n  4. \"<controller>\" — the bare controller name, when pointing at a section's listing page in"
+                . ' general (not creating, not one specific item) — e.g. "where are the settings for the navbar".'
+                . "\n  5. null — when the question isn't about a specific findable section (e.g. a general question,"
+                . ' or something not covered by any section below).'
+                . "\n  For shapes 1-4, copy the id/controller verbatim from the lists below — never invent or guess"
+                . ' one. Only use "<controller>:add" when "add" is actually listed in that section\'s actions.',
+            'Here is the complete, authoritative list of admin sections, what each one is for, and which actions'
+                . ' they support:',
             implode("\n", $sectionLines),
+            'Here is the complete list of existing Texts rows (id and slug) — use these ids for "target" when the'
+                . ' question is about one of these specific values:',
+            implode("\n", $textLines),
+            'Here is a list of the ' . self::NEWS_CONTEXT_LIMIT . ' most recent News articles (id, title,'
+                . ' description) — NOT the complete list, older articles may exist that aren\'t shown here. Use'
+                . ' these ids for "target" when the question is about one of these specific articles:',
+            implode("\n", $newsLines),
+            'If a question is about a News article you can\'t find in that list, it may simply be older than what\'s'
+                . ' shown — say so honestly (e.g. suggest checking the News section\'s full list) instead of'
+                . ' guessing an id or claiming the article doesn\'t exist at all.',
             'If a question is about something not covered by any of these sections, say so honestly instead of'
                 . ' guessing or inventing a section that doesn\'t exist.',
         ]);
@@ -176,7 +249,7 @@ class AssistantController extends AppController
         string $descriptionContext,
         string $imageUrl,
         string $organisationName,
-        string $mode,
+        string $mode
     ): string {
         $lines = [
             'You are helping write short website copy in Slovak for a local fishing association (MO SRZ) website.',
@@ -281,7 +354,9 @@ class AssistantController extends AppController
             $lines[] = '- "suggestion": ONLY when the admin is asking you to draft or rewrite the actual field text, put the ready-to-use'
                 . " text here, plain text. This is a \"{$fieldLabel}\" field — if that's a title/name/heading field, keep the"
                 . ' suggestion very short (a few words, one short phrase, no ending punctuation); for a longer field like a'
-                . ' description, 1-4 sentences is appropriate. If the admin is instead asking a question, asking for clarification,'
+                . ' description, write a normal full-length description covering the subject properly — do not artificially'
+                . ' shorten it to a sentence or two, a few well-developed paragraphs is fine when the subject calls for it.'
+                . ' If the admin is instead asking a question, asking for clarification,'
                 . ' or the reply is not meant to be dropped straight into the field, leave "suggestion" as null — do not put a draft'
                 . ' there just because the conversation is about the field.';
         }
@@ -305,9 +380,9 @@ class AssistantController extends AppController
 
     /**
      * @param array<int, array{role: string, text: string}> $history
-     * @return array{message: string, suggestion: string|null}
+     * @return array{message: string, suggestion: string|null, target: string|null}
      */
-    private function callGemini(string $apiKey, string $systemPrompt, array $history): array
+    private function callGemini(string $apiKey, string $systemPrompt, array $history, bool $withTarget = false): array
     {
         $client = new Client();
         $url = sprintf(self::GEMINI_URL_TEMPLATE, self::GEMINI_MODEL, $apiKey);
@@ -320,6 +395,16 @@ class AssistantController extends AppController
             $history,
         );
 
+        $properties = [
+            'message' => ['type' => 'STRING'],
+            'suggestion' => ['type' => 'STRING', 'nullable' => true],
+        ];
+        $required = ['message', 'suggestion'];
+        if ($withTarget) {
+            $properties['target'] = ['type' => 'STRING', 'nullable' => true];
+            $required[] = 'target';
+        }
+
         $response = $client->post($url, [
             'system_instruction' => ['parts' => [['text' => $systemPrompt]]],
             'contents' => $contents,
@@ -327,11 +412,8 @@ class AssistantController extends AppController
                 'responseMimeType' => 'application/json',
                 'responseSchema' => [
                     'type' => 'OBJECT',
-                    'properties' => [
-                        'message' => ['type' => 'STRING'],
-                        'suggestion' => ['type' => 'STRING', 'nullable' => true],
-                    ],
-                    'required' => ['message', 'suggestion'],
+                    'properties' => $properties,
+                    'required' => $required,
                 ],
             ],
         ], ['type' => 'json', 'timeout' => 15]);
@@ -354,11 +436,72 @@ class AssistantController extends AppController
         $parsed = json_decode($text, true);
         $message = is_string($parsed['message'] ?? null) ? trim($parsed['message']) : trim($text);
         $suggestion = is_string($parsed['suggestion'] ?? null) ? trim($parsed['suggestion']) : null;
+        $target = is_string($parsed['target'] ?? null) ? trim($parsed['target']) : null;
 
         if ($message === '') {
             throw new \RuntimeException(__('The AI assistant returned an empty suggestion.'));
         }
 
-        return ['message' => $message, 'suggestion' => $suggestion !== '' ? $suggestion : null];
+        return [
+            'message' => $message,
+            'suggestion' => $suggestion !== '' ? $suggestion : null,
+            'target' => $target !== '' ? $target : null,
+        ];
+    }
+
+    /**
+     * Turns the model's "target" pointer (see buildNavigationPrompt()) into
+     * an actual admin URL — built here from real routes/data, never taken
+     * from the model directly, so a hallucinated id, controller name, or
+     * unsupported action can't produce a broken or unintended link.
+     */
+    private function resolveNavigationLink(?string $target): ?string
+    {
+        if ($target === null) {
+            return null;
+        }
+
+        if (str_starts_with($target, 'text:')) {
+            return $this->resolveRowLink($target, 'text:', 'Texts');
+        }
+
+        if (str_starts_with($target, 'news:')) {
+            return $this->resolveRowLink($target, 'news:', 'News');
+        }
+
+        $categories = AppController::adminCategories();
+
+        if (str_ends_with($target, ':add')) {
+            $controller = substr($target, 0, -strlen(':add'));
+            $supportsAdd = isset($categories[$controller]) && in_array('add', $categories[$controller]['actions'], true);
+
+            return $supportsAdd ? Router::url(['prefix' => 'Admin', 'controller' => $controller, 'action' => 'add']) : null;
+        }
+
+        if (!array_key_exists($target, $categories)) {
+            return null;
+        }
+
+        return Router::url(['prefix' => 'Admin', 'controller' => $target, 'action' => 'index']);
+    }
+
+    /**
+     * Shared "id:<n> for table <Controller>" resolution used by both the
+     * text: and news: target shapes — checks the row actually exists before
+     * building the edit link, same reasoning as resolveNavigationLink()'s
+     * class comment.
+     */
+    private function resolveRowLink(string $target, string $prefix, string $tableAndController): ?string
+    {
+        $id = substr($target, strlen($prefix));
+        if (!ctype_digit($id)) {
+            return null;
+        }
+
+        $exists = TableRegistry::getTableLocator()->get($tableAndController)->exists(['id' => (int)$id]);
+
+        return $exists
+            ? Router::url(['prefix' => 'Admin', 'controller' => $tableAndController, 'action' => 'edit', $id])
+            : null;
     }
 }

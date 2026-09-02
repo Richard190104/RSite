@@ -96,6 +96,24 @@ class NotificationsController extends AppController
         return null;
     }
 
+    public function toggleActive(?string $id = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        $Notifications = $this->fetchTable('Notifications');
+        $notification = $Notifications->get($id);
+
+        $settings = $notification->settings ?? [];
+        $settings['is_active'] = !(bool)($settings['is_active'] ?? true);
+        $notification->settings = $settings;
+
+        if (!$Notifications->save($notification)) {
+            $this->Flash->error(__('Could not update the notification.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
     public function delete(?string $id = null)
     {
         $this->request->allowMethod(['post', 'delete']);

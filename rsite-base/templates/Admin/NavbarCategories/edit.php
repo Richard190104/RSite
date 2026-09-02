@@ -16,18 +16,22 @@ foreach ($allPages as $page) {
     $pageOptions[$page->id] = $page->title;
 }
 ?>
-<div class="content">
+<div class="content form-card">
     <?= $this->Form->create($category) ?>
-        <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title']) ?>
+        <div class="form-grid">
+            <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
 
-        <?= $this->Form->control('page_ids', [
-            'type' => 'select',
-            'multiple' => 'checkbox',
-            'label' => __('Pages in this category'),
-            'options' => $pageOptions,
-            'value' => $selectedPageIds,
-        ]) ?>
-
-        <?= $this->Form->button(__('Save')) ?>
+            <?= $this->Form->control('page_ids', [
+                'type' => 'select',
+                'multiple' => 'checkbox',
+                'label' => __('Pages in this category'),
+                'options' => $pageOptions,
+                'value' => $selectedPageIds,
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
+        </div>
+        <div class="form-card__actions">
+            <?= $this->Form->button(__('Save')) ?>
+        </div>
     <?= $this->Form->end() ?>
 </div>

@@ -6,16 +6,22 @@
  */
 $this->assign('title', __('Edit photo'));
 ?>
-<div class="content">
-    <?= $this->Html->image('/img/galleries/' . $photo->image, ['alt' => '', 'width' => 240]) ?>
+<div class="content form-card">
+    <div class="form-card__preview">
+        <?= $this->Html->image('/img/galleries/' . $photo->image, ['alt' => '', 'width' => 240]) ?>
+    </div>
     <?= $this->Form->create($photo, ['type' => 'file']) ?>
-        <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)')]) ?>
-        <?= $this->Form->control('category_id', [
-            'type' => 'select',
-            'options' => $categories,
-            'empty' => __('— none —'),
-            'label' => __('Category'),
-        ]) ?>
-        <?= $this->Form->button(__('Save')) ?>
+        <div class="form-grid">
+            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)')]) ?>
+            <?= $this->Form->control('category_id', [
+                'type' => 'select',
+                'options' => $categories,
+                'empty' => __('— none —'),
+                'label' => __('Category'),
+            ]) ?>
+        </div>
+        <div class="form-card__actions">
+            <?= $this->Form->button(__('Save')) ?>
+        </div>
     <?= $this->Form->end() ?>
 </div>

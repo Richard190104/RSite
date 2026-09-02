@@ -27,7 +27,9 @@ $this->assign('title', __('Logos'));
                             <?php endif; ?>
                         </td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $logo->id]) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $logo->id],
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

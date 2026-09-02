@@ -11,17 +11,21 @@ $this->set('aiChatFields', [
     'fieldLabel' => 'short event description',
 ]);
 ?>
-<div class="content">
+<div class="content form-card">
     <?= $this->Form->create($event) ?>
-        <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title']) ?>
-        <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description'), 'id' => 'description']) ?>
-        <?= $this->Form->control('date', ['label' => __('Date')]) ?>
-        <?= $this->Form->control('category_id', [
-            'type' => 'select',
-            'options' => $categories,
-            'empty' => __('— none —'),
-            'label' => __('Category'),
-        ]) ?>
-        <?= $this->Form->button(__('Save')) ?>
+        <div class="form-grid">
+            <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
+            <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description'), 'id' => 'description', 'container' => ['class' => 'form-grid__full']]) ?>
+            <?= $this->Form->control('date', ['label' => __('Date')]) ?>
+            <?= $this->Form->control('category_id', [
+                'type' => 'select',
+                'options' => $categories,
+                'empty' => __('— none —'),
+                'label' => __('Category'),
+            ]) ?>
+        </div>
+        <div class="form-card__actions">
+            <?= $this->Form->button(__('Save')) ?>
+        </div>
     <?= $this->Form->end() ?>
 </div>

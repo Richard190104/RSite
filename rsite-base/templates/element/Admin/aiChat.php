@@ -59,16 +59,16 @@ $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !==
     data-ai-chat-use-label="<?= h(__('Use this')) ?>"
 >
     <button type="button" class="admin-ai-chat__toggle" aria-label="<?= __('Open Rybárik, the AI assistant') ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3C7.02944 3 3 6.58172 3 11c0 2.38 1.19 4.5 3.06 5.94-.1.98-.45 2.2-1.29 3.2-.15.18-.02.46.22.44 1.6-.13 3.24-.72 4.32-1.34.85.2 1.75.31 2.69.31 4.9706 0 9-3.5817 9-8s-4.0294-8-9-8Z"/>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+            <path d="M12 2.5c.3 0 .58.2.67.49l1.36 4.24a4 4 0 0 0 2.6 2.6l4.24 1.36a.7.7 0 0 1 0 1.34l-4.24 1.36a4 4 0 0 0-2.6 2.6l-1.36 4.24a.7.7 0 0 1-1.34 0l-1.36-4.24a4 4 0 0 0-2.6-2.6l-4.24-1.36a.7.7 0 0 1 0-1.34l4.24-1.36a4 4 0 0 0 2.6-2.6l1.36-4.24c.09-.29.37-.49.67-.49Z"/>
         </svg>
     </button>
 
     <div class="admin-ai-chat__panel">
         <div class="admin-ai-chat__header">
             <span class="admin-ai-chat__header-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 3C7.02944 3 3 6.58172 3 11c0 2.38 1.19 4.5 3.06 5.94-.1.98-.45 2.2-1.29 3.2-.15.18-.02.46.22.44 1.6-.13 3.24-.72 4.32-1.34.85.2 1.75.31 2.69.31 4.9706 0 9-3.5817 9-8s-4.0294-8-9-8Z"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                    <path d="M12 2.5c.3 0 .58.2.67.49l1.36 4.24a4 4 0 0 0 2.6 2.6l4.24 1.36a.7.7 0 0 1 0 1.34l-4.24 1.36a4 4 0 0 0-2.6 2.6l-1.36 4.24a.7.7 0 0 1-1.34 0l-1.36-4.24a4 4 0 0 0-2.6-2.6l-4.24-1.36a.7.7 0 0 1 0-1.34l4.24-1.36a4 4 0 0 0 2.6-2.6l1.36-4.24c.09-.29.37-.49.67-.49Z"/>
                 </svg>
             </span>
             <span class="admin-ai-chat__header-text">

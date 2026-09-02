@@ -81,13 +81,25 @@ document.addEventListener('DOMContentLoaded', function () {
         return document.querySelector('[data-html-preview-toggle-for="' + field.id + '"]');
     }
 
-    function appendMessage(role, text, suggestion) {
+    function appendMessage(role, text, suggestion, link) {
         var bubble = document.createElement('div');
         bubble.className = 'admin-ai-chat__message admin-ai-chat__message--' + role;
 
         var textEl = document.createElement('p');
         textEl.textContent = text;
         bubble.appendChild(textEl);
+
+        // Navigation-mode replies (see Admin\AssistantController::resolveNavigationLink())
+        // can carry a server-resolved admin URL alongside the message — a
+        // real link built from actual routes/data, never something the
+        // model's text was parsed for, so it's safe to render directly.
+        if (link) {
+            var linkEl = document.createElement('a');
+            linkEl.href = link;
+            linkEl.className = 'admin-ai-chat__link';
+            linkEl.textContent = widget.dataset.aiChatGoToLabel || 'Prejsť tam';
+            bubble.appendChild(linkEl);
+        }
 
         // Only a reply the model itself flagged as a ready-to-use draft
         // (suggestion !== null/empty) gets a "Use this" button — a plain
@@ -186,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                appendMessage('assistant', result.data.message, result.data.suggestion);
+                appendMessage('assistant', result.data.message, result.data.suggestion, result.data.link);
                 history.push({ role: 'assistant', text: result.data.message });
             })
             .catch(function () {

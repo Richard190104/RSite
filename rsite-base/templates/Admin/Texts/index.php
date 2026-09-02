@@ -21,7 +21,9 @@ $this->assign('title', __('Texts'));
                         <td><?= h(__(ucfirst($text->slug))) ?></td>
                         <td><?= h($text->value) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $text->id]) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $text->id],
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

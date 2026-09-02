@@ -97,6 +97,21 @@ class BannersController extends AppController
         return null;
     }
 
+    public function toggleEnabled(?string $id = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        $Banners = $this->fetchTable('Banners');
+        $banner = $Banners->get($id);
+        $banner->is_enabled = !$banner->is_enabled;
+
+        if (!$Banners->save($banner)) {
+            $this->Flash->error(__('Could not update the banner.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
     public function delete(?string $id = null)
     {
         $this->request->allowMethod(['post', 'delete']);

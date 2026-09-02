@@ -14,6 +14,7 @@
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'admin']) ?>
     <?= $this->Html->script('admin-helper-widget') ?>
+    <?= $this->Html->script('admin-toggle-checkbox') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

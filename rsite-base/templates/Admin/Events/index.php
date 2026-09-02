@@ -26,12 +26,11 @@ $this->assign('title', __('Events'));
                         <td><?= $event->date !== null ? h($event->date->format('d.m.Y')) : '' ?></td>
                         <td><?= h($event->category->title ?? '') ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $event->id],
-                                ['confirm' => __('Are you sure you want to delete "{0}"?', $event->title)],
-                            ) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $event->id],
+                                'deleteUrl' => ['action' => 'delete', $event->id],
+                                'confirmMessage' => __('Are you sure you want to delete "{0}"?', $event->title),
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

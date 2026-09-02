@@ -137,11 +137,11 @@
     padding: 0.85rem 1.4rem;
     border-radius: 999px;
     background: v.$color-navy;
-    color: v.$color-white !important;
+    color: v.$color-white;
     font-family: v.$font-heading;
     font-size: v.$font-size-md;
     font-weight: 700;
-    text-decoration: none !important;
+    text-decoration: none;
     transition: background 0.15s ease;
 
     &:hover,

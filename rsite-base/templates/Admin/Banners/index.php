@@ -13,27 +13,37 @@ $this->assign('title', __('Banners'));
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th><?= __('Title') ?></th>
                     <th><?= __('Location') ?></th>
                     <th><?= __('Background') ?></th>
-                    <th><?= __('Status') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($banners as $banner): ?>
                     <tr>
+                        <td>
+                            <?= $this->Form->create(null, [
+                                'url' => ['action' => 'toggleEnabled', $banner->id],
+                                'class' => 'banner-toggle-form',
+                            ]) ?>
+                                <?= $this->Form->checkbox('is_enabled', [
+                                    'checked' => $banner->is_enabled,
+                                    'class' => 'js-toggle-checkbox',
+                                    'title' => __('Show on the page'),
+                                ]) ?>
+                            <?= $this->Form->end() ?>
+                        </td>
                         <td><?= h($banner->title) ?></td>
                         <td><?= h($banner->location) ?></td>
                         <td><?= $this->Html->image('/img/banners/' . $banner->background, ['alt' => $banner->title, 'width' => 120]) ?></td>
-                        <td><?= $banner->is_enabled ? __('Shown') : __('Hidden') ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $banner->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $banner->id],
-                                ['confirm' => __('Are you sure you want to delete "{0}"?', $banner->title)],
-                            ) ?>
+                            <?= $this->element('Admin/rowActions', [
+                                'editUrl' => ['action' => 'edit', $banner->id],
+                                'deleteUrl' => ['action' => 'delete', $banner->id],
+                                'confirmMessage' => __('Are you sure you want to delete "{0}"?', $banner->title),
+                            ]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -11,19 +11,23 @@ $this->set('aiChatFields', [
     'fieldLabel' => 'short page teaser description',
 ]);
 ?>
-<div class="content">
+<div class="content form-card">
     <h1><?= h(__($page->title)) ?></h1>
     <input type="hidden" id="page-title" value="<?= h(__($page->title)) ?>">
     <?= $this->Form->create($page) ?>
-        <?= $this->Form->control('content.description', [
-            'type' => 'textarea',
-            'rows' => 3,
-            'label' => __('Description'),
-            'value' => $description,
-            'id' => 'content-description',
-        ]) ?>
-
-        <?= $this->Form->button(__('Save')) ?>
+        <div class="form-grid">
+            <?= $this->Form->control('content.description', [
+                'type' => 'textarea',
+                'rows' => 3,
+                'label' => __('Description'),
+                'value' => $description,
+                'id' => 'content-description',
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
+        </div>
+        <div class="form-card__actions">
+            <?= $this->Form->button(__('Save')) ?>
+        </div>
     <?= $this->Form->end() ?>
 
     <p><?= __('Shown under the page name in the homepage quick access cards.') ?></p>

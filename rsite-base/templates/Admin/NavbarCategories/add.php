@@ -10,9 +10,13 @@ $this->set('aiChatFields', [
     'fieldLabel' => 'short navbar category title',
 ]);
 ?>
-<div class="content">
+<div class="content form-card">
     <?= $this->Form->create($category) ?>
-        <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title']) ?>
-        <?= $this->Form->button(__('Save')) ?>
+        <div class="form-grid">
+            <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
+        </div>
+        <div class="form-card__actions">
+            <?= $this->Form->button(__('Save')) ?>
+        </div>
     <?= $this->Form->end() ?>
 </div>
