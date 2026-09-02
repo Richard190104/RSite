@@ -42,6 +42,35 @@ body {
     font-weight: 400;
 }
 
+// Sticky footer: on a page with little content (e.g. an empty gallery
+// category), the footer should stay pinned to the bottom of the viewport
+// instead of floating up right under the content. .main grows to fill any
+// leftover space, pushing .site-footer down to the end of the flex column.
+//
+// The flex container is a dedicated .site-wrapper (see
+// templates/layout/default.php) wrapping the whole page, not body itself —
+// body stays a plain block element so nothing here depends on body's own
+// formatting context. .page-banner (a direct child, i.e. a direct flex
+// item, since it's the hero Swiper) needs its own explicit width/margin
+// override for this to work — see the &.swiper rule in app.scss for why.
+html {
+    height: 100%;
+}
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    flex: 1 0 auto;
+}
+
+.site-footer {
+    flex-shrink: 0;
+}
+
 .top-nav-links,
 .side-nav,
 h1, h2, h3, h4, h5, h6 {

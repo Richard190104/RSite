@@ -9,7 +9,13 @@ $this->assign('title', __('Add photo'));
 <div class="content form-card">
     <?= $this->Form->create($photo, ['type' => 'file']) ?>
         <div class="form-grid">
-            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Image')]) ?>
+            <?= $this->Form->control('image', [
+                'type' => 'file',
+                'multiple' => true,
+                'name' => 'image[]',
+                'label' => __('Images'),
+            ]) ?>
+            <p><?= __('Select multiple files to add several photos at once — they will all be saved under the category picked below.') ?></p>
             <?= $this->Form->control('category_id', [
                 'type' => 'select',
                 'options' => $categories,
