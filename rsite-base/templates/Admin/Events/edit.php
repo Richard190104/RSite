@@ -17,6 +17,8 @@ $this->set('aiChatFields', [
             <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description'), 'id' => 'description', 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('date', ['label' => __('Date')]) ?>
+            <?= $this->Form->control('time', ['label' => __('Time'), 'placeholder' => '08:00']) ?>
+            <?= $this->Form->control('location', ['label' => __('Location'), 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('category_id', [
                 'type' => 'select',
                 'options' => $categories,
