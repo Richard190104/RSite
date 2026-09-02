@@ -21,7 +21,7 @@ $this->assign('title', __('Galleries'));
             <tbody>
                 <?php foreach ($photos as $photo): ?>
                     <tr>
-                        <td><?= $this->Html->image('/img/galleries/' . $photo->image, ['alt' => '', 'width' => 80]) ?></td>
+                        <td><?= $this->Html->image($photo->image, ['alt' => '', 'width' => 80]) ?></td>
                         <td><?= h($photo->category->title ?? '') ?></td>
                         <td class="actions">
                             <?= $this->element('Admin/rowActions', [

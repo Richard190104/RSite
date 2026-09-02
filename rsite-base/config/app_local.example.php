@@ -102,4 +102,16 @@ return [
     'Ai' => [
         'geminiApiKey' => env('GEMINI_API_KEY', null),
     ],
+
+    /*
+     * ImgBB API key, used to host public gallery photos (Admin\GalleriesController,
+     * Admin\ImgBbUploadTrait) instead of storing them in webroot/img/ — a photo
+     * gallery can grow far larger than this host's disk quota comfortably holds.
+     * Free tier — get a key at https://api.imgbb.com/. Leave unset to disable
+     * gallery photo uploads (a clear "not configured" error instead of failing
+     * oddly).
+     */
+    'ImgBB' => [
+        'apiKey' => env('IMGBB_API_KEY', null),
+    ],
 ];

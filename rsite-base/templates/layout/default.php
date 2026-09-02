@@ -33,14 +33,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('css') ?>
 </head>
 <body>
-    <?= $this->element('navbar') ?>
-    <?= $this->element('notificationPopup') ?>
-    <?= $this->element('banner') ?>
-    <main class="main">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-    </main>
-    <?= $this->element('footer') ?>
+    <div class="site-wrapper">
+        <?= $this->element('navbar') ?>
+        <?= $this->element('notificationPopup') ?>
+        <?= $this->element('banner') ?>
+        <main class="main">
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
+        </main>
+        <?= $this->element('footer') ?>
+    </div>
     <?= $this->fetch('script') ?>
 </body>
 </html>

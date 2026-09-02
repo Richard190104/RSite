@@ -5,7 +5,12 @@ namespace App\Controller\Admin;
 
 class GalleriesController extends AppController
 {
+    // ImageUploadTrait is used only for its imageUploadError() validation
+    // (type/size) — the actual bytes go to ImgBB (ImgBbUploadTrait), not
+    // webroot/img/, since a photo gallery can grow far larger than this
+    // host's disk quota comfortably holds.
     use ImageUploadTrait;
+    use ImgBbUploadTrait;
 
     public function index(): void
     {
@@ -18,6 +23,15 @@ class GalleriesController extends AppController
         $this->set(compact('photos'));
     }
 
+    /**
+     * Accepts one or more files at once (the form's file input has the
+     * `multiple` attribute and name="image[]") — each valid file becomes
+     * its own Gallery row under the single category picked in the form.
+     * This is the only admin upload form that allows batch uploads; every
+     * other image field (Banners, News, Notifications, Categories) is
+     * still one file per record, since only the gallery is meant to grow
+     * to dozens/hundreds of photos at a time.
+     */
     public function add()
     {
         $Galleries = $this->fetchTable('Galleries');
@@ -25,27 +39,53 @@ class GalleriesController extends AppController
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
-            $upload = $data['image'] ?? null;
-            unset($data['image']);
+            $categoryId = $data['category_id'] ?? null;
 
-            $photo = $Galleries->patchEntity($photo, $data);
-            $uploadError = $this->imageUploadError($upload, true);
+            /** @var array<\Psr\Http\Message\UploadedFileInterface> $uploads */
+            $uploads = (array)($data['image'] ?? []);
+            $uploads = array_filter(
+                $uploads,
+                fn ($upload) => $upload instanceof \Psr\Http\Message\UploadedFileInterface
+                    && $upload->getError() !== UPLOAD_ERR_NO_FILE,
+            );
 
-            if (!$photo->getErrors() && $uploadError === null) {
-                $photo->image = $this->storeImageUpload($upload, 'galleries');
+            if (!$uploads) {
+                $this->Flash->error(__('Please choose at least one image.'));
+            } else {
+                $saved = 0;
+                foreach ($uploads as $upload) {
+                    $uploadError = $this->imageUploadError($upload, true);
+                    if ($uploadError !== null) {
+                        $this->Flash->error($uploadError);
+                        continue;
+                    }
 
-                if ($Galleries->save($photo)) {
-                    $this->Flash->success(__('Photo saved.'));
+                    try {
+                        $uploaded = $this->uploadToImgBb($upload);
+                    } catch (\RuntimeException $e) {
+                        $this->Flash->error($e->getMessage());
+                        continue;
+                    }
+
+                    $newPhoto = $Galleries->newEntity([
+                        'category_id' => $categoryId,
+                        'image' => $uploaded['url'],
+                        'delete_url' => $uploaded['deleteUrl'],
+                    ]);
+
+                    if ($Galleries->save($newPhoto)) {
+                        $saved++;
+                    } else {
+                        $this->Flash->error(__('Could not save one of the photos.'));
+                    }
+                }
+
+                if ($saved > 0) {
+                    $this->Flash->success(__n('{0} photo saved.', '{0} photos saved.', $saved, $saved));
 
                     return $this->redirect(['action' => 'index']);
                 }
             }
-
-            if ($uploadError !== null) {
-                $this->Flash->error($uploadError);
-            }
-            $this->Flash->error(__('Could not save the photo, check the errors below.'));
         }
 
         $this->set('photo', $photo);
@@ -68,22 +108,28 @@ class GalleriesController extends AppController
             $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
             $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
 
-            $oldImage = $photo->image;
+            $oldDeleteUrl = $photo->delete_url;
             $photo = $Galleries->patchEntity($photo, $data);
 
             if (!$photo->getErrors() && $uploadError === null) {
-                if ($hasNewFile) {
-                    $photo->image = $this->storeImageUpload($upload, 'galleries');
-                }
-
-                if ($Galleries->save($photo)) {
+                try {
                     if ($hasNewFile) {
-                        $this->deleteImageUpload('galleries', $oldImage);
+                        $uploaded = $this->uploadToImgBb($upload);
+                        $photo->image = $uploaded['url'];
+                        $photo->delete_url = $uploaded['deleteUrl'];
                     }
 
-                    $this->Flash->success(__('Photo saved.'));
+                    if ($Galleries->save($photo)) {
+                        if ($hasNewFile && $oldDeleteUrl) {
+                            $this->deleteFromImgBb($oldDeleteUrl);
+                        }
 
-                    return $this->redirect(['action' => 'index']);
+                        $this->Flash->success(__('Photo saved.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                } catch (\RuntimeException $e) {
+                    $uploadError = $e->getMessage();
                 }
             }
 
@@ -107,7 +153,9 @@ class GalleriesController extends AppController
         $photo = $Galleries->get($id);
 
         if ($Galleries->delete($photo)) {
-            $this->deleteImageUpload('galleries', $photo->image);
+            if ($photo->delete_url) {
+                $this->deleteFromImgBb($photo->delete_url);
+            }
 
             $this->Flash->success(__('Photo deleted.'));
         } else {
