@@ -2,8 +2,8 @@
 /**
  * One-shot translation workflow: extract new __() strings, translate them
  * with Gemini, let you review/edit the result, then commit + push + deploy
- * them — a single run instead of the separate translate-locales.mjs /
- * manual commit / deploy-translations.mjs steps.
+ * them — one script covering what used to be a separate extract-and-
+ * translate step, a manual commit, and a separate deploy step.
  *
  * Flow:
  *   1. Check out `main` (only — never your own branch/working tree) into a
@@ -14,31 +14,33 @@
  *      not-yet-merged strings early, and could commit them onto `main`
  *      ahead of the code that uses them — see git history for why this
  *      changed.)
- *   2. Translate every string missing from sk_SK/default.po there (same
- *      logic as translate-locales.mjs — only ADDS new msgid/msgstr pairs,
- *      never touches existing ones).
- *   3. Print what changed and pause. Edit the worktree's
+ *   2. Translate every string missing from sk_SK/default.po there — only
+ *      ADDS new msgid/msgstr pairs, never touches existing ones.
+ *   3. Print what changed and pause for review — SKIPPED when CI=true
+ *      (GitHub Actions sets this automatically; nothing interactive can
+ *      happen in a workflow run). Locally, edit the worktree's
  *      resources/locales/sk_SK/default.po by hand right now (path printed
  *      at the prompt) if any translation needs fixing — the file on disk
  *      there is what gets committed and deployed, not what's printed above.
- *   4. On Enter: git add + commit + push resources/locales/ from the
- *      worktree to `main` (skipped if there's nothing to commit — e.g. you
- *      only hand-edited something already committed, or step 2 found
- *      nothing new). Your own checkout/branch is never touched.
+ *   4. git add + commit + push resources/locales/ from the worktree to
+ *      `main` (skipped if there's nothing to commit — e.g. you only
+ *      hand-edited something already committed, or step 2 found nothing
+ *      new). Your own checkout/branch is never touched.
  *   5. Upload resources/locales/ to production over FTP, from that same
  *      freshly-pushed worktree state.
  *   6. Clear the production cache — CakePHP's translation cache would
  *      otherwise keep serving the old .po content until it naturally
  *      expires. Uploads webroot/clear-cache.php with a freshly generated
- *      one-off token, prints the URL for you to open yourself (this host's
- *      anti-bot challenge blocks a plain Node request — see
- *      clearRemoteCache() below), waits for Enter, then deletes it from
- *      the server. Always runs (unlike deploy.mjs's --clear-cache, which
- *      is opt-in) — this workflow's whole point is getting a translation
- *      change live, so skipping the cache-bust would defeat it.
+ *      one-off token and hits it through the host's anti-bot challenge
+ *      (same AES-128-CBC bypass as deploy.mjs — see that file's header
+ *      comment for the full rationale), then deletes it from the server.
+ *      Always runs (unlike deploy.mjs's plain code deploy, which never
+ *      touches the cache) — this workflow's whole point is getting a
+ *      translation change live, so skipping the cache-bust would defeat it.
  *
  * Usage:
- *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... node bin/translate-and-deploy.mjs
+ *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... CACHE_TOKEN=... \
+ *     node bin/translate-and-deploy.mjs
  *
  * The Gemini key comes from config/app_local.php's Ai.geminiApiKey — see
  * readGeminiApiKey() below. FTP credentials are read from the environment
@@ -48,7 +50,7 @@
  */
 import { Client } from 'basic-ftp';
 import { execFileSync } from 'node:child_process';
-import { randomBytes } from 'node:crypto';
+import { createDecipheriv, randomBytes } from 'node:crypto';
 import { appendFileSync, existsSync, readdirSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import readline from 'node:readline/promises';
@@ -59,9 +61,8 @@ const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '
 const REPO_ROOT = join(ROOT, '..');
 const ROOT_REL = relative(REPO_ROOT, ROOT).split(sep).join('/');
 
-// Separate from deploy.mjs's .deploy-build and deploy-translations.mjs's
-// .deploy-translations-build — none of these scripts should be able to
-// clobber another's export if run back to back.
+// Separate from deploy.mjs's .deploy-build — the two scripts shouldn't be
+// able to clobber each other's export if run back to back.
 const WORKTREE_DIR = join(ROOT, '.translate-and-deploy-worktree');
 
 // The production site — used only to build the clear-cache.php URL printed
@@ -343,10 +344,10 @@ async function translateNewStrings(worktreeRoot, apiKey) {
     return translated;
 }
 
-// Same fast-forward-only sync deploy.mjs/deploy-translations.mjs use —
-// refuses rather than guessing if history has diverged. Run BEFORE the
-// translate step (not just before commit) so the diff shown for review is
-// relative to what's actually on origin, not a stale local main.
+// Same fast-forward-only sync deploy.mjs uses — refuses rather than
+// guessing if history has diverged. Run BEFORE the translate step (not
+// just before commit) so the diff shown for review is relative to what's
+// actually on origin, not a stale local main.
 function syncMainWithOrigin() {
     console.log('\nFetching origin/main...');
     runGit(['fetch', 'origin', 'main'], REPO_ROOT);
@@ -430,7 +431,7 @@ function* walkDir(dir, base) {
 
 // Uploads resources/locales/ straight from the worktree — it's already
 // main's just-pushed HEAD, so no separate git-archive export step is
-// needed the way deploy.mjs/deploy-translations.mjs do it standalone.
+// needed the way deploy.mjs does it standalone.
 // Leaves `client` connected — the caller reuses it for clearRemoteCache().
 async function deployLocalesOverFtp(client, worktreeRoot) {
     console.log('\n=== Uploading over FTP ===');
@@ -461,12 +462,45 @@ function clearCacheScriptWithToken(worktreeRoot, token) {
     return source.replace(placeholder, token);
 }
 
-// Uploads webroot/clear-cache.php with a one-off random token, then waits
-// for you to open the URL yourself and confirm it ran, before deleting it
-// from the server — same pattern as deploy.mjs's runOneOffScript(), see
-// that function's comment for why this needs a real browser (this host's
-// anti-bot challenge blocks a plain Node request) and why the file must
-// not be left sitting on the server.
+// GETs `url`; if the response is the host's anti-bot challenge page (an
+// inline <script> computing a cookie value via AES-128-CBC and redirecting
+// to the same URL with &i=1), solves it without a browser and re-requests
+// — otherwise returns the response as-is. Identical to deploy.mjs's
+// fetchThroughAntiBotChallenge() — see that file's comment for the full
+// rationale (verified byte-identical against the host's own /aes.js);
+// duplicated here rather than shared on purpose, same as the rest of this
+// script's helpers (a change to one script shouldn't silently affect
+// another).
+async function fetchThroughAntiBotChallenge(url) {
+    const first = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; deploy-script)' } });
+    const firstBody = await first.text();
+
+    const challenge = firstBody.match(
+        /toNumbers\("([a-f0-9]+)"\),b=toNumbers\("([a-f0-9]+)"\),c=toNumbers\("([a-f0-9]+)"\).*?location\.href="([^"]+)"/s,
+    );
+    if (!challenge) {
+        return { status: first.status, body: firstBody };
+    }
+
+    const [, keyHex, ivHex, ciphertextHex, redirectUrl] = challenge;
+    const decipher = createDecipheriv('aes-128-cbc', Buffer.from(keyHex, 'hex'), Buffer.from(ivHex, 'hex'));
+    decipher.setAutoPadding(false);
+    const cookieValue = Buffer.concat([decipher.update(Buffer.from(ciphertextHex, 'hex')), decipher.final()]).toString('hex');
+
+    const second = await fetch(redirectUrl, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; deploy-script)',
+            Cookie: `__test=${cookieValue}`,
+        },
+    });
+    return { status: second.status, body: await second.text() };
+}
+
+// Uploads webroot/clear-cache.php with a one-off random token, hits it
+// through the anti-bot challenge, checks the output for the expected
+// marker, and only deletes the script from the server if that marker was
+// found — a failed/unexpected run is left in place for inspection rather
+// than silently cleaned up.
 async function clearRemoteCache(client, worktreeRoot) {
     const token = randomBytes(16).toString('hex');
     const remotePath = '/htdocs/webroot/clear-cache.php';
@@ -475,14 +509,21 @@ async function clearRemoteCache(client, worktreeRoot) {
     await client.uploadFrom(Readable.from([clearCacheScriptWithToken(worktreeRoot, token)]), remotePath);
 
     const url = `${SITE_URL.replace(/\/$/, '')}/clear-cache.php?token=${token}`;
-    console.log(`\nOpen this URL in your browser and confirm the output looks right:\n  ${url}`);
+    const { status, body } = await fetchThroughAntiBotChallenge(url);
 
-    const rl = readline.createInterface({ input: stdin, output: stdout });
-    await rl.question('\nPress Enter once you\'ve checked it (this deletes clear-cache.php from the server)... ');
-    rl.close();
+    console.log(body.trim());
+
+    const successMarker = '=== Clearing all ===';
+    if (status !== 200 || !body.includes(successMarker)) {
+        throw new Error(
+            `Cache clear did not report success (HTTP ${status}, expected "${successMarker}" in the output) — ` +
+            'leaving clear-cache.php on the server for inspection. Check the output above, fix the issue, then ' +
+            'delete webroot/clear-cache.php from the server by hand once resolved.',
+        );
+    }
 
     await client.remove(remotePath);
-    console.log('clear-cache.php removed from the server.');
+    console.log('\nclear-cache.php removed from the server.');
 }
 
 async function main() {
@@ -513,13 +554,22 @@ async function main() {
             }
         }
 
-        console.log(
-            `\nReview and edit by hand now if needed: ${join(worktreeRoot, 'resources', 'locales', 'sk_SK', 'default.po')}` +
-            '\nWhatever is on disk there when you press Enter is what gets committed and deployed.',
-        );
-        const rl = readline.createInterface({ input: stdin, output: stdout });
-        await rl.question('\nPress Enter to commit, push, and deploy... ');
-        rl.close();
+        // CI=true is set automatically by GitHub Actions (and most other
+        // CI providers) — nothing interactive can happen in a workflow
+        // run, so this trusts the Gemini translation as-is and moves
+        // straight to commit/push/deploy. Locally, this still pauses for
+        // review/hand-editing before anything is committed.
+        if (process.env.CI === 'true') {
+            console.log('\nCI run — skipping the interactive review pause.');
+        } else {
+            console.log(
+                `\nReview and edit by hand now if needed: ${join(worktreeRoot, 'resources', 'locales', 'sk_SK', 'default.po')}` +
+                '\nWhatever is on disk there when you press Enter is what gets committed and deployed.',
+            );
+            const rl = readline.createInterface({ input: stdin, output: stdout });
+            await rl.question('\nPress Enter to commit, push, and deploy... ');
+            rl.close();
+        }
 
         const committed = commitAndPushLocales(worktreeRoot);
         if (!committed && translated.length === 0) {
