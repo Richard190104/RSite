@@ -1412,3 +1412,7 @@ msgstr "O nás text na testovanie skriptu"
 #: ./templates/Pages/home.php:20
 msgid "About us text for script testings"
 msgstr "O nás text pre testovanie skriptov"
+
+#: ./templates/Pages/home.php:20
+msgid "Testing ABOUTUS Text automatic translations"
+msgstr "Testovanie automatických prekladov textu O NÁS"
