@@ -386,6 +386,18 @@ function commitAndPushLocales(worktreeRoot) {
 
     console.log('\n=== Committing resources/locales/ to main ===');
     runGit(['add', '--', 'resources/locales'], worktreeRoot);
+
+    // The worktree is a fresh checkout with no git identity of its own —
+    // a CI runner has no global user.name/user.email configured at all
+    // (unlike a developer's own machine, where this is already set), so
+    // `git commit` fails outright without it. Scoped to this worktree only
+    // (no --global), and only set in CI — locally this defers to whatever
+    // identity is already configured for the repo/machine.
+    if (process.env.CI === 'true') {
+        runGit(['config', 'user.name', 'github-actions[bot]'], worktreeRoot);
+        runGit(['config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], worktreeRoot);
+    }
+
     // Two separate -m flags (git joins them with a blank line) rather than
     // one string containing literal newlines — run()/runGit() may execute
     // through a shell (needed for Windows .cmd/.bat shims elsewhere in

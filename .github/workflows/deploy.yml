@@ -1,13 +1,21 @@
 name: Deploy
 
+# Deploys only on an actual PR merge into main — NOT on every push to main
+# (a direct push, e.g. from bin/translate-and-deploy.mjs committing a
+# translation update, or a small fix pushed straight to main, would
+# otherwise trigger a full deploy for no reason). `pull_request: closed`
+# fires both when a PR is merged and when it's closed unmerged — the
+# `if:` on the job below is what actually filters to merged-only.
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
 
-# Only one deploy at a time — a second push to main while one is still
-# running waits for it rather than racing it (both would git-archive
-# `main` and FTP-upload at the same time otherwise, and bin/deploy.mjs's
+# Only one deploy at a time — a second merge while one is still running
+# waits for it rather than racing it (both would git-archive `main` and
+# FTP-upload at the same time otherwise, and bin/deploy.mjs's
 # .vendor-deployed-hash bookkeeping isn't safe against concurrent writers).
 concurrency:
   group: deploy-production
@@ -15,6 +23,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     # Needed for the "Commit updated vendor marker" step below to push back
     # to main with the default GITHUB_TOKEN — repos with restrictive default
@@ -27,6 +36,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          # Explicit ref: pull_request's default checkout is the PR's merge
+          # preview commit (refs/pull/N/merge), not the actual main branch
+          # — after a merge, `main` itself already has this PR's commits,
+          # so check that out directly instead of a synthetic preview ref.
+          ref: main
           # bin/deploy.mjs runs `git fetch origin main` / `git merge-base
           # main origin/main` itself to verify local main matches origin
           # before deploying — a shallow clone (actions/checkout's default,
