@@ -17,7 +17,7 @@ $miniBanners = TableRegistry::getTableLocator()->get('Banners')
 <div class="p-home">
     <div class="p-home__about-us">
         <div class="p-home__about-us-left">
-            <h2 class="p-home__about-us-heading"><?= __('About us text for script testings') ?></h2>
+            <h2 class="p-home__about-us-heading"><?= __('About us') ?></h2>
             <p class="p-home__about-us-text"><?= h($page->content['about_us_text'] ?? '') ?></p>
             <a class="p-home__about-us-cta" href="#"><?= __('More about the organisation') ?> &rarr;</a>
         </div>

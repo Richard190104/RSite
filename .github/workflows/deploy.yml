@@ -16,6 +16,13 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Needed for the "Commit updated vendor marker" step below to push back
+    # to main with the default GITHUB_TOKEN — repos with restrictive default
+    # workflow permissions (Settings > Actions > General) would otherwise
+    # deny that push regardless of this, so if it still fails with a 403,
+    # that setting needs "Read and write permissions" enabled there too.
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,4 +60,26 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          MIGRATION_TOKEN: ${{ secrets.MIGRATION_TOKEN }}
+          CACHE_TOKEN: ${{ secrets.CACHE_TOKEN }}
         run: node bin/deploy.mjs
+
+      # bin/deploy.mjs writes an updated .vendor-deployed-hash locally
+      # whenever it uploads vendor/ (composer.lock changed since the last
+      # deploy), but never commits it — deploy.mjs's own header comment
+      # says that's on whoever deploys after a composer.lock change. A
+      # human deploying locally does that by hand; this step is the CI
+      # equivalent, so the marker doesn't drift and every later deploy
+      # (CI or local) keeps trusting it to skip an unchanged vendor/.
+      - name: Commit updated vendor marker
+        working-directory: rsite-base
+        run: |
+          if git diff --quiet -- .vendor-deployed-hash; then
+            echo "No change to .vendor-deployed-hash — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .vendor-deployed-hash
+          git commit -m "Update .vendor-deployed-hash after CI deploy [skip ci]"
+          git push origin HEAD:main
