@@ -21,6 +21,9 @@
 /.deploy-archive.tar
 /.deploy-translations-build/
 /.deploy-translations-archive.tar
+/.translate-and-deploy-build/
+/.translate-and-deploy-archive.tar
+/.translate-and-deploy-worktree/
 
 # OS generated files #
 ######################
