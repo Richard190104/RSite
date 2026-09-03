@@ -69,6 +69,14 @@ class AppController extends BaseController
                 ),
                 'actions' => ['index', 'edit'],
             ],
+            'CommitteeMembers' => [
+                'label' => __('Committee'),
+                'description' => __(
+                    'The organisation\'s committee (výbor) — name (required), plus optional phone, email, and a'
+                        . ' photo. Not shown on the public site yet, admin-managed data only for now.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
             'News' => [
                 'label' => __('News'),
                 'description' => __(

@@ -31,6 +31,74 @@ msgstr "Stránky"
 msgid "News"
 msgstr "Novinky"
 
+#: ./src/Controller/Admin/AppController.php (adminCategories label)
+msgid "Committee"
+msgstr "Výbor"
+
+#: ./templates/Admin/CommitteeMembers/index.php
+msgid "Add committee member"
+msgstr "Pridať člena výboru"
+
+#: ./templates/Admin/CommitteeMembers/edit.php
+msgid "Edit committee member"
+msgstr "Upraviť člena výboru"
+
+#: ./src/Controller/Admin/CommitteeMembersController.php
+msgid "Committee member saved."
+msgstr "Člen výboru uložený."
+
+#: ./src/Controller/Admin/CommitteeMembersController.php
+msgid "Could not save the committee member, check the errors below."
+msgstr "Člena výboru sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/CommitteeMembersController.php
+msgid "Committee member deleted."
+msgstr "Člen výboru odstránený."
+
+#: ./src/Controller/Admin/CommitteeMembersController.php
+msgid "Could not delete the committee member."
+msgstr "Člena výboru sa nepodarilo odstrániť."
+
+#: ./templates/Admin/CommitteeMembers/index.php
+msgid "Role"
+msgstr "Funkcia"
+
+#: ./templates/Admin/CommitteeMembers/add.php
+msgid "Role (optional)"
+msgstr "Funkcia (nepovinné)"
+
+#: ./templates/Admin/CommitteeMembers/index.php
+msgid "Section"
+msgstr "Sekcia"
+
+#: ./templates/Admin/CommitteeMembers/add.php
+msgid "e.g. Committee members, Audit committee"
+msgstr "napr. Členovia výboru, Kontrolná komisia"
+
+#: ./templates/Admin/CommitteeMembers/index.php
+msgid "Phone"
+msgstr "Telefón"
+
+#: ./templates/Admin/CommitteeMembers/add.php
+msgid "Phone (optional)"
+msgstr "Telefón (nepovinné)"
+
+#: ./templates/Admin/CommitteeMembers/add.php
+msgid "Email (optional)"
+msgstr "Email (nepovinné)"
+
+#: ./templates/Admin/CommitteeMembers/index.php
+msgid "Photo"
+msgstr "Fotografia"
+
+#: ./templates/Admin/CommitteeMembers/add.php
+msgid "Photo (optional)"
+msgstr "Fotografia (nepovinné)"
+
+#: ./templates/Admin/CommitteeMembers/edit.php
+msgid "Replace photo (optional)"
+msgstr "Nahradiť fotografiu (nepovinné)"
+
 #: ./templates/element/Admin/sidebar.php:12
 msgid "Categories"
 msgstr "Kategórie"
@@ -734,8 +802,8 @@ msgid "The \"about us\" feature tiles are managed separately as banners with the
 msgstr "Dlaždice \"o nás\" sa spravujú samostatne ako bannery s umiestnením \"Home — mini banner\"."
 
 #: ./templates/Admin/Pages/edit_home.php
-msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
-msgstr "Sekcia \"revíry a aktivity\" sa tiež spravuje samostatne ako bannery: hlavná fotka používa umiestnenie \"Home — fishing grounds main image\" a jej dlaždice umiestnenie \"Home — fishing grounds tile\"."
+msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds minibanner\" location, and its cards use the \"Home — fishing grounds tile\" location."
+msgstr "Sekcia \"revíry a aktivity\" sa tiež spravuje samostatne ako bannery: hlavná fotka používa umiestnenie \"Home — fishing grounds minibanner\" a jej dlaždice umiestnenie \"Home — fishing grounds tile\"."
 
 #: ./src/Controller/Admin/BannersController.php
 msgid "The background image must be a JPEG, PNG or WEBP file."
@@ -858,6 +926,10 @@ msgstr "Domov"
 #: ./templates/Pages/home.php (dynamic __($page->title), not auto-extracted)
 msgid "Gallery"
 msgstr "Galéria"
+
+#: ./templates/Pages/onas.php (dynamic __($page->title), not auto-extracted)
+msgid "About us"
+msgstr "O nás"
 
 #: ./templates/Gallery/cards.php
 msgid "Gallery categories"

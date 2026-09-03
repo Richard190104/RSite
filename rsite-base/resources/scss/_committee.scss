@@ -1,0 +1,109 @@
+@use 'sass:color';
+@use 'variables' as v;
+
+.committee-wrap {
+    width: 100%;
+    background: v.$color-main-bg;
+
+    &--alt {
+        background: v.$color-white;
+    }
+}
+
+.committee {
+    width: 100%;
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+
+    &__heading {
+        font-family: v.$font-heading;
+        font-weight: 700;
+        font-size: v.$font-size-4xl;
+        margin: 0 0 2rem;
+        color: v.$color-navy;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 4rem;
+            height: 0.4rem;
+            margin-top: 0.8rem;
+            background: v.$color-yellow;
+        }
+    }
+}
+
+.committee__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1.6rem;
+}
+
+.committee__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    background: v.$color-white;
+    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144), 0 4px 12px rgba(60, 66, 87, 0.089);
+}
+
+.committee__photo {
+    height: 16rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #4a5b70 0%, #1f2937 100%);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.committee__photo-placeholder {
+    width: 40%;
+    height: 40%;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.committee__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.2rem 1.4rem 1.4rem;
+}
+
+.committee__name {
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-lg;
+    color: v.$color-navy;
+}
+
+.committee__role {
+    font-size: v.$font-size-base;
+    font-weight: 700;
+    color: color.adjust(v.$color-yellow, $lightness: -10%);
+}
+
+.committee__email,
+.committee__phone {
+    font-size: v.$font-size-base;
+    color: v.$color-lightgray;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: v.$color-navy;
+        text-decoration: underline;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .committee__grid {
+        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    }
+}
