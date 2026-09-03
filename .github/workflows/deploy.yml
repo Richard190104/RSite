@@ -1,1 +1,99 @@
+name: Deploy
 
+# Deploys only on an actual PR merge into main — NOT on every push to main
+# (a direct push, e.g. from bin/translate-and-deploy.mjs committing a
+# translation update, or a small fix pushed straight to main, would
+# otherwise trigger a full deploy for no reason). `pull_request: closed`
+# fires both when a PR is merged and when it's closed unmerged — the
+# `if:` on the job below is what actually filters to merged-only.
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+# Only one deploy at a time — a second merge while one is still running
+# waits for it rather than racing it (both would git-archive `main` and
+# FTP-upload at the same time otherwise, and bin/deploy.mjs's
+# .vendor-deployed-hash bookkeeping isn't safe against concurrent writers).
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    # Needed for the "Commit updated vendor marker" step below to push back
+    # to main with the default GITHUB_TOKEN — repos with restrictive default
+    # workflow permissions (Settings > Actions > General) would otherwise
+    # deny that push regardless of this, so if it still fails with a 403,
+    # that setting needs "Read and write permissions" enabled there too.
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Explicit ref: pull_request's default checkout is the PR's merge
+          # preview commit (refs/pull/N/merge), not the actual main branch
+          # — after a merge, `main` itself already has this PR's commits,
+          # so check that out directly instead of a synthetic preview ref.
+          ref: main
+          # bin/deploy.mjs runs `git fetch origin main` / `git merge-base
+          # main origin/main` itself to verify local main matches origin
+          # before deploying — a shallow clone (actions/checkout's default,
+          # fetch-depth: 1) doesn't have enough history for merge-base to
+          # resolve correctly.
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: rsite-base/.nvmrc
+
+      - name: Install Node dependencies
+        working-directory: rsite-base
+        run: npm ci
+
+      # bin/deploy.mjs runs `composer install --no-dev` itself, against a
+      # fresh `git archive` export of main's HEAD — not against this
+      # checkout's own working tree. It deliberately never installs
+      # dependencies here; composer only needs to be on PATH.
+
+      - name: Deploy to production
+        working-directory: rsite-base
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          MIGRATION_TOKEN: ${{ secrets.MIGRATION_TOKEN }}
+          CACHE_TOKEN: ${{ secrets.CACHE_TOKEN }}
+        run: node bin/deploy.mjs
+
+      # bin/deploy.mjs writes an updated .vendor-deployed-hash locally
+      # whenever it uploads vendor/ (composer.lock changed since the last
+      # deploy), but never commits it — deploy.mjs's own header comment
+      # says that's on whoever deploys after a composer.lock change. A
+      # human deploying locally does that by hand; this step is the CI
+      # equivalent, so the marker doesn't drift and every later deploy
+      # (CI or local) keeps trusting it to skip an unchanged vendor/.
+      - name: Commit updated vendor marker
+        working-directory: rsite-base
+        run: |
+          if git diff --quiet -- .vendor-deployed-hash; then
+            echo "No change to .vendor-deployed-hash — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .vendor-deployed-hash
+          git commit -m "Update .vendor-deployed-hash after CI deploy [skip ci]"
+          git push origin HEAD:main

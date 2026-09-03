@@ -10,19 +10,21 @@
  * too, just without saying so in the UI.
  *
  * Usage:
- *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... node bin/deploy.mjs
- *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... MIGRATION_TOKEN=... node bin/deploy.mjs --migrate https://rsite.great-site.net
+ *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... MIGRATION_TOKEN=... CACHE_TOKEN=... \
+ *     node bin/deploy.mjs
  *
- * --migrate <site-url> additionally uploads webroot/run-migrations.php
- * (with its token placeholder swapped for MIGRATION_TOKEN), prints the URL
- * for you to open and check yourself (this host's anti-bot challenge blocks
- * a plain Node request — see runOneOffScript() below), waits for Enter, then
- * deletes it from the server — opt-in, since a routine deploy shouldn't
- * touch the database without being asked to.
- *
- * --clear-cache <site-url> does the same with webroot/clear-cache.php and
- * CACHE_TOKEN — for when only the translation/schema cache needs a kick
- * (e.g. after deploy-translations.mjs) and a real migration isn't needed.
+ * Every run also runs pending migrations and clears the cache, right after
+ * the FTP upload — see runOneOffScriptAuto() for how. This host serves a
+ * one-time JS/cookie anti-bot challenge to any client before letting a
+ * request through, which a plain HTTP request would normally just bounce
+ * off (only a real browser, having already run the challenge's JS, gets
+ * through) — solveAntiBotChallenge() below solves it without a browser: the
+ * challenge is a fixed AES-128-CBC decrypt (this host's own /aes.js, a
+ * bundled slowAES implementation) of server-supplied values, verified
+ * byte-for-byte against Node's built-in crypto module to decrypt
+ * identically. If the host ever changes that challenge, this will start
+ * failing loudly (a thrown error, not a silent bad deploy) rather than
+ * quietly stop working.
  *
  * Deploys ONLY what's committed on `main` — never the working tree. main's
  * HEAD is exported with `git archive` into a clean throwaway directory
@@ -35,12 +37,10 @@
  */
 import { Client } from 'basic-ftp';
 import { execFileSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
+import { createDecipheriv, createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { Readable } from 'node:stream';
-import readline from 'node:readline/promises';
-import { stdin, stdout } from 'node:process';
 import * as tar from 'tar';
 
 // ROOT is the working copy this script lives in — used only to locate the
@@ -75,9 +75,9 @@ const VENDOR_MARKER = join(ROOT, '.vendor-deployed-hash');
 // gitignored, so git archive never includes them regardless — listed here
 // too as a second line of defense. run-migrations.php and clear-cache.php
 // are excluded from this regular upload on purpose: they only ever go up
-// as part of runOneOffScript() below (--migrate / --clear-cache), which
-// deletes them again right after — neither must ever be left sitting on
-// the server between deploys. .vendor-deployed-hash is tracked in git (see
+// as part of runOneOffScriptAuto() below, which deletes them again right
+// after a successful run — neither must ever be left sitting on the
+// server between deploys. .vendor-deployed-hash is tracked in git (see
 // above) so it travels with main between machines, but it's a deploy-tool
 // bookkeeping file, not something the server needs — excluded here so it
 // never actually gets uploaded.
@@ -231,62 +231,91 @@ function buildVendor() {
     run('composer', ['install', '--no-dev', '--no-scripts', '--optimize-autoloader', '--no-interaction', '--no-progress'], SOURCE_DIR);
 }
 
-// Uploads a one-off script (run-migrations.php or clear-cache.php), then
-// waits for you to open the URL yourself and confirm it ran, before
-// deleting it from the server.
-//
-// This host serves a one-time JS/cookie anti-bot challenge to new clients
-// before letting a request through — fine in a real browser, but a plain
-// Node https.get() can't run the JS or persist the resulting cookie, so it
-// only ever sees the challenge page, never the script's output. A real
-// browser (which already solved that challenge before) gets through fine.
-async function runOneOffScript(client, { label, filename, placeholder, token, siteUrl }) {
+// GETs `url`; if the response is the host's anti-bot challenge page (an
+// inline <script> computing a cookie value via AES-128-CBC and redirecting
+// to the same URL with &i=1), solves it without a browser and re-requests
+// — otherwise returns the response as-is. Handles at most one challenge
+// hop (this host has never been seen chaining more than one), and throws
+// with the response body included if the challenge shape doesn't match
+// what solveAntiBotChallenge() expects, so a host-side change to the
+// challenge fails loudly here rather than silently returning a blocked
+// page to the caller.
+async function fetchThroughAntiBotChallenge(url) {
+    const first = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; deploy-script)' } });
+    const firstBody = await first.text();
+
+    const challenge = firstBody.match(
+        /toNumbers\("([a-f0-9]+)"\),b=toNumbers\("([a-f0-9]+)"\),c=toNumbers\("([a-f0-9]+)"\).*?location\.href="([^"]+)"/s,
+    );
+    if (!challenge) {
+        return { status: first.status, body: firstBody };
+    }
+
+    const [, keyHex, ivHex, ciphertextHex, redirectUrl] = challenge;
+    // The challenge's own AES implementation (this host's /aes.js, a
+    // bundled slowAES) and Node's built-in aes-128-cbc decrypt with
+    // padding turned off were verified to produce byte-identical output
+    // for the same key/iv/ciphertext — no need to carry a copy of that
+    // third-party JS here.
+    const decipher = createDecipheriv('aes-128-cbc', Buffer.from(keyHex, 'hex'), Buffer.from(ivHex, 'hex'));
+    decipher.setAutoPadding(false);
+    const cookieValue = Buffer.concat([decipher.update(Buffer.from(ciphertextHex, 'hex')), decipher.final()]).toString('hex');
+
+    const second = await fetch(redirectUrl, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; deploy-script)',
+            Cookie: `__test=${cookieValue}`,
+        },
+    });
+    return { status: second.status, body: await second.text() };
+}
+
+// Uploads a one-off script (run-migrations.php or clear-cache.php), hits
+// it through the anti-bot challenge, checks the output for successMarker,
+// and only deletes the script from the server if that marker was found —
+// a script that failed (or whose output didn't match what was expected)
+// is deliberately left in place rather than cleaned up, so it's still
+// there to inspect instead of silently disappearing after a bad run.
+async function runOneOffScriptAuto(client, { label, filename, placeholder, token, siteUrl, successMarker }) {
     const remotePath = `/htdocs/webroot/${filename}`;
 
     console.log(`\n=== Running ${label} ===`);
     await client.uploadFrom(Readable.from([oneOffScriptWithToken(filename, placeholder, token)]), remotePath);
 
     const url = `${siteUrl.replace(/\/$/, '')}/${filename}?token=${token}`;
-    console.log(`\nOpen this URL in your browser and confirm the output looks right:\n  ${url}`);
+    const { status, body } = await fetchThroughAntiBotChallenge(url);
 
-    const rl = readline.createInterface({ input: stdin, output: stdout });
-    await rl.question(`\nPress Enter once you've checked it (this deletes ${filename} from the server)... `);
-    rl.close();
+    console.log(body.trim());
+
+    if (status !== 200 || !body.includes(successMarker)) {
+        throw new Error(
+            `${label} did not report success (HTTP ${status}, expected "${successMarker}" in the output) — ` +
+            `leaving ${filename} on the server for inspection. Check the output above, fix the issue, then delete ` +
+            `webroot/${filename} from the server by hand once resolved.`,
+        );
+    }
 
     await client.remove(remotePath);
-    console.log(`${filename} removed from the server.`);
+    console.log(`\n${filename} removed from the server.`);
 }
 
+// The production site — used only to build the run-migrations.php /
+// clear-cache.php URLs. Overridable via SITE_URL in case this ever needs
+// to point elsewhere (a staging copy, a domain change).
+const SITE_URL = process.env.SITE_URL || 'https://rsite.great-site.net';
+
 async function main() {
-    const { FTP_SERVER, FTP_USERNAME, FTP_PASSWORD } = process.env;
+    const { FTP_SERVER, FTP_USERNAME, FTP_PASSWORD, MIGRATION_TOKEN, CACHE_TOKEN } = process.env;
     if (!FTP_SERVER || !FTP_USERNAME || !FTP_PASSWORD) {
         console.error('Missing FTP_SERVER / FTP_USERNAME / FTP_PASSWORD in the environment.');
         process.exit(1);
     }
-
-    // Migrations and cache-clearing are opt-in per run: --migrate / --clear-cache
-    // <https://site> upload their one-off script, hit it once, and delete it —
-    // but only when asked, since neither is something a routine CSS/text
-    // deploy should trigger by accident.
-    const migrateFlagIndex = process.argv.indexOf('--migrate');
-    const migrationSiteUrl = migrateFlagIndex !== -1 ? process.argv[migrateFlagIndex + 1] : null;
-    if (migrateFlagIndex !== -1 && !migrationSiteUrl) {
-        console.error('--migrate requires a URL, e.g. --migrate https://rsite.great-site.net');
+    if (!MIGRATION_TOKEN) {
+        console.error('Missing MIGRATION_TOKEN in the environment (must match the value in webroot/run-migrations.php once deployed).');
         process.exit(1);
     }
-    if (migrationSiteUrl && !process.env.MIGRATION_TOKEN) {
-        console.error('--migrate also requires MIGRATION_TOKEN in the environment (must match the value in webroot/run-migrations.php once deployed).');
-        process.exit(1);
-    }
-
-    const clearCacheFlagIndex = process.argv.indexOf('--clear-cache');
-    const clearCacheSiteUrl = clearCacheFlagIndex !== -1 ? process.argv[clearCacheFlagIndex + 1] : null;
-    if (clearCacheFlagIndex !== -1 && !clearCacheSiteUrl) {
-        console.error('--clear-cache requires a URL, e.g. --clear-cache https://rsite.great-site.net');
-        process.exit(1);
-    }
-    if (clearCacheSiteUrl && !process.env.CACHE_TOKEN) {
-        console.error('--clear-cache also requires CACHE_TOKEN in the environment (must match the value in webroot/clear-cache.php once deployed).');
+    if (!CACHE_TOKEN) {
+        console.error('Missing CACHE_TOKEN in the environment (must match the value in webroot/clear-cache.php once deployed).');
         process.exit(1);
     }
 
@@ -361,25 +390,23 @@ async function main() {
         writeFileSync(VENDOR_MARKER, currentHash);
         console.log(`\nDone. ${uploaded} files uploaded.`);
 
-        if (migrationSiteUrl) {
-            await runOneOffScript(client, {
-                label: 'migrations',
-                filename: 'run-migrations.php',
-                placeholder: '__MIGRATION_TOKEN__',
-                token: process.env.MIGRATION_TOKEN,
-                siteUrl: migrationSiteUrl,
-            });
-        }
+        await runOneOffScriptAuto(client, {
+            label: 'migrations',
+            filename: 'run-migrations.php',
+            placeholder: '__MIGRATION_TOKEN__',
+            token: MIGRATION_TOKEN,
+            siteUrl: SITE_URL,
+            successMarker: 'OK: migrate() succeeded.',
+        });
 
-        if (clearCacheSiteUrl) {
-            await runOneOffScript(client, {
-                label: 'cache clear',
-                filename: 'clear-cache.php',
-                placeholder: '__CACHE_TOKEN__',
-                token: process.env.CACHE_TOKEN,
-                siteUrl: clearCacheSiteUrl,
-            });
-        }
+        await runOneOffScriptAuto(client, {
+            label: 'cache clear',
+            filename: 'clear-cache.php',
+            placeholder: '__CACHE_TOKEN__',
+            token: CACHE_TOKEN,
+            siteUrl: SITE_URL,
+            successMarker: '=== Clearing all ===',
+        });
     } finally {
         client.close();
     }

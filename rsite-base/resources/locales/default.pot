@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-05 16:50+0000\n"
+"POT-Creation-Date: 2026-09-03 13:53+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,134 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ./src/Controller/Admin/AppController.php:34
+#: ./templates/Admin/Dashboard/index.php:5
+msgid "Dashboard"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:35
+msgid "The admin landing page — a short overview, no editable content here."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:39
+#: ./templates/Admin/Texts/index.php:6
+msgid "Texts"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:40
+msgid "Key/value site-wide text snippets (organisation name, city, address, email, ICO, footer description, social media URLs...) used throughout the public site. Rows already exist — this section only edits existing values, it does not create new ones."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:48
+#: ./templates/Admin/Banners/index.php:6
+msgid "Banners"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:49
+msgid "Images shown on the site: the homepage/page hero carousel, the \"about us\" mini-banner tiles, and the \"fishing grounds\" section image + tiles. Each banner has a location that decides where it appears, and a title/subtitle."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:57
+#: ./templates/Admin/NavbarCategories/index.php:6
+msgid "Navbar categories"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:58
+msgid "The dropdown categories shown in the site's top navigation menu, each grouping a set of pages."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:64
+#: ./templates/Admin/NavbarCategories/index.php:17
+#: ./templates/Admin/Pages/index.php:6
+msgid "Pages"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:65
+msgid "The site's static content pages (e.g. kontakt, homepage content) — edits an existing page's text/content; the homepage specifically also has its quick-access shortcuts configured here."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:73
+#: ./templates/Admin/News/index.php:6
+msgid "News"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:74
+msgid "News articles shown in the \"Latest news\" section on the homepage. Each article has a title, a short plain-text description (shown on the homepage card), an image, a date, an optional category, and an HTML poster field with an AI assistant that can generate a notice-board-style graphic from the title/description."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:83
+#: ./templates/Admin/Categories/index.php:6
+msgid "Categories"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:84
+msgid "Categories used to group news articles and gallery items."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:88
+#: ./templates/Admin/Events/index.php:6
+msgid "Events"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:89
+msgid "Events listed on the site."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:93
+#: ./templates/Admin/Galleries/index.php:6
+msgid "Galleries"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:94
+msgid "Photo galleries shown on the site, grouped by category."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:98
+#: ./templates/Admin/Logos/index.php:6
+msgid "Logos"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:99
+msgid "The site's logo images (e.g. the main header logo, footer logo)."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:103
+#: ./templates/Admin/Notifications/index.php:6
+#: ./templates/element/navbar.php:54
+#: ./templates/element/navbar.php:55
+#: ./templates/element/navbar.php:63
+msgid "Notifications"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:104
+msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:65
+msgid "The AI assistant is not configured (missing Ai.geminiApiKey in app_local.php)."
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:74
+msgid "description"
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:81
+msgid "Say something first."
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:422
+msgid "The AI model is overloaded right now — try again in a moment."
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:426
+msgid "The AI assistant could not be reached right now."
+msgstr ""
+
+#: ./src/Controller/Admin/AssistantController.php:433
+#: ./src/Controller/Admin/AssistantController.php:442
+msgid "The AI assistant returned an empty suggestion."
+msgstr ""
 
 #: ./src/Controller/Admin/BannersController.php:37
 #: ./src/Controller/Admin/BannersController.php:82
@@ -24,34 +152,38 @@ msgstr ""
 msgid "Could not save the banner, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/BannersController.php:110
+#: ./src/Controller/Admin/BannersController.php:109
+msgid "Could not update the banner."
+msgstr ""
+
+#: ./src/Controller/Admin/BannersController.php:125
 msgid "Banner deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/BannersController.php:112
+#: ./src/Controller/Admin/BannersController.php:127
 msgid "Could not delete the banner."
 msgstr ""
 
-#: ./src/Controller/Admin/CategoriesController.php:28
-#: ./src/Controller/Admin/CategoriesController.php:51
+#: ./src/Controller/Admin/CategoriesController.php:43
+#: ./src/Controller/Admin/CategoriesController.php:88
 #: ./src/Controller/Admin/NavbarCategoriesController.php:28
 #: ./src/Controller/Admin/NavbarCategoriesController.php:64
 msgid "Category saved."
 msgstr ""
 
-#: ./src/Controller/Admin/CategoriesController.php:33
-#: ./src/Controller/Admin/CategoriesController.php:56
+#: ./src/Controller/Admin/CategoriesController.php:52
+#: ./src/Controller/Admin/CategoriesController.php:97
 #: ./src/Controller/Admin/NavbarCategoriesController.php:33
 #: ./src/Controller/Admin/NavbarCategoriesController.php:69
 msgid "Could not save the category, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/CategoriesController.php:73
+#: ./src/Controller/Admin/CategoriesController.php:118
 #: ./src/Controller/Admin/NavbarCategoriesController.php:93
 msgid "Category deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/CategoriesController.php:75
+#: ./src/Controller/Admin/CategoriesController.php:120
 #: ./src/Controller/Admin/NavbarCategoriesController.php:95
 msgid "Could not delete the category."
 msgstr ""
@@ -74,23 +206,35 @@ msgstr ""
 msgid "Could not delete the event."
 msgstr ""
 
-#: ./src/Controller/Admin/GalleriesController.php:39
-#: ./src/Controller/Admin/GalleriesController.php:84
+#: ./src/Controller/Admin/GalleriesController.php:53
+msgid "Please choose at least one image."
+msgstr ""
+
+#: ./src/Controller/Admin/GalleriesController.php:79
+msgid "Could not save one of the photos."
+msgstr ""
+
+#: ./src/Controller/Admin/GalleriesController.php:127
 msgid "Photo saved."
 msgstr ""
 
-#: ./src/Controller/Admin/GalleriesController.php:48
-#: ./src/Controller/Admin/GalleriesController.php:93
+#: ./src/Controller/Admin/GalleriesController.php:139
 msgid "Could not save the photo, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/GalleriesController.php:112
+#: ./src/Controller/Admin/GalleriesController.php:160
 msgid "Photo deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/GalleriesController.php:114
+#: ./src/Controller/Admin/GalleriesController.php:162
 msgid "Could not delete the photo."
 msgstr ""
+
+#: ./src/Controller/Admin/GalleriesController.php:84
+msgid "{0} photo saved."
+msgid_plural "{0} photos saved."
+msgstr[0] ""
+msgstr[1] ""
 
 #: ./src/Controller/Admin/ImageUploadTrait.php:23
 msgid "Please choose an image."
@@ -108,33 +252,83 @@ msgstr ""
 msgid "The image must be smaller than 5 MB."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:39
-#: ./src/Controller/Admin/NewsController.php:84
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:32
+msgid "Image hosting is not configured (missing ImgBB.apiKey in app_local.php)."
+msgstr ""
+
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:49
+msgid "The image could not be uploaded to the image host."
+msgstr ""
+
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:57
+msgid "The image host returned an unexpected response."
+msgstr ""
+
+#: ./src/Controller/Admin/LogosController.php:45
+msgid "Logo saved."
+msgstr ""
+
+#: ./src/Controller/Admin/LogosController.php:50
+msgid "Could not save the logo."
+msgstr ""
+
+#: ./src/Controller/Admin/NewsController.php:44
+#: ./src/Controller/Admin/NewsController.php:93
 msgid "News article saved."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:48
-#: ./src/Controller/Admin/NewsController.php:93
+#: ./src/Controller/Admin/NewsController.php:53
+#: ./src/Controller/Admin/NewsController.php:102
 msgid "Could not save the article, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:112
+#: ./src/Controller/Admin/NewsController.php:121
 msgid "News article deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:114
+#: ./src/Controller/Admin/NewsController.php:123
 msgid "Could not delete the article."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:52
+#: ./src/Controller/Admin/NotificationsController.php:38
+#: ./src/Controller/Admin/NotificationsController.php:82
+msgid "Notification saved."
+msgstr ""
+
+#: ./src/Controller/Admin/NotificationsController.php:47
+#: ./src/Controller/Admin/NotificationsController.php:91
+msgid "Could not save the notification, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/NotificationsController.php:111
+msgid "Could not update the notification."
+msgstr ""
+
+#: ./src/Controller/Admin/NotificationsController.php:127
+msgid "Notification deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/NotificationsController.php:129
+msgid "Could not delete the notification."
+msgstr ""
+
+#: ./src/Controller/Admin/PagesController.php:42
+msgid "Page saved."
+msgstr ""
+
+#: ./src/Controller/Admin/PagesController.php:47
+msgid "Could not save the page."
+msgstr ""
+
+#: ./src/Controller/Admin/PagesController.php:75
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:60
+#: ./src/Controller/Admin/PagesController.php:83
 msgid "Homepage saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:65
+#: ./src/Controller/Admin/PagesController.php:88
 msgid "Could not save the homepage."
 msgstr ""
 
@@ -150,8 +344,12 @@ msgstr ""
 msgid "Invalid username or password."
 msgstr ""
 
-#: ./src/Model/Table/BannersTable.php:48
+#: ./src/Model/Table/BannersTable.php:54
 msgid "Please select a valid location."
+msgstr ""
+
+#: ./src/Model/Table/NotificationsTable.php:52
+msgid "Must be on or after the start date."
 msgstr ""
 
 #: ./templates/Admin/Banners/add.php:7
@@ -159,59 +357,68 @@ msgstr ""
 msgid "Add banner"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:11
-#: ./templates/Admin/Banners/edit.php:12
-#: ./templates/Admin/Banners/index.php:16
-#: ./templates/Admin/Categories/add.php:11
-#: ./templates/Admin/Categories/edit.php:11
+#: ./templates/Admin/Banners/add.php:17
+#: ./templates/Admin/Banners/edit.php:20
+#: ./templates/Admin/Banners/index.php:17
+#: ./templates/Admin/Categories/add.php:17
+#: ./templates/Admin/Categories/edit.php:20
 #: ./templates/Admin/Categories/index.php:16
-#: ./templates/Admin/Events/add.php:11
-#: ./templates/Admin/Events/edit.php:11
+#: ./templates/Admin/Events/add.php:17
+#: ./templates/Admin/Events/edit.php:17
 #: ./templates/Admin/Events/index.php:16
-#: ./templates/Admin/NavbarCategories/add.php:10
-#: ./templates/Admin/NavbarCategories/edit.php:16
+#: ./templates/Admin/NavbarCategories/add.php:16
+#: ./templates/Admin/NavbarCategories/edit.php:22
 #: ./templates/Admin/NavbarCategories/index.php:16
-#: ./templates/Admin/News/add.php:11
-#: ./templates/Admin/News/edit.php:12
+#: ./templates/Admin/News/add.php:19
+#: ./templates/Admin/News/edit.php:23
 #: ./templates/Admin/News/index.php:17
+#: ./templates/Admin/Notifications/add.php:16
+#: ./templates/Admin/Notifications/edit.php:19
+#: ./templates/Admin/Notifications/index.php:18
 #: ./templates/Admin/Pages/index.php:13
+#: ./templates/element/Admin/aiChat.php:91
 msgid "Title"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:12
-#: ./templates/Admin/Banners/edit.php:13
+#: ./templates/Admin/Banners/add.php:18
+#: ./templates/Admin/Banners/edit.php:21
 msgid "Subtitle"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:13
-#: ./templates/Admin/Banners/edit.php:14
-#: ./templates/Admin/Banners/index.php:17
+#: ./templates/Admin/Banners/add.php:19
+#: ./templates/Admin/Banners/edit.php:22
+#: ./templates/Admin/Banners/index.php:18
 msgid "Location"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:14
+#: ./templates/Admin/Banners/add.php:20
 msgid "Background image"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:15
-#: ./templates/Admin/Banners/edit.php:16
+#: ./templates/Admin/Banners/add.php:21
+#: ./templates/Admin/Banners/edit.php:24
+#: ./templates/Admin/Banners/index.php:34
 msgid "Show on the page"
 msgstr ""
 
-#: ./templates/Admin/Banners/add.php:16
-#: ./templates/Admin/Banners/edit.php:17
-#: ./templates/Admin/Categories/add.php:19
-#: ./templates/Admin/Categories/edit.php:19
-#: ./templates/Admin/Events/add.php:19
-#: ./templates/Admin/Events/edit.php:19
-#: ./templates/Admin/Galleries/add.php:18
-#: ./templates/Admin/Galleries/edit.php:19
-#: ./templates/Admin/NavbarCategories/add.php:11
-#: ./templates/Admin/NavbarCategories/edit.php:26
-#: ./templates/Admin/News/add.php:21
-#: ./templates/Admin/News/edit.php:22
+#: ./templates/Admin/Banners/add.php:24
+#: ./templates/Admin/Banners/edit.php:27
+#: ./templates/Admin/Categories/add.php:39
+#: ./templates/Admin/Categories/edit.php:42
+#: ./templates/Admin/Events/add.php:28
+#: ./templates/Admin/Events/edit.php:28
+#: ./templates/Admin/Galleries/add.php:27
+#: ./templates/Admin/Galleries/edit.php:29
+#: ./templates/Admin/Logos/edit.php:23
+#: ./templates/Admin/NavbarCategories/add.php:19
+#: ./templates/Admin/NavbarCategories/edit.php:34
+#: ./templates/Admin/News/add.php:46
+#: ./templates/Admin/News/edit.php:50
+#: ./templates/Admin/Notifications/add.php:25
+#: ./templates/Admin/Notifications/edit.php:36
+#: ./templates/Admin/Pages/edit.php:29
 #: ./templates/Admin/Pages/edit_home.php:27
-#: ./templates/Admin/Texts/edit.php:11
+#: ./templates/Admin/Texts/edit.php:14
 msgid "Save"
 msgstr ""
 
@@ -219,67 +426,33 @@ msgstr ""
 msgid "Edit banner"
 msgstr ""
 
-#: ./templates/Admin/Banners/edit.php:15
+#: ./templates/Admin/Banners/edit.php:23
 msgid "Replace background image (optional)"
 msgstr ""
 
-#: ./templates/Admin/Banners/index.php:6
-#: ./templates/element/Admin/sidebar.php:11
-msgid "Banners"
-msgstr ""
-
-#: ./templates/Admin/Banners/index.php:18
-msgid "Background"
-msgstr ""
-
 #: ./templates/Admin/Banners/index.php:19
-msgid "Status"
+msgid "Background"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:20
 #: ./templates/Admin/Categories/index.php:19
-#: ./templates/Admin/Events/index.php:18
+#: ./templates/Admin/Events/index.php:19
 #: ./templates/Admin/Galleries/index.php:18
+#: ./templates/Admin/Logos/index.php:15
 #: ./templates/Admin/NavbarCategories/index.php:18
 #: ./templates/Admin/News/index.php:20
+#: ./templates/Admin/Notifications/index.php:21
 #: ./templates/Admin/Pages/index.php:15
 #: ./templates/Admin/Texts/index.php:15
 msgid "Actions"
 msgstr ""
 
-#: ./templates/Admin/Banners/index.php:29
-msgid "Shown"
-msgstr ""
-
-#: ./templates/Admin/Banners/index.php:29
-msgid "Hidden"
-msgstr ""
-
-#: ./templates/Admin/Banners/index.php:31
-#: ./templates/Admin/Categories/index.php:29
-#: ./templates/Admin/Events/index.php:27
-#: ./templates/Admin/Galleries/index.php:27
-#: ./templates/Admin/NavbarCategories/index.php:27
-#: ./templates/Admin/News/index.php:31
-#: ./templates/Admin/Pages/index.php:24
-#: ./templates/Admin/Texts/index.php:24
-msgid "Edit"
-msgstr ""
-
-#: ./templates/Admin/Banners/index.php:33
-#: ./templates/Admin/Categories/index.php:31
-#: ./templates/Admin/Events/index.php:29
-#: ./templates/Admin/Galleries/index.php:29
-#: ./templates/Admin/NavbarCategories/index.php:29
-#: ./templates/Admin/News/index.php:33
-msgid "Delete"
-msgstr ""
-
-#: ./templates/Admin/Banners/index.php:35
-#: ./templates/Admin/Categories/index.php:33
-#: ./templates/Admin/Events/index.php:31
-#: ./templates/Admin/NavbarCategories/index.php:31
-#: ./templates/Admin/News/index.php:35
+#: ./templates/Admin/Banners/index.php:45
+#: ./templates/Admin/Categories/index.php:32
+#: ./templates/Admin/Events/index.php:32
+#: ./templates/Admin/NavbarCategories/index.php:30
+#: ./templates/Admin/News/index.php:34
+#: ./templates/Admin/Notifications/index.php:47
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr ""
 
@@ -290,21 +463,45 @@ msgstr ""
 msgid "Add category"
 msgstr ""
 
-#: ./templates/Admin/Categories/add.php:15
-#: ./templates/Admin/Categories/edit.php:15
+#: ./templates/Admin/Categories/add.php:20
+#: ./templates/Admin/Categories/edit.php:23
+#: ./templates/Admin/Events/add.php:18
+#: ./templates/Admin/Events/edit.php:18
+#: ./templates/Admin/News/add.php:20
+#: ./templates/Admin/News/edit.php:24
+#: ./templates/Admin/Notifications/add.php:17
+#: ./templates/Admin/Notifications/edit.php:20
+#: ./templates/Admin/Pages/edit.php:22
+#: ./templates/element/Admin/aiChat.php:99
+msgid "Description"
+msgstr ""
+
+#: ./templates/Admin/Categories/add.php:27
+#: ./templates/Admin/Categories/edit.php:30
 msgid "— none (top-level) —"
 msgstr ""
 
-#: ./templates/Admin/Categories/add.php:16
-#: ./templates/Admin/Categories/edit.php:16
+#: ./templates/Admin/Categories/add.php:28
+#: ./templates/Admin/Categories/edit.php:31
 #: ./templates/Admin/Categories/index.php:17
 msgid "Parent category"
 msgstr ""
 
-#: ./templates/Admin/Categories/add.php:18
-#: ./templates/Admin/Categories/edit.php:18
+#: ./templates/Admin/Categories/add.php:31
+#: ./templates/Admin/Categories/edit.php:34
 #: ./templates/Admin/Categories/index.php:18
 msgid "Show in gallery"
+msgstr ""
+
+#: ./templates/Admin/Categories/add.php:34
+#: ./templates/Admin/Categories/edit.php:37
+#: ./templates/Admin/Galleries/index.php:16
+#: ./templates/Admin/Logos/index.php:14
+#: ./templates/Admin/News/add.php:43
+#: ./templates/Admin/News/index.php:16
+#: ./templates/Admin/Notifications/add.php:20
+#: ./templates/Admin/Notifications/index.php:17
+msgid "Image"
 msgstr ""
 
 #: ./templates/Admin/Categories/edit.php:7
@@ -312,9 +509,11 @@ msgstr ""
 msgid "Edit category"
 msgstr ""
 
-#: ./templates/Admin/Categories/index.php:6
-#: ./templates/element/Admin/sidebar.php:15
-msgid "Categories"
+#: ./templates/Admin/Categories/edit.php:37
+#: ./templates/Admin/Galleries/edit.php:15
+#: ./templates/Admin/News/edit.php:47
+#: ./templates/Admin/Notifications/edit.php:23
+msgid "Replace image (optional)"
 msgstr ""
 
 #: ./templates/Admin/Categories/index.php:27
@@ -323,11 +522,6 @@ msgstr ""
 
 #: ./templates/Admin/Categories/index.php:27
 msgid "No"
-msgstr ""
-
-#: ./templates/Admin/Dashboard/index.php:5
-#: ./templates/element/Admin/sidebar.php:9
-msgid "Dashboard"
 msgstr ""
 
 #: ./templates/Admin/Dashboard/index.php:7
@@ -343,30 +537,32 @@ msgstr ""
 msgid "Add event"
 msgstr ""
 
-#: ./templates/Admin/Events/add.php:12
-#: ./templates/Admin/Events/edit.php:12
-#: ./templates/Admin/News/add.php:12
-#: ./templates/Admin/News/edit.php:13
-msgid "Description"
+#: ./templates/Admin/Events/add.php:19
+#: ./templates/Admin/Events/edit.php:19
+#: ./templates/Admin/Events/index.php:17
+#: ./templates/Admin/News/add.php:36
+#: ./templates/Admin/News/edit.php:40
+#: ./templates/Admin/News/index.php:19
+msgid "Date"
 msgstr ""
 
-#: ./templates/Admin/Events/add.php:16
-#: ./templates/Admin/Events/edit.php:16
-#: ./templates/Admin/Galleries/add.php:15
-#: ./templates/Admin/Galleries/edit.php:16
-#: ./templates/Admin/News/add.php:17
-#: ./templates/Admin/News/edit.php:18
+#: ./templates/Admin/Events/add.php:23
+#: ./templates/Admin/Events/edit.php:23
+#: ./templates/Admin/Galleries/add.php:22
+#: ./templates/Admin/Galleries/edit.php:24
+#: ./templates/Admin/News/add.php:40
+#: ./templates/Admin/News/edit.php:44
 msgid "— none —"
 msgstr ""
 
-#: ./templates/Admin/Events/add.php:17
-#: ./templates/Admin/Events/edit.php:17
-#: ./templates/Admin/Events/index.php:17
-#: ./templates/Admin/Galleries/add.php:16
-#: ./templates/Admin/Galleries/edit.php:17
+#: ./templates/Admin/Events/add.php:24
+#: ./templates/Admin/Events/edit.php:24
+#: ./templates/Admin/Events/index.php:18
+#: ./templates/Admin/Galleries/add.php:23
+#: ./templates/Admin/Galleries/edit.php:25
 #: ./templates/Admin/Galleries/index.php:17
-#: ./templates/Admin/News/add.php:18
-#: ./templates/Admin/News/edit.php:19
+#: ./templates/Admin/News/add.php:41
+#: ./templates/Admin/News/edit.php:45
 #: ./templates/Admin/News/index.php:18
 msgid "Category"
 msgstr ""
@@ -375,54 +571,53 @@ msgstr ""
 msgid "Edit event"
 msgstr ""
 
-#: ./templates/Admin/Events/index.php:6
-#: ./templates/element/Admin/sidebar.php:16
-msgid "Events"
-msgstr ""
-
 #: ./templates/Admin/Galleries/add.php:7
 #: ./templates/Admin/Galleries/index.php:10
 msgid "Add photo"
 msgstr ""
 
-#: ./templates/Admin/Galleries/add.php:11
-#: ./templates/Admin/Galleries/index.php:16
-#: ./templates/Admin/News/add.php:20
-#: ./templates/Admin/News/index.php:16
-msgid "Image"
+#: ./templates/Admin/Galleries/add.php:16
+msgid "Images"
+msgstr ""
+
+#: ./templates/Admin/Galleries/add.php:18
+msgid "Select multiple files to add several photos at once — they will all be saved under the category picked below."
 msgstr ""
 
 #: ./templates/Admin/Galleries/edit.php:7
 msgid "Edit photo"
 msgstr ""
 
-#: ./templates/Admin/Galleries/edit.php:12
-#: ./templates/Admin/News/edit.php:21
-msgid "Replace image (optional)"
+#: ./templates/Admin/Galleries/edit.php:17
+msgid "Caption"
 msgstr ""
 
-#: ./templates/Admin/Galleries/index.php:6
-#: ./templates/element/Admin/sidebar.php:17
-msgid "Galleries"
+#: ./templates/Admin/Galleries/edit.php:19
+msgid "Shown instead of the category name on the public gallery"
 msgstr ""
 
-#: ./templates/Admin/Galleries/index.php:31
+#: ./templates/Admin/Galleries/index.php:30
 msgid "Are you sure you want to delete this photo?"
 msgstr ""
 
-#: ./templates/Admin/NavbarCategories/edit.php:21
+#: ./templates/Admin/Logos/edit.php:18
+msgid "Upload image"
+msgstr ""
+
+#: ./templates/Admin/Logos/edit.php:18
+msgid "Replace image"
+msgstr ""
+
+#: ./templates/Admin/Logos/index.php:13
+msgid "Logo"
+msgstr ""
+
+#: ./templates/Admin/Logos/index.php:26
+msgid "No image yet"
+msgstr ""
+
+#: ./templates/Admin/NavbarCategories/edit.php:27
 msgid "Pages in this category"
-msgstr ""
-
-#: ./templates/Admin/NavbarCategories/index.php:6
-#: ./templates/element/Admin/sidebar.php:12
-msgid "Navbar categories"
-msgstr ""
-
-#: ./templates/Admin/NavbarCategories/index.php:17
-#: ./templates/Admin/Pages/index.php:6
-#: ./templates/element/Admin/sidebar.php:13
-msgid "Pages"
 msgstr ""
 
 #: ./templates/Admin/News/add.php:7
@@ -430,23 +625,59 @@ msgstr ""
 msgid "Add article"
 msgstr ""
 
-#: ./templates/Admin/News/add.php:13
-#: ./templates/Admin/News/edit.php:14
-#: ./templates/Admin/News/index.php:19
-msgid "Date"
+#: ./templates/Admin/News/add.php:25
+#: ./templates/Admin/News/edit.php:29
+msgid "Poster (HTML)"
+msgstr ""
+
+#: ./templates/Admin/News/add.php:32
+#: ./templates/Admin/News/edit.php:36
+msgid "Poster preview"
+msgstr ""
+
+#: ./templates/Admin/News/add.php:33
+#: ./templates/Admin/News/edit.php:37
+msgid "Show preview"
 msgstr ""
 
 #: ./templates/Admin/News/edit.php:7
 msgid "Edit article"
 msgstr ""
 
-#: ./templates/Admin/News/index.php:6
-#: ./templates/element/Admin/sidebar.php:14
-msgid "News"
+#: ./templates/Admin/Notifications/add.php:6
+#: ./templates/Admin/Notifications/index.php:10
+msgid "Add notification"
 msgstr ""
 
-#: ./templates/Admin/Pages/edit.php:10
-msgid "No page-specific settings are defined for this page yet."
+#: ./templates/Admin/Notifications/add.php:18
+#: ./templates/Admin/Notifications/edit.php:21
+#: ./templates/Admin/Notifications/index.php:19
+msgid "Valid from"
+msgstr ""
+
+#: ./templates/Admin/Notifications/add.php:19
+#: ./templates/Admin/Notifications/edit.php:22
+#: ./templates/Admin/Notifications/index.php:20
+msgid "Valid to"
+msgstr ""
+
+#: ./templates/Admin/Notifications/add.php:21
+#: ./templates/Admin/Notifications/edit.php:26
+#: ./templates/Admin/Notifications/index.php:35
+msgid "Is active"
+msgstr ""
+
+#: ./templates/Admin/Notifications/add.php:22
+#: ./templates/Admin/Notifications/edit.php:31
+msgid "Show as popup"
+msgstr ""
+
+#: ./templates/Admin/Notifications/edit.php:6
+msgid "Edit notification"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit.php:33
+msgid "Shown under the page name in the homepage quick access cards."
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:7
@@ -466,21 +697,21 @@ msgid "The \"about us\" feature tiles are managed separately as banners with the
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:32
+#: ./templates/Admin/Pages/edit_home.php:37
 msgid "Manage banners"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_home.php:36
+msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
 msgstr ""
 
 #: ./templates/Admin/Pages/index.php:14
 msgid "Slug"
 msgstr ""
 
-#: ./templates/Admin/Texts/edit.php:10
+#: ./templates/Admin/Texts/edit.php:11
 #: ./templates/Admin/Texts/index.php:14
 msgid "Value"
-msgstr ""
-
-#: ./templates/Admin/Texts/index.php:6
-#: ./templates/element/Admin/sidebar.php:10
-msgid "Texts"
 msgstr ""
 
 #: ./templates/Admin/Texts/index.php:13
@@ -505,8 +736,189 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ./templates/element/Admin/sidebar.php:37
+#: ./templates/Gallery/cards.php:10
+#: ./templates/Gallery/cards.php:15
+#: ./templates/Gallery/cards.php:38
+msgid "Gallery categories"
+msgstr ""
+
+#: ./templates/Gallery/cards.php:17
+msgid "No categories have been added yet."
+msgstr ""
+
+#: ./templates/Gallery/cards.php:68
+#: ./templates/element/news.php:40
+msgid "Previous"
+msgstr ""
+
+#: ./templates/Gallery/cards.php:69
+#: ./templates/element/news.php:41
+msgid "Next"
+msgstr ""
+
+#: ./templates/Gallery/cards.php:78
+msgid "Photographs"
+msgstr ""
+
+#: ./templates/Gallery/cards.php:81
+msgid "No photos in this category yet."
+msgstr ""
+
+#: ./templates/Gallery/cards.php:116
+#: ./templates/element/Admin/aiChat.php:80
+#: ./templates/element/notificationPopup.php:19
+msgid "Close"
+msgstr ""
+
+#: ./templates/Pages/home.php:20
+msgid "Testing ABOUTUS Text automatic translations"
+msgstr ""
+
+#: ./templates/Pages/home.php:22
+msgid "More about the organisation"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:22
+msgid "Contact details"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:33
+msgid "Address"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:37
+msgid "Address will appear here once set in admin."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:50
+msgid "Email"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:53
+msgid "Send an email"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:55
+msgid "Email will appear here once set in admin."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:68
+#: ./templates/element/footer.php:89
+msgid "ID No."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:72
+msgid "Company ID will appear here once set in admin."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:79
+msgid "Social media"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:81
+msgid "Follow our updates, events and catches."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:104
+msgid "Find us"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:107
+msgid "Location map"
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:119
+msgid "Open in Google Maps"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:47
+#: ./templates/element/Admin/aiChat.php:108
+msgid "HTML poster"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:59
+msgid "Use this"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:61
+msgid "Open Rybárik, the AI assistant"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:75
+msgid "Rybárik"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:77
+msgid "Ask me to draft or rewrite the text on this page — pick a field above and I'll write a ready-to-use suggestion for it."
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:78
+msgid "Ask me where to find something or how to do it in this admin panel, and I'll point you to the right place."
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:89
+msgid "title"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:120
+msgid "Ask the assistant to draft or edit this text…"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:121
+msgid "Ask where to find or how to do something…"
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:123
+msgid "Send"
+msgstr ""
+
+#: ./templates/element/Admin/rowActions.php:19
+msgid "Edit"
+msgstr ""
+
+#: ./templates/element/Admin/rowActions.php:25
+msgid "Delete"
+msgstr ""
+
+#: ./templates/element/Admin/sidebar.php:31
 msgid "Log out"
+msgstr ""
+
+#: ./templates/element/fishing-grounds.php:27
+msgid "Fishing grounds and activities"
+msgstr ""
+
+#: ./templates/element/fishing-grounds.php:32
+msgid "View all fishing grounds"
+msgstr ""
+
+#: ./templates/element/fishing-grounds.php:48
+msgid "More information"
+msgstr ""
+
+#: ./templates/element/footer.php:58
+#: ./templates/element/quickAccess.php:39
+msgid "Quick access"
+msgstr ""
+
+#: ./templates/element/footer.php:72
+msgid "Contact"
+msgstr ""
+
+#: ./templates/element/navbar.php:85
+msgid "No active notifications."
+msgstr ""
+
+#: ./templates/element/news.php:17
+msgid "Latest news"
+msgstr ""
+
+#: ./templates/element/news.php:32
+msgid "Read more"
+msgstr ""
+
+#: ./templates/element/news.php:45
+msgid "All news"
 msgstr ""
 
 #: ./templates/layout/error.php:36
