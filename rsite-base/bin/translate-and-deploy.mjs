@@ -6,18 +6,27 @@
  * manual commit / deploy-translations.mjs steps.
  *
  * Flow:
- *   1. bin/cake i18n extract, then translate every string missing from
- *      sk_SK/default.po (same logic as translate-locales.mjs — only ADDS
- *      new msgid/msgstr pairs, never touches existing ones).
- *   2. Print what changed and pause. Edit resources/locales/sk_SK/default.po
- *      by hand right now if any translation needs fixing — the file on
- *      disk is what gets committed and deployed, not what's printed above.
- *   3. On Enter: git add + commit + push resources/locales/ to `main`
- *      (skipped if there's nothing to commit — e.g. you only hand-edited
- *      something that was already committed, or step 1 found nothing new).
- *   4. Upload resources/locales/ to production over FTP — same target this
- *      pushed to `main`, re-fetched fresh rather than assumed, in case
- *      something else pushed to main between step 3 and now.
+ *   1. Check out `main` (only — never your own branch/working tree) into a
+ *      throwaway git worktree, and run bin/cake i18n extract THERE. This
+ *      means only __() strings already on `main` get translated — work in
+ *      progress on a feature branch is picked up once it's merged, not
+ *      before. (Extracting from your own checkout instead would translate
+ *      not-yet-merged strings early, and could commit them onto `main`
+ *      ahead of the code that uses them — see git history for why this
+ *      changed.)
+ *   2. Translate every string missing from sk_SK/default.po there (same
+ *      logic as translate-locales.mjs — only ADDS new msgid/msgstr pairs,
+ *      never touches existing ones).
+ *   3. Print what changed and pause. Edit the worktree's
+ *      resources/locales/sk_SK/default.po by hand right now (path printed
+ *      at the prompt) if any translation needs fixing — the file on disk
+ *      there is what gets committed and deployed, not what's printed above.
+ *   4. On Enter: git add + commit + push resources/locales/ from the
+ *      worktree to `main` (skipped if there's nothing to commit — e.g. you
+ *      only hand-edited something already committed, or step 2 found
+ *      nothing new). Your own checkout/branch is never touched.
+ *   5. Upload resources/locales/ to production over FTP, from that same
+ *      freshly-pushed worktree state.
  *
  * Usage:
  *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... node bin/translate-and-deploy.mjs
@@ -30,22 +39,19 @@
  */
 import { Client } from 'basic-ftp';
 import { execFileSync } from 'node:child_process';
-import { appendFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { appendFileSync, existsSync, readdirSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
-import * as tar from 'tar';
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const REPO_ROOT = join(ROOT, '..');
-const POT_PATH = join(ROOT, 'resources', 'locales', 'default.pot');
-const PO_PATH = join(ROOT, 'resources', 'locales', 'sk_SK', 'default.po');
-const LOCALES_REL = relative(REPO_ROOT, join(ROOT, 'resources', 'locales')).split(sep).join('/');
+const ROOT_REL = relative(REPO_ROOT, ROOT).split(sep).join('/');
 
 // Separate from deploy.mjs's .deploy-build and deploy-translations.mjs's
 // .deploy-translations-build — none of these scripts should be able to
 // clobber another's export if run back to back.
-const SOURCE_DIR = join(ROOT, '.translate-and-deploy-build');
+const WORKTREE_DIR = join(ROOT, '.translate-and-deploy-worktree');
 
 // The "lite" flash variant — plain gemini-flash-latest returned persistent
 // 503 "high demand" errors even with retries when this script was tested;
@@ -98,8 +104,49 @@ function readGeminiApiKey() {
     return key || null;
 }
 
-function extractMessages() {
-    console.log('=== Extracting messages (bin/cake i18n extract) ===');
+// Checks out `main` into a throwaway worktree — a second, independent
+// checkout in its own directory, sharing this repo's .git — so extraction
+// can run against exactly what's on `main` without ever touching this
+// checkout's branch or working tree (see this file's header comment for
+// why that matters). Any leftover worktree from an interrupted previous
+// run is torn down first, through git (not a raw directory delete) so its
+// .git/worktrees/ entry doesn't dangle.
+//
+// vendor/ and config/app_local.php are both gitignored, so the fresh
+// worktree has neither — bin/cake.php can't even boot without vendor/, and
+// the Gemini key lives in app_local.php. Both are symlinked in from this
+// checkout rather than copied/reinstalled: cheap, and always exactly what
+// this machine already has configured.
+function setUpMainWorktree() {
+    if (existsSync(WORKTREE_DIR)) {
+        try {
+            runGit(['worktree', 'remove', '--force', WORKTREE_DIR], REPO_ROOT);
+        } catch {
+            rmSync(WORKTREE_DIR, { recursive: true, force: true });
+        }
+    }
+
+    runGit(['worktree', 'add', '--detach', WORKTREE_DIR, 'main'], REPO_ROOT);
+
+    const worktreeRoot = join(WORKTREE_DIR, ROOT_REL);
+    symlinkSync(join(ROOT, 'vendor'), join(worktreeRoot, 'vendor'));
+    symlinkSync(join(ROOT, 'config', 'app_local.php'), join(worktreeRoot, 'config', 'app_local.php'));
+
+    return worktreeRoot;
+}
+
+function tearDownMainWorktree() {
+    runGit(['worktree', 'remove', '--force', WORKTREE_DIR], REPO_ROOT);
+}
+
+// Runs inside worktreeRoot (main's checkout, see setUpMainWorktree()), not
+// this script's own cwd — so only __() strings already on `main` are ever
+// extracted/translated. worktreeRoot needs its own vendor/ to run
+// bin/cake.php at all (vendor/ is gitignored, so a fresh worktree doesn't
+// have one) — setUpMainWorktree() symlinks it in from this checkout before
+// this runs.
+function extractMessages(worktreeRoot) {
+    console.log('=== Extracting messages (bin/cake i18n extract, from main) ===');
     // Deliberately no --marker-error: it flags every dynamic __($variable)
     // call (e.g. __($page->title)) as an "invalid marker" — those are
     // legitimate and expected in this app (see the README's i18n section),
@@ -112,7 +159,7 @@ function extractMessages() {
         '--merge=yes',
         '--overwrite',
         '--extract-core=no',
-    ]);
+    ], worktreeRoot);
 }
 
 // Both default.pot and default.po share the same simple shape here: every
@@ -230,16 +277,20 @@ function parseTranslateResponse(data, expectedCount) {
     return translations;
 }
 
-// Runs extraction + translation, appending any newly-translated strings to
-// PO_PATH on disk. Returns the list of what it added (empty if nothing was
-// missing) — purely informational, the actual source of truth from here on
-// is the file on disk, which the operator may still hand-edit before the
-// commit step.
-async function translateNewStrings(apiKey) {
-    extractMessages();
+// Runs extraction + translation inside worktreeRoot (main's checkout),
+// appending any newly-translated strings to its sk_SK/default.po. Returns
+// the list of what it added (empty if nothing was missing) — purely
+// informational, the actual source of truth from here on is the file on
+// disk (in the worktree), which the operator may still hand-edit before
+// the commit step.
+async function translateNewStrings(worktreeRoot, apiKey) {
+    extractMessages(worktreeRoot);
 
-    const potContent = readFileSync(POT_PATH, 'utf8');
-    const poContent = readFileSync(PO_PATH, 'utf8');
+    const potPath = join(worktreeRoot, 'resources', 'locales', 'default.pot');
+    const poPath = join(worktreeRoot, 'resources', 'locales', 'sk_SK', 'default.po');
+
+    const potContent = readFileSync(potPath, 'utf8');
+    const poContent = readFileSync(poPath, 'utf8');
 
     const alreadyTranslated = parsePoMsgids(poContent);
     const potEntries = parsePotEntries(potContent);
@@ -271,7 +322,7 @@ async function translateNewStrings(apiKey) {
         })
         .join('');
 
-    appendFileSync(PO_PATH, appended);
+    appendFileSync(poPath, appended);
 
     return translated;
 }
@@ -303,93 +354,39 @@ function syncMainWithOrigin() {
     runGit(['fetch', 'origin', 'main:main'], REPO_ROOT);
 }
 
-// Commits + pushes resources/locales/ to main if (and only if) there's
-// something to commit — covers both "translate step added nothing and the
-// operator didn't hand-edit anything" and "everything here was already
-// committed on a previous run".
-//
-// This never runs `git checkout` on REPO_ROOT — extractMessages() and the
-// Gemini step wrote resources/locales/default.pot and
-// resources/locales/sk_SK/default.po directly into whatever branch you
-// currently have checked out there, and switching that checkout out from
-// under you (or worse, committing those files onto your current feature
-// branch instead of main) is exactly the failure mode deploy.mjs's own
-// "never touch the working tree" design avoids. Instead this uses a
-// throwaway `git worktree` — a second checkout of `main` in its own
-// directory — copies the two files there, and commits/pushes from that
-// worktree. Your actual checkout and branch are never touched.
-function commitAndPushLocales() {
-    const status = capture('git', ['status', '--porcelain', '--', LOCALES_REL], REPO_ROOT);
+// Commits + pushes resources/locales/ from the worktree to main, if (and
+// only if) there's something to commit — covers both "translate step
+// added nothing and the operator didn't hand-edit anything" and
+// "everything here was already committed on a previous run". Runs
+// entirely inside the worktree, so this never touches your own
+// checkout/branch.
+function commitAndPushLocales(worktreeRoot) {
+    const status = capture('git', ['status', '--porcelain', '--', 'resources/locales'], worktreeRoot);
     if (!status) {
         console.log('\nresources/locales/ has no changes to commit — skipping commit/push.');
         return false;
     }
 
-    console.log('\n=== Committing resources/locales/ to main (via a throwaway worktree) ===');
-    const worktreeDir = join(ROOT, '.translate-and-deploy-worktree');
-    if (existsSync(worktreeDir)) {
-        // A leftover worktree from an interrupted previous run — remove it
-        // through git first (not just rmSync the directory), so its entry
-        // in .git/worktrees/ is cleaned up too rather than left dangling.
-        try {
-            runGit(['worktree', 'remove', '--force', worktreeDir], REPO_ROOT);
-        } catch {
-            rmSync(worktreeDir, { recursive: true, force: true });
-        }
-    }
+    console.log('\n=== Committing resources/locales/ to main ===');
+    runGit(['add', '--', 'resources/locales'], worktreeRoot);
+    // Two separate -m flags (git joins them with a blank line) rather than
+    // one string containing literal newlines — run()/runGit() may execute
+    // through a shell (needed for Windows .cmd/.bat shims elsewhere in
+    // these scripts), which mangles an embedded-newline argument into
+    // multiple shell tokens instead of passing it through as one.
+    runGit([
+        'commit',
+        '-m', 'Update translations',
+        '-m', 'Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>',
+    ], worktreeRoot);
+    runGit(['push', 'origin', 'HEAD:main'], worktreeRoot);
 
-    try {
-        runGit(['worktree', 'add', '--detach', worktreeDir, 'main'], REPO_ROOT);
-
-        const potRel = relative(REPO_ROOT, POT_PATH).split(sep).join('/');
-        const poRel = relative(REPO_ROOT, PO_PATH).split(sep).join('/');
-        cpSync(POT_PATH, join(worktreeDir, potRel));
-        cpSync(PO_PATH, join(worktreeDir, poRel));
-
-        runGit(['add', '--', LOCALES_REL], worktreeDir);
-        // Two separate -m flags (git joins them with a blank line) rather
-        // than one string containing literal newlines — run() executes
-        // through a shell (needed for Windows .cmd/.bat shims elsewhere in
-        // these scripts), which mangles an embedded-newline argument into
-        // multiple shell tokens instead of passing it through as one.
-        runGit([
-            'commit',
-            '-m', 'Update translations',
-            '-m', 'Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>',
-        ], worktreeDir);
-        runGit(['push', 'origin', 'HEAD:main'], worktreeDir);
-
-        // Fast-forward the caller's own local `main` ref (not checkout) to
-        // match what was just pushed, so a later run's syncMainWithOrigin()
-        // sees it as already up to date instead of re-fetching for no reason.
-        runGit(['fetch', 'origin', 'main:main'], REPO_ROOT);
-    } finally {
-        runGit(['worktree', 'remove', '--force', worktreeDir], REPO_ROOT);
-    }
+    // Fast-forward the caller's own local `main` ref (not checkout) to
+    // match what was just pushed, so a later run's syncMainWithOrigin()
+    // sees it as already up to date instead of re-fetching for no reason.
+    runGit(['fetch', 'origin', 'main:main'], REPO_ROOT);
 
     return true;
-}
-
-// Exports only resources/locales/ from main's HEAD via git archive
-// (immune to any other uncommitted changes sitting in the working tree,
-// e.g. on a feature branch) — same approach deploy.mjs/deploy-translations.mjs
-// use, kept independent here on purpose per those files' own header
-// comments (a change to one script shouldn't silently affect another).
-async function exportLocalesToSourceDir() {
-    if (existsSync(SOURCE_DIR)) {
-        rmSync(SOURCE_DIR, { recursive: true, force: true });
-    }
-    mkdirSync(SOURCE_DIR, { recursive: true });
-
-    const tarPath = join(ROOT, '.translate-and-deploy-archive.tar');
-    execFileSync('git', ['archive', '--format=tar', '-o', tarPath, 'main', '--', LOCALES_REL], { cwd: REPO_ROOT });
-
-    await tar.x({
-        file: tarPath,
-        cwd: SOURCE_DIR,
-        strip: LOCALES_REL.split('/').length,
-    });
-    rmSync(tarPath);
 }
 
 function* walkDir(dir, base) {
@@ -404,11 +401,12 @@ function* walkDir(dir, base) {
     }
 }
 
-async function deployLocalesOverFtp({ server, username, password }) {
-    console.log('\n=== Exporting resources/locales/ from main ===');
-    await exportLocalesToSourceDir();
-
+// Uploads resources/locales/ straight from the worktree — it's already
+// main's just-pushed HEAD, so no separate git-archive export step is
+// needed the way deploy.mjs/deploy-translations.mjs do it standalone.
+async function deployLocalesOverFtp(worktreeRoot, { server, username, password }) {
     console.log('\n=== Uploading over FTP ===');
+    const localesDir = join(worktreeRoot, 'resources', 'locales');
     const client = new Client();
     client.ftp.verbose = false;
 
@@ -416,7 +414,7 @@ async function deployLocalesOverFtp({ server, username, password }) {
         await client.access({ host: server, user: username, password, secure: false });
 
         let uploaded = 0;
-        for (const { full, rel } of walkDir(SOURCE_DIR, SOURCE_DIR)) {
+        for (const { full, rel } of walkDir(localesDir, localesDir)) {
             const remotePath = '/htdocs/resources/locales/' + rel;
             await client.ensureDir('/htdocs/resources/locales/' + rel.split('/').slice(0, -1).join('/'));
             await client.uploadFrom(full, remotePath);
@@ -445,30 +443,37 @@ async function main() {
 
     syncMainWithOrigin();
 
-    const translated = await translateNewStrings(apiKey);
+    console.log("\n=== Checking out main into a throwaway worktree ===");
+    const worktreeRoot = setUpMainWorktree();
 
-    if (translated.length) {
-        console.log(`\nAppended ${translated.length} translation(s) to resources/locales/sk_SK/default.po:`);
-        for (const entry of translated) {
-            console.log(`  "${entry.msgid}" -> "${entry.msgstr}"`);
+    try {
+        const translated = await translateNewStrings(worktreeRoot, apiKey);
+
+        if (translated.length) {
+            console.log(`\nAppended ${translated.length} translation(s) to resources/locales/sk_SK/default.po:`);
+            for (const entry of translated) {
+                console.log(`  "${entry.msgid}" -> "${entry.msgstr}"`);
+            }
         }
+
+        console.log(
+            `\nReview and edit by hand now if needed: ${join(worktreeRoot, 'resources', 'locales', 'sk_SK', 'default.po')}` +
+            '\nWhatever is on disk there when you press Enter is what gets committed and deployed.',
+        );
+        const rl = readline.createInterface({ input: stdin, output: stdout });
+        await rl.question('\nPress Enter to commit, push, and deploy... ');
+        rl.close();
+
+        const committed = commitAndPushLocales(worktreeRoot);
+        if (!committed && translated.length === 0) {
+            console.log('\nNothing changed and nothing to deploy. Done.');
+            return;
+        }
+
+        await deployLocalesOverFtp(worktreeRoot, { server: FTP_SERVER, username: FTP_USERNAME, password: FTP_PASSWORD });
+    } finally {
+        tearDownMainWorktree();
     }
-
-    console.log(
-        '\nReview resources/locales/sk_SK/default.po now — edit it by hand if any translation needs fixing.' +
-        ' Whatever is on disk when you press Enter is what gets committed and deployed.',
-    );
-    const rl = readline.createInterface({ input: stdin, output: stdout });
-    await rl.question('\nPress Enter to commit, push, and deploy... ');
-    rl.close();
-
-    const committed = commitAndPushLocales();
-    if (!committed && translated.length === 0) {
-        console.log('\nNothing changed and nothing to deploy. Done.');
-        return;
-    }
-
-    await deployLocalesOverFtp({ server: FTP_SERVER, username: FTP_USERNAME, password: FTP_PASSWORD });
 }
 
 main().catch((error) => {
