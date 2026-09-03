@@ -1,1 +1,56 @@
+name: Deploy
 
+on:
+  push:
+    branches:
+      - main
+
+# Only one deploy at a time — a second push to main while one is still
+# running waits for it rather than racing it (both would git-archive
+# `main` and FTP-upload at the same time otherwise, and bin/deploy.mjs's
+# .vendor-deployed-hash bookkeeping isn't safe against concurrent writers).
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # bin/deploy.mjs runs `git fetch origin main` / `git merge-base
+          # main origin/main` itself to verify local main matches origin
+          # before deploying — a shallow clone (actions/checkout's default,
+          # fetch-depth: 1) doesn't have enough history for merge-base to
+          # resolve correctly.
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: rsite-base/.nvmrc
+
+      - name: Install Node dependencies
+        working-directory: rsite-base
+        run: npm ci
+
+      # bin/deploy.mjs runs `composer install --no-dev` itself, against a
+      # fresh `git archive` export of main's HEAD — not against this
+      # checkout's own working tree. It deliberately never installs
+      # dependencies here; composer only needs to be on PATH.
+
+      - name: Deploy to production
+        working-directory: rsite-base
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: node bin/deploy.mjs
