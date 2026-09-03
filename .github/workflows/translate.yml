@@ -58,14 +58,6 @@ jobs:
         # bin/cake.php i18n extract — needs a real install here first.
         run: composer install --no-interaction --no-progress
 
-      - name: Debug Gemini key (temporary)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          echo "Key length: ${#GEMINI_API_KEY}"
-          echo "First 4 chars: ${GEMINI_API_KEY:0:4}"
-          echo "Last 4 chars: ${GEMINI_API_KEY: -4}"
-
       - name: Translate and deploy
         working-directory: rsite-base
         env:
