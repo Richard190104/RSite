@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-03 11:31+0000\n"
+"POT-Creation-Date: 2026-09-03 11:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -771,7 +771,7 @@ msgid "Close"
 msgstr ""
 
 #: ./templates/Pages/home.php:20
-msgid "About us text for script testing"
+msgid "About us text for script testings"
 msgstr ""
 
 #: ./templates/Pages/home.php:22
