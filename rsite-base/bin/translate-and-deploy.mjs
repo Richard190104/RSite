@@ -27,6 +27,15 @@
  *      nothing new). Your own checkout/branch is never touched.
  *   5. Upload resources/locales/ to production over FTP, from that same
  *      freshly-pushed worktree state.
+ *   6. Clear the production cache — CakePHP's translation cache would
+ *      otherwise keep serving the old .po content until it naturally
+ *      expires. Uploads webroot/clear-cache.php with a freshly generated
+ *      one-off token, prints the URL for you to open yourself (this host's
+ *      anti-bot challenge blocks a plain Node request — see
+ *      clearRemoteCache() below), waits for Enter, then deletes it from
+ *      the server. Always runs (unlike deploy.mjs's --clear-cache, which
+ *      is opt-in) — this workflow's whole point is getting a translation
+ *      change live, so skipping the cache-bust would defeat it.
  *
  * Usage:
  *   FTP_SERVER=... FTP_USERNAME=... FTP_PASSWORD=... node bin/translate-and-deploy.mjs
@@ -39,10 +48,12 @@
  */
 import { Client } from 'basic-ftp';
 import { execFileSync } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
 import { appendFileSync, existsSync, readdirSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
+import { Readable } from 'node:stream';
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const REPO_ROOT = join(ROOT, '..');
@@ -52,6 +63,11 @@ const ROOT_REL = relative(REPO_ROOT, ROOT).split(sep).join('/');
 // .deploy-translations-build — none of these scripts should be able to
 // clobber another's export if run back to back.
 const WORKTREE_DIR = join(ROOT, '.translate-and-deploy-worktree');
+
+// The production site — used only to build the clear-cache.php URL printed
+// for you to open. Overridable via SITE_URL in case this ever needs to
+// point elsewhere (a staging copy, a domain change).
+const SITE_URL = process.env.SITE_URL || 'https://rsite.great-site.net';
 
 // The "lite" flash variant — plain gemini-flash-latest returned persistent
 // 503 "high demand" errors even with retries when this script was tested;
@@ -381,10 +397,21 @@ function commitAndPushLocales(worktreeRoot) {
     ], worktreeRoot);
     runGit(['push', 'origin', 'HEAD:main'], worktreeRoot);
 
-    // Fast-forward the caller's own local `main` ref (not checkout) to
-    // match what was just pushed, so a later run's syncMainWithOrigin()
-    // sees it as already up to date instead of re-fetching for no reason.
-    runGit(['fetch', 'origin', 'main:main'], REPO_ROOT);
+    // Update the caller's own local `main` ref to match what was just
+    // pushed, so a later run's syncMainWithOrigin() sees it as already up
+    // to date. `git fetch origin main:main` refuses outright when `main`
+    // is the branch currently checked out in REPO_ROOT (as opposed to the
+    // worktree) — happens whenever you run this script from your own
+    // `main` checkout rather than a feature branch. Detect that case and
+    // fast-forward-merge instead, which works on a checked-out branch;
+    // fall back to the plain ref fetch otherwise (works from any other
+    // branch, no checkout side effect).
+    const currentBranch = capture('git', ['branch', '--show-current'], REPO_ROOT);
+    if (currentBranch === 'main') {
+        runGit(['merge', '--ff-only', 'origin/main'], REPO_ROOT);
+    } else {
+        runGit(['fetch', 'origin', 'main:main'], REPO_ROOT);
+    }
 
     return true;
 }
@@ -404,28 +431,58 @@ function* walkDir(dir, base) {
 // Uploads resources/locales/ straight from the worktree — it's already
 // main's just-pushed HEAD, so no separate git-archive export step is
 // needed the way deploy.mjs/deploy-translations.mjs do it standalone.
-async function deployLocalesOverFtp(worktreeRoot, { server, username, password }) {
+// Leaves `client` connected — the caller reuses it for clearRemoteCache().
+async function deployLocalesOverFtp(client, worktreeRoot) {
     console.log('\n=== Uploading over FTP ===');
     const localesDir = join(worktreeRoot, 'resources', 'locales');
-    const client = new Client();
-    client.ftp.verbose = false;
 
-    try {
-        await client.access({ host: server, user: username, password, secure: false });
-
-        let uploaded = 0;
-        for (const { full, rel } of walkDir(localesDir, localesDir)) {
-            const remotePath = '/htdocs/resources/locales/' + rel;
-            await client.ensureDir('/htdocs/resources/locales/' + rel.split('/').slice(0, -1).join('/'));
-            await client.uploadFrom(full, remotePath);
-            uploaded += 1;
-            console.log(`  uploaded resources/locales/${rel}`);
-        }
-
-        console.log(`\nDone. ${uploaded} file(s) uploaded.`);
-    } finally {
-        client.close();
+    let uploaded = 0;
+    for (const { full, rel } of walkDir(localesDir, localesDir)) {
+        const remotePath = '/htdocs/resources/locales/' + rel;
+        await client.ensureDir('/htdocs/resources/locales/' + rel.split('/').slice(0, -1).join('/'));
+        await client.uploadFrom(full, remotePath);
+        uploaded += 1;
+        console.log(`  uploaded resources/locales/${rel}`);
     }
+
+    console.log(`\nDone. ${uploaded} file(s) uploaded.`);
+}
+
+// Reads webroot/clear-cache.php from the worktree (so this always reflects
+// what main actually has) and substitutes its token placeholder with a
+// freshly generated one-off secret — in memory only, never written back to
+// the file on disk or committed.
+function clearCacheScriptWithToken(worktreeRoot, token) {
+    const placeholder = '__CACHE_TOKEN__';
+    const source = readFileSync(join(worktreeRoot, 'webroot', 'clear-cache.php'), 'utf8');
+    if (!source.includes(placeholder)) {
+        throw new Error(`Couldn't find the ${placeholder} placeholder in webroot/clear-cache.php`);
+    }
+    return source.replace(placeholder, token);
+}
+
+// Uploads webroot/clear-cache.php with a one-off random token, then waits
+// for you to open the URL yourself and confirm it ran, before deleting it
+// from the server — same pattern as deploy.mjs's runOneOffScript(), see
+// that function's comment for why this needs a real browser (this host's
+// anti-bot challenge blocks a plain Node request) and why the file must
+// not be left sitting on the server.
+async function clearRemoteCache(client, worktreeRoot) {
+    const token = randomBytes(16).toString('hex');
+    const remotePath = '/htdocs/webroot/clear-cache.php';
+
+    console.log('\n=== Clearing the production cache ===');
+    await client.uploadFrom(Readable.from([clearCacheScriptWithToken(worktreeRoot, token)]), remotePath);
+
+    const url = `${SITE_URL.replace(/\/$/, '')}/clear-cache.php?token=${token}`;
+    console.log(`\nOpen this URL in your browser and confirm the output looks right:\n  ${url}`);
+
+    const rl = readline.createInterface({ input: stdin, output: stdout });
+    await rl.question('\nPress Enter once you\'ve checked it (this deletes clear-cache.php from the server)... ');
+    rl.close();
+
+    await client.remove(remotePath);
+    console.log('clear-cache.php removed from the server.');
 }
 
 async function main() {
@@ -470,7 +527,15 @@ async function main() {
             return;
         }
 
-        await deployLocalesOverFtp(worktreeRoot, { server: FTP_SERVER, username: FTP_USERNAME, password: FTP_PASSWORD });
+        const client = new Client();
+        client.ftp.verbose = false;
+        try {
+            await client.access({ host: FTP_SERVER, user: FTP_USERNAME, password: FTP_PASSWORD, secure: false });
+            await deployLocalesOverFtp(client, worktreeRoot);
+            await clearRemoteCache(client, worktreeRoot);
+        } finally {
+            client.close();
+        }
     } finally {
         tearDownMainWorktree();
     }
