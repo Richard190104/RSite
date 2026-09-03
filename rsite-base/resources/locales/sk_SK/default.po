@@ -1400,3 +1400,7 @@ msgstr "V tejto kategórii zatiaľ nie sú žiadne fotografie."
 #: ./templates/element/Admin/aiChat.php:89
 msgid "title"
 msgstr "názov"
+
+#: ./templates/Pages/home.php:20
+msgid "About ustest new script"
+msgstr "O nás - testovací nový skript"
