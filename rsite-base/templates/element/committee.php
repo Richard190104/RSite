@@ -25,7 +25,15 @@ foreach ($committeeMembers as $member) {
 
             <div class="committee__grid">
                 <?php foreach ($members as $member): ?>
-                    <div class="committee__card">
+                    <div
+                        class="committee__card"
+                        data-committee-member
+                        data-name="<?= h($member->name) ?>"
+                        data-role="<?= h($member->role ?? '') ?>"
+                        data-email="<?= h($member->email ?? '') ?>"
+                        data-phone="<?= h($member->phone ?? '') ?>"
+                        data-photo="<?= $member->photo ? h($this->Url->build('/img/committee/' . $member->photo)) : '' ?>"
+                    >
                         <div class="committee__photo">
                             <?php if ($member->photo): ?>
                                 <?= $this->Html->image('/img/committee/' . $member->photo, ['alt' => $member->name]) ?>
@@ -54,3 +62,21 @@ foreach ($committeeMembers as $member) {
         </section>
     </div>
 <?php endforeach; ?>
+
+<div class="committee-modal" data-committee-modal>
+    <div class="committee-modal__frame">
+        <button type="button" class="committee-modal__close" aria-label="<?= __('Close') ?>">&times;</button>
+        <div class="committee-modal__photo">
+            <img class="committee-modal__image" alt="" hidden>
+            <svg class="committee-modal__photo-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            </svg>
+        </div>
+        <span class="committee-modal__name"></span>
+        <span class="committee-modal__role" hidden></span>
+        <a class="committee-modal__email" href="" hidden></a>
+        <a class="committee-modal__phone" href="" hidden></a>
+    </div>
+</div>
+<?= $this->Html->script('committee-modal') ?>

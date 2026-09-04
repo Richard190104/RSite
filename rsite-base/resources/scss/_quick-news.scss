@@ -29,6 +29,10 @@
 
 .quick-news__carousel {
     overflow: hidden;
+
+    .swiper-wrapper {
+        padding: 0.5rem 0rem;
+    }
 }
 
 .quick-news__card {
@@ -50,48 +54,16 @@
     }
 }
 
-.quick-news__nav-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 1.2rem;
-}
-
-.quick-news__nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border: none;
-    border-radius: 50%;
-    color: v.$color-navy;
-    font-size: v.$font-size-xl;
-    cursor: pointer;
-    background: none;
-
-    &:hover{
-        background: none;
-        color: v.$color-links-active;
-    }
-
-    &.swiper-button-disabled {
-        opacity: 0;
-        cursor: default;
-
-        &:hover,
-        &:focus-visible {
-            color: v.$color-white;
-            background: none;
-        }
-    }
-}
-
 .quick-news__image {
     position: relative;
     height: 16rem;
     background-color: v.$color-navy;
     background-size: cover;
     background-position: center;
+
+    &--placeholder {
+        background-image: linear-gradient(160deg, #4a5b70 0%, #1f2937 100%);
+    }
 }
 
 .quick-news__date {
@@ -153,13 +125,21 @@
     color: v.$color-navy;
 }
 
+// Prev arrow — "All news" — next arrow, spread across one row so the row's
+// own margin-top gives consistent spacing under the cards whether or not
+// Swiper ends up hiding the arrows (nothing to page through).
+.quick-news__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
 .quick-news__all {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 0.6rem;
     width: fit-content;
-    margin: 0rem auto 0;
     padding: 1rem 2rem;
     border-radius: 0.6rem;
     background: v.$color-navy;
@@ -168,10 +148,10 @@
     font-size: v.$font-size-md;
     text-decoration: none;
     transition: background-color 0.2s ease-out;
-
     &:hover,
     &:focus-visible {
-        background: color.adjust(v.$color-navy, $lightness: -8%);
+        background: color.adjust(v.$color-navy, $lightness: -1%);
+        color: v.$color-white;
     }
 }
 

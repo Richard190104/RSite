@@ -20,7 +20,12 @@ if (!$news) {
         <div class="swiper-wrapper">
             <?php foreach ($news as $article): ?>
                 <article class="quick-news__card swiper-slide">
-                    <div class="quick-news__image" style="background-image: url('<?= h($this->Url->build('/img/news/' . $article->image)) ?>')">
+                    <div
+                        class="quick-news__image<?= $article->image ? '' : ' quick-news__image--placeholder' ?>"
+                        <?php if ($article->image): ?>
+                            style="background-image: url('<?= h($this->Url->build('/img/news/' . $article->image)) ?>')"
+                        <?php endif; ?>
+                    >
                         <span class="quick-news__date"><?= h($article->date->i18nFormat('dd MMM yyyy')) ?></span>
                     </div>
                     <div class="quick-news__body">
@@ -36,13 +41,14 @@ if (!$news) {
         </div>
     </div>
 
-    <div class="quick-news__nav-row">
-        <button type="button" class="quick-news__nav quick-news__nav--prev" aria-label="<?= __('Previous') ?>">&larr;</button>
-        <button type="button" class="quick-news__nav quick-news__nav--next" aria-label="<?= __('Next') ?>">&rarr;</button>
-    </div>
+    <div class="quick-news__footer">
+        <button type="button" class="carousel-nav__btn quick-news__nav--prev" aria-label="<?= __('Previous') ?>">&larr;</button>
 
-    <?php // TODO: point at the news listing page once it exists ?>
-    <a class="quick-news__all" href="#"><?= __('All news') ?> &rarr;</a>
+        <?php // TODO: point at the news listing page once it exists ?>
+        <a class="quick-news__all" href="#"><?= __('All news') ?> &rarr;</a>
+
+        <button type="button" class="carousel-nav__btn quick-news__nav--next" aria-label="<?= __('Next') ?>">&rarr;</button>
+    </div>
 </section>
 <?= $this->Html->script('vendor/swiper-bundle.min') ?>
 <?= $this->Html->script('news-swiper') ?>

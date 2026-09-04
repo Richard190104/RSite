@@ -63,8 +63,12 @@ trait ImageUploadTrait
         return $filename;
     }
 
-    private function deleteImageUpload(string $subdir, string $filename): void
+    private function deleteImageUpload(string $subdir, ?string $filename): void
     {
+        if (!$filename) {
+            return;
+        }
+
         $file = WWW_ROOT . 'img' . DS . $subdir . DS . $filename;
         if (is_file($file)) {
             unlink($file);

@@ -40,7 +40,7 @@ $this->set('aiChatFields', [
                 'empty' => __('— none —'),
                 'label' => __('Category'),
             ]) ?>
-            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Image'), 'container' => ['class' => 'form-grid__full']]) ?>
+            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Image (optional)'), 'container' => ['class' => 'form-grid__full']]) ?>
         </div>
         <div class="form-card__actions">
             <?= $this->Form->button(__('Save')) ?>

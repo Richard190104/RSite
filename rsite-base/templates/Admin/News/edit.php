@@ -11,13 +11,15 @@ $this->set('aiChatFields', [
     'fieldLabel' => 'short news article summary',
     'htmlTargetField' => 'content',
     'htmlFieldLabel' => 'HTML poster for the news article',
-    'imageUrl' => $this->Url->build('/img/news/' . $article->image, ['fullBase' => true]),
+    'imageUrl' => $article->image ? $this->Url->build('/img/news/' . $article->image, ['fullBase' => true]) : '',
 ]);
 ?>
 <div class="content form-card">
-    <div class="form-card__preview">
-        <?= $this->Html->image('/img/news/' . $article->image, ['alt' => $article->title, 'width' => 240]) ?>
-    </div>
+    <?php if ($article->image): ?>
+        <div class="form-card__preview">
+            <?= $this->Html->image('/img/news/' . $article->image, ['alt' => $article->title, 'width' => 240]) ?>
+        </div>
+    <?php endif; ?>
     <?= $this->Form->create($article, ['type' => 'file']) ?>
         <div class="form-grid">
             <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>

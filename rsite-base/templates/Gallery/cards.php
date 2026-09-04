@@ -64,10 +64,10 @@ $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery catego
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="p-gallery__subcats-nav">
-                        <button type="button" class="p-gallery__subcats-nav-btn p-gallery__subcats-nav-btn--prev" aria-label="<?= __('Previous') ?>">&larr;</button>
-                        <button type="button" class="p-gallery__subcats-nav-btn p-gallery__subcats-nav-btn--next" aria-label="<?= __('Next') ?>">&rarr;</button>
-                    </div>
+                    <?= $this->element('carouselNav', [
+                        'prevClass' => 'p-gallery__subcats-nav-btn--prev',
+                        'nextClass' => 'p-gallery__subcats-nav-btn--next',
+                    ]) ?>
                 </div>
                 <?= $this->Html->script('vendor/swiper-bundle.min') ?>
                 <?= $this->Html->script('gallery-subcats-swiper') ?>

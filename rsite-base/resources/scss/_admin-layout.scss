@@ -275,16 +275,7 @@
         }
     }
 
-    // A Form->control(..., ['multiple' => 'checkbox']) — CakePHP renders it
-    // as .input.select (not .input.multicheckbox, despite the option name):
-    // a label, a hidden input, then one bare "<div class="checkbox"><label>
-    // ...</label></div>" per option as direct siblings, stacked with no
-    // spacing of its own — reads as a loose pile of items rather than a
-    // single control. Turned into a compact grid of small chips (switch +
-    // name close together) instead of full-width rows — full-width rows
-    // put the switch and the name far apart with a lot of empty space
-    // between them, which read as "stretched" rather than compact.
-    .input.select {
+    .admin-multicheckbox .input.select {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
         gap: 0.6rem;
@@ -296,7 +287,7 @@
         }
     }
 
-    .input.select .checkbox label {
+    .admin-multicheckbox .checkbox label {
         display: flex;
         align-items: center;
         gap: 0.7rem;
@@ -317,7 +308,7 @@
     // The per-item switches read smaller here than a standalone form
     // toggle (e.g. "Show in gallery") — a tight grid of several small
     // chips calls for a smaller control than a single lone one does.
-    .input.select .checkbox input[type='checkbox'] {
+    .admin-multicheckbox .checkbox input[type='checkbox'] {
         width: 2.8rem;
         height: 1.6rem;
         // Milligram's global `input { margin-bottom: 1.5rem }` otherwise
@@ -344,14 +335,14 @@
     // - .input.checkbox label > input (add/edit forms, e.g. "Show in gallery")
     // - a bare input.js-toggle-checkbox with no label (index-listing toggle
     //   cell, see Banners/Notifications index — no text next to the switch)
-    // - .input.select .checkbox label > input (a multiple=>checkbox field's
-    //   per-item switch, e.g. homepage "quick access" page picker)
+    // - .admin-multicheckbox .checkbox label > input (a multiple=>checkbox
+    //   field's per-item switch, e.g. homepage "quick access" page picker)
     .input.checkbox label {
         cursor: pointer;
     }
 
     .input.checkbox input[type='checkbox'],
-    .input.select .checkbox input[type='checkbox'],
+    .admin-multicheckbox .checkbox input[type='checkbox'],
     .js-toggle-checkbox {
         -webkit-appearance: none;
         appearance: none;
