@@ -24,7 +24,8 @@
     cursor: pointer;
 
     &:hover,
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
         background: none;
         color: v.$color-links-active;
     }
@@ -35,7 +36,8 @@
         pointer-events: none;
 
         &:hover,
-        &:focus-visible {
+        &:focus-visible,
+        &:focus {
             background: none;
             color: v.$color-navy;
         }
