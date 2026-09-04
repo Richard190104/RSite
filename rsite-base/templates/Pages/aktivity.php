@@ -26,6 +26,12 @@ $activityIcons = [
                     <?php foreach ($upcomingEvents as $event): ?>
                         <article class="p-aktivity__event-card">
                             <div class="p-aktivity__event-media">
+                                <?php if ($event->image): ?>
+                                    <?= $this->Html->image('/img/events/' . $event->image, [
+                                        'alt' => $event->title,
+                                        'class' => 'p-aktivity__event-image',
+                                    ]) ?>
+                                <?php endif; ?>
                                 <?php if ($event->date): ?>
                                     <span class="p-aktivity__event-date">
                                         <span class="p-aktivity__event-day"><?= h($event->date->i18nFormat('dd')) ?></span>
@@ -70,7 +76,7 @@ $activityIcons = [
                     <?php endforeach; ?>
                 </div>
             <?php else: ?>
-                <p class="p-aktivity__empty"><?= __('No upcoming events yet. Add some in admin.') ?></p>
+                <p class="p-aktivity__empty"><?= __('No upcoming events yet.') ?></p>
             <?php endif; ?>
         </section>
 
@@ -117,9 +123,9 @@ $activityIcons = [
             >
                 <div class="p-aktivity__calendar-main">
                     <div class="p-aktivity__calendar-toolbar">
-                        <button type="button" class="p-aktivity__calendar-nav" data-cal-prev aria-label="<?= __('Previous month') ?>">‹</button>
+                        <button type="button" class="p-aktivity__calendar-nav" data-cal-prev aria-label="<?= __('Previous month') ?>">&larr;</button>
                         <h3 class="p-aktivity__calendar-month" data-cal-month></h3>
-                        <button type="button" class="p-aktivity__calendar-nav" data-cal-next aria-label="<?= __('Next month') ?>">›</button>
+                        <button type="button" class="p-aktivity__calendar-nav" data-cal-next aria-label="<?= __('Next month') ?>">&rarr;</button>
                     </div>
                     <div class="p-aktivity__calendar-weekdays" data-cal-weekdays></div>
                     <div class="p-aktivity__calendar-grid" data-cal-grid></div>

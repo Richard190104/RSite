@@ -12,7 +12,12 @@ $this->set('aiChatFields', [
 ]);
 ?>
 <div class="content form-card">
-    <?= $this->Form->create($event) ?>
+    <?php if ($event->image): ?>
+        <div class="form-card__preview">
+            <?= $this->Html->image('/img/events/' . $event->image, ['alt' => $event->title, 'width' => 240]) ?>
+        </div>
+    <?php endif; ?>
+    <?= $this->Form->create($event, ['type' => 'file']) ?>
         <div class="form-grid">
             <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description'), 'id' => 'description', 'container' => ['class' => 'form-grid__full']]) ?>
@@ -25,6 +30,7 @@ $this->set('aiChatFields', [
                 'empty' => __('— none —'),
                 'label' => __('Category'),
             ]) ?>
+            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)'), 'container' => ['class' => 'form-grid__full']]) ?>
         </div>
         <div class="form-card__actions">
             <?= $this->Form->button(__('Save')) ?>

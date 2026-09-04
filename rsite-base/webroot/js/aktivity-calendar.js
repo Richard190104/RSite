@@ -127,14 +127,11 @@
             .map((event) => {
                 const date = parseKey(event.date);
                 const isPast = date < today;
-                const day = date.toLocaleDateString(locale, { day: '2-digit' });
-                const month = date.toLocaleDateString(locale, { month: 'short' });
+                const day = date.toLocaleDateString(locale, { day: 'numeric' });
+                const month = date.toLocaleDateString(locale, { month: 'short' }).replace(/\./g, '');
                 return `
                     <li class="p-aktivity__calendar-item${isPast ? ' is-past' : ''}">
-                        <span class="p-aktivity__calendar-badge">
-                            <span>${escapeHtml(day)}</span>
-                            <span>${escapeHtml(month)}</span>
-                        </span>
+                        <span class="p-aktivity__calendar-badge">${escapeHtml(`${day} ${month}`)}</span>
                         <div class="p-aktivity__calendar-item-body">
                             <span class="p-aktivity__calendar-item-title">${escapeHtml(event.title)}</span>
                             ${metaLine(event)}
@@ -162,13 +159,12 @@
         }
 
         const isPast = date < today;
+        const day = date.toLocaleDateString(locale, { day: 'numeric' });
+        const month = date.toLocaleDateString(locale, { month: 'short' }).replace(/\./g, '');
         listEl.innerHTML = dayEvents
             .map((event) => `
                 <li class="p-aktivity__calendar-item is-detail${isPast ? ' is-past' : ''}">
-                    <span class="p-aktivity__calendar-badge">
-                        <span>${escapeHtml(date.toLocaleDateString(locale, { day: '2-digit' }))}</span>
-                        <span>${escapeHtml(date.toLocaleDateString(locale, { month: 'short' }))}</span>
-                    </span>
+                    <span class="p-aktivity__calendar-badge">${escapeHtml(`${day} ${month}`)}</span>
                     <div class="p-aktivity__calendar-item-body">
                         <span class="p-aktivity__calendar-item-title">${escapeHtml(event.title)}</span>
                         ${event.description ? `<p class="p-aktivity__calendar-item-text">${escapeHtml(event.description)}</p>` : ''}
@@ -197,7 +193,7 @@
 
         const cells = [];
         for (let i = 0; i < startOffset; i += 1) {
-            cells.push('<span class="p-aktivity__calendar-day is-empty"></span>');
+            cells.push('<span class="p-aktivity__calendar-day is-empty" aria-hidden="true"></span>');
         }
 
         for (let day = 1; day <= daysInMonth; day += 1) {
@@ -223,6 +219,12 @@
             cells.push(
                 `<button type="button" class="${classes}" data-date="${key}" ${hasEvents ? '' : 'disabled'}>${day}</button>`
             );
+        }
+
+        // Always fill 6 weeks (42 cells) so the grid height stays stable
+        // when switching between months with different week counts.
+        while (cells.length < 42) {
+            cells.push('<span class="p-aktivity__calendar-day is-empty" aria-hidden="true"></span>');
         }
 
         gridEl.innerHTML = cells.join('');

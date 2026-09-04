@@ -915,6 +915,9 @@ msgstr "Obrázok musí byť súbor typu JPEG, PNG alebo WEBP."
 msgid "The image must be smaller than 5 MB."
 msgstr "Obrázok musí byť menší ako 5 MB."
 
+msgid "The uploaded file is too large for the server (limit {0}). Please choose a smaller image."
+msgstr "Nahrávaný súbor je príliš veľký pre server (limit {0}). Vyberte menší obrázok."
+
 #: ./templates/Admin/News/add.php
 msgid "— none —"
 msgstr "— žiadna —"
@@ -1553,8 +1556,8 @@ msgid "Closest events"
 msgstr "Najbližšie udalosti"
 
 #: ./templates/Pages/aktivity.php
-msgid "No upcoming events yet. Add some in admin."
-msgstr "Zatiaľ žiadne nadchádzajúce podujatia. Pridajte ich v admine."
+msgid "No upcoming events yet."
+msgstr "Zatiaľ žiadne nadchádzajúce podujatia."
 
 #: ./templates/Pages/aktivity.php
 msgid "No events this month."

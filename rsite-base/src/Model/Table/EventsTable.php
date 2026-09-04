@@ -45,6 +45,10 @@ class EventsTable extends Table
             ->maxLength('time', 32)
             ->allowEmptyString('time')
 
+            ->scalar('image')
+            ->maxLength('image', 255)
+            ->allowEmptyString('image')
+
             ->allowEmptyString('category_id');
 
         return $validator;

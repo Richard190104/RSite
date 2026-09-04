@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 
 class EventsController extends AppController
 {
+    use ImageUploadTrait;
+
     public function index(): void
     {
         $events = $this->fetchTable('Events')
@@ -22,14 +24,31 @@ class EventsController extends AppController
         $event = $Events->newEmptyEntity();
 
         if ($this->request->is('post')) {
-            $event = $Events->patchEntity($event, $this->request->getData());
+            $data = $this->request->getData();
+            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
+            $upload = $data['image'] ?? null;
+            unset($data['image']);
 
-            if ($Events->save($event)) {
-                $this->Flash->success(__('Event saved.'));
+            $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
+            $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
 
-                return $this->redirect(['action' => 'index']);
+            $event = $Events->patchEntity($event, $data);
+
+            if (!$event->getErrors() && $uploadError === null) {
+                if ($hasFile) {
+                    $event->image = $this->storeImageUpload($upload, 'events');
+                }
+
+                if ($Events->save($event)) {
+                    $this->Flash->success(__('Event saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
             }
 
+            if ($uploadError !== null) {
+                $this->Flash->error($uploadError);
+            }
             $this->Flash->error(__('Could not save the event, check the errors below.'));
         }
 
@@ -45,14 +64,36 @@ class EventsController extends AppController
         $event = $Events->get($id);
 
         if ($this->request->is(['post', 'put'])) {
-            $event = $Events->patchEntity($event, $this->request->getData());
+            $data = $this->request->getData();
+            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
+            $upload = $data['image'] ?? null;
+            unset($data['image']);
 
-            if ($Events->save($event)) {
-                $this->Flash->success(__('Event saved.'));
+            $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
+            $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
 
-                return $this->redirect(['action' => 'index']);
+            $oldImage = $event->image;
+            $event = $Events->patchEntity($event, $data);
+
+            if (!$event->getErrors() && $uploadError === null) {
+                if ($hasNewFile) {
+                    $event->image = $this->storeImageUpload($upload, 'events');
+                }
+
+                if ($Events->save($event)) {
+                    if ($hasNewFile) {
+                        $this->deleteImageUpload('events', $oldImage);
+                    }
+
+                    $this->Flash->success(__('Event saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
             }
 
+            if ($uploadError !== null) {
+                $this->Flash->error($uploadError);
+            }
             $this->Flash->error(__('Could not save the event, check the errors below.'));
         }
 
@@ -70,6 +111,7 @@ class EventsController extends AppController
         $event = $Events->get($id);
 
         if ($Events->delete($event)) {
+            $this->deleteImageUpload('events', $event->image);
             $this->Flash->success(__('Event deleted.'));
         } else {
             $this->Flash->error(__('Could not delete the event.'));
