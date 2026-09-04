@@ -66,6 +66,7 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/home', ['redirect' => '/'], ['routeClass' => RedirectRoute::class]);
 
         $builder->connect('/kontakt', ['controller' => 'Pages', 'action' => 'kontakt']);
+        $builder->connect('/aktivity', ['controller' => 'Pages', 'action' => 'aktivity']);
 
         $builder->connect('/o-nas', ['controller' => 'Pages', 'action' => 'onas']);
 

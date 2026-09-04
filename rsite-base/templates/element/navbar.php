@@ -114,7 +114,7 @@ $activeNotifications = $this->activeNotifications();
 
                 <?php if ($contactPage !== null): ?>
                     <li class="site-nav__category site-nav__category--end">
-                        <a href="<?= h($this->Url->build('/kontakt')) ?>"><?= h(__($contactPage->title)) ?></a>
+                        <a href="/<?= h($contactPage->slug) ?>"><?= h(__($contactPage->title)) ?></a>
                     </li>
                 <?php endif; ?>
             </ul>

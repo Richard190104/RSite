@@ -20,6 +20,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
+use Cake\I18n\Date;
 use Cake\View\Exception\MissingTemplateException;
 
 /**
@@ -78,6 +79,64 @@ class PagesController extends AppController
             ->all();
 
         $this->set(compact('page', 'mainBanner', 'committeeMembers'));
+    }
+
+    /**
+     * Public activities page: upcoming event cards, activity categories, and
+     * a front-end calendar fed by all Events from admin.
+     */
+    public function aktivity(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'aktivity'])->firstOrFail();
+        $today = Date::now();
+
+        $Events = $this->fetchTable('Events');
+
+        $upcomingEvents = $Events->find()
+            ->contain(['Categories'])
+            ->where(['Events.date >=' => $today])
+            ->orderBy(['Events.date' => 'ASC'])
+            ->limit(3)
+            ->all()
+            ->toList();
+
+        $allEvents = $Events->find()
+            ->contain(['Categories'])
+            ->where(['Events.date IS NOT' => null])
+            ->orderBy(['Events.date' => 'ASC'])
+            ->all()
+            ->toList();
+
+        $categoryIds = $Events->find()
+            ->select(['category_id'])
+            ->where(['category_id IS NOT' => null])
+            ->distinct(['category_id'])
+            ->all()
+            ->extract('category_id')
+            ->toList();
+
+        $categories = $categoryIds
+            ? $this->fetchTable('Categories')
+                ->find()
+                ->where(['id IN' => $categoryIds])
+                ->orderBy(['title' => 'ASC'])
+                ->limit(5)
+                ->all()
+                ->toList()
+            : [];
+
+        $calendarEvents = array_map(static function ($event) {
+            return [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'date' => $event->date?->format('Y-m-d'),
+                'location' => $event->location,
+                'time' => $event->time,
+            ];
+        }, $allEvents);
+
+        $this->set(compact('page', 'upcomingEvents', 'categories', 'calendarEvents'));
     }
 
     /**
