@@ -35,9 +35,9 @@
 .quick-access__card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.9rem;
-    padding: 2rem 1.8rem;
+    padding: 2rem 2.3rem;
     background: var(--color-white);
     border-radius: 0.8rem;
     text-decoration: none;

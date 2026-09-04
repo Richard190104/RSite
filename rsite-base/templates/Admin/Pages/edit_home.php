@@ -17,14 +17,15 @@ $quickAccess = $page->content['quick_access'] ?? [];
                 'value' => $aboutUsText,
                 'container' => ['class' => 'form-grid__full'],
             ]) ?>
-            <?= $this->Form->control('content.quick_access', [
-                'type' => 'select',
-                'multiple' => 'checkbox',
-                'label' => __('Quick access (max 6 pages)'),
-                'options' => $otherPages,
-                'value' => $quickAccess,
-                'container' => ['class' => 'form-grid__full'],
-            ]) ?>
+            <div class="form-grid__full admin-multicheckbox">
+                <?= $this->Form->control('content.quick_access', [
+                    'type' => 'select',
+                    'multiple' => 'checkbox',
+                    'label' => __('Quick access (max 6 pages)'),
+                    'options' => $otherPages,
+                    'value' => $quickAccess,
+                ]) ?>
+            </div>
         </div>
         <div class="form-card__actions">
             <?= $this->Form->button(__('Save')) ?>

@@ -30,15 +30,19 @@ class NewsController extends AppController
             $upload = $data['image'] ?? null;
             unset($data['image']);
 
+            $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
+            $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
+
             if (!empty($data['content'])) {
                 $data['content'] = $this->sanitizeHtml($data['content']);
             }
 
             $article = $News->patchEntity($article, $data);
-            $uploadError = $this->imageUploadError($upload, true);
 
             if (!$article->getErrors() && $uploadError === null) {
-                $article->image = $this->storeImageUpload($upload, 'news');
+                if ($hasFile) {
+                    $article->image = $this->storeImageUpload($upload, 'news');
+                }
 
                 if ($News->save($article)) {
                     $this->Flash->success(__('News article saved.'));

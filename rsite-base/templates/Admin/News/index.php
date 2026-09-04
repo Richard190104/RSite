@@ -23,7 +23,11 @@ $this->assign('title', __('News'));
             <tbody>
                 <?php foreach ($news as $article): ?>
                     <tr>
-                        <td><?= $this->Html->image('/img/news/' . $article->image, ['alt' => $article->title, 'width' => 80]) ?></td>
+                        <td>
+                            <?php if ($article->image): ?>
+                                <?= $this->Html->image('/img/news/' . $article->image, ['alt' => $article->title, 'width' => 80]) ?>
+                            <?php endif; ?>
+                        </td>
                         <td><?= h($article->title) ?></td>
                         <td><?= h($article->category->title ?? '') ?></td>
                         <td><?= h($article->date->format('d.m.Y')) ?></td>

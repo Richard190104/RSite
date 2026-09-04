@@ -169,43 +169,8 @@
     }
 }
 
-.p-gallery__subcats-nav {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.6rem;
+.p-gallery__subcats-carousel + .carousel-nav {
     margin-top: 0.6rem;
-}
-
-.p-gallery__subcats-nav-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border: none;
-    border-radius: 50%;
-    background: none;
-    color: v.$color-navy;
-    font-size: v.$font-size-xl;
-    cursor: pointer;
-
-    &:hover,
-    &:focus-visible,
-    &:focus {
-        background: none;
-        color: v.$color-links-active;
-    }
-
-    &.swiper-button-disabled {
-        opacity: 0.3;
-        cursor: default;
-
-        &:hover,
-        &:focus-visible {
-            background: none;
-            color: v.$color-navy;
-        }
-    }
 }
 
 .p-gallery__divider {

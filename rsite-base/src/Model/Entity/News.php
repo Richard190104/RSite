@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $description
  * @property string|null $content
- * @property string $image
+ * @property string|null $image
  * @property \Cake\I18n\Date $date
  * @property int|null $category_id
  * @property \Cake\I18n\DateTime $created
