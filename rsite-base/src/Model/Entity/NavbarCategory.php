@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * @property int $id
  * @property string $title
+ * @property int $position
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  * @property \App\Model\Entity\Page[] $pages
@@ -16,6 +17,7 @@ class NavbarCategory extends Entity
 {
     protected array $_accessible = [
         'title' => true,
+        'position' => true,
         'created' => true,
         'modified' => true,
         'pages' => true,

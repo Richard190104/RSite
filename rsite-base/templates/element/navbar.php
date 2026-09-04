@@ -18,8 +18,12 @@ use Cake\ORM\TableRegistry;
 
 $navbarCategories = TableRegistry::getTableLocator()->get('NavbarCategories')
     ->find()
-    ->contain(['Pages'])
-    ->orderBy(['NavbarCategories.title' => 'ASC'])
+    ->contain([
+        'Pages' => function ($q) {
+            return $q->orderBy(['Pages.position' => 'ASC']);
+        },
+    ])
+    ->orderBy(['NavbarCategories.position' => 'ASC'])
     ->all();
 
 $organisationName = $this->organisationName();
