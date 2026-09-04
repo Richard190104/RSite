@@ -24,8 +24,8 @@ $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery catego
                         >
                             <div
                                 class="p-gallery__card-image"
-                                <?php if ($category->image): ?>
-                                    style="background-image: url('<?= h($this->Url->build('/img/categories/' . $category->image)) ?>');"
+                                <?php if ($category->thumbnail_url): ?>
+                                    style="background-image: url('<?= h($this->Url->build($category->thumbnail_url)) ?>');"
                                 <?php endif; ?>
                             ></div>
                             <span class="p-gallery__card-badge"><?= h($category->title) ?></span>
@@ -55,8 +55,8 @@ $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery catego
                                 >
                                     <div
                                         class="p-gallery__card-image"
-                                        <?php if ($subcategory->image): ?>
-                                            style="background-image: url('<?= h($this->Url->build('/img/categories/' . $subcategory->image)) ?>');"
+                                        <?php if ($subcategory->thumbnail_url): ?>
+                                            style="background-image: url('<?= h($this->Url->build($subcategory->thumbnail_url)) ?>');"
                                         <?php endif; ?>
                                     ></div>
                                     <span class="p-gallery__card-badge"><?= h($subcategory->title) ?></span>

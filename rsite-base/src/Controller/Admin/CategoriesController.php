@@ -9,13 +9,51 @@ class CategoriesController extends AppController
 
     public function index(): void
     {
+        // Top-level categories with their children eager-loaded (ordered
+        // by position, same as the child list itself) — the template
+        // renders one drag-reorder list per parent (top-level categories
+        // among themselves, then each parent's children among themselves),
+        // since positions are only meaningful scoped to a shared parent_id
+        // (see reorder()).
         $categories = $this->fetchTable('Categories')
             ->find()
-            ->contain(['ParentCategories'])
-            ->orderBy(['Categories.title' => 'ASC'])
+            ->where(['parent_id IS' => null])
+            ->contain(['ChildCategories' => fn ($q) => $q->orderBy(['ChildCategories.position' => 'ASC'])])
+            ->orderBy(['Categories.position' => 'ASC'])
             ->all();
 
         $this->set(compact('categories'));
+    }
+
+    /**
+     * Reorders Categories via drag-and-drop on the index listing — see
+     * webroot/js/admin-drag-reorder.js. Expects an ordered array of ids in
+     * `order`, all sharing the same `parentId` (null for top-level), and
+     * writes 0-based positions to match, same pattern as
+     * NavbarCategoriesController::reorder(). `parentId` is included in the
+     * WHERE (not just used to pick the list) so a stale or tampered
+     * request can only ever move ids within the parent it claims, never
+     * reassign a category to a different parent's position sequence.
+     */
+    public function reorder()
+    {
+        $this->request->allowMethod(['post']);
+        $this->viewBuilder()->setClassName('Json');
+        $this->viewBuilder()->setOption('serialize', ['success']);
+
+        $Categories = $this->fetchTable('Categories');
+        $ids = array_map('intval', (array)$this->request->getData('order'));
+        $parentId = $this->request->getData('parentId');
+        $parentId = $parentId === null || $parentId === '' ? null : (int)$parentId;
+        $parentCondition = $parentId === null ? ['parent_id IS' => null] : ['parent_id' => $parentId];
+
+        foreach ($ids as $position => $id) {
+            $Categories->updateAll(['position' => $position], ['id' => $id] + $parentCondition);
+        }
+
+        $this->set('success', true);
+
+        return null;
     }
 
     public function add()
