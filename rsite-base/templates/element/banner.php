@@ -21,6 +21,8 @@ if ($controller === 'pages' && $action === 'home') {
     $location = 'kontakt';
 } elseif ($controller === 'pages' && $action === 'onas') {
     $location = 'o-nas';
+} elseif ($controller === 'pages' && $action === 'aktivity') {
+    $location = 'aktivity';
 } elseif ($controller === 'pages' && ($pass[0] ?? null) !== null) {
     $location = (string)$pass[0];
 } else {

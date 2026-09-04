@@ -915,6 +915,9 @@ msgstr "Obrázok musí byť súbor typu JPEG, PNG alebo WEBP."
 msgid "The image must be smaller than 5 MB."
 msgstr "Obrázok musí byť menší ako 5 MB."
 
+msgid "The uploaded file is too large for the server (limit {0}). Please choose a smaller image."
+msgstr "Nahrávaný súbor je príliš veľký pre server (limit {0}). Vyberte menší obrázok."
+
 #: ./templates/Admin/News/add.php
 msgid "— none —"
 msgstr "— žiadna —"
@@ -1535,3 +1538,86 @@ msgstr "Potiahnutím riadkov za úchyt zmeňte poradie – takto sa kategórie z
 #: ./templates/Admin/News/add.php:43
 msgid "Image (optional)"
 msgstr "Obrázok (voliteľné)"
+
+#: ./templates/Pages/aktivity.php
+msgid "Upcoming events"
+msgstr "Nadchádzajúce podujatia"
+
+#: ./templates/Pages/aktivity.php
+msgid "Our activities"
+msgstr "Naše aktivity"
+
+#: ./templates/Pages/aktivity.php
+msgid "Activities calendar"
+msgstr "Kalendár aktivít"
+
+#: ./templates/Pages/aktivity.php
+msgid "Closest events"
+msgstr "Najbližšie udalosti"
+
+#: ./templates/Pages/aktivity.php
+msgid "No upcoming events yet."
+msgstr "Zatiaľ žiadne nadchádzajúce podujatia."
+
+#: ./templates/Pages/aktivity.php
+msgid "No events this month."
+msgstr "Tento mesiac nie sú žiadne udalosti."
+
+#: ./templates/Pages/aktivity.php
+msgid "Events and activities in this category."
+msgstr "Podujatia a aktivity v tejto kategórii."
+
+#: ./templates/Pages/aktivity.php
+msgid "Previous month"
+msgstr "Predchádzajúci mesiac"
+
+#: ./templates/Pages/aktivity.php
+msgid "Next month"
+msgstr "Nasledujúci mesiac"
+
+#: ./templates/Pages/aktivity.php
+msgid "Mon"
+msgstr "Po"
+
+#: ./templates/Pages/aktivity.php
+msgid "Tue"
+msgstr "Ut"
+
+#: ./templates/Pages/aktivity.php
+msgid "Wed"
+msgstr "St"
+
+#: ./templates/Pages/aktivity.php
+msgid "Thu"
+msgstr "Št"
+
+#: ./templates/Pages/aktivity.php
+msgid "Fri"
+msgstr "Pi"
+
+#: ./templates/Pages/aktivity.php
+msgid "Sat"
+msgstr "So"
+
+#: ./templates/Pages/aktivity.php
+msgid "Sun"
+msgstr "Ne"
+
+#: ./templates/Admin/Events/add.php
+#: ./templates/Admin/Events/edit.php
+#: ./templates/Admin/Events/index.php
+msgid "Location"
+msgstr "Miesto"
+
+#: ./templates/Admin/Events/add.php
+#: ./templates/Admin/Events/edit.php
+msgid "Time"
+msgstr "Čas"
+
+#: ./templates/Pages/aktivity.php
+msgid "Show less"
+msgstr "Menej"
+
+#: ./templates/Pages/aktivity.php
+msgid "No events on this day."
+msgstr "V tento deň nie sú žiadne udalosti."

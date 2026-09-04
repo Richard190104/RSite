@@ -13,8 +13,10 @@ $this->assign('title', __('Events'));
         <table>
             <thead>
                 <tr>
+                    <th><?= __('Image') ?></th>
                     <th><?= __('Title') ?></th>
                     <th><?= __('Date') ?></th>
+                    <th><?= __('Location') ?></th>
                     <th><?= __('Category') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -22,8 +24,14 @@ $this->assign('title', __('Events'));
             <tbody>
                 <?php foreach ($events as $event): ?>
                     <tr>
+                        <td>
+                            <?php if ($event->image): ?>
+                                <?= $this->Html->image('/img/events/' . $event->image, ['alt' => $event->title, 'width' => 80]) ?>
+                            <?php endif; ?>
+                        </td>
                         <td><?= h($event->title) ?></td>
                         <td><?= $event->date !== null ? h($event->date->format('d.m.Y')) : '' ?></td>
+                        <td><?= h($event->location ?? '') ?></td>
                         <td><?= h($event->category->title ?? '') ?></td>
                         <td class="actions">
                             <?= $this->element('Admin/rowActions', [

@@ -37,6 +37,18 @@ class EventsTable extends Table
             ->requirePresence('date', 'create')
             ->notEmptyDate('date')
 
+            ->scalar('location')
+            ->maxLength('location', 255)
+            ->allowEmptyString('location')
+
+            ->scalar('time')
+            ->maxLength('time', 32)
+            ->allowEmptyString('time')
+
+            ->scalar('image')
+            ->maxLength('image', 255)
+            ->allowEmptyString('image')
+
             ->allowEmptyString('category_id');
 
         return $validator;
