@@ -1488,3 +1488,33 @@ msgstr "O nás text pre testovanie skriptov"
 #: ./templates/Pages/home.php:20
 msgid "Testing ABOUTUS Text automatic translations"
 msgstr "Testovanie automatických prekladov textu O NÁS"
+
+#: ./src/Controller/Admin/AppController.php:74
+msgid "The organisation's committee (výbor) — name (required), plus optional phone, email, and a photo. Not shown on the public site yet, admin-managed data only for now."
+msgstr "Výbor organizácie — meno (povinné), plus voliteľne telefón, email a fotografia. Zatiaľ sa nezobrazuje na verejnej stránke, ide len o údaje spravované administrátorom."
+
+#: ./templates/Admin/CommitteeMembers/add.php:11
+#: ./templates/Admin/CommitteeMembers/edit.php:16
+#: ./templates/Admin/CommitteeMembers/index.php:17
+msgid "Name"
+msgstr "Meno"
+
+#: ./templates/Admin/Pages/edit_home.php:36
+msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
+msgstr "Sekcia „Revíry a činnosť“ sa tiež spravuje samostatne ako bannery: hlavná fotografia používa umiestnenie „Úvod — hlavný obrázok revírov“ a jej karty používajú umiestnenie „Úvod — dlaždica revírov“."
+
+#: ./templates/Admin/Pages/edit_onas.php:6
+msgid "Edit \"About us\" page"
+msgstr "Upraviť stránku „O nás“"
+
+#: ./templates/Admin/Pages/edit_onas.php:32
+msgid "\"About us text\" is shown on this page itself. \"Description\" is shown under the page name in the homepage quick access cards, if this page is added there."
+msgstr "„Text O nás“ sa zobrazuje priamo na tejto stránke. „Popis“ sa zobrazuje pod názvom stránky v rýchlych odkazoch na domovskej stránke, ak je táto stránka tam pridaná."
+
+#: ./templates/Admin/Pages/edit_onas.php:35
+msgid "The image shown next to the \"about us\" text is managed separately as a banner with the \"About us — minibanner\" location."
+msgstr "Obrázok zobrazený vedľa textu „o nás“ sa spravuje samostatne ako banner s umiestnením „O nás — minibanner“."
+
+#: ./templates/Pages/onas.php:14
+msgid "About our organisation"
+msgstr "O našej organizácii"
