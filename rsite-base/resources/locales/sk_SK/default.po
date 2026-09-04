@@ -1518,3 +1518,20 @@ msgstr "Obrázok zobrazený vedľa textu „o nás“ sa spravuje samostatne ako
 #: ./templates/Pages/onas.php:14
 msgid "About our organisation"
 msgstr "O našej organizácii"
+
+#: ./templates/Admin/NavbarCategories/edit.php:22
+msgid "Toggle a page on to include it into category, drag by the handle to reorder"
+msgstr "Prepnite stránku na jej zaradenie do kategórie, potiahnutím za úchyt zmeňte poradie"
+
+#: ./templates/Admin/NavbarCategories/edit.php:26
+#: ./templates/Admin/NavbarCategories/index.php:29
+msgid "Drag to reorder"
+msgstr "Potiahnutím zmeňte poradie"
+
+#: ./templates/Admin/NavbarCategories/index.php:12
+msgid "Drag rows by the handle to reorder — this is the order categories appear in the site navigation."
+msgstr "Potiahnutím riadkov za úchyt zmeňte poradie – takto sa kategórie zobrazia v navigácii webu."
+
+#: ./templates/Admin/News/add.php:43
+msgid "Image (optional)"
+msgstr "Obrázok (voliteľné)"
