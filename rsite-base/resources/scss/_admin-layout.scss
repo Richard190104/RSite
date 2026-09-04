@@ -228,6 +228,112 @@
         border-top: 1px solid v.$admin-color-border;
     }
 
+    // Explanatory notes below a form (e.g. "this image is managed
+    // separately as a banner") — grouped into one visually distinct panel
+    // instead of bare <p> tags loose in the page, which read as
+    // disconnected scraps rather than a single "here's what else to know"
+    // block.
+    .form-card__hints {
+        margin-top: 2rem;
+        padding: 1.2rem 1.4rem;
+        border-radius: 0.4rem;
+        background: v.$color-main-bg;
+        border: 1px solid v.$admin-color-border;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+    }
+
+    .form-card__hint {
+        display: flex;
+        gap: 0.7rem;
+        margin: 0;
+        font-size: v.$font-size-base;
+        color: v.$color-lightgray;
+        line-height: 1.5;
+
+        &::before {
+            content: 'i';
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            border-radius: 50%;
+            background: v.$admin-color-border;
+            color: v.$admin-color-text;
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+        }
+
+        a {
+            white-space: nowrap;
+        }
+    }
+
+    // A Form->control(..., ['multiple' => 'checkbox']) — CakePHP renders it
+    // as .input.select (not .input.multicheckbox, despite the option name):
+    // a label, a hidden input, then one bare "<div class="checkbox"><label>
+    // ...</label></div>" per option as direct siblings, stacked with no
+    // spacing of its own — reads as a loose pile of items rather than a
+    // single control. Turned into a compact grid of small chips (switch +
+    // name close together) instead of full-width rows — full-width rows
+    // put the switch and the name far apart with a lot of empty space
+    // between them, which read as "stretched" rather than compact.
+    .input.select {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+        gap: 0.6rem;
+
+        > label {
+            // The field label ("Rýchly prístup...") spans the full row
+            // above the grid of chips rather than becoming a grid cell.
+            grid-column: 1 / -1;
+        }
+    }
+
+    .input.select .checkbox label {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin: 0;
+        padding: 0.5rem 0.8rem;
+        border-radius: 0.4rem;
+        border: 1px solid v.$admin-color-border;
+        cursor: pointer;
+        font-size: v.$font-size-lg;
+        color: v.$admin-color-text;
+        transition: background-color 0.1s ease, border-color 0.1s ease;
+
+        &:hover {
+            border-color: v.$admin-color-accent;
+        }
+    }
+
+    // The per-item switches read smaller here than a standalone form
+    // toggle (e.g. "Show in gallery") — a tight grid of several small
+    // chips calls for a smaller control than a single lone one does.
+    .input.select .checkbox input[type='checkbox'] {
+        width: 2.8rem;
+        height: 1.6rem;
+        // Milligram's global `input { margin-bottom: 1.5rem }` otherwise
+        // pushes the chip taller than its own padding calls for.
+        margin-bottom: 0;
+
+        &::before {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        &:checked::before {
+            transform: translateX(1.2rem);
+        }
+    }
+
     @media screen and (max-width: v.$breakpoint-sm) {
         .form-grid {
             grid-template-columns: 1fr;
@@ -238,11 +344,14 @@
     // - .input.checkbox label > input (add/edit forms, e.g. "Show in gallery")
     // - a bare input.js-toggle-checkbox with no label (index-listing toggle
     //   cell, see Banners/Notifications index — no text next to the switch)
+    // - .input.select .checkbox label > input (a multiple=>checkbox field's
+    //   per-item switch, e.g. homepage "quick access" page picker)
     .input.checkbox label {
         cursor: pointer;
     }
 
     .input.checkbox input[type='checkbox'],
+    .input.select .checkbox input[type='checkbox'],
     .js-toggle-checkbox {
         -webkit-appearance: none;
         appearance: none;
@@ -325,6 +434,114 @@
         &--delete:focus {
             background: v.$color-message-error-bg;
             color: v.$color-message-error-text;
+        }
+    }
+
+    // Drag-and-drop reordering (webroot/js/admin-drag-reorder.js) — a
+    // dedicated handle column/icon rather than the whole row being
+    // draggable, so normal row interactions (clicking a link, selecting
+    // text) aren't accidentally hijacked as a drag.
+    .admin-drag-hint {
+        margin-bottom: 1rem;
+        font-size: v.$font-size-lg;
+        color: v.$color-lightgray;
+    }
+
+    .js-drag-reorder-handle {
+        width: 2rem;
+        cursor: grab;
+        color: v.$color-lightgray;
+
+        svg {
+            width: 1.4rem;
+            height: 1.4rem;
+            display: block;
+        }
+    }
+
+    .js-drag-reorder-item.is-dragging {
+        opacity: 0.4;
+    }
+
+    // Page picker (NavbarCategories/edit.php + admin-page-picker.js) — a
+    // bordered list where each row is a page with a drag handle, its name,
+    // and a toggle switch (same look index-listing toggles use) for
+    // whether it's included in this category.
+    .admin-page-picker-field {
+        margin-bottom: 1.6rem;
+    }
+
+    .admin-page-picker {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid v.$admin-color-border;
+        border-radius: 0.4rem;
+        max-height: 28rem;
+        overflow-y: auto;
+    }
+
+    .admin-page-picker__item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.6rem 0.9rem;
+        border-bottom: 1px solid v.$admin-color-border;
+        margin: 0;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    .admin-page-picker__title {
+        flex: 1;
+        font-size: v.$font-size-lg;
+        color: v.$color-lightgray;
+        transition: color 0.1s ease;
+    }
+
+    .admin-page-picker__item.is-checked .admin-page-picker__title {
+        color: v.$admin-color-text;
+        font-weight: 700;
+    }
+
+    // Reuses the same toggle-switch look input.checkbox/js-toggle-checkbox
+    // already have elsewhere in the admin.
+    .admin-page-picker__item input[type='checkbox'] {
+        -webkit-appearance: none;
+        appearance: none;
+        display: inline-block;
+        position: relative;
+        width: 3.4rem;
+        height: 1.9rem;
+        margin: 0;
+        border-radius: 999px;
+        background: v.$admin-color-border;
+        border: 0;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease-in-out;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0.2rem;
+            left: 0.2rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: v.$color-white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            transition: transform 0.15s ease-in-out;
+        }
+
+        &:checked {
+            background: v.$admin-color-accent;
+
+            &::before {
+                transform: translateX(1.5rem);
+            }
         }
     }
 }

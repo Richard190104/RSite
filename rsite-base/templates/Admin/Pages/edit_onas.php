@@ -29,10 +29,10 @@ $description = $page->content['description'] ?? '';
         </div>
     <?= $this->Form->end() ?>
 
-    <p><?= __('"About us text" is shown on this page itself. "Description" is shown under the page name in the homepage quick access cards, if this page is added there.') ?></p>
-
-    <p>
-        <?= __('The image shown next to the "about us" text is managed separately as a banner with the "About us — minibanner" location.') ?>
-        <?= $this->Html->link(__('Manage banners'), ['prefix' => 'Admin', 'controller' => 'Banners', 'action' => 'index']) ?>
-    </p>
+    <div class="form-card__hints">
+        <p class="form-card__hint">
+            <?= __('The image shown next to the "about us" text is managed separately as a banner with the "About us — minibanner" location.') ?>
+            <?= $this->Html->link(__('Manage banners'), ['prefix' => 'Admin', 'controller' => 'Banners', 'action' => 'index']) ?>
+        </p>
+    </div>
 </div>

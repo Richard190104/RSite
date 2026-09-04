@@ -29,6 +29,4 @@ $this->set('aiChatFields', [
             <?= $this->Form->button(__('Save')) ?>
         </div>
     <?= $this->Form->end() ?>
-
-    <p><?= __('Shown under the page name in the homepage quick access cards.') ?></p>
 </div>

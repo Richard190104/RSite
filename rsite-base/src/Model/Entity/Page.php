@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property array|null $content
  * @property int|null $navbar_category_id
+ * @property int $position
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  * @property \App\Model\Entity\NavbarCategory|null $navbar_category
@@ -22,6 +23,7 @@ class Page extends Entity
         'title' => true,
         'content' => true,
         'navbar_category_id' => true,
+        'position' => true,
         'created' => true,
         'modified' => true,
     ];

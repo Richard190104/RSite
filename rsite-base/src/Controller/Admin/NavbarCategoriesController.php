@@ -10,10 +10,35 @@ class NavbarCategoriesController extends AppController
         $categories = $this->fetchTable('NavbarCategories')
             ->find()
             ->contain(['Pages'])
-            ->orderBy(['NavbarCategories.title' => 'ASC'])
+            ->orderBy(['NavbarCategories.position' => 'ASC'])
             ->all();
 
         $this->set(compact('categories'));
+    }
+
+    /**
+     * Reorders NavbarCategories via drag-and-drop on the index listing —
+     * see webroot/js/admin-drag-reorder.js. Expects an ordered array of
+     * ids in `order` and writes 0-based positions to match, so a later
+     * ->orderBy(['position' => 'ASC']) always reflects exactly the order
+     * the admin last dropped them in.
+     */
+    public function reorder()
+    {
+        $this->request->allowMethod(['post']);
+        $this->viewBuilder()->setClassName('Json');
+        $this->viewBuilder()->setOption('serialize', ['success']);
+
+        $Categories = $this->fetchTable('NavbarCategories');
+        $ids = array_map('intval', (array)$this->request->getData('order'));
+
+        foreach ($ids as $position => $id) {
+            $Categories->updateAll(['position' => $position], ['id' => $id]);
+        }
+
+        $this->set('success', true);
+
+        return null;
     }
 
     public function add()
@@ -48,18 +73,23 @@ class NavbarCategoriesController extends AppController
             $category = $Categories->patchEntity($category, $this->request->getData());
 
             if ($Categories->save($category)) {
+                // page_ids arrives in whatever order webroot/js/admin-drag-reorder.js
+                // last left the checkboxes in the DOM — that's the admin's
+                // chosen display order, not just a selection set, so array
+                // index doubles as the position to persist.
                 $selectedIds = array_map('intval', (array)$this->request->getData('page_ids'));
 
-                if ($selectedIds !== []) {
-                    $Pages->updateAll(
-                        ['navbar_category_id' => $category->id],
-                        ['id IN' => $selectedIds],
-                    );
-                }
                 $Pages->updateAll(
                     ['navbar_category_id' => null],
                     ['navbar_category_id' => $category->id, 'id NOT IN' => $selectedIds ?: [0]],
                 );
+
+                foreach ($selectedIds as $position => $pageId) {
+                    $Pages->updateAll(
+                        ['navbar_category_id' => $category->id, 'position' => $position],
+                        ['id' => $pageId],
+                    );
+                }
 
                 $this->Flash->success(__('Category saved.'));
 
@@ -69,13 +99,30 @@ class NavbarCategoriesController extends AppController
             $this->Flash->error(__('Could not save the category, check the errors below.'));
         }
 
-        $allPages = $Pages->find()->orderBy(['title' => 'ASC'])->all();
-        $selectedPageIds = $Pages->find()
-            ->select(['id'])
+        // Selected pages first (in their current position order), then the
+        // rest — so the drag-and-drop list opens already showing this
+        // category's pages up top in the order they'll display, with
+        // everything else available below to add.
+        // ->toArray() up front — the query result is a single-pass cursor,
+        // so reusing it both for extract() below and for the append() merge
+        // would silently yield nothing the second time round.
+        $selectedPages = $Pages->find()
             ->where(['navbar_category_id' => $category->id])
+            ->orderBy(['position' => 'ASC'])
             ->all()
-            ->extract('id')
             ->toArray();
+        $selectedPageIds = array_map(fn ($page) => $page->id, $selectedPages);
+
+        $otherPages = $Pages->find()
+            ->where(['OR' => [
+                'navbar_category_id !=' => $category->id,
+                'navbar_category_id IS' => null,
+            ]])
+            ->orderBy(['title' => 'ASC'])
+            ->all()
+            ->toArray();
+
+        $allPages = array_merge($selectedPages, $otherPages);
 
         $this->set(compact('category', 'allPages', 'selectedPageIds'));
 
