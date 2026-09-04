@@ -1,0 +1,76 @@
+name: Translate
+
+# Manual only — run from the Actions tab ("Run workflow"). Never triggered
+# by a push, so it never runs as a side effect of a routine deploy; a
+# translation update is its own deliberate action.
+on:
+  workflow_dispatch:
+
+# Only one translation run at a time — a second run while one is still
+# committing/pushing to main would race it.
+concurrency:
+  group: translate-production
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    # Needed for bin/translate-and-deploy.mjs to push its translation
+    # commit to main with the default GITHUB_TOKEN — repos with restrictive
+    # default workflow permissions (Settings > Actions > General) would
+    # otherwise deny that push regardless of this, so if it still fails
+    # with a 403, that setting needs "Read and write permissions" enabled
+    # there too.
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # bin/translate-and-deploy.mjs runs `git fetch origin main` /
+          # `git merge-base main origin/main` and creates its own worktree
+          # off `main` — a shallow clone (actions/checkout's default,
+          # fetch-depth: 1) doesn't have enough history for merge-base or
+          # `git worktree add` to resolve correctly.
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: rsite-base/.nvmrc
+
+      - name: Install Node dependencies
+        working-directory: rsite-base
+        # bin/translate-and-deploy.mjs itself imports basic-ftp (its only
+        # runtime npm dependency) from node_modules.
+        run: npm ci
+
+      - name: Install Composer dependencies
+        working-directory: rsite-base
+        # translate-and-deploy.mjs's worktree symlinks THIS checkout's
+        # vendor/ in (it's gitignored, so a fresh worktree has none) to run
+        # bin/cake.php i18n extract — needs a real install here first.
+        run: composer install --no-interaction --no-progress
+
+      - name: Translate and deploy
+        working-directory: rsite-base
+        env:
+          CI: 'true'
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          CACHE_TOKEN: ${{ secrets.CACHE_TOKEN }}
+          # config/app_local.example.php's Ai.geminiApiKey already reads
+          # env('GEMINI_API_KEY', null) by default — composer's postInstall
+          # generates app_local.php from that template when none exists
+          # (true in a fresh CI checkout), so this env var alone is enough
+          # for readGeminiApiKey()'s Configure::read('Ai.geminiApiKey') to
+          # pick it up; no file edit needed.
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node bin/translate-and-deploy.mjs

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-03 09:43+0000\n"
+"POT-Creation-Date: 2026-09-03 13:53+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -61,60 +61,51 @@ msgid "The site's static content pages (e.g. kontakt, homepage content) — edit
 msgstr ""
 
 #: ./src/Controller/Admin/AppController.php:73
-#: ./templates/Admin/CommitteeMembers/index.php:6
-msgid "Committee"
-msgstr ""
-
-#: ./src/Controller/Admin/AppController.php:74
-msgid "The organisation's committee (výbor) — name (required), plus optional phone, email, and a photo. Not shown on the public site yet, admin-managed data only for now."
-msgstr ""
-
-#: ./src/Controller/Admin/AppController.php:81
 #: ./templates/Admin/News/index.php:6
 msgid "News"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:82
+#: ./src/Controller/Admin/AppController.php:74
 msgid "News articles shown in the \"Latest news\" section on the homepage. Each article has a title, a short plain-text description (shown on the homepage card), an image, a date, an optional category, and an HTML poster field with an AI assistant that can generate a notice-board-style graphic from the title/description."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:91
+#: ./src/Controller/Admin/AppController.php:83
 #: ./templates/Admin/Categories/index.php:6
 msgid "Categories"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:92
+#: ./src/Controller/Admin/AppController.php:84
 msgid "Categories used to group news articles and gallery items."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:96
+#: ./src/Controller/Admin/AppController.php:88
 #: ./templates/Admin/Events/index.php:6
 msgid "Events"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:97
+#: ./src/Controller/Admin/AppController.php:89
 msgid "Events listed on the site."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:101
+#: ./src/Controller/Admin/AppController.php:93
 #: ./templates/Admin/Galleries/index.php:6
 msgid "Galleries"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:102
+#: ./src/Controller/Admin/AppController.php:94
 msgid "Photo galleries shown on the site, grouped by category."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:106
+#: ./src/Controller/Admin/AppController.php:98
 #: ./templates/Admin/Logos/index.php:6
 msgid "Logos"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:107
+#: ./src/Controller/Admin/AppController.php:99
 msgid "The site's logo images (e.g. the main header logo, footer logo)."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:111
+#: ./src/Controller/Admin/AppController.php:103
 #: ./templates/Admin/Notifications/index.php:6
 #: ./templates/element/navbar.php:54
 #: ./templates/element/navbar.php:55
@@ -122,7 +113,7 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:112
+#: ./src/Controller/Admin/AppController.php:104
 msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
 msgstr ""
 
@@ -339,25 +330,23 @@ msgstr ""
 msgid "Could not delete the notification."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:46
-#: ./src/Controller/Admin/PagesController.php:133
+#: ./src/Controller/Admin/PagesController.php:42
 msgid "Page saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:51
-#: ./src/Controller/Admin/PagesController.php:138
+#: ./src/Controller/Admin/PagesController.php:47
 msgid "Could not save the page."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:79
+#: ./src/Controller/Admin/PagesController.php:75
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:87
+#: ./src/Controller/Admin/PagesController.php:83
 msgid "Homepage saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:92
+#: ./src/Controller/Admin/PagesController.php:88
 msgid "Could not save the homepage."
 msgstr ""
 
@@ -373,7 +362,7 @@ msgstr ""
 msgid "Invalid username or password."
 msgstr ""
 
-#: ./src/Model/Table/BannersTable.php:55
+#: ./src/Model/Table/BannersTable.php:54
 msgid "Please select a valid location."
 msgstr ""
 
@@ -434,8 +423,6 @@ msgstr ""
 #: ./templates/Admin/Banners/edit.php:27
 #: ./templates/Admin/Categories/add.php:39
 #: ./templates/Admin/Categories/edit.php:42
-#: ./templates/Admin/CommitteeMembers/add.php:17
-#: ./templates/Admin/CommitteeMembers/edit.php:26
 #: ./templates/Admin/Events/add.php:28
 #: ./templates/Admin/Events/edit.php:28
 #: ./templates/Admin/Galleries/add.php:27
@@ -449,7 +436,6 @@ msgstr ""
 #: ./templates/Admin/Notifications/edit.php:36
 #: ./templates/Admin/Pages/edit.php:29
 #: ./templates/Admin/Pages/edit_home.php:27
-#: ./templates/Admin/Pages/edit_onas.php:28
 #: ./templates/Admin/Texts/edit.php:14
 msgid "Save"
 msgstr ""
@@ -468,7 +454,6 @@ msgstr ""
 
 #: ./templates/Admin/Banners/index.php:20
 #: ./templates/Admin/Categories/index.php:19
-#: ./templates/Admin/CommitteeMembers/index.php:20
 #: ./templates/Admin/Events/index.php:19
 #: ./templates/Admin/Galleries/index.php:18
 #: ./templates/Admin/Logos/index.php:15
@@ -482,7 +467,6 @@ msgstr ""
 
 #: ./templates/Admin/Banners/index.php:45
 #: ./templates/Admin/Categories/index.php:32
-#: ./templates/Admin/CommitteeMembers/index.php:38
 #: ./templates/Admin/Events/index.php:32
 #: ./templates/Admin/NavbarCategories/index.php:30
 #: ./templates/Admin/News/index.php:34
@@ -506,7 +490,6 @@ msgstr ""
 #: ./templates/Admin/Notifications/add.php:17
 #: ./templates/Admin/Notifications/edit.php:20
 #: ./templates/Admin/Pages/edit.php:22
-#: ./templates/Admin/Pages/edit_onas.php:22
 #: ./templates/element/Admin/aiChat.php:99
 msgid "Description"
 msgstr ""
@@ -557,53 +540,6 @@ msgstr ""
 
 #: ./templates/Admin/Categories/index.php:27
 msgid "No"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/add.php:6
-#: ./templates/Admin/CommitteeMembers/index.php:10
-msgid "Add committee member"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/add.php:11
-#: ./templates/Admin/CommitteeMembers/edit.php:16
-#: ./templates/Admin/CommitteeMembers/index.php:17
-msgid "Name"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/add.php:12
-#: ./templates/Admin/CommitteeMembers/edit.php:17
-msgid "Phone (optional)"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/add.php:13
-#: ./templates/Admin/CommitteeMembers/edit.php:18
-msgid "Email (optional)"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/add.php:14
-#: ./templates/Admin/CommitteeMembers/edit.php:21
-msgid "Photo (optional)"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/edit.php:6
-msgid "Edit committee member"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/edit.php:21
-msgid "Replace photo (optional)"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/index.php:16
-msgid "Photo"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/index.php:18
-msgid "Phone"
-msgstr ""
-
-#: ./templates/Admin/CommitteeMembers/index.php:19
-#: ./templates/Pages/kontakt.php:50
-msgid "Email"
 msgstr ""
 
 #: ./templates/Admin/Dashboard/index.php:7
@@ -781,24 +717,11 @@ msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:32
 #: ./templates/Admin/Pages/edit_home.php:37
-#: ./templates/Admin/Pages/edit_onas.php:36
 msgid "Manage banners"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:36
 msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
-msgstr ""
-
-#: ./templates/Admin/Pages/edit_onas.php:6
-msgid "Edit \"About us\" page"
-msgstr ""
-
-#: ./templates/Admin/Pages/edit_onas.php:32
-msgid "\"About us text\" is shown on this page itself. \"Description\" is shown under the page name in the homepage quick access cards, if this page is added there."
-msgstr ""
-
-#: ./templates/Admin/Pages/edit_onas.php:35
-msgid "The image shown next to the \"about us\" text is managed separately as a banner with the \"About us — minibanner\" location."
 msgstr ""
 
 #: ./templates/Admin/Pages/index.php:14
@@ -867,7 +790,7 @@ msgid "Close"
 msgstr ""
 
 #: ./templates/Pages/home.php:20
-msgid "About us"
+msgid "Testing ABOUTUS Text automatic translations"
 msgstr ""
 
 #: ./templates/Pages/home.php:22
@@ -884,6 +807,10 @@ msgstr ""
 
 #: ./templates/Pages/kontakt.php:37
 msgid "Address will appear here once set in admin."
+msgstr ""
+
+#: ./templates/Pages/kontakt.php:50
+msgid "Email"
 msgstr ""
 
 #: ./templates/Pages/kontakt.php:53
@@ -921,10 +848,6 @@ msgstr ""
 
 #: ./templates/Pages/kontakt.php:119
 msgid "Open in Google Maps"
-msgstr ""
-
-#: ./templates/Pages/onas.php:13
-msgid "About our organisation"
 msgstr ""
 
 #: ./templates/element/Admin/aiChat.php:47

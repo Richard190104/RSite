@@ -1387,3 +1387,104 @@ msgstr "Zobraziť náhľad"
 #: ./templates/Admin/News/edit.php
 msgid "Poster preview"
 msgstr "Náhľad plagátu"
+
+#: ./src/Controller/Admin/AssistantController.php:74
+msgid "description"
+msgstr "popis"
+
+#: ./src/Controller/Admin/AssistantController.php:422
+msgid "The AI model is overloaded right now — try again in a moment."
+msgstr "Model AI je práve preťažený — skúste to o chvíľu znova."
+
+#: ./src/Controller/Admin/BannersController.php:109
+msgid "Could not update the banner."
+msgstr "Nepodarilo sa aktualizovať banner."
+
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:32
+msgid "Image hosting is not configured (missing ImgBB.apiKey in app_local.php)."
+msgstr "Hosting obrázkov nie je nakonfigurovaný (v súbore app_local.php chýba ImgBB.apiKey)."
+
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:49
+msgid "The image could not be uploaded to the image host."
+msgstr "Obrázok sa nepodarilo nahrať na hostiteľský server."
+
+#: ./src/Controller/Admin/ImgBbUploadTrait.php:57
+msgid "The image host returned an unexpected response."
+msgstr "Hostiteľ obrázkov vrátil neočakávanú odpoveď."
+
+#: ./src/Controller/Admin/NotificationsController.php:38
+#: ./src/Controller/Admin/NotificationsController.php:82
+msgid "Notification saved."
+msgstr "Upozornenie bolo uložené."
+
+#: ./src/Controller/Admin/NotificationsController.php:47
+#: ./src/Controller/Admin/NotificationsController.php:91
+msgid "Could not save the notification, check the errors below."
+msgstr "Upozornenie sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/NotificationsController.php:111
+msgid "Could not update the notification."
+msgstr "Upozornenie sa nepodarilo aktualizovať."
+
+#: ./src/Controller/Admin/NotificationsController.php:127
+msgid "Notification deleted."
+msgstr "Upozornenie bolo vymazané."
+
+#: ./src/Controller/Admin/NotificationsController.php:129
+msgid "Could not delete the notification."
+msgstr "Upozornenie sa nepodarilo vymazat."
+
+#: ./src/Model/Table/NotificationsTable.php:52
+msgid "Must be on or after the start date."
+msgstr "Musí byť v deň začiatku alebo neskôr."
+
+#: ./templates/Admin/Notifications/add.php:6
+#: ./templates/Admin/Notifications/index.php:10
+msgid "Add notification"
+msgstr "Pridať upozornenie"
+
+#: ./templates/Admin/Notifications/add.php:18
+#: ./templates/Admin/Notifications/edit.php:21
+#: ./templates/Admin/Notifications/index.php:19
+msgid "Valid from"
+msgstr "Platné od"
+
+#: ./templates/Admin/Notifications/add.php:19
+#: ./templates/Admin/Notifications/edit.php:22
+#: ./templates/Admin/Notifications/index.php:20
+msgid "Valid to"
+msgstr "Platné do"
+
+#: ./templates/Admin/Notifications/add.php:21
+#: ./templates/Admin/Notifications/edit.php:26
+#: ./templates/Admin/Notifications/index.php:35
+msgid "Is active"
+msgstr "Je aktívne"
+
+#: ./templates/Admin/Notifications/edit.php:6
+msgid "Edit notification"
+msgstr "Upraviť upozornenie"
+
+#: ./templates/Gallery/cards.php:81
+msgid "No photos in this category yet."
+msgstr "V tejto kategórii zatiaľ nie sú žiadne fotografie."
+
+#: ./templates/element/Admin/aiChat.php:89
+msgid "title"
+msgstr "názov"
+
+#: ./templates/Pages/home.php:20
+msgid "About ustest new script"
+msgstr "O nás - testovací nový skript"
+
+#: ./templates/Pages/home.php:20
+msgid "About us text for script testing"
+msgstr "O nás text na testovanie skriptu"
+
+#: ./templates/Pages/home.php:20
+msgid "About us text for script testings"
+msgstr "O nás text pre testovanie skriptov"
+
+#: ./templates/Pages/home.php:20
+msgid "Testing ABOUTUS Text automatic translations"
+msgstr "Testovanie automatických prekladov textu O NÁS"
