@@ -24,6 +24,10 @@ class PagesController extends AppController
             return $this->editHome($Pages, $page);
         }
 
+        if ($page->slug === 'o-nas') {
+            return $this->editOnas($Pages, $page);
+        }
+
         if ($this->request->is(['post', 'put'])) {
             $data = (array)$this->request->getData('content');
             $description = trim((string)($data['description'] ?? ''));
@@ -92,6 +96,50 @@ class PagesController extends AppController
         $this->set('page', $page);
         $this->set('otherPages', $otherPages);
         $this->render('edit_home');
+
+        return null;
+    }
+
+    /**
+     * "O nás" page-specific content: the "about us" text shown on the page
+     * itself (own field, same pattern as home's about_us_text) next to the
+     * page's 'onas-main' banner image — that image is a regular Banner
+     * under its own virtual location, managed in Banners like the
+     * homepage/fishing grounds tiles, not edited here.
+     *
+     * Also keeps the same 'description' field every other fixed page has
+     * (see edit()) — the teaser text shown on this page's homepage
+     * "quick access" card, if it's ever added there. Losing this field
+     * here would silently blank that teaser on save.
+     */
+    private function editOnas($Pages, Page $page)
+    {
+        if ($this->request->is(['post', 'put'])) {
+            $data = (array)$this->request->getData('content');
+            $description = trim((string)($data['description'] ?? ''));
+
+            $content = (array)$page->content;
+            $content['about_us_text'] = (string)($data['about_us_text'] ?? '');
+
+            if ($description === '') {
+                unset($content['description']);
+            } else {
+                $content['description'] = $description;
+            }
+
+            $page->content = $content;
+
+            if ($Pages->save($page)) {
+                $this->Flash->success(__('Page saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $this->Flash->error(__('Could not save the page.'));
+        }
+
+        $this->set('page', $page);
+        $this->render('edit_onas');
 
         return null;
     }

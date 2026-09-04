@@ -17,6 +17,7 @@ class BannersTable extends Table
         'home_mini' => 'Home — mini banner (about us tile)',
         'grounds-mini' => 'Home — fishing grounds tile',
         'grounds-mini-main' => 'Home — fishing grounds main image',
+        'onas-main' => 'About us — minibanner',
     ];
 
     public function initialize(array $config): void

@@ -188,6 +188,24 @@ msgstr ""
 msgid "Could not delete the category."
 msgstr ""
 
+#: ./src/Controller/Admin/CommitteeMembersController.php:41
+#: ./src/Controller/Admin/CommitteeMembersController.php:85
+msgid "Committee member saved."
+msgstr ""
+
+#: ./src/Controller/Admin/CommitteeMembersController.php:50
+#: ./src/Controller/Admin/CommitteeMembersController.php:94
+msgid "Could not save the committee member, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/CommitteeMembersController.php:114
+msgid "Committee member deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/CommitteeMembersController.php:116
+msgid "Could not delete the committee member."
+msgstr ""
+
 #: ./src/Controller/Admin/EventsController.php:28
 #: ./src/Controller/Admin/EventsController.php:51
 msgid "Event saved."
@@ -685,6 +703,7 @@ msgid "Edit homepage"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:15
+#: ./templates/Admin/Pages/edit_onas.php:15
 msgid "About us text"
 msgstr ""
 

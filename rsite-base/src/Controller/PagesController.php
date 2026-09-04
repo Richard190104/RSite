@@ -55,6 +55,32 @@ class PagesController extends AppController
     }
 
     /**
+     * Public "about us" page. Fixed "o-nas" slug — text comes from
+     * page.content['about_us_text'] (Admin\PagesController::editOnas()),
+     * the feature image is a regular Banner under the reserved 'onas-main'
+     * virtual location (same pattern as the homepage/fishing-grounds
+     * images, see BannersTable::VIRTUAL_LOCATIONS). Also lists the
+     * organisation's committee (Admin\CommitteeMembersController).
+     */
+    public function onas(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'o-nas'])->firstOrFail();
+
+        $mainBanner = $this->fetchTable('Banners')
+            ->find()
+            ->where(['location' => 'onas-main', 'is_enabled' => true])
+            ->orderBy(['id' => 'ASC'])
+            ->first();
+
+        $committeeMembers = $this->fetchTable('CommitteeMembers')
+            ->find()
+            ->orderBy(['section' => 'ASC', 'name' => 'ASC'])
+            ->all();
+
+        $this->set(compact('page', 'mainBanner', 'committeeMembers'));
+    }
+
+    /**
      * Displays a view
      *
      *

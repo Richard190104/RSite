@@ -1,0 +1,62 @@
+@use 'variables' as v;
+
+.p-onas {
+    width: 100%;
+    background: v.$color-white;
+}
+
+.p-onas__layout {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 4rem;
+    align-items: center;
+}
+
+.p-onas__heading {
+    margin: 0 0 1.6rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-4xl;
+    color: v.$color-navy;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-yellow;
+    }
+}
+
+.p-onas__body {
+    margin: 0;
+    font-size: v.$font-size-lg;
+    line-height: 1.7;
+    color: v.$color-lightgray;
+}
+
+.p-onas__image {
+    min-height: 26rem;
+    width: 80%;
+    justify-self: center;
+    height: 100%;
+    border-radius: 0.8rem;
+    background-color: v.$color-navy;
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-onas__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .p-onas__image {
+        min-height: 20rem;
+        order: -1;
+    }
+}
