@@ -84,6 +84,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 function (item) { return item.dataset.id; },
             );
 
+            // Present (possibly empty-string, meaning "no parent"/top-level)
+            // only for lists that opted in via the attribute — e.g.
+            // Categories, which has more than one same-page drag list and
+            // needs the server to scope the reorder to just this parent.
+            // Absent entirely for single-list pages like NavbarCategories,
+            // which have nothing to scope by.
+            var body = { order: order };
+            if (list.dataset.dragReorderParentId !== undefined) {
+                body.parentId = list.dataset.dragReorderParentId || null;
+            }
+
             var csrfMeta = document.querySelector('meta[name="csrf-token"]');
             fetch(url, {
                 method: 'POST',
@@ -92,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'X-CSRF-Token': csrfMeta ? csrfMeta.content : '',
                     Accept: 'application/json',
                 },
-                body: JSON.stringify({ order: order }),
+                body: JSON.stringify(body),
             }).catch(function () {
                 // Best-effort — a failed reorder just means the old order
                 // persists server-side; the admin can retry the drag.
