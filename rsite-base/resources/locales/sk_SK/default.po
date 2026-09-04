@@ -1621,3 +1621,11 @@ msgstr "Menej"
 #: ./templates/Pages/aktivity.php
 msgid "No events on this day."
 msgstr "V tento deň nie sú žiadne udalosti."
+
+#: ./templates/Admin/Categories/index.php:12
+msgid "Drag rows by the handle to reorder — this is the order categories (and their subcategories) appear in the public gallery."
+msgstr "Potiahnutím riadkov za úchyt ich usporiadajte – v tomto poradí sa kategórie (a ich podkategórie) zoberavia vo verejnej galérii."
+
+#: ./templates/Admin/Categories/index.php:57
+msgid "Subcategories of \"{0}\""
+msgstr "Podkategórie položky \"{0}\""
