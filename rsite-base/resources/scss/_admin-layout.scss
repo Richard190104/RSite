@@ -454,6 +454,15 @@
         opacity: 0.4;
     }
 
+    // Categories/index.php — one drag-reorder table per parent_id group
+    // (top-level categories, then each one's subcategories), each preceded
+    // by this heading so it's clear which group a table belongs to.
+    .admin-subsection-title {
+        margin-top: 2.4rem;
+        margin-bottom: 1rem;
+        font-size: v.$font-size-lg;
+    }
+
     // Page picker (NavbarCategories/edit.php + admin-page-picker.js) — a
     // bordered list where each row is a page with a drag handle, its name,
     // and a toggle switch (same look index-listing toggles use) for

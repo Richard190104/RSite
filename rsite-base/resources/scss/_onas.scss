@@ -8,7 +8,7 @@
 .p-onas__layout {
     max-width: v.$content-width;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 4rem 0rem;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     gap: 4rem;
@@ -48,6 +48,7 @@
     background-color: v.$color-navy;
     background-size: cover;
     background-position: center;
+    margin-left: auto;
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
