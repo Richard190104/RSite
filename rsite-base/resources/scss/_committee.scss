@@ -1,12 +1,11 @@
-@use 'sass:color';
 @use 'variables' as v;
 
 .committee-wrap {
     width: 100%;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
 
     &--alt {
-        background: v.$color-white;
+        background: v.$color-bg;
     }
 }
 
@@ -21,7 +20,7 @@
         font-weight: 700;
         font-size: v.$font-size-4xl;
         margin: 0 0 2rem;
-        color: v.$color-navy;
+        color: v.$color-primary;
 
         &::after {
             content: '';
@@ -29,7 +28,7 @@
             width: 4rem;
             height: 0.4rem;
             margin-top: 0.8rem;
-            background: v.$color-yellow;
+            background: v.$color-secondary;
         }
     }
 }
@@ -45,7 +44,7 @@
     flex-direction: column;
     border-radius: 0.8rem;
     overflow: hidden;
-    background: v.$color-white;
+    background: v.$color-bg;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144), 0 4px 12px rgba(60, 66, 87, 0.089);
     cursor: pointer;
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
@@ -86,24 +85,24 @@
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-lg;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .committee__role {
     font-size: v.$font-size-base;
     font-weight: 700;
-    color: color.adjust(v.$color-yellow, $lightness: -10%);
+    color: color-mix(in srgb, v.$color-secondary 90%, black);
 }
 
 .committee__email,
 .committee__phone {
     font-size: v.$font-size-base;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     text-decoration: none;
 
     &:hover,
     &:focus {
-        color: v.$color-navy;
+        color: v.$color-primary;
         text-decoration: underline;
     }
 }
@@ -141,7 +140,7 @@
     max-width: 34rem;
     padding: 3.2rem 2.4rem 2.8rem;
     border-radius: 1rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     text-align: center;
     box-shadow: 0 24px 60px rgba(20, 22, 26, 0.22), 0 4px 14px rgba(20, 22, 26, 0.1);
 }
@@ -174,25 +173,25 @@
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-2xl;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .committee-modal__role {
     font-size: v.$font-size-xl;
     font-weight: 700;
-    color: color.adjust(v.$color-yellow, $lightness: -10%);
+    color: color-mix(in srgb, v.$color-secondary 90%, black);
 }
 
 .committee-modal__email,
 .committee-modal__phone {
     margin-top: 0.4rem;
     font-size: v.$font-size-lg;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     text-decoration: none;
 
     &:hover,
     &:focus {
-        color: v.$color-navy;
+        color: v.$color-primary;
         text-decoration: underline;
     }
 }
@@ -206,19 +205,12 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    border: none;
-    border-radius: 50%;
-    background: none;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-2xl;
     line-height: 1;
-    cursor: pointer;
 
     &:hover,
-    &:focus,
-    &:active {
-        background: none;
-        border: none;
-        color: v.$color-navy;
+    &:focus-visible {
+        color: v.$color-primary;
     }
 }

@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property string|null $location
  * @property string|null $time
  * @property string|null $image
+ * @property string|null $content
  * @property int|null $category_id
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
@@ -27,6 +28,7 @@ class Event extends Entity
         'location' => true,
         'time' => true,
         'image' => true,
+        'content' => true,
         'category_id' => true,
         'created' => true,
         'modified' => true,

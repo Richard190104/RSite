@@ -14,7 +14,7 @@
     width: min(52rem, calc(100vw - 3.2rem));
     padding: 2rem 2.2rem;
     border-radius: 1.4rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     box-shadow: 0 12px 28px rgba(20, 58, 107, 0.22);
     opacity: 0;
     transform: translateY(-1rem);
@@ -35,25 +35,10 @@
     position: absolute;
     top: 0.8rem;
     right: 1rem;
-    border: none;
-    background: none;
     padding: 0;
     font-size: v.$font-size-2xl;
     line-height: 1;
-    color: v.$color-lightgray;
-    cursor: pointer;
-
-    // Milligram styles every <button> on :hover/:focus (background,
-    // border, color) globally — undo all of it so this stays a plain
-    // borderless glyph in every state, not just the default one.
-    &:hover,
-    &:focus,
-    &:active {
-        background: none;
-        border: none;
-        color: v.$color-lightgray;
-        outline: 0;
-    }
+    color: v.$color-text-muted;
 }
 
 .notification-popup__image {
@@ -76,12 +61,12 @@
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-xl;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .notification-popup__description {
     margin: 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-md;
     line-height: 1.4;
     display: -webkit-box;

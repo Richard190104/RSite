@@ -1,40 +1,70 @@
 @use 'variables' as v;
 
 // Milligram overrides
+//
+// Everything below is a DEFAULT — the actual value an admin sees can be
+// overridden per request by templates/element/colorVariables.php, a small
+// inline <style> block the public layout renders after this stylesheet
+// (see templates/layout/default.php), sourced from Admin\ColorsController's
+// own `colors` table. Later same-specificity rules win
+// in CSS, so that element's :root block simply redeclares whichever of
+// these custom properties an admin has customized. The admin layout never
+// renders that element, so admin pages always show these defaults.
 :root {
     --color-cakephp-red: #{v.$color-cakephp-red};
     --color-cakephp-gray: #{v.$color-cakephp-gray};
     --color-cakephp-blue: #{v.$color-cakephp-blue};
     --color-cakephp-lightblue: #{v.$color-cakephp-lightblue};
 
-    --color-lightgray: #{v.$color-lightgray};
-    --color-white: #{v.$color-white};
+    --color-primary: #{v.$color-primary-default};
+    --color-secondary: #{v.$color-secondary-default};
+    --color-bg: #{v.$color-bg-default};
+    --color-bg-alt: #{v.$color-bg-alt-default};
+    --color-text-muted: #{v.$color-text-muted-default};
+    --color-heading: #{v.$color-heading-default};
+    --color-link: #{v.$color-link-default};
+    --color-link-hover: #{v.$color-link-hover-default};
 
-    --color-main-bg: #{v.$color-main-bg};
-    --color-links: #{v.$color-links};
-    --color-links-active: #{v.$color-links-active};
-    --color-headings: #{v.$color-headings};
+    --color-success-bg: #{v.$color-success-bg-default};
+    --color-success-text: #{v.$color-success-text-default};
+    --color-success-border: #{v.$color-success-border-default};
 
-    --color-message-success-bg: #{v.$color-message-success-bg};
-    --color-message-success-text: #{v.$color-message-success-text};
-    --color-message-success-border: #{v.$color-message-success-border};
+    --color-warning-bg: #{v.$color-warning-bg-default};
+    --color-warning-text: #{v.$color-warning-text-default};
+    --color-warning-border: #{v.$color-warning-border-default};
 
-    --color-message-warning-bg: #{v.$color-message-warning-bg};
-    --color-message-warning-text: #{v.$color-message-warning-text};
-    --color-message-warning-border: #{v.$color-message-warning-border};
+    --color-error-bg: #{v.$color-error-bg-default};
+    --color-error-text: #{v.$color-error-text-default};
+    --color-error-border: #{v.$color-error-border-default};
 
-    --color-message-error-bg: #{v.$color-message-error-bg};
-    --color-message-error-text: #{v.$color-message-error-text};
-    --color-message-error-border: #{v.$color-message-error-border};
-
-    --color-message-info-bg: #{v.$color-message-info-bg};
-    --color-message-info-text: #{v.$color-message-info-text};
-    --color-message-info-border: #{v.$color-message-info-border};
+    --color-info-bg: #{v.$color-info-bg-default};
+    --color-info-text: #{v.$color-info-text-default};
+    --color-info-border: #{v.$color-info-border-default};
 }
 
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: var(--color-cakephp-red);
     border-color: var(--color-cakephp-red);
+}
+
+// Shared reset for icon-only "×" dismiss buttons (modals, popups, chat
+// panels...) — add this class alongside a component's own BEM class on any
+// bare close button instead of re-overriding Milligram's global button
+// background/border/hover/focus treatment in every component's own
+// stylesheet. The component's own class still sets position/size/color/
+// font-size; this only strips the button chrome, in one place, for good.
+.close-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: none;
+        border: none;
+        outline: 0;
+    }
 }
 
 body {
@@ -79,17 +109,17 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
-    color: var(--color-headings);
+    color: var(--color-heading);
 }
 
 a {
-    color: var(--color-links);
+    color: var(--color-link);
     transition: color 0.2s linear;
 
     &:hover,
     &:focus,
     &:active {
-        color: var(--color-links-active);
+        color: var(--color-link-hover);
         transition: color 0.2s ease-out;
     }
 }
@@ -98,11 +128,11 @@ a {
 .top-nav-links a,
 th a,
 .actions a {
-    color: var(--color-lightgray);
+    color: var(--color-text-muted);
 
     &:hover,
     &:focus {
-        color: var(--color-links-active);
+        color: var(--color-link-hover);
     }
 }
 
@@ -117,7 +147,7 @@ th a,
 // Main
 .content {
     padding: 2rem;
-    background: var(--color-white);
+    background: var(--color-bg);
     border-radius: 0.4rem;
     // Thanks Stripe
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
@@ -157,9 +187,9 @@ th {
 // Flash messages
 .message {
     padding: .5rem 1rem;
-    background: var(--color-message-info-bg);
-    color: var(--color-message-info-text);
-    border-color: var(--color-message-info-border);
+    background: var(--color-info-bg);
+    color: var(--color-info-text);
+    border-color: var(--color-info-border);
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
@@ -170,19 +200,19 @@ th {
         display: none;
     }
     &.success {
-        background: var(--color-message-success-bg);
-        color: var(--color-message-success-text);
-        border-color: var(--color-message-success-border);
+        background: var(--color-success-bg);
+        color: var(--color-success-text);
+        border-color: var(--color-success-border);
     }
     &.warning {
-        background: var(--color-message-warning-bg);
-        color: var(--color-message-warning-text);
-        border-color: var(--color-message-warning-border);
+        background: var(--color-warning-bg);
+        color: var(--color-warning-text);
+        border-color: var(--color-warning-border);
     }
     &.error {
-        background: var(--color-message-error-bg);
-        color: var(--color-message-error-text);
-        border-color: var(--color-message-error-border);
+        background: var(--color-error-bg);
+        color: var(--color-error-text);
+        border-color: var(--color-error-border);
     }
 }
 
@@ -235,7 +265,7 @@ input[type='color'] {
         }
         &.disabled a {
             cursor: not-allowed;
-            color: var(--color-lightgray);
+            color: var(--color-text-muted);
             text-decoration: none;
 
             &:hover {

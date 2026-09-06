@@ -107,6 +107,16 @@ class AppController extends BaseController
                 'description' => __('The site\'s logo images (e.g. the main header logo, footer logo).'),
                 'actions' => ['index', 'edit'],
             ],
+            'Colors' => [
+                'label' => __('Colors'),
+                'description' => __(
+                    'The public site\'s color palette (brand colors, backgrounds/text, flash message colors) — one'
+                        . ' form saving the whole palette at once, plus a "Reset to defaults" that reverts every'
+                        . ' color at once. Takes effect immediately, no rebuild needed. Does not affect the admin'
+                        . ' panel\'s own colors, which are fixed separately.',
+                ),
+                'actions' => ['index', 'reset'],
+            ],
             'Notifications' => [
                 'label' => __('Notifications'),
                 'description' => __(

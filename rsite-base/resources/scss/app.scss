@@ -45,12 +45,12 @@
     // Swiper's own pagination dots, restyled to the site's palette instead
     // of its default blue/white.
     .swiper-pagination-bullet {
-        background: v.$color-white;
+        background: v.$color-bg;
         opacity: 0.6;
     }
 
     .swiper-pagination-bullet-active {
-        background: v.$color-yellow;
+        background: v.$color-secondary;
         opacity: 1;
     }
 }
@@ -93,7 +93,7 @@
     font-size: v.$font-size-6xl;
     line-height: 1.15;
     letter-spacing: -0.01em;
-    color: v.$color-white;
+    color: v.$color-bg;
 }
 
 .page-banner__subtitle {

@@ -16,7 +16,7 @@ if ($notification === null) {
 }
 ?>
 <div class="notification-popup" role="status">
-    <button type="button" class="notification-popup__close" aria-label="<?= __('Close') ?>">&times;</button>
+    <button type="button" class="notification-popup__close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
     <img class="notification-popup__image" src="<?= h($this->Url->build('/img/notifications/' . $notification->image)) ?>" alt="">
     <div class="notification-popup__text">
         <span class="notification-popup__title"><?= h($notification->title) ?></span>

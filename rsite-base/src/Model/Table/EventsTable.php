@@ -49,6 +49,12 @@ class EventsTable extends Table
             ->maxLength('image', 255)
             ->allowEmptyString('image')
 
+            // 'content' (the HTML poster) is handled entirely in the
+            // controller, same as News::content — sanitized via
+            // HtmlSanitizeTrait before it's ever saved.
+            ->scalar('content')
+            ->allowEmptyString('content')
+
             ->allowEmptyString('category_id');
 
         return $validator;
