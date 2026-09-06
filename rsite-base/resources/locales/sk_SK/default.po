@@ -1629,3 +1629,148 @@ msgstr "Potiahnutím riadkov za úchyt ich usporiadajte – v tomto poradí sa k
 #: ./templates/Admin/Categories/index.php:57
 msgid "Subcategories of \"{0}\""
 msgstr "Podkategórie položky \"{0}\""
+
+#: ./src/Controller/Admin/AppController.php:111
+#: ./templates/Admin/Colors/index.php:9
+msgid "Colors"
+msgstr "Farby"
+
+#: ./src/Controller/Admin/AppController.php:112
+msgid "The public site's color palette (brand colors, backgrounds/text, flash message colors) — one form saving the whole palette at once, plus a \"Reset to defaults\" that reverts every color at once. Takes effect immediately, no rebuild needed. Does not affect the admin panel's own colors, which are fixed separately."
+msgstr "Farebná paleta verejnej stránky (farby značky, pozadia/text, farby flash správ) — jeden formulár ukladá celú paletu naraz, plus „Obnoviť predvolené“, čím sa vráti každá farba naraz. Prejaví sa okamžite, nie je potrebná nová kompilácia. Neovplyvňuje vlastné farby administrácie, ktoré sú nastavené samostatne."
+
+#: ./src/Controller/Admin/ColorsController.php:20
+msgid "Colors saved."
+msgstr "Farby boli uložené."
+
+#: ./src/Controller/Admin/ColorsController.php:25
+msgid "Could not save: {0}"
+msgstr "Nepodarilo sa uložiť: {0}"
+
+#: ./src/Controller/Admin/ColorsController.php:47
+msgid "Colors reset to defaults."
+msgstr "Farby boli obnovené na predvolené hodnoty."
+
+#: ./src/Controller/Admin/ColorsController.php:49
+msgid "Could not reset: {0}"
+msgstr "Nepodarilo sa obnoviť: {0}"
+
+#: ./src/Model/Table/ColorsTable.php:40
+msgid "Enter a valid hex color, e.g. #143a6b."
+msgstr "Zadajte platnú hexadecimálnu farbu, napr. #143a6b."
+
+#: ./templates/Admin/Colors/index.php:18
+msgid "Brand colors"
+msgstr "Farby značky"
+
+#: ./templates/Admin/Colors/index.php:19
+msgid "Primary"
+msgstr "Primárna"
+
+#: ./templates/Admin/Colors/index.php:20
+msgid "Secondary"
+msgstr "Sekundárna"
+
+#: ./templates/Admin/Colors/index.php:22
+msgid "Backgrounds & text"
+msgstr "Pozadia a text"
+
+#: ./templates/Admin/Colors/index.php:24
+msgid "Alternate background"
+msgstr "Alternatívne pozadie"
+
+#: ./templates/Admin/Colors/index.php:25
+msgid "Muted text"
+msgstr "Stlmený text"
+
+#: ./templates/Admin/Colors/index.php:26
+msgid "Heading text"
+msgstr "Text nadpisu"
+
+#: ./templates/Admin/Colors/index.php:27
+msgid "Link"
+msgstr "Odkaz"
+
+#: ./templates/Admin/Colors/index.php:28
+msgid "Link (hover)"
+msgstr "Odkaz (po umiestnení kurzora)"
+
+#: ./templates/Admin/Colors/index.php:30
+msgid "Flash messages"
+msgstr "Flash správy"
+
+#: ./templates/Admin/Colors/index.php:31
+msgid "Success — background"
+msgstr "Úspech — pozadie"
+
+#: ./templates/Admin/Colors/index.php:32
+msgid "Success — text"
+msgstr "Úspech — text"
+
+#: ./templates/Admin/Colors/index.php:33
+msgid "Success — border"
+msgstr "Úspech — okraj"
+
+#: ./templates/Admin/Colors/index.php:34
+msgid "Warning — background"
+msgstr "Upozornenie — pozadie"
+
+#: ./templates/Admin/Colors/index.php:35
+msgid "Warning — text"
+msgstr "Upozornenie — text"
+
+#: ./templates/Admin/Colors/index.php:36
+msgid "Warning — border"
+msgstr "Upozornenie — okraj"
+
+#: ./templates/Admin/Colors/index.php:37
+msgid "Error — background"
+msgstr "Chyba — pozadie"
+
+#: ./templates/Admin/Colors/index.php:38
+msgid "Error — text"
+msgstr "Chyba — text"
+
+#: ./templates/Admin/Colors/index.php:39
+msgid "Error — border"
+msgstr "Chyba — okraj"
+
+#: ./templates/Admin/Colors/index.php:40
+msgid "Info — background"
+msgstr "Informácia — pozadie"
+
+#: ./templates/Admin/Colors/index.php:41
+msgid "Info — text"
+msgstr "Informácia — text"
+
+#: ./templates/Admin/Colors/index.php:42
+msgid "Info — border"
+msgstr "Informácia — okraj"
+
+#: ./templates/Admin/Colors/index.php:73
+msgid "Reset all to defaults"
+msgstr "Obnoviť všetko na predvolené"
+
+#: ./templates/Admin/Colors/index.php:76
+msgid "Reset the whole palette to its original default colors? This cannot be undone."
+msgstr "Obnoviť celú paletu na pôvodné predvolené farby? Túto akciu nie je možné vrátiť späť."
+
+#: ./templates/Admin/Colors/index.php:84
+msgid "These change the whole public site's look immediately — no rebuild or redeploy needed. The admin panel itself keeps its own separate colors and is not affected."
+msgstr "Tieto zmeny okamžite ovplyvnia vzhľad celej verejnej stránky — nie je potrebná opätovná generácia ani zverejnenie. Administračné rozhranie si zachováva vlastné farby a zostane nedotknuté."
+
+#: ./templates/element/Admin/aiChat.php:85
+msgid "Ask me to suggest a color palette (a mood, a season, \"make it warmer\"...) and I'll fill it in and save it right away."
+msgstr "Požiadajte ma o navrhnutie farebnej palety (nálada, ročné obdobie, „spravte ju teplejšou“...) a ja ju hneď vyplním a uložím."
+
+#: ./templates/element/Admin/aiChat.php:127
+msgid "palette"
+msgstr "paleta"
+
+#: ./templates/element/Admin/aiChat.php:129
+msgid "Suggest a palette"
+msgstr "Navrhnúť paletu"
+
+#: ./templates/element/Admin/aiChat.php:144
+msgid "Describe the palette you want…"
+msgstr "Opíšte požadovanú paletu…"
