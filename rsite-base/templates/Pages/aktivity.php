@@ -24,7 +24,18 @@ $activityIcons = [
             <?php if ($upcomingEvents): ?>
                 <div class="p-aktivity__upcoming">
                     <?php foreach ($upcomingEvents as $event): ?>
-                        <article class="p-aktivity__event-card">
+                        <article
+                            class="p-aktivity__event-card"
+                            data-aktivity-event
+                            data-title="<?= h($event->title) ?>"
+                            data-description="<?= h($event->description) ?>"
+                            data-image="<?= $event->image ? h($this->Url->build('/img/events/' . $event->image)) : '' ?>"
+                            data-date="<?= $event->date ? h($event->date->i18nFormat('d. MMMM yyyy')) : '' ?>"
+                            data-location="<?= h($event->location ?? '') ?>"
+                            data-time="<?= h($event->time ?? '') ?>"
+                            data-category="<?= $event->category ? h(__($event->category->title)) : '' ?>"
+                            data-content="<?= h($event->content ?? '') ?>"
+                        >
                             <div class="p-aktivity__event-media">
                                 <?php if ($event->image): ?>
                                     <?= $this->Html->image('/img/events/' . $event->image, [
@@ -85,7 +96,10 @@ $activityIcons = [
                 <h2 class="p-aktivity__heading"><?= __('Our activities') ?></h2>
                 <div class="p-aktivity__types">
                     <?php foreach ($categories as $index => $category): ?>
-                        <article class="p-aktivity__type-card">
+                        <a
+                            class="p-aktivity__type-card"
+                            href="<?= $this->Url->build(['controller' => 'Gallery', 'action' => 'category', $category->id]) ?>"
+                        >
                             <span class="p-aktivity__type-icon" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                                     <?= $activityIcons[$index % count($activityIcons)] ?>
@@ -95,7 +109,7 @@ $activityIcons = [
                             <p class="p-aktivity__type-text">
                                 <?= __('Events and activities in this category.') ?>
                             </p>
-                        </article>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </section>
@@ -138,4 +152,20 @@ $activityIcons = [
         </section>
     </div>
 </section>
+
+<div class="p-aktivity__event-modal" data-aktivity-event-modal>
+    <div class="p-aktivity__event-modal-frame">
+        <button type="button" class="p-aktivity__event-modal-close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
+        <img class="p-aktivity__event-modal-image" alt="" hidden>
+        <div class="p-aktivity__event-modal-body">
+            <span class="p-aktivity__event-modal-category" hidden></span>
+            <h3 class="p-aktivity__event-modal-title"></h3>
+            <p class="p-aktivity__event-modal-meta" hidden></p>
+            <p class="p-aktivity__event-modal-description"></p>
+        </div>
+        <div class="p-aktivity__event-modal-poster" hidden></div>
+    </div>
+</div>
+
 <?= $this->Html->script('aktivity-calendar') ?>
+<?= $this->Html->script('aktivity-event-modal') ?>

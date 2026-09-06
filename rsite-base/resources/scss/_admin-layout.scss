@@ -8,9 +8,9 @@
 .admin-login {
     --color-cakephp-red: #{v.$admin-color-accent};
     --color-cakephp-blue: #{v.$admin-color-accent};
-    --color-links: #{v.$admin-color-text};
-    --color-links-active: #{v.$admin-color-accent};
-    --color-headings: #{v.$admin-color-text};
+    --color-link: #{v.$admin-color-text};
+    --color-link-hover: #{v.$admin-color-accent};
+    --color-heading: #{v.$admin-color-text};
 
     .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
         border-radius: 2px;
@@ -66,7 +66,7 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05rem;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
         border-bottom: 1px solid v.$admin-color-text;
     }
 
@@ -88,7 +88,7 @@
     width: v.$admin-sidebar-width;
     flex-shrink: 0;
     background: v.$color-cakephp-gray;
-    color: v.$color-white;
+    color: v.$color-bg;
     padding: 2rem 0;
     display: flex;
     flex-direction: column;
@@ -101,7 +101,7 @@
     padding: 0 1.5rem;
 
     a {
-        color: v.$color-white;
+        color: v.$color-bg;
     }
 }
 
@@ -124,12 +124,12 @@
 
     &:hover,
     &:focus {
-        color: v.$color-white;
+        color: v.$color-bg;
         background: rgba(255, 255, 255, 0.05);
     }
 
     &.is-active {
-        color: v.$color-white;
+        color: v.$color-bg;
         background: rgba(255, 255, 255, 0.08);
         border-left-color: v.$admin-color-sidebar-active;
         font-weight: 400;
@@ -138,7 +138,7 @@
 
 .admin-main {
     flex: 1;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
     padding: 2rem;
     min-width: 0;
 }
@@ -169,7 +169,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
 }
 
 .admin-login {
@@ -228,6 +228,21 @@
         border-top: 1px solid v.$admin-color-border;
     }
 
+    // A lighter, non-default action (e.g. Admin\Colors\index.php's "Reset
+    // all to defaults") that shouldn't compete visually with the form's own
+    // primary submit button.
+    .button--secondary {
+        background: transparent;
+        border-color: v.$admin-color-border;
+        color: v.$admin-color-text;
+
+        &:hover,
+        &:focus {
+            background: v.$admin-color-border;
+            border-color: v.$admin-color-border;
+        }
+    }
+
     // Explanatory notes below a form (e.g. "this image is managed
     // separately as a banner") — grouped into one visually distinct panel
     // instead of bare <p> tags loose in the page, which read as
@@ -237,7 +252,7 @@
         margin-top: 2rem;
         padding: 1.2rem 1.4rem;
         border-radius: 0.4rem;
-        background: v.$color-main-bg;
+        background: v.$color-bg-alt;
         border: 1px solid v.$admin-color-border;
         display: flex;
         flex-direction: column;
@@ -249,7 +264,7 @@
         gap: 0.7rem;
         margin: 0;
         font-size: v.$font-size-base;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
         line-height: 1.5;
 
         &::before {
@@ -365,7 +380,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 50%;
-            background: v.$color-white;
+            background: v.$color-bg;
             transition: transform 0.15s ease-in-out;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
         }
@@ -408,7 +423,7 @@
         padding: 0;
         margin-left: 0.5rem;
         border-radius: 0.4rem;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
 
         svg {
             width: 1.4rem;
@@ -423,8 +438,8 @@
 
         &--delete:hover,
         &--delete:focus {
-            background: v.$color-message-error-bg;
-            color: v.$color-message-error-text;
+            background: v.$color-error-bg;
+            color: v.$color-error-text;
         }
     }
 
@@ -435,13 +450,13 @@
     .admin-drag-hint {
         margin-bottom: 1rem;
         font-size: v.$font-size-lg;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
     }
 
     .js-drag-reorder-handle {
         width: 2rem;
         cursor: grab;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
 
         svg {
             width: 1.4rem;
@@ -497,7 +512,7 @@
     .admin-page-picker__title {
         flex: 1;
         font-size: v.$font-size-lg;
-        color: v.$color-lightgray;
+        color: v.$color-text-muted;
         transition: color 0.1s ease;
     }
 
@@ -531,7 +546,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 50%;
-            background: v.$color-white;
+            background: v.$color-bg;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
             transition: transform 0.15s ease-in-out;
         }

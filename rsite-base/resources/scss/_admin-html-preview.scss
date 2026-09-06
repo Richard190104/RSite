@@ -25,10 +25,15 @@
 .admin-html-preview-modal__panel {
     display: flex;
     flex-direction: column;
-    width: min(70rem, 100%);
+    // Matches .p-aktivity__event-modal-frame.is-poster's own width rule
+    // (see _aktivity.scss) — this preview is only useful if it shows the
+    // poster at the same width visitors will actually see it at on the
+    // public site, not some other, narrower admin-only convention.
+    width: 100%;
+    max-width: 60rem;
     max-height: 90vh;
     border-radius: 0.6rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     overflow: hidden;
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
 }
@@ -39,27 +44,15 @@
     justify-content: space-between;
     padding: 1rem 1.4rem;
     background: v.$admin-color-accent;
-    color: v.$color-white;
+    color: v.$color-bg;
     font-weight: 700;
 }
 
 .admin-html-preview-modal__close {
-    border: none;
-    background: none;
     padding: 0;
     font-size: v.$font-size-xl;
     line-height: 1;
-    color: v.$color-white;
-    cursor: pointer;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background: none;
-        border: none;
-        color: v.$color-white;
-        outline: 0;
-    }
+    color: v.$color-bg;
 }
 
 .admin-html-preview-modal__frame {

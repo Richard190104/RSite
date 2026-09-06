@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var closeButton = document.createElement('button');
         closeButton.type = 'button';
-        closeButton.className = 'admin-html-preview-modal__close';
+        closeButton.className = 'admin-html-preview-modal__close close-btn';
         closeButton.setAttribute('aria-label', 'Close');
         closeButton.innerHTML = '&times;';
         header.appendChild(closeButton);

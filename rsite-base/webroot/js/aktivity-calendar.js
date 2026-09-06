@@ -99,6 +99,21 @@
         return parts.length ? `<p class="p-aktivity__calendar-item-meta">${escapeHtml(parts.join(' · '))}</p>` : '';
     };
 
+    // Same data-* contract as the "Upcoming events" cards (see
+    // templates/Pages/aktivity.php) so aktivity-event-modal.js's delegated
+    // click handler opens the identical popup for these JS-rendered items.
+    const eventAttrs = (event) => (
+        ` data-aktivity-event`
+        + ` data-title="${escapeHtml(event.title)}"`
+        + ` data-description="${escapeHtml(event.description)}"`
+        + ` data-image="${escapeHtml(event.image || '')}"`
+        + ` data-date="${escapeHtml(event.displayDate || '')}"`
+        + ` data-location="${escapeHtml(event.location || '')}"`
+        + ` data-time="${escapeHtml(event.time || '')}"`
+        + ` data-category="${escapeHtml(event.category || '')}"`
+        + ` data-content="${escapeHtml(event.content || '')}"`
+    );
+
     const renderMonthList = (monthStart) => {
         if (asideTitle) {
             asideTitle.textContent = closestLabel;
@@ -130,7 +145,7 @@
                 const day = date.toLocaleDateString(locale, { day: 'numeric' });
                 const month = date.toLocaleDateString(locale, { month: 'short' }).replace(/\./g, '');
                 return `
-                    <li class="p-aktivity__calendar-item${isPast ? ' is-past' : ''}">
+                    <li class="p-aktivity__calendar-item${isPast ? ' is-past' : ''}"${eventAttrs(event)}>
                         <span class="p-aktivity__calendar-badge">${escapeHtml(`${day} ${month}`)}</span>
                         <div class="p-aktivity__calendar-item-body">
                             <span class="p-aktivity__calendar-item-title">${escapeHtml(event.title)}</span>
@@ -163,7 +178,7 @@
         const month = date.toLocaleDateString(locale, { month: 'short' }).replace(/\./g, '');
         listEl.innerHTML = dayEvents
             .map((event) => `
-                <li class="p-aktivity__calendar-item is-detail${isPast ? ' is-past' : ''}">
+                <li class="p-aktivity__calendar-item is-detail${isPast ? ' is-past' : ''}"${eventAttrs(event)}>
                     <span class="p-aktivity__calendar-badge">${escapeHtml(`${day} ${month}`)}</span>
                     <div class="p-aktivity__calendar-item-body">
                         <span class="p-aktivity__calendar-item-title">${escapeHtml(event.title)}</span>

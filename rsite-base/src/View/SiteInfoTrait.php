@@ -38,6 +38,7 @@ trait SiteInfoTrait
     private ?string $organisationIco = null;
     private ?string $facebookUrl = null;
     private ?string $instagramUrl = null;
+    private ?array $siteColors = null;
 
     public function organisationName(): string
     {
@@ -96,6 +97,19 @@ trait SiteInfoTrait
     public function instagramUrl(): string
     {
         return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Instagram URL');
+    }
+
+    /**
+     * The site's customizable palette (Admin\ColorsController) as
+     * slug => hex, e.g. 'primary' => '#001a3b' — read by
+     * templates/element/colorVariables.php to build the :root override the
+     * public layout injects after the compiled stylesheet.
+     *
+     * @return array<string, string>
+     */
+    public function siteColors(): array
+    {
+        return $this->siteColors ??= TableRegistry::getTableLocator()->get('Colors')->allAsSlugMap();
     }
 
     /**

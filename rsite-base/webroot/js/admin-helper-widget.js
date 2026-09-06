@@ -81,6 +81,41 @@ document.addEventListener('DOMContentLoaded', function () {
         return document.querySelector('[data-html-preview-toggle-for="' + field.id + '"]');
     }
 
+    // Palette mode has no single target field — a reply's "suggestion" is a
+    // JSON object of color-slug -> hex (see Admin\AssistantController's
+    // 'palette' mode prompt), applied to every matching input on the page
+    // and saved immediately, with no separate "Use this" confirmation step.
+    function applyPalette(suggestionJson) {
+        var palette;
+        try {
+            palette = JSON.parse(suggestionJson);
+        } catch (e) {
+            return false;
+        }
+        if (!palette || typeof palette !== 'object') {
+            return false;
+        }
+
+        var form = null;
+        var applied = false;
+        Object.keys(palette).forEach(function (slug) {
+            var colorInput = document.querySelector('input[name="colors[' + slug + ']"]');
+            var value = palette[slug];
+            if (!colorInput || typeof value !== 'string' || !/^#[0-9a-f]{6}$/i.test(value)) {
+                return;
+            }
+            colorInput.value = value.toLowerCase();
+            form = form || colorInput.form;
+            applied = true;
+        });
+
+        if (applied && form) {
+            form.submit();
+        }
+
+        return applied;
+    }
+
     function appendMessage(role, text, suggestion, link) {
         var bubble = document.createElement('div');
         bubble.className = 'admin-ai-chat__message admin-ai-chat__message--' + role;
@@ -108,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // into whichever field was active AT THE TIME the message was
         // sent (captured below), not whatever mode is selected by the
         // time the admin clicks the button.
-        if (suggestion && activeMode) {
+        if (suggestion && activeMode && activeMode.dataset.modeKind !== 'palette') {
             var targetMode = activeMode;
             var useButton = document.createElement('button');
             useButton.type = 'button';
@@ -167,7 +202,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // normally (mode "text") — it just has no field to write "Use this"
         // into until the admin picks one.
         var activeField = activeMode ? document.getElementById(activeMode.dataset.modeTarget) : null;
-        var mode = !modeButtons.length ? 'nav' : (activeMode && activeMode.dataset.modeKind === 'html' ? 'html' : 'text');
+        var activeKind = activeMode ? activeMode.dataset.modeKind : null;
+        var mode = !modeButtons.length ? 'nav' : (activeKind === 'html' || activeKind === 'palette' ? activeKind : 'text');
 
         fetch(widget.dataset.aiChatUrl, {
             method: 'POST',
@@ -200,6 +236,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 appendMessage('assistant', result.data.message, result.data.suggestion, result.data.link);
                 history.push({ role: 'assistant', text: result.data.message });
+
+                if (mode === 'palette' && result.data.suggestion && !applyPalette(result.data.suggestion)) {
+                    appendError('Nepodarilo sa aplikovať navrhnutú paletu.');
+                }
             })
             .catch(function () {
                 appendError('Nepodarilo sa spojiť s AI asistentom.');

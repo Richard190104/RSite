@@ -21,7 +21,7 @@
     border: none;
     border-radius: 50%;
     background: v.$admin-color-accent;
-    color: v.$color-white;
+    color: v.$color-bg;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.14);
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -64,7 +64,7 @@
     height: 54rem;
     max-height: calc(100vh - 4rem);
     border-radius: 1.2rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 24px 60px rgba(20, 22, 26, 0.22), 0 4px 14px rgba(20, 22, 26, 0.1);
     overflow: hidden;
@@ -93,7 +93,7 @@
     gap: 0.7rem;
     padding: 1.1rem 1.3rem;
     background: linear-gradient(135deg, v.$admin-color-accent, v.$admin-color-accent-hover);
-    color: v.$color-white;
+    color: v.$color-bg;
     flex: 0 0 auto;
 }
 
@@ -134,22 +134,10 @@
 
 .admin-ai-chat__close {
     align-self: flex-start;
-    border: none;
-    background: none;
     padding: 0.2rem;
     font-size: v.$font-size-xl;
     line-height: 1;
     color: rgba(255, 255, 255, 0.85);
-    cursor: pointer;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background: none;
-        border: none;
-        color: rgba(255, 255, 255, 0.85);
-        outline: 0;
-    }
 }
 
 .admin-ai-chat__mode-row {
@@ -171,7 +159,7 @@
     margin: 0;
     padding: 0.45rem 1.1rem;
     border: 1px solid v.$admin-color-border;
-    background: v.$color-white;
+    background: v.$color-bg;
     color: v.$admin-color-text;
     font-size: v.$font-size-sm;
     font-weight: 600;
@@ -182,14 +170,14 @@
 
     &:hover,
     &:focus {
-        background: v.$color-main-bg;
+        background: v.$color-bg-alt;
         border-color: v.$admin-color-border;
     }
 
     &.is-active {
         background: v.$admin-color-accent;
         border-color: v.$admin-color-accent;
-        color: v.$color-white;
+        color: v.$color-bg;
 
         &:hover,
         &:focus {
@@ -206,7 +194,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
 }
 
 .admin-ai-chat__message {
@@ -226,13 +214,13 @@
     &--user {
         align-self: flex-end;
         background: v.$admin-color-accent;
-        color: v.$color-white;
+        color: v.$color-bg;
         border-bottom-right-radius: 0.3rem;
     }
 
     &--assistant {
         align-self: flex-start;
-        background: v.$color-white;
+        background: v.$color-bg;
         color: v.$admin-color-text;
         border: 1px solid rgba(0, 0, 0, 0.05);
         border-bottom-left-radius: 0.3rem;
@@ -240,9 +228,9 @@
 
     &--error {
         align-self: center;
-        background: v.$color-message-error-bg;
-        color: v.$color-message-error-text;
-        border: 1px solid v.$color-message-error-border;
+        background: v.$color-error-bg;
+        color: v.$color-error-text;
+        border: 1px solid v.$color-error-border;
         font-size: v.$font-size-sm;
         box-shadow: none;
     }
@@ -289,7 +277,7 @@
     padding: 0.4rem 0.9rem;
     border-radius: 999px;
     background: v.$admin-color-accent;
-    color: v.$color-white;
+    color: v.$color-bg;
     text-decoration: none;
     font-size: v.$font-size-sm;
     font-weight: 700;
@@ -302,7 +290,7 @@
 
     &:hover,
     &:focus {
-        color: v.$color-white;
+        color: v.$color-bg;
         opacity: 1;
     }
 }
@@ -312,7 +300,7 @@
     align-items: center;
     gap: 0.6rem;
     padding: 1rem 1.2rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     border-top: 1px solid v.$admin-color-border;
     flex: 0 0 auto;
     margin-bottom: 0px;

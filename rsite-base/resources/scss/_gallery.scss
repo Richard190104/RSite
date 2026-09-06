@@ -2,7 +2,7 @@
 
 .p-gallery {
     width: 100%;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
 }
 
 .p-gallery__body {
@@ -19,12 +19,12 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-md;
     font-weight: 600;
-    color: v.$color-navy;
+    color: v.$color-primary;
     text-decoration: none;
 
     &:hover,
     &:focus-visible {
-        color: v.$color-links-active;
+        color: v.$color-link-hover;
     }
 }
 
@@ -33,7 +33,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-4xl;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
 
     &::after {
         content: '';
@@ -41,7 +41,7 @@
         width: 4rem;
         height: 0.4rem;
         margin-top: 0.8rem;
-        background: v.$color-yellow;
+        background: v.$color-secondary;
     }
 }
 
@@ -50,12 +50,12 @@
     max-width: 60rem;
     font-size: v.$font-size-lg;
     line-height: 1.6;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
 }
 
 .p-gallery__empty {
     font-size: v.$font-size-lg;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
 }
 
 .p-gallery__section-title {
@@ -63,7 +63,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-4xl;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .p-gallery__cards {
@@ -111,8 +111,8 @@
     line-height: 1.25;
     padding: 0.5rem 1rem;
     border-radius: 0.4rem;
-    background: v.$color-yellow;
-    color: v.$color-navy;
+    background: v.$color-secondary;
+    color: v.$color-primary;
     font-family: v.$font-heading;
     font-size: v.$font-size-base;
     font-weight: 700;
@@ -188,7 +188,7 @@
 .p-gallery__photo-card {
     border-radius: 0.9rem;
     overflow: hidden;
-    background: v.$color-white;
+    background: v.$color-bg;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 8px 24px rgba(20, 58, 107, 0.06);
     border: 1px solid rgba(20, 58, 107, 0.06);
 }
@@ -224,8 +224,8 @@
     flex: 0 0 auto;
     padding: 0.35rem 0.7rem;
     border-radius: 0.4rem;
-    background: v.$color-yellow;
-    color: v.$color-navy;
+    background: v.$color-secondary;
+    color: v.$color-primary;
     font-family: v.$font-heading;
     font-size: v.$font-size-xs;
     font-weight: 700;
@@ -241,7 +241,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-base;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .p-gallery__lightbox {
@@ -283,7 +283,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-lg;
     font-weight: 600;
-    color: v.$color-white;
+    color: v.$color-bg;
 }
 
 .p-gallery__lightbox-close {
@@ -295,21 +295,9 @@
     justify-content: center;
     width: 3.4rem;
     height: 3.4rem;
-    border: none;
-    color: v.$color-white;
-    background: none;
+    color: v.$color-bg;
     font-size: v.$font-size-2xl;
     line-height: 1;
-    cursor: pointer;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background: none;
-        border: none;
-        color: v.$color-white;
-        outline: 0;
-    }
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {

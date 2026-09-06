@@ -73,7 +73,7 @@ class AssistantController extends AppController
         $imageUrl = (string)$this->request->getData('image_url');
         $fieldLabel = (string)$this->request->getData('field_label', __('description'));
         $requestedMode = (string)$this->request->getData('mode');
-        $mode = in_array($requestedMode, ['html', 'nav'], true) ? $requestedMode : 'text';
+        $mode = in_array($requestedMode, ['html', 'nav', 'palette'], true) ? $requestedMode : 'text';
         $messages = (array)$this->request->getData('messages');
 
         $history = $this->sanitizeHistory($messages);
@@ -84,6 +84,7 @@ class AssistantController extends AppController
         }
 
         $organisationName = (string)TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
+        $colors = TableRegistry::getTableLocator()->get('Colors')->allAsSlugMap();
 
         $systemPrompt = $mode === 'nav'
             ? $this->buildNavigationPrompt()
@@ -95,6 +96,7 @@ class AssistantController extends AppController
                 $imageUrl,
                 $organisationName,
                 $mode,
+                $colors,
             );
 
         try {
@@ -252,6 +254,12 @@ class AssistantController extends AppController
         ]);
     }
 
+    /**
+     * @param array<string, string> $colors The site's current live palette
+     *   (Admin\ColorsController, slug => hex) — always the actual values an
+     *   admin has set, never a fixed default, so the assistant's output
+     *   stays on-brand even after someone changes the palette.
+     */
     private function buildSystemPrompt(
         string $fieldLabel,
         string $title,
@@ -259,7 +267,8 @@ class AssistantController extends AppController
         string $descriptionContext,
         string $imageUrl,
         string $organisationName,
-        string $mode
+        string $mode,
+        array $colors = []
     ): string {
         $lines = [
             'You are helping write short website copy in Slovak for a local fishing association (MO SRZ) website.',
@@ -270,96 +279,66 @@ class AssistantController extends AppController
         ];
 
         if ($mode === 'html') {
-            $letterhead = $organisationName !== '' ? $organisationName : 'ORGANISATION NAME HERE';
-            $lines[] = '- "suggestion": a ready-to-use HTML notice/announcement poster for a rich-text editor — modeled after a'
-                . ' traditional official fishing-association notice board announcement (organisation letterhead, a short'
-                . ' "OZNAMUJE"/"VYHLASUJE"-style label as plain accent-colored text with no background of its own, an optional'
-                . ' legal reference line, one large emphasized central statement, and detail lines below), but rendered in a'
-                . ' clean modern style using this site\'s own palette instead of the old plain black-text-on-white-paper look.'
-                . ' Follow this exact HTML structure/skeleton — copy the tag nesting and inline-style approach precisely, only'
-                . ' changing text content and the size/padding values as described further below:'
-                . "\n\n<div style=\"background-color:#fff;color:#143a6b;padding:2.5rem;border-radius:0.8rem;text-align:center;"
-                . "border:1px solid #f5f7fa;min-height:500px;max-width:70rem;margin:0 auto;\">"
-                . "\n<p style=\"font-weight:700;letter-spacing:0.05em;text-transform:uppercase;font-size:1rem;margin:0;\">"
-                . "{$letterhead}</p>"
-                . "\n<p style=\"font-size:1.1rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-top:0.6rem;"
-                . "margin-bottom:0;color:#f9d71c;\">OZNAMUJE / VYHLASUJE</p>"
-                . "\n<p style=\"font-size:0.9rem;color:#143a6b;margin-top:1rem;margin-bottom:0;\">Optional legal reference line"
-                . ' (law/decree number), only if relevant to the subject.</p>'
-                . "\n<h1 style=\"font-size:2.6rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#143a6b;"
-                . "margin-top:1.4rem;margin-bottom:0;line-height:1.2;\">MAIN STATEMENT HERE (short, 2-5 words, the single most"
-                . ' important fact)</h1>'
-                . "\n<div style=\"width:60px;height:4px;background-color:#f9d71c;margin:1.2rem auto;\"></div>"
-                . "\n<p style=\"font-size:1.1rem;line-height:1.7;color:#143a6b;\">Detail lines here — location/revír number,"
-                . ' date range, or other concrete specifics relevant to the subject, plus one or two sentences of explanation if'
-                . ' useful.</p>'
-                . "\n</div>"
-                . "\n\nUse the exact organisation name given to you as the letterhead text — never invent or guess one, and never"
-                . ' leave a generic "MO SRZ" or placeholder if a real name is provided below.'
-                . ' The "OZNAMUJE"/"VYHLASUJE" label is plain colored text with NO background pill/box behind it — do not add'
-                . ' background-color to that element.'
-                . ' The outer div must always keep max-width:70rem;margin:0 auto; exactly as in the skeleton — this fixes the'
-                . ' poster to a consistent, correctly-proportioned width instead of stretching full-width in whatever container it'
-                . ' ends up in. Never remove or change these two values.'
-                . " \n\nADAPT THE OVERALL SIZE AND SPACING TO HOW MUCH TEXT THERE ACTUALLY IS — this is important, do not always use"
-                . ' the same fixed sizes from the skeleton above:'
-                . " \n- The outer div must always keep min-height:500px (more, e.g. 600px+, only if a long detail paragraph"
-                . ' genuinely needs it — never shrink below 500px). Critically, the CONTENT itself — not empty padding — must'
-                . ' visually fill that height. Do not just add a big padding number and call it done; actually make each element'
-                . ' bigger and more spaced out so the poster looks intentionally full and well-composed at that size, never like a'
-                . ' small cluster of text floating in a mostly-empty white box.'
-                . " \n- If the detail paragraph ends up short (roughly one sentence or less), fill the space by scaling up EVERY"
-                . ' element and the gaps between them, not just the outer padding: a noticeably larger main statement heading'
-                . ' (e.g. 3.5-4.5rem), a larger detail paragraph (e.g. 1.3-1.5rem), a taller/wider divider bar, and generous'
-                . ' margin-top on each element (e.g. 2-2.5rem between the label and the heading, between the heading and the'
-                . ' divider, and between the divider and the detail paragraph) so the whole 500px+ is used by clearly-spaced'
-                . ' content, not by one small cluster of normal-sized text sitting in a large blank area.'
-                . " \n- If the detail paragraph is long (multiple sentences covering several facts), the text itself naturally"
-                . ' fills the space, so keep sizes closer to the skeleton defaults or slightly smaller (heading ~2-2.4rem, detail'
-                . ' paragraph ~1-1.1rem) and tighten the margins between elements — a text-heavy notice should stay compact and'
-                . ' readable, relying on the amount of text rather than oversized elements to reach the minimum height.'
-                . " \n- IMPORTANT: do NOT use display:flex, justify-content, align-items, or flex-direction to center/fill content —"
-                . ' this sanitizer does not support flexbox properties at all and will silently strip them, leaving the poster'
-                . ' looking broken/uncentered. Achieve the "filled" look ONLY through padding, margin/margin-top, and font-size on'
-                . ' the elements themselves, exactly as instructed above — never rely on flexbox or any positioning property.'
-                . ' Always keep the overall structure (letterhead line, oznamuje/vyhlasuje label, optional legal reference, one'
-                . ' large main statement, divider, detail paragraph) even as the exact wording, sizes, and whether the'
-                . ' legal-reference line is included vary by subject and length.'
-                . ' Never output just a <div> with highlighted <span> lines of plain paragraph text — that is NOT an acceptable'
-                . ' result. Only ever use these exact colors, never invent a different hue (e.g. no red for warnings — even for a'
-                . ' strict/serious announcement, stick to this palette): navy #143a6b, yellow #f9d71c, white #fff, light gray'
-                . ' #f5f7fa.'
-                . ' Write the actual label/statement/detail text based on the title and description given below — mention the'
-                . ' concrete subject (what is being announced, and any concrete facts like location, dates, reference numbers'
-                . ' present in the description) — do not write a vague "Dôležité oznámenie, prosíme prečítajte si usmernenia"'
-                . ' placeholder that could apply to any article, and do not copy the description verbatim — distill it into the'
-                . ' notice-board format above. If no title/description is given, ask the admin what the notice should be about'
-                . ' instead of inventing generic filler content.'
+            $orgName = $organisationName !== '' ? $organisationName : 'ORGANISATION NAME HERE';
+            $palette = 'primary ' . ($colors['primary'] ?? '#001a3b')
+                . ', secondary ' . ($colors['secondary'] ?? '#ec2828')
+                . ', background ' . ($colors['bg'] ?? '#fff')
+                . ', alternate background ' . ($colors['bg_alt'] ?? '#f5f7fa');
+            $lines[] = '- "suggestion": a ready-to-use HTML mini content page about the subject below, for a local fishing'
+                . ' association website — shown to visitors in a popup. Design it however you think looks best: you have'
+                . ' complete creative freedom over structure, layout, and visual style — nothing here is a template to'
+                . ' follow, only the actual technical constraints of where and how this gets shown, listed below.'
+                . " This is the site's current color palette (admin-configurable, so treat it as live, not fixed):"
+                . " {$palette}. You can include those colors or variations of them, but you can come up with different"
+                . ' colors also.'
+                . " If you show the organisation name, use the exact name given to you (\"{$orgName}\") — never invent or"
+                . ' guess one, and never leave a generic placeholder if a real name is provided below.'
+                . ' Write the actual heading/section/detail text based on the title and description given below — mention'
+                . ' the concrete subject and any concrete facts (location, dates, reference numbers) present in the'
+                . ' description — do not write a vague placeholder that could apply to any article, and do not copy the'
+                . ' description verbatim. If no title/description is given, ask the admin what it should be about instead'
+                . ' of inventing generic filler content.'
+                . ' This renders inside a fixed ~60rem (~1200px) wide popup, not a wide desktop page — design and size'
+                . ' everything for that canvas. The outermost element should not set its own max-width/width — leave that'
+                . ' unset so it fills the popup.'
+                . ' Write a <style> block (put it first, before the rest of the markup) and style elements by class — this'
+                . ' is where flexbox, grid, @media queries, :hover and other pseudo-classes/pseudo-elements, CSS custom'
+                . ' properties, gradients, and object-fit all belong. An inline style="..." attribute also works for'
+                . ' one-off tweaks, but only supports a more limited, older subset of CSS — no flexbox/grid/object-fit'
+                . ' there, those only work via a class styled in the <style> block.'
                 . ($imageUrl !== ''
-                    ? ' The article has an uploaded image (URL given below) — when asked to use it, or by default if it makes'
-                        . ' sense, use it as a full hero background instead of the plain white/light-gray card. Do this with TWO'
-                        . ' nested divs — the CSS sanitizer here does not support linear-gradient(), so a gradient overlay trick'
-                        . ' will not work; use a solid semi-transparent overlay div instead:'
-                        . "\n<div style=\"background-image:url('{$imageUrl}');background-size:cover;background-position:center;"
-                        . "border-radius:0.8rem;max-width:70rem;margin:0 auto;\">"
-                        . "\n<div style=\"background-color:rgba(20,58,107,0.72);padding:2.5rem;border-radius:0.8rem;color:#fff;"
-                        . "text-align:center;\">"
-                        . "\n... the same letterhead/label/statement/divider/detail structure goes here ..."
-                        . "\n</div></div>"
-                        . ' The inner div\'s background-color (navy at ~0.7 opacity) sits on top of the photo and darkens it enough'
-                        . ' for text to stay legible — switch all text colors inside to white #fff instead of navy in this photo'
-                        . ' version (the "OZNAMUJE" label keeps its yellow text color, that stays readable against the dark'
-                        . ' overlay). Keep the same overall structure (letterhead, label, optional legal line, main statement,'
-                        . ' divider, detail paragraph) — only the background/text-color scheme changes to this photo+overlay version.'
+                    ? " The article has an uploaded image ({$imageUrl}) — use it however (or however much) you think"
+                        . ' improves the result, including not at all.'
                     : '')
                 . ' Allowed tags ONLY: p, br, strong, b, em, i, u, s, a (with href), ul, ol, li, h1, h2, h3, h4, blockquote,'
-                . ' img (with src/alt), span/div — all of these may carry an inline style limited to: text-align, color,'
-                . ' background-color, background, background-image, background-size, background-position, padding, margin,'
-                . ' margin-top, margin-right, margin-bottom, margin-left, border-radius, border, font-size, font-weight,'
-                . ' line-height, width, max-width, height, min-height, display, text-decoration, letter-spacing, text-transform.'
-                . ' No <script>,'
-                . ' no <style> blocks, no event handler attributes, no other tags or CSS properties. If the admin is instead just'
+                . ' img (with src/alt), span, div — each may carry a class and/or an inline style attribute. No <script>,'
+                . ' no event handler attributes (onclick etc.), no external stylesheet/font <link> tags, no other tags.'
+                . ' If the admin is instead just'
                 . ' asking a question or the reply is not meant to be dropped into the editor, leave "suggestion" as null.';
+        } elseif ($mode === 'palette') {
+            $paletteSlugs = ['primary', 'secondary', 'bg', 'bg_alt', 'text_muted', 'heading', 'link', 'link_hover'];
+            $currentPalette = json_encode(
+                array_intersect_key($colors, array_flip($paletteSlugs)),
+                JSON_PRETTY_PRINT,
+            );
+            $lines[] = 'You are proposing a new color palette for the whole public website (not just one field) —'
+                . ' the admin is describing what look/mood/season/theme they want, and you respond with a complete'
+                . ' replacement palette.'
+                . " The site's current palette is:\n{$currentPalette}"
+                . ' - "suggestion": ONLY when the admin is actually asking for a new palette (or a change to the'
+                . ' current one), a single JSON string (it goes inside the normal JSON "suggestion" string field, so'
+                . ' escape it like any other string value) encoding an object with EXACTLY these 8 keys, each a'
+                . ' 6-digit hex color starting with #: "primary", "secondary", "bg", "bg_alt", "text_muted",'
+                . ' "heading", "link", "link_hover". Keep any key the admin\'s request does not call for unchanged'
+                . ' from the current palette above rather than inventing a new value for it.'
+                . ' These are real, functional UI colors, not just a mood board — keep the result actually usable:'
+                . ' "bg" and "bg_alt" are page/card backgrounds (must stay light enough, or consistently dark if you'
+                . ' intentionally go for a dark theme, for "text_muted"/"heading" to read clearly on top of them);'
+                . ' "primary" is the main brand color (navbar, headings, buttons); "secondary" is the accent color'
+                . ' (badges, highlights) and should contrast against "primary", not blend into it; "link"/"link_hover"'
+                . ' are plain text link colors, distinct enough from body text to read as clickable.'
+                . ' If the admin is instead just asking a question, or the reply is not meant to be applied as a new'
+                . ' palette, leave "suggestion" as null.';
         } else {
             $lines[] = '- "suggestion": ONLY when the admin is asking you to draft or rewrite the actual field text, put the ready-to-use'
                 . " text here, plain text. This is a \"{$fieldLabel}\" field — if that's a title/name/heading field, keep the"
@@ -381,7 +360,7 @@ class AssistantController extends AppController
             $lines[] = "Current text already in the field being edited:\n{$existingText}";
         }
         if ($mode === 'html' && $imageUrl !== '') {
-            $lines[] = "This article's uploaded image URL (use it as described above if the admin wants a photo background):"
+            $lines[] = "This article's uploaded image URL (use it as described above, at your discretion):"
                 . " {$imageUrl}";
         }
 

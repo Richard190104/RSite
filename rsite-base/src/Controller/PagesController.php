@@ -21,6 +21,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\I18n\Date;
+use Cake\Routing\Router;
 use Cake\View\Exception\MissingTemplateException;
 
 /**
@@ -115,24 +116,36 @@ class PagesController extends AppController
             ->extract('category_id')
             ->toList();
 
+        // Only categories flagged Category::show_in_gallery are shown here
+        // — same flag as the public gallery (see GalleryController), so a
+        // tile only ever appears once there's actually a gallery page for
+        // an admin to send visitors to (see the tile's link below).
         $categories = $categoryIds
             ? $this->fetchTable('Categories')
                 ->find()
-                ->where(['id IN' => $categoryIds])
+                ->where(['id IN' => $categoryIds, 'show_in_gallery' => true])
                 ->orderBy(['title' => 'ASC'])
                 ->limit(5)
                 ->all()
                 ->toList()
             : [];
 
+        // Carries the same fields as each event card's data-* attributes
+        // (see templates/Pages/aktivity.php) so the calendar's own
+        // JS-rendered list items (aktivity-calendar.js) can open the exact
+        // same popup (aktivity-event-modal.js) as the upcoming-events cards.
         $calendarEvents = array_map(static function ($event) {
             return [
                 'id' => $event->id,
                 'title' => $event->title,
                 'description' => $event->description,
                 'date' => $event->date?->format('Y-m-d'),
+                'displayDate' => $event->date?->i18nFormat('d. MMMM yyyy'),
                 'location' => $event->location,
                 'time' => $event->time,
+                'image' => $event->image ? Router::url('/img/events/' . $event->image) : '',
+                'category' => $event->category ? __($event->category->title) : '',
+                'content' => $event->content ?? '',
             ];
         }, $allEvents);
 

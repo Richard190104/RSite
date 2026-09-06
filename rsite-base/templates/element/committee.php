@@ -65,7 +65,7 @@ foreach ($committeeMembers as $member) {
 
 <div class="committee-modal" data-committee-modal>
     <div class="committee-modal__frame">
-        <button type="button" class="committee-modal__close" aria-label="<?= __('Close') ?>">&times;</button>
+        <button type="button" class="committee-modal__close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
         <div class="committee-modal__photo">
             <img class="committee-modal__image" alt="" hidden>
             <svg class="committee-modal__photo-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

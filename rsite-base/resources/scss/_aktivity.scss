@@ -3,7 +3,7 @@
 
 .p-aktivity {
     width: 100%;
-    background: v.$color-main-bg;
+    background: v.$color-bg-alt;
 }
 
 .p-aktivity__body {
@@ -26,7 +26,7 @@
     font-size: v.$font-size-5xl;
     font-weight: 700;
     line-height: 1.2;
-    color: v.$color-navy;
+    color: v.$color-primary;
 
     &::after {
         content: '';
@@ -34,7 +34,7 @@
         width: 4rem;
         height: 0.4rem;
         margin-top: 0.8rem;
-        background: v.$color-yellow;
+        background: v.$color-secondary;
     }
 }
 
@@ -42,8 +42,8 @@
     margin: 0;
     padding: 2rem;
     border-radius: 1rem;
-    background: v.$color-white;
-    color: v.$color-lightgray;
+    background: v.$color-bg;
+    color: v.$color-text-muted;
     font-size: v.$font-size-lg;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 8px 24px rgba(20, 58, 107, 0.06);
 }
@@ -59,9 +59,10 @@
     flex-direction: column;
     overflow: hidden;
     border-radius: 1rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.1), 0 8px 24px rgba(20, 58, 107, 0.08);
     border: 1px solid rgba(20, 58, 107, 0.06);
+    cursor: pointer;
 }
 
 .p-aktivity__event-media {
@@ -91,8 +92,8 @@
     min-width: 6.4rem;
     padding: 0.9rem 0.8rem;
     border-radius: 0.7rem;
-    background: v.$color-yellow;
-    color: v.$color-navy;
+    background: v.$color-secondary;
+    color: v.$color-primary;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
@@ -124,7 +125,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: color.adjust(v.$color-yellow, $lightness: -28%);
+    color: color-mix(in srgb, v.$color-secondary 72%, black);
 }
 
 .p-aktivity__event-title {
@@ -133,12 +134,12 @@
     font-size: v.$font-size-xl;
     font-weight: 700;
     line-height: 1.3;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .p-aktivity__event-text {
     margin: 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-lg;
     line-height: 1.5;
     display: -webkit-box;
@@ -163,7 +164,7 @@
     border-radius: 0;
     background: transparent !important;
     background-color: transparent !important;
-    color: v.$color-navy !important;
+    color: v.$color-primary !important;
     font-family: v.$font-heading;
     font-size: v.$font-size-md;
     font-weight: 700;
@@ -179,7 +180,7 @@
         width: 100%;
         height: 0.25rem;
         margin-top: 0.25rem;
-        background: v.$color-yellow;
+        background: v.$color-secondary;
         transform: scaleX(0);
         transform-origin: left;
         transition: transform 0.15s ease;
@@ -189,7 +190,7 @@
     &:focus-visible {
         background: transparent !important;
         background-color: transparent !important;
-        color: v.$color-navy !important;
+        color: v.$color-primary !important;
         border: none;
 
         &::after {
@@ -204,7 +205,7 @@
     gap: 0.6rem;
     margin: auto 0 0;
     padding-top: 0.6rem;
-    color: v.$color-navy;
+    color: v.$color-primary;
     font-size: v.$font-size-md;
     font-weight: 600;
 
@@ -230,9 +231,17 @@
     min-height: 18rem;
     padding: 2rem 1.6rem;
     border-radius: 1rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     border: 1px solid rgba(20, 58, 107, 0.06);
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.08), 0 8px 20px rgba(20, 58, 107, 0.06);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(60, 66, 87, 0.1), 0 14px 28px rgba(20, 58, 107, 0.1);
+    }
 }
 
 .p-aktivity__type-icon {
@@ -242,7 +251,7 @@
     height: 4.4rem;
     border-radius: 1rem;
     background: rgba(20, 58, 107, 0.08);
-    color: v.$color-navy;
+    color: v.$color-primary;
 
     svg {
         width: 2.2rem;
@@ -255,12 +264,12 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-xl;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .p-aktivity__type-text {
     margin: 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-md;
     line-height: 1.45;
 }
@@ -284,7 +293,7 @@
     height: 100%;
     padding: 2.4rem 2.6rem 2.6rem;
     border-radius: 1.2rem;
-    background: v.$color-white;
+    background: v.$color-bg;
     border: 1px solid rgba(20, 58, 107, 0.05);
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.06), 0 12px 28px rgba(20, 58, 107, 0.07);
 }
@@ -306,7 +315,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-3xl;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
     text-transform: capitalize;
     text-align: center;
 }
@@ -322,7 +331,7 @@
     border-radius: 0;
     background: none;
     background-color: transparent;
-    color: v.$color-navy;
+    color: v.$color-primary;
     font-size: v.$font-size-2xl;
     line-height: 1;
     cursor: pointer;
@@ -336,7 +345,7 @@
         background: none;
         background-color: transparent;
         border: none;
-        color: v.$color-links-active;
+        color: v.$color-link-hover;
         box-shadow: none;
     }
 }
@@ -352,7 +361,7 @@
     text-align: center;
     font-size: v.$font-size-md;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
     text-transform: capitalize;
     letter-spacing: 0.01em;
 }
@@ -378,7 +387,7 @@
     border-radius: 50%;
     background: transparent;
     background-color: transparent;
-    color: v.$color-navy;
+    color: v.$color-primary;
     font-family: v.$font-heading;
     font-size: v.$font-size-lg;
     font-weight: 600;
@@ -402,9 +411,9 @@
     }
 
     &.has-event.is-future {
-        background: v.$color-yellow;
-        background-color: v.$color-yellow;
-        color: v.$color-navy;
+        background: v.$color-secondary;
+        background-color: v.$color-secondary;
+        color: v.$color-primary;
     }
 
     &.has-event.is-past {
@@ -415,7 +424,7 @@
 
     &.is-selected {
         transform: scale(1.08);
-        box-shadow: 0 0 0 2px v.$color-navy;
+        box-shadow: 0 0 0 2px v.$color-primary;
     }
 
     &:hover,
@@ -424,16 +433,16 @@
     &:active {
         background: rgba(20, 58, 107, 0.08);
         background-color: rgba(20, 58, 107, 0.08);
-        color: v.$color-navy;
+        color: v.$color-primary;
         box-shadow: none;
     }
 
     &.has-event.is-future:hover,
     &.has-event.is-future:focus,
     &.has-event.is-future:focus-visible {
-        background: color.adjust(v.$color-yellow, $lightness: -5%);
-        background-color: color.adjust(v.$color-yellow, $lightness: -5%);
-        color: v.$color-navy;
+        background: color-mix(in srgb, v.$color-secondary 95%, black);
+        background-color: color-mix(in srgb, v.$color-secondary 95%, black);
+        color: v.$color-primary;
     }
 
     &.has-event.is-past:hover,
@@ -447,7 +456,7 @@
     &.is-selected:hover,
     &.is-selected:focus,
     &.is-selected:focus-visible {
-        box-shadow: 0 0 0 2px v.$color-navy;
+        box-shadow: 0 0 0 2px v.$color-primary;
     }
 
     &:disabled,
@@ -458,7 +467,7 @@
         cursor: default;
         background: transparent;
         background-color: transparent;
-        color: v.$color-navy;
+        color: v.$color-primary;
         box-shadow: none;
         transform: none;
         opacity: 1;
@@ -477,7 +486,7 @@
     font-family: v.$font-heading;
     font-size: v.$font-size-2xl;
     font-weight: 700;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .p-aktivity__calendar-list {
@@ -498,6 +507,7 @@
     background: transparent;
     border-radius: 0;
     box-shadow: none;
+    cursor: pointer;
 
     &:last-child {
         border-bottom: none;
@@ -524,8 +534,8 @@
     min-width: 6.8rem;
     padding: 0.45rem 0.9rem;
     border-radius: 999px;
-    background: v.$color-yellow;
-    color: v.$color-navy;
+    background: v.$color-secondary;
+    color: v.$color-primary;
     font-family: v.$font-heading;
     font-size: v.$font-size-sm;
     font-weight: 700;
@@ -537,20 +547,24 @@
 .p-aktivity__calendar-item-title {
     font-size: v.$font-size-lg;
     font-weight: 600;
-    color: v.$color-navy;
+    color: v.$color-primary;
     line-height: 1.35;
 }
 
 .p-aktivity__calendar-item-text {
     margin: 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-sm;
     line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .p-aktivity__calendar-item-meta {
     margin: 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-sm;
     font-weight: 500;
 }
@@ -558,7 +572,7 @@
 .p-aktivity__calendar-empty {
     margin: 0;
     padding: 0.4rem 0;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
     font-size: v.$font-size-md;
 }
 
@@ -585,6 +599,155 @@
 
     .p-aktivity__calendar-grid {
         min-height: 22rem;
+    }
+}
+
+// Popup shown when clicking an upcoming-event card — same data-attribute-
+// driven pattern as .committee-modal (see _committee.scss/committee-modal.js),
+// just scoped under p-aktivity's own naming since its content fields differ
+// (event title/description/date/location/time vs. name/role/email/phone).
+.p-aktivity__event-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(20, 22, 26, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    &.is-open {
+        display: flex;
+    }
+}
+
+.p-aktivity__event-modal-frame {
+    position: relative;
+    width: 100%;
+    max-width: 42rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    border-radius: 1rem;
+    background: v.$color-bg;
+    box-shadow: 0 24px 60px rgba(20, 22, 26, 0.22), 0 4px 14px rgba(20, 22, 26, 0.1);
+
+    // Wider frame when showing an event's own HTML poster (see
+    // .p-aktivity__event-modal-poster) — the plain image/title/description
+    // layout stays at the narrower default above. Capped at a fixed 60rem
+    // (not a viewport percentage) — a percentage-wide popup on a large
+    // desktop gave the AI far more horizontal room than it could reliably
+    // fill (e.g. a tall photo column paired with much shorter text left a
+    // large blank gap); a fixed, moderate width keeps the canvas roughly
+    // the same size regardless of screen size, matching what
+    // Admin\AssistantController's HTML prompt now tells the AI to expect.
+    &.is-poster {
+        max-width: 60rem;
+    }
+}
+
+.p-aktivity__event-modal-image {
+    display: block;
+    width: 100%;
+    height: 18rem;
+    object-fit: cover;
+    border-radius: 1rem 1rem 0 0;
+
+    // This class's own `display: block` overrides the [hidden] attribute's
+    // UA-stylesheet `display: none` (an explicit author `display` always
+    // wins over the UA default) — without this override, an event with no
+    // image still rendered a broken-image icon instead of staying hidden,
+    // since the <img>'s src is empty/stale but `hidden` alone no longer hid it.
+    &[hidden] {
+        display: none;
+    }
+}
+
+.p-aktivity__event-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 2rem 2.2rem 2.2rem;
+
+    // Same [hidden]-override issue as .p-aktivity__event-modal-image above:
+    // this class's own `display: flex` beats the [hidden] attribute's UA
+    // `display: none`, so opening a poster event right after a plain one
+    // left the previous plain layout visible above the new poster instead
+    // of actually hiding it.
+    &[hidden] {
+        display: none;
+    }
+}
+
+// Holds an event's own HTML poster (see Admin\AssistantController's HTML
+// mode) when set — shown instead of .p-aktivity__event-modal-body. The
+// poster brings its own inline background/padding/max-width, so this is
+// just breathing room within the frame, not a styled container itself.
+.p-aktivity__event-modal-poster {
+    padding: 1.4rem;
+}
+
+.p-aktivity__event-modal-poster-frame {
+    display: block;
+    width: 100%;
+    // Overwritten in JS once the iframe loads and reports its actual
+    // content height — this is just a sane fallback while it loads.
+    height: 32rem;
+    border: none;
+    // Backs up the JS-set `scrolling="no"` attribute — together they stop
+    // the iframe showing its own scrollbars over a 1-2px rounding gap
+    // between its measured content height and what actually got applied.
+    overflow: hidden;
+}
+
+.p-aktivity__event-modal-category {
+    font-size: v.$font-size-sm;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, v.$color-secondary 72%, black);
+}
+
+.p-aktivity__event-modal-title {
+    margin: 0;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-2xl;
+    font-weight: 700;
+    color: v.$color-primary;
+}
+
+.p-aktivity__event-modal-meta {
+    margin: 0;
+    color: v.$color-primary;
+    font-size: v.$font-size-md;
+    font-weight: 600;
+}
+
+.p-aktivity__event-modal-description {
+    margin: 0;
+    color: v.$color-text-muted;
+    font-size: v.$font-size-lg;
+    line-height: 1.55;
+    white-space: pre-line;
+}
+
+.p-aktivity__event-modal-close {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    color: v.$color-text-muted;
+    font-size: v.$font-size-2xl;
+    line-height: 1;
+
+    &:hover,
+    &:focus-visible {
+        color: v.$color-primary;
     }
 }
 

@@ -22,6 +22,10 @@
  * @var string|null $imageUrl Optional: the public URL of an already-uploaded image for this record (e.g. News::image).
  *   When set, Admin\AssistantController::chat() can offer to use it as a full photo background (with a dark overlay) for
  *   an HTML-mode poster instead of the plain white/light-gray card.
+ * @var bool|null $paletteMode Optional: enables a "Suggest a palette" mode button (see Admin\Colors\index.php)
+ *   instead of the usual field-drafting ones — has no single target field, since a reply here fills every color
+ *   input on the page at once and immediately submits the form (see webroot/js/admin-helper-widget.js applyPalette),
+ *   rather than waiting for a "Use this" click.
  *
  * Floating chat bubble for the AI writing assistant — see
  * Admin\AssistantController::chat() and webroot/js/admin-assistant-chat.js for the
@@ -47,6 +51,7 @@ $htmlTargetField ??= null;
 $htmlFieldLabel ??= __('HTML poster');
 $descriptionField ??= $targetField;
 $imageUrl ??= null;
+$paletteMode ??= false;
 
 $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !== null;
 ?>
@@ -73,39 +78,55 @@ $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !==
             </span>
             <span class="admin-ai-chat__header-text">
                 <strong><?= __('Rybárik') ?></strong>
-                <span><?= $hasFieldMode
-                    ? __('Ask me to draft or rewrite the text on this page — pick a field above and I\'ll write a ready-to-use suggestion for it.')
-                    : __('Ask me where to find something or how to do it in this admin panel, and I\'ll point you to the right place.') ?></span>
+                <span><?php
+                    if ($hasFieldMode) {
+                        echo __('Ask me to draft or rewrite the text on this page — pick a field above and I\'ll write a ready-to-use suggestion for it.');
+                    } elseif ($paletteMode) {
+                        echo __('Ask me to suggest a color palette (a mood, a season, "make it warmer"...) and I\'ll fill it in and save it right away.');
+                    } else {
+                        echo __('Ask me where to find something or how to do it in this admin panel, and I\'ll point you to the right place.');
+                    }
+                ?></span>
             </span>
-            <button type="button" class="admin-ai-chat__close" aria-label="<?= __('Close') ?>">&times;</button>
+            <button type="button" class="admin-ai-chat__close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
         </div>
 
-        <?php if ($hasFieldMode): ?>
+        <?php if ($hasFieldMode || $paletteMode): ?>
             <div class="admin-ai-chat__mode-row">
-                <button
-                    type="button"
-                    class="admin-ai-chat__mode"
-                    data-mode-target="<?= h($titleField) ?>"
-                    data-mode-field-label="<?= h(__('title')) ?>"
-                    data-mode-kind="text"
-                ><?= __('Title') ?></button>
-                <?php if ($targetField !== $titleField): ?>
+                <?php if ($hasFieldMode): ?>
                     <button
                         type="button"
                         class="admin-ai-chat__mode"
-                        data-mode-target="<?= h($targetField) ?>"
-                        data-mode-field-label="<?= h($fieldLabel) ?>"
+                        data-mode-target="<?= h($titleField) ?>"
+                        data-mode-field-label="<?= h(__('title')) ?>"
                         data-mode-kind="text"
-                    ><?= __('Description') ?></button>
+                    ><?= __('Title') ?></button>
+                    <?php if ($targetField !== $titleField): ?>
+                        <button
+                            type="button"
+                            class="admin-ai-chat__mode"
+                            data-mode-target="<?= h($targetField) ?>"
+                            data-mode-field-label="<?= h($fieldLabel) ?>"
+                            data-mode-kind="text"
+                        ><?= __('Description') ?></button>
+                    <?php endif; ?>
+                    <?php if ($htmlTargetField !== null): ?>
+                        <button
+                            type="button"
+                            class="admin-ai-chat__mode"
+                            data-mode-target="<?= h($htmlTargetField) ?>"
+                            data-mode-field-label="<?= h($htmlFieldLabel) ?>"
+                            data-mode-kind="html"
+                        ><?= __('HTML poster') ?></button>
+                    <?php endif; ?>
                 <?php endif; ?>
-                <?php if ($htmlTargetField !== null): ?>
+                <?php if ($paletteMode): ?>
                     <button
                         type="button"
                         class="admin-ai-chat__mode"
-                        data-mode-target="<?= h($htmlTargetField) ?>"
-                        data-mode-field-label="<?= h($htmlFieldLabel) ?>"
-                        data-mode-kind="html"
-                    ><?= __('HTML poster') ?></button>
+                        data-mode-field-label="<?= h(__('palette')) ?>"
+                        data-mode-kind="palette"
+                    ><?= __('Suggest a palette') ?></button>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -116,9 +137,15 @@ $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !==
             <textarea
                 class="admin-ai-chat__input"
                 rows="2"
-                placeholder="<?= $hasFieldMode
-                    ? h(__('Ask the assistant to draft or edit this text…'))
-                    : h(__('Ask where to find or how to do something…')) ?>"
+                placeholder="<?php
+                    if ($hasFieldMode) {
+                        echo h(__('Ask the assistant to draft or edit this text…'));
+                    } elseif ($paletteMode) {
+                        echo h(__('Describe the palette you want…'));
+                    } else {
+                        echo h(__('Ask where to find or how to do something…'));
+                    }
+                ?>"
             ></textarea>
             <button type="submit" class="admin-ai-chat__send"><?= __('Send') ?></button>
         </form>

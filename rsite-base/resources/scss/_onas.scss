@@ -2,7 +2,7 @@
 
 .p-onas {
     width: 100%;
-    background: v.$color-white;
+    background: v.$color-bg;
 }
 
 .p-onas__layout {
@@ -20,7 +20,7 @@
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-4xl;
-    color: v.$color-navy;
+    color: v.$color-primary;
 
     &::after {
         content: '';
@@ -28,7 +28,7 @@
         width: 4rem;
         height: 0.4rem;
         margin-top: 0.8rem;
-        background: v.$color-yellow;
+        background: v.$color-secondary;
     }
 }
 
@@ -36,7 +36,7 @@
     margin: 0;
     font-size: v.$font-size-lg;
     line-height: 1.7;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
 }
 
 .p-onas__image {
@@ -45,7 +45,7 @@
     justify-self: center;
     height: 100%;
     border-radius: 0.8rem;
-    background-color: v.$color-navy;
+    background-color: v.$color-primary;
     background-size: cover;
     background-position: center;
     margin-left: auto;

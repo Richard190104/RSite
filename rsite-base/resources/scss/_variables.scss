@@ -4,33 +4,55 @@ $color-cakephp-gray: #404041;
 $color-cakephp-blue: #2f85ae;
 $color-cakephp-lightblue: #34bdd7;
 
-// Additional colors
-$color-lightgray: #454e56;
-$color-light-lightgray: #606c7625;
-$color-white: #fff;
-$color-navy: #143a6b;
-$color-yellow: #f9d71c;
+$color-primary-default: #001a3b;
+$color-secondary-default: #ec2828;
+$color-bg-default: #fff;
+$color-bg-alt-default: #f5f7fa;
+$color-text-muted-default: #454e56;
+$color-heading-default: #363637;
+$color-link-default: #2f85ae;
+$color-link-hover-default: #2a6496;
 
-$color-main-bg: #f5f7fa;
-$color-links: $color-cakephp-blue;
-$color-links-active: #2a6496;
-$color-headings: #363637;
+$color-success-bg-default: #e3fcec;
+$color-success-text-default: #1f9d55;
+$color-success-border-default: #51d88a;
 
-$color-message-success-bg: #e3fcec;
-$color-message-success-text: #1f9d55;
-$color-message-success-border: #51d88a;
+$color-warning-bg-default: #fffabc;
+$color-warning-text-default: #8d7b00;
+$color-warning-border-default: #d3b800;
 
-$color-message-warning-bg: #fffabc;
-$color-message-warning-text: #8d7b00;
-$color-message-warning-border: #d3b800;
+$color-error-bg-default: #fcebea;
+$color-error-text-default: #cc1f1a;
+$color-error-border-default: #ef5753;
 
-$color-message-error-bg: #fcebea;
-$color-message-error-text: #cc1f1a;
-$color-message-error-border: #ef5753;
+$color-info-bg-default: #eff8ff;
+$color-info-text-default: #2779bd;
+$color-info-border-default: #6cb2eb;
 
-$color-message-info-bg: #eff8ff;
-$color-message-info-text: #2779bd;
-$color-message-info-border: #6cb2eb;
+$color-primary: var(--color-primary);
+$color-secondary: var(--color-secondary);
+$color-bg: var(--color-bg);
+$color-bg-alt: var(--color-bg-alt);
+$color-text-muted: var(--color-text-muted);
+$color-heading: var(--color-heading);
+$color-link: var(--color-link);
+$color-link-hover: var(--color-link-hover);
+
+$color-success-bg: var(--color-success-bg);
+$color-success-text: var(--color-success-text);
+$color-success-border: var(--color-success-border);
+
+$color-warning-bg: var(--color-warning-bg);
+$color-warning-text: var(--color-warning-text);
+$color-warning-border: var(--color-warning-border);
+
+$color-error-bg: var(--color-error-bg);
+$color-error-text: var(--color-error-text);
+$color-error-border: var(--color-error-border);
+
+$color-info-bg: var(--color-info-bg);
+$color-info-text: var(--color-info-text);
+$color-info-border: var(--color-info-border);
 
 $font-heading: "Raleway", sans-serif;
 $font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;

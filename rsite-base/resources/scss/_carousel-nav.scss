@@ -19,7 +19,7 @@
     border: none;
     border-radius: 50%;
     background: none;
-    color: v.$color-navy;
+    color: v.$color-primary;
     font-size: v.$font-size-xl;
     cursor: pointer;
 
@@ -27,7 +27,7 @@
     &:focus-visible,
     &:focus {
         background: none;
-        color: v.$color-links-active;
+        color: v.$color-link-hover;
     }
 
     &.swiper-button-disabled {
@@ -39,7 +39,7 @@
         &:focus-visible,
         &:focus {
             background: none;
-            color: v.$color-navy;
+            color: v.$color-primary;
         }
     }
 }

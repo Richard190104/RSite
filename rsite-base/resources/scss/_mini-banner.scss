@@ -28,8 +28,8 @@
         background: linear-gradient(
             to bottom,
             transparent 0%,
-            v.$color-light-lightgray 35%,
-            v.$color-light-lightgray 65%,
+            color-mix(in srgb, v.$color-text-muted 15%, transparent) 35%,
+            color-mix(in srgb, v.$color-text-muted 15%, transparent) 65%,
             transparent 100%
         );
     }
@@ -46,7 +46,7 @@
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-xl;
-    color: v.$color-navy;
+    color: v.$color-primary;
 }
 
 .mini-banner__subtitle {
@@ -54,7 +54,7 @@
     line-height: 1.4;
     justify-self: center;
     text-align: center;
-    color: v.$color-lightgray;
+    color: v.$color-text-muted;
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
@@ -74,8 +74,8 @@
             background: linear-gradient(
                 to right,
                 transparent 0%,
-                v.$color-light-lightgray 35%,
-                v.$color-light-lightgray 65%,
+                color-mix(in srgb, v.$color-text-muted 15%, transparent) 35%,
+                color-mix(in srgb, v.$color-text-muted 15%, transparent) 65%,
                 transparent 100%
             );
         }

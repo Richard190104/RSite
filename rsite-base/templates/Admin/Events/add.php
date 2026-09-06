@@ -9,6 +9,8 @@ $this->set('aiChatFields', [
     'targetField' => 'description',
     'titleField' => 'title',
     'fieldLabel' => 'short event description',
+    'htmlTargetField' => 'content',
+    'htmlFieldLabel' => 'HTML poster for the event',
 ]);
 ?>
 <div class="content form-card">
@@ -26,9 +28,24 @@ $this->set('aiChatFields', [
                 'label' => __('Category'),
             ]) ?>
             <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Image (optional)'), 'container' => ['class' => 'form-grid__full']]) ?>
+
+            <div class="form-grid__full">
+                <?= $this->Form->control('content', [
+                    'type' => 'textarea',
+                    'label' => __('Poster (HTML)'),
+                    'id' => 'content',
+                ]) ?>
+                <button
+                    type="button"
+                    class="button admin-html-preview-toggle"
+                    data-html-preview-toggle-for="content"
+                    data-html-preview-title="<?= h(__('Poster preview')) ?>"
+                ><?= __('Show preview') ?></button>
+            </div>
         </div>
         <div class="form-card__actions">
             <?= $this->Form->button(__('Save')) ?>
         </div>
     <?= $this->Form->end() ?>
 </div>
+<?= $this->Html->script('admin-html-preview') ?>
