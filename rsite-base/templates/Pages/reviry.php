@@ -8,13 +8,6 @@ $this->assign('title', __($page->title));
 ?>
 <section class="p-reviry">
 
-    <div class="p-reviry__map-section">
-        <div class="p-reviry__map-section-inner">
-            <h1 class="p-reviry__map-heading"><?= __('Fishing grounds map') ?></h1>
-            <?= $this->element('reviryMap', ['fishingGrounds' => $fishingGrounds]) ?>
-        </div>
-    </div>
-
     <h2 class="p-reviry__map-heading"><?= __('Our fishing grounds') ?></h2>
 
     <?php if (!$fishingGrounds): ?>
@@ -58,6 +51,22 @@ $this->assign('title', __($page->title));
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+    <div class="p-reviry__map-section">
+        <div class="p-reviry__map-section-inner">
+            <h1 class="p-reviry__map-heading"><?= __('Fishing grounds map') ?></h1>
+            <?php if ($this->reviryMapSubtitle() !== ''): ?>
+                <p class="p-reviry__map-lead">
+                    <svg class="p-reviry__map-lead-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/>
+                        <circle cx="12" cy="10" r="2.5"/>
+                    </svg>
+                    <span><?= h($this->reviryMapSubtitle()) ?></span>
+                </p>
+            <?php endif; ?>
+            <?= $this->element('reviryMap', ['fishingGrounds' => $fishingGrounds]) ?>
+        </div>
+    </div>
 
 </section>
 
