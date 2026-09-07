@@ -24,12 +24,17 @@ $activityIcons = [
             <?php if ($upcomingEvents): ?>
                 <div class="p-aktivity__upcoming">
                     <?php foreach ($upcomingEvents as $event): ?>
+                        <?php
+                            $eventImagePath = $event->image
+                                ? '/img/events/' . $event->image
+                                : $this->randomPlaceholderImage();
+                        ?>
                         <article
                             class="p-aktivity__event-card"
                             data-aktivity-event
                             data-title="<?= h($event->title) ?>"
                             data-description="<?= h($event->description) ?>"
-                            data-image="<?= $event->image ? h($this->Url->build('/img/events/' . $event->image)) : '' ?>"
+                            data-image="<?= h($this->Url->build($eventImagePath)) ?>"
                             data-date="<?= $event->date ? h($event->date->i18nFormat('d. MMMM yyyy')) : '' ?>"
                             data-location="<?= h($event->location ?? '') ?>"
                             data-time="<?= h($event->time ?? '') ?>"
@@ -37,12 +42,10 @@ $activityIcons = [
                             data-content="<?= h($event->content ?? '') ?>"
                         >
                             <div class="p-aktivity__event-media">
-                                <?php if ($event->image): ?>
-                                    <?= $this->Html->image('/img/events/' . $event->image, [
-                                        'alt' => $event->title,
-                                        'class' => 'p-aktivity__event-image',
-                                    ]) ?>
-                                <?php endif; ?>
+                                <?= $this->Html->image($eventImagePath, [
+                                    'alt' => $event->title,
+                                    'class' => 'p-aktivity__event-image',
+                                ]) ?>
                                 <?php if ($event->date): ?>
                                     <span class="p-aktivity__event-date">
                                         <span class="p-aktivity__event-day"><?= h($event->date->i18nFormat('dd')) ?></span>

@@ -94,6 +94,8 @@ class GalleryController extends AppController
 
         $firstPhotoByCategory = $this->firstPhotoByCategory($allIds);
 
+        $placeholderImages = $this->fetchTable('PlaceholderImages');
+
         foreach ($categories as $category) {
             if ($category->image) {
                 $category->thumbnail_url = '/img/categories/' . $category->image;
@@ -105,11 +107,22 @@ class GalleryController extends AppController
                 continue;
             }
 
+            $matchedChildPhoto = false;
             foreach ($category->child_categories ?? [] as $child) {
                 if (isset($firstPhotoByCategory[$child->id])) {
                     $category->thumbnail_url = $firstPhotoByCategory[$child->id];
+                    $matchedChildPhoto = true;
                     break;
                 }
+            }
+
+            // A category with no admin image and no photos of its own or
+            // its children's (a brand-new category, most often) — a random
+            // stock nature photo instead of an empty card image, same
+            // PlaceholderImagesTable::random() fallback News/Events/
+            // FishingGrounds use.
+            if (!$matchedChildPhoto) {
+                $category->thumbnail_url = '/img/placeholders/' . $placeholderImages->random();
             }
         }
     }

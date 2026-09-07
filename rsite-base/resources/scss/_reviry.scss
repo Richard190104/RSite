@@ -1,70 +1,8 @@
 @use 'variables' as v;
 
-.p-reviry {
-    max-width: v.$content-width;
-    margin: 4rem auto 0;
-}
-
 .p-reviry__empty {
     color: v.$color-text-muted;
     font-size: v.$font-size-lg;
-}
-
-// Breaks out of .p-reviry's centered max-width to span the full viewport
-// width (so its alternate background reaches both edges), then
-// .p-reviry__map-section-inner re-applies that same max-width/centering to
-// the actual content so it still lines up with the rest of the page.
-.p-reviry__map-section {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: 4rem 0;
-    background: v.$color-bg-alt;
-}
-
-.p-reviry__map-section-inner {
-    max-width: v.$content-width;
-    margin: 0 auto;
-}
-
-.p-reviry__map-heading {
-    margin-top: 4rem;
-    margin: 0 0 1.6rem;
-    font-family: v.$font-heading;
-    font-weight: 700;
-    font-size: v.$font-size-4xl;
-    color: v.$color-primary;
-
-    &::after {
-        content: '';
-        display: block;
-        width: 4rem;
-        height: 0.4rem;
-        margin-top: 0.8rem;
-        background: v.$color-secondary;
-    }
-}
-
-.p-reviry__map-lead {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
-    max-width: 60rem;
-    margin: 0 0 2.4rem;
-    padding-left: 1.6rem;
-    font-family: v.$font-heading;
-    font-size: v.$font-size-xl;
-    font-weight: 600;
-    line-height: 1.5;
-    color: v.$color-primary;
-}
-
-.p-reviry__map-lead-icon {
-    flex-shrink: 0;
-    width: 2.2rem;
-    height: 2.2rem;
-    margin-top: 0.2rem;
-    color: v.$color-secondary;
 }
 
 // A stylized (non-geographic) illustration — a warm paper backdrop with
@@ -74,6 +12,7 @@
 .p-reviry-map {
     margin: 0;
     color: v.$color-primary;
+    text-align: left;
 }
 
 .p-reviry-map__frame {
@@ -254,48 +193,102 @@
     text-align: center;
 }
 
+.p-reviry__list-section {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 4rem 0rem;
+}
+
+.p-reviry__list-heading {
+    margin: 0 0 2rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-5xl;
+    color: v.$color-primary;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-secondary;
+    }
+}
+
+// Same card-grid pattern as the homepage's "Quick access" tiles (see
+// _quick-access.scss) — icon/photo, title, and an arrow pinned to the
+// bottom — so this page reads as consistent with the rest of the site
+// rather than yet another bespoke list layout. A plain <button>, not a
+// link, since a click opens the shared detail modal (see reviry-modal.js)
+// instead of navigating.
 .p-reviry__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
-    gap: 2.4rem;
-    margin-bottom: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap: 1.6rem;
 }
 
 .p-reviry__card {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    width: 100%;
     height: auto;
+    padding: 0 0 2rem;
     background: v.$color-bg;
+    border: none;
     border-radius: 0.8rem;
     overflow: hidden;
+    text-align: left;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: normal;
+    white-space: normal;
+    color: v.$color-primary;
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144),
         0 4px 12px rgba(60, 66, 87, 0.089);
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 
+    // Milligram's button:hover/:focus reset (background-color: #606c76)
+    // has the same selector weight as this class and loads first, so it
+    // otherwise wins the cascade — explicit override, not a real style
+    // change, keeps the card visually static on hover/focus.
     &:hover,
-    &:focus-within {
-        box-shadow: 0 2px 4px rgba(60, 66, 87, 0.1),
-            0 10px 20px rgba(60, 66, 87, 0.1);
+    &:focus {
+        background: v.$color-bg;
+        border-color: transparent;
+        color: v.$color-primary;
     }
 }
 
-.p-reviry__image {
+.p-reviry__card-image-frame {
     position: relative;
-    height: 18rem;
+    width: 100%;
+    height: 15rem;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+}
+
+.p-reviry__card-image {
+    width: 100%;
+    height: 100%;
     background-color: v.$color-primary;
     background-size: cover;
     background-position: center;
+    transition: transform 0.3s ease-out;
 
-    &--placeholder {
-        background-image: linear-gradient(160deg, #4a5b70 0%, #1f2937 100%);
+    .p-reviry__card:hover &,
+    .p-reviry__card:focus &,
+    .p-reviry__card:focus-visible & {
+        transform: scale(1.08);
     }
 }
 
-.p-reviry__badge {
+.p-reviry__card-badge {
     position: absolute;
-    top: 1.2rem;
-    left: 1.2rem;
+    top: 1rem;
+    left: 1rem;
     padding: 0.4rem 1rem;
     border-radius: 0.4rem;
     background: v.$color-secondary;
@@ -304,54 +297,78 @@
     font-size: v.$font-size-sm;
 }
 
-.p-reviry__body {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-    padding: 1.8rem 2rem 2rem;
-}
-
-.p-reviry__type {
+.p-reviry__card-type {
+    width: calc(100% - 4rem);
+    margin: 0 2rem;
     font-weight: 700;
     font-size: v.$font-size-sm;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     color: color-mix(in srgb, v.$color-secondary 80%, black);
 }
 
-.p-reviry__title {
+.p-reviry__card-title {
+    width: calc(100% - 4rem);
+    margin: 0 2rem;
     font-family: v.$font-heading;
     font-weight: 700;
     font-size: v.$font-size-xl;
     line-height: 1.3;
-    color: v.$color-primary;
-    margin: 0;
 }
 
-.p-reviry__description {
+.p-reviry__card-location {
+    width: calc(100% - 4rem);
+    margin: 0 2rem;
     color: v.$color-text-muted;
-    font-size: v.$font-size-lg;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.5;
-    margin: 0;
+    font-size: v.$font-size-base;
 }
 
-.p-reviry__divider {
-    width: 100%;
-    height: 1px;
-    margin: 0.4rem 0 0;
-    border: none;
-    background: v.$color-bg-alt;
+.p-reviry__card-arrow {
+    width: 1.8rem;
+    height: 1.8rem;
+    // Pins the arrow to the bottom of the card so cards with and without a
+    // location still line up in a row — same trick as quick-access.
+    margin: auto 2rem 0;
 }
 
-.p-reviry__link {
-    margin-top: 0.2rem;
-    font-weight: 600;
-    font-size: v.$font-size-md;
+// The map is a secondary element down here, not the page's hero — its own
+// (smaller) heading/lead, no full-bleed background, sized like any other
+// in-flow section so it doesn't compete with the card grid above it.
+.p-reviry__map-section {
+    max-width: v.$content-width;
+    margin: 4rem auto;
+}
+
+.p-reviry__map-heading {
+    margin: 0 0 1.2rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-5xl;
     color: v.$color-primary;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-secondary;
+    }
+}
+
+.p-reviry__map-lead {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0 0 1.6rem;
+    font-size: v.$font-size-lg;
+    color: v.$color-text-muted;
+}
+
+.p-reviry__map-lead-icon {
+    flex-shrink: 0;
+    width: 1.8rem;
+    height: 1.8rem;
+    color: v.$color-secondary;
 }
 
 .p-reviry__modal {
@@ -474,11 +491,7 @@
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
-    .p-reviry {
-        padding: 2rem 0;
-    }
-
-    .p-reviry__grid {
-        grid-template-columns: 1fr;
+    .p-reviry__list-section {
+        padding: 3rem 1.6rem;
     }
 }

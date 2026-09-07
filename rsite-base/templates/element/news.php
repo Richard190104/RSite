@@ -21,10 +21,8 @@ if (!$news) {
             <?php foreach ($news as $article): ?>
                 <article class="quick-news__card swiper-slide">
                     <div
-                        class="quick-news__image<?= $article->image ? '' : ' quick-news__image--placeholder' ?>"
-                        <?php if ($article->image): ?>
-                            style="background-image: url('<?= h($this->Url->build('/img/news/' . $article->image)) ?>')"
-                        <?php endif; ?>
+                        class="quick-news__image"
+                        style="background-image: url('<?= h($this->Url->build($article->image ? '/img/news/' . $article->image : $this->randomPlaceholderImage())) ?>')"
                     >
                         <span class="quick-news__date"><?= h($article->date->i18nFormat('dd MMM yyyy')) ?></span>
                     </div>

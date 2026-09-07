@@ -112,7 +112,7 @@ foreach ($located as $fishingGround) {
                     data-location="<?= h($ground->location ?? '') ?>"
                     data-type="<?= h($ground->type ?? '') ?>"
                     data-registration-number="<?= h($ground->registration_number ?? '') ?>"
-                    data-image="<?= $ground->image ? h($this->Url->build('/img/fishing-grounds/' . $ground->image)) : '' ?>"
+                    data-image="<?= h($this->Url->build($ground->image ? '/img/fishing-grounds/' . $ground->image : $this->randomPlaceholderImage())) ?>"
                 >
                     <span class="p-reviry-map__pin-dot">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
