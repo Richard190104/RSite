@@ -29,7 +29,7 @@ $cards = $Banners->find()
     <div class="fishing-grounds__layout">
         <?php if ($mainBanner !== null): ?>
             <div class="fishing-grounds__main" style="background-image: url('<?= h($this->Url->build('/img/banners/' . $mainBanner->background)) ?>')">
-                <a class="fishing-grounds__main-cta" href="#"><?= __('View all fishing grounds') ?></a>
+                <a class="fishing-grounds__main-cta" href="<?= $this->Url->build(['action' => 'reviry']) ?>"><?= __('View all fishing grounds') ?></a>
             </div>
         <?php endif; ?>
 
@@ -45,7 +45,7 @@ $cards = $Banners->find()
                                 <p class="fishing-grounds__description"><?= h($subtitle) ?></p>
                             <?php endif; ?>
                             <?php // TODO: point at a real target once each card has one ?>
-                            <a class="fishing-grounds__link" href="#"><?= __('More information') ?> &rarr;</a>
+                            <a class="fishing-grounds__link" href="<?= $this->Url->build(['action' => 'aktivity']) ?>"><?= __('More information') ?> &rarr;</a>
                         </span>
                     </div>
                 <?php endforeach; ?>
