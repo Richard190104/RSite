@@ -67,6 +67,7 @@ return function (RouteBuilder $routes): void {
 
         $builder->connect('/kontakt', ['controller' => 'Pages', 'action' => 'kontakt']);
         $builder->connect('/aktivity', ['controller' => 'Pages', 'action' => 'aktivity']);
+        $builder->connect('/news', ['controller' => 'Pages', 'action' => 'news']);
 
         $builder->connect('/o-nas', ['controller' => 'Pages', 'action' => 'onas']);
 
