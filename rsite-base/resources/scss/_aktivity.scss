@@ -732,24 +732,8 @@
     white-space: pre-line;
 }
 
-.p-aktivity__event-modal-close {
-    position: absolute;
-    top: 0.8rem;
-    right: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    color: v.$color-text-muted;
-    font-size: v.$font-size-2xl;
-    line-height: 1;
-
-    &:hover,
-    &:focus-visible {
-        color: v.$color-primary;
-    }
-}
+// .p-aktivity__event-modal-close's actual appearance comes from the shared
+// .modal-close-btn class (see _base.scss) — nothing to style here.
 
 @media screen and (max-width: v.$breakpoint-sm) {
     .p-aktivity__body {

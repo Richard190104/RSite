@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var category = modal.querySelector('.p-news__modal-category');
     var title = modal.querySelector('.p-news__modal-title');
     var meta = modal.querySelector('.p-news__modal-meta');
+    var metaText = modal.querySelector('.p-news__modal-meta-text');
     var description = modal.querySelector('.p-news__modal-description');
     var body = modal.querySelector('.p-news__modal-body');
     var poster = modal.querySelector('.p-news__modal-poster');
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (card.dataset.date) {
-            meta.textContent = card.dataset.date;
+            metaText.textContent = card.dataset.date;
             meta.hidden = false;
         } else {
             meta.hidden = true;

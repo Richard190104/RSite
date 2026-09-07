@@ -286,19 +286,8 @@
     color: v.$color-bg;
 }
 
-.p-gallery__lightbox-close {
-    position: absolute;
-    top: 0.6rem;
-    right: 0rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.4rem;
-    height: 3.4rem;
-    color: v.$color-bg;
-    font-size: v.$font-size-2xl;
-    line-height: 1;
-}
+// .p-gallery__lightbox-close's actual appearance comes from the shared
+// .modal-close-btn class (see _base.scss) — nothing to style here.
 
 @media screen and (max-width: v.$breakpoint-sm) {
     .p-gallery__body {

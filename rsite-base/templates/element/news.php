@@ -34,7 +34,7 @@ if (!$news) {
                         <?php endif; ?>
                         <h3 class="quick-news__title"><?= h($article->title) ?></h3>
                         <p class="quick-news__description"><?= h($article->description) ?></p>
-                        <span class="quick-news__link"><?= __('Read more') ?> &rarr;</span>
+                        <a class="quick-news__link" href="<?= $this->Url->build(['action' => 'news']) ?>"><?= __('Read more') ?> &rarr;</a>
                     </div>
                 </article>
             <?php endforeach; ?>
@@ -45,7 +45,7 @@ if (!$news) {
         <button type="button" class="carousel-nav__btn quick-news__nav--prev" aria-label="<?= __('Previous') ?>">&larr;</button>
 
         <?php // TODO: point at the news listing page once it exists ?>
-        <a class="quick-news__all" href="#"><?= __('All news') ?> &rarr;</a>
+        <a class="quick-news__all" href="<?= $this->Url->build(['action' => 'news']) ?>"><?= __('All news') ?> &rarr;</a>
 
         <button type="button" class="carousel-nav__btn quick-news__nav--next" aria-label="<?= __('Next') ?>">&rarr;</button>
     </div>

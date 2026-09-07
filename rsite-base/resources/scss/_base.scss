@@ -67,6 +67,50 @@
     }
 }
 
+// Shared close button for fullscreen overlay modals/lightboxes (gallery
+// lightbox, committee member popup, aktivity event popup, news article
+// popup) — a "glass" circle sitting directly on the modal's own image/photo,
+// so it needs to read against arbitrary photo content rather than a fixed
+// background. Not used by small on-page popups like the notification
+// toast, which sit on a plain white card with nothing to blur.
+// `padding: 0` overrides Milligram's default `button` padding (0 3rem) —
+// without it the icon gets pushed outside this button's much smaller
+// fixed width/height entirely, rather than just looking mis-sized.
+.modal-close-btn {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.6rem;
+    height: 3.6rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    background: rgba(20, 22, 26, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.15s ease-out;
+
+    svg {
+        display: block;
+        width: 1.6rem;
+        height: 1.6rem;
+        flex-shrink: 0;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background: rgba(20, 22, 26, 0.55);
+        color: #fff;
+    }
+}
+
 body {
     font-family: v.$font-body;
     font-weight: 400;

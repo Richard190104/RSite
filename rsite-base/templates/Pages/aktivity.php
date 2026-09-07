@@ -155,7 +155,7 @@ $activityIcons = [
 
 <div class="p-aktivity__event-modal" data-aktivity-event-modal>
     <div class="p-aktivity__event-modal-frame">
-        <button type="button" class="p-aktivity__event-modal-close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
+        <?= $this->element('modalCloseBtn', ['extraClass' => 'p-aktivity__event-modal-close']) ?>
         <img class="p-aktivity__event-modal-image" alt="" hidden>
         <div class="p-aktivity__event-modal-body">
             <span class="p-aktivity__event-modal-category" hidden></span>
