@@ -1774,3 +1774,7 @@ msgstr "Navrhnúť paletu"
 #: ./templates/element/Admin/aiChat.php:144
 msgid "Describe the palette you want…"
 msgstr "Opíšte požadovanú paletu…"
+
+#: ./templates/Pages/news.php:31
+msgid "No news articles yet."
+msgstr "Zatiaľ žiadne novinky."

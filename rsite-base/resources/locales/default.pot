@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-06 11:09+0000\n"
+"POT-Creation-Date: 2026-09-07 10:32+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1047,6 +1047,7 @@ msgstr ""
 
 #: ./templates/Gallery/cards.php:116
 #: ./templates/Pages/aktivity.php:158
+#: ./templates/Pages/news.php:81
 #: ./templates/element/Admin/aiChat.php:91
 #: ./templates/element/committee.php:68
 #: ./templates/element/notificationPopup.php:19
@@ -1059,6 +1060,7 @@ msgstr ""
 
 #: ./templates/Pages/aktivity.php:63
 #: ./templates/Pages/aktivity.php:66
+#: ./templates/Pages/news.php:59
 #: ./templates/element/news.php:37
 msgid "Read more"
 msgstr ""
@@ -1189,6 +1191,15 @@ msgstr ""
 msgid "Open in Google Maps"
 msgstr ""
 
+#: ./templates/Pages/news.php:18
+#: ./templates/element/news.php:48
+msgid "All news"
+msgstr ""
+
+#: ./templates/Pages/news.php:31
+msgid "No news articles yet."
+msgstr ""
+
 #: ./templates/Pages/onas.php:14
 msgid "About our organisation"
 msgstr ""
@@ -1299,10 +1310,6 @@ msgstr ""
 
 #: ./templates/element/news.php:17
 msgid "Latest news"
-msgstr ""
-
-#: ./templates/element/news.php:48
-msgid "All news"
 msgstr ""
 
 #: ./templates/layout/error.php:36
