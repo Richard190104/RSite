@@ -113,7 +113,7 @@ $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery catego
                 <div class="p-gallery__lightbox" data-gallery-lightbox-modal>
                     <div class="p-gallery__lightbox-frame">
                         <img class="p-gallery__lightbox-image" alt="">
-                        <button type="button" class="p-gallery__lightbox-close close-btn" aria-label="<?= __('Close') ?>">&times;</button>
+                        <?= $this->element('modalCloseBtn', ['extraClass' => 'p-gallery__lightbox-close']) ?>
                     </div>
                     <p class="p-gallery__lightbox-caption"></p>
                 </div>

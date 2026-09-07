@@ -39,6 +39,11 @@
     font-size: v.$font-size-2xl;
     line-height: 1;
     color: v.$color-text-muted;
+
+    &:hover,
+    &:focus {
+        color: v.$color-link-hover;
+    }
 }
 
 .notification-popup__image {
