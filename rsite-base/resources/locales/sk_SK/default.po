@@ -1863,11 +1863,11 @@ msgstr "Upraviť rybársky revír"
 
 #: ./templates/Pages/reviry.php:11
 msgid "Our fishing grounds"
-msgstr "Naše rybárske revíry"
+msgstr "Naše revíry"
 
 #: ./templates/Pages/reviry.php:14
 msgid "No fishing grounds have been added yet."
-msgstr "Zatiaľ neboli pridané žiadne rybárske revíry."
+msgstr "Zatiaľ neboli pridané žiadne revíry."
 
 #: ./templates/Pages/reviry.php:48
 msgid "Fishing ground detail"
@@ -1880,3 +1880,6 @@ msgstr "Štylizovaná mapa Medzilaborcí zobrazujúca polohu jednotlivých rybá
 #: ./templates/element/reviryMap.php:100
 msgid "No fishing grounds with a map position yet."
 msgstr "Zatiaľ žiadne rybárske revíry s polohou na mape."
+
+msgid "Fishing grounds"
+msgstr "Revíry"
