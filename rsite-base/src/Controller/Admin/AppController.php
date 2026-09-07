@@ -97,6 +97,16 @@ class AppController extends BaseController
                 'description' => __('Events listed on the site.'),
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
+            'FishingGrounds' => [
+                'label' => __('Revíry'),
+                'description' => __(
+                    'The individual fishing grounds/territories (revíry) the organisation manages — each with a'
+                        . ' title, description, photo, free-text location, and map coordinates. Separate from the'
+                        . ' "reviry" static page text (that\'s edited under Pages) — this is the actual list of'
+                        . ' waters.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
             'Galleries' => [
                 'label' => __('Galleries'),
                 'description' => __('Photo galleries shown on the site, grouped by category.'),

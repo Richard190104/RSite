@@ -90,6 +90,7 @@ class ColorsTable extends Table
             'info_bg' => '#eff8ff',
             'info_text' => '#2779bd',
             'info_border' => '#6cb2eb',
+            'reviry_map_bg' => '#f4ecd8',
         ];
     }
 }

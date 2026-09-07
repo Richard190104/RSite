@@ -1,0 +1,470 @@
+@use 'variables' as v;
+
+.p-reviry {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 4rem 0;
+}
+
+.p-reviry__empty {
+    color: v.$color-text-muted;
+    font-size: v.$font-size-lg;
+}
+
+// Breaks out of .p-reviry's centered max-width to span the full viewport
+// width (so its alternate background reaches both edges), then
+// .p-reviry__map-section-inner re-applies that same max-width/centering to
+// the actual content so it still lines up with the rest of the page.
+.p-reviry__map-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: 4rem;
+    padding: 4rem 0;
+    background: v.$color-bg-alt;
+}
+
+.p-reviry__map-section-inner {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.p-reviry__map-heading {
+    margin: 0 0 1.6rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-4xl;
+    color: v.$color-primary;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-secondary;
+    }
+}
+
+.p-reviry__map-lead {
+    margin: 0 0 2rem;
+    font-size: v.$font-size-lg;
+    color: v.$color-text-muted;
+}
+
+// A stylized (non-geographic) illustration — a warm paper backdrop with
+// decorative contour lines/forest texture and pin labels, all drawn from
+// currentColor so it reads correctly in both themes (see
+// templates/element/reviryMap.php for how pin positions are computed).
+.p-reviry-map {
+    margin: 0;
+    color: v.$color-primary;
+}
+
+.p-reviry-map__frame {
+    position: relative;
+}
+
+.p-reviry-map__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1.2rem;
+    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144),
+        0 4px 12px rgba(60, 66, 87, 0.089);
+}
+
+.p-reviry-map__bg {
+    fill: var(--color-reviry-map-bg, #f4ecd8);
+}
+
+.p-reviry-map__forest {
+    fill: #a8c090;
+    opacity: 0.55;
+    stroke: none;
+}
+
+.p-reviry-map__road {
+    fill: none;
+    stroke: #a89a7c;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.p-reviry-map__boundary {
+    fill: none;
+    stroke: #b3543f;
+    stroke-width: 1.5;
+    stroke-dasharray: 7 5;
+    stroke-linecap: round;
+    opacity: 0.75;
+}
+
+.p-reviry-map__river {
+    fill: none;
+    stroke: #6a95bd;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.p-reviry-map__empty-text {
+    fill: v.$color-text-muted;
+    font-size: 16px;
+}
+
+// Settlement name markers (town/village centers) — deliberately quieter
+// than the fishing-ground pins below (no pill background), so they read as
+// map labels rather than competing with the actual data points.
+.p-reviry-map__place-dot {
+    fill: #4a4238;
+}
+
+.p-reviry-map__place-label {
+    fill: #4a4238;
+    font-size: 13px;
+    font-weight: 600;
+    dominant-baseline: middle;
+}
+
+.p-reviry-map__place--primary {
+    .p-reviry-map__place-label {
+        font-size: 15px;
+        font-weight: 700;
+    }
+}
+
+// Overlay of plain HTML pins on top of the SVG basemap (not SVG shapes
+// themselves) — a real backdrop-filter blur (the "frosted glass" look)
+// only reliably renders on an HTML element, not an SVG <rect>, in current
+// browsers. inset:0 + pointer-events:none on the container so empty space
+// between pins still lets clicks/hovers reach the map underneath; each pin
+// re-enables pointer-events on itself.
+.p-reviry-map__pins {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+// Collapsed by default (just the glass circle + pin icon, backdrop-filter
+// applied to this glass pill even when collapsed — there's no separate
+// opaque circle sitting on top of it, see .p-reviry-map__pin-dot below).
+// On hover/focus the pill grows out to the right and the label fades in.
+// left/top (set inline per-pin from position_x/position_y) place the
+// circle's center at the target point; the translate(-50%, -50%) here
+// re-centers the whole button on that point regardless of its (variable,
+// label-length-dependent) expanded width.
+//
+// Animated via max-width, not width: a `width` transition can't animate
+// to/from `auto` (the collapsed<->expanded sizes differ per pin, driven by
+// label length, so an explicit expanded width isn't known in CSS) — the
+// browser just snaps instantly in one direction, which is exactly the
+// "no reverse animation" bug this replaces. max-width has no such
+// restriction: capping it at a value larger than any real label (24rem)
+// gives the content's own width the room to determine the actual size,
+// while still transitioning smoothly both ways.
+.p-reviry-map__pin {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 3.2rem;
+    max-width: 100%;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 6px rgba(20, 22, 26, 0.18);
+    color: v.$color-primary;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+    transition: max-width 0.28s ease-out, padding-right 0.28s ease-out, background-color 0.15s ease-out;
+    overflow: hidden;
+}
+
+.p-reviry-map__pin-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.2rem;
+    height: 3.2rem;
+
+    svg {
+        width: 2.1rem;
+        height: 2.1rem;
+        // The location-pin glyph's own drawn shape (a teardrop) isn't
+        // vertically symmetric within its 24x24 viewBox — most of its
+        // visual weight sits in the upper circle, with an empty point
+        // tapering below it — so centering the <svg> box itself (via the
+        // parent's flex centering) still reads as slightly high. This nudges
+        // it down to where the drawn shape's own center of mass lands.
+        transform: translateY(0.15rem);
+        filter: drop-shadow(0 1px 1px rgba(20, 22, 26, 0.25));
+    }
+}
+
+.p-reviry-map__pin-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: v.$font-size-md;
+    font-weight: 700;
+    opacity: 0;
+    transition: max-width 0.4s ease-out, opacity 0.15s ease-out;
+}
+
+.p-reviry-map__pin:hover,
+.p-reviry-map__pin:focus {
+    max-width: 30rem;
+    padding-right: 1.4rem;
+    background: rgba(255, 255, 255, 0.55);
+    color: v.$color-primary;
+
+    .p-reviry-map__pin-label {
+        max-width: 24rem;
+        opacity: 1;
+        margin-left: 0.8rem;
+        transition-delay: 0.05s;
+    }
+}
+
+.p-reviry-map__caption {
+    margin-top: 1rem;
+    font-size: v.$font-size-sm;
+    color: v.$color-text-muted;
+    text-align: center;
+}
+
+.p-reviry__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    gap: 2.4rem;
+    margin-bottom: 4rem;
+}
+
+.p-reviry__card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    background: v.$color-bg;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144),
+        0 4px 12px rgba(60, 66, 87, 0.089);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+
+    &:hover,
+    &:focus-within {
+        box-shadow: 0 2px 4px rgba(60, 66, 87, 0.1),
+            0 10px 20px rgba(60, 66, 87, 0.1);
+    }
+}
+
+.p-reviry__image {
+    position: relative;
+    height: 18rem;
+    background-color: v.$color-primary;
+    background-size: cover;
+    background-position: center;
+
+    &--placeholder {
+        background-image: linear-gradient(160deg, #4a5b70 0%, #1f2937 100%);
+    }
+}
+
+.p-reviry__badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    background: v.$color-secondary;
+    color: v.$color-primary;
+    font-weight: 700;
+    font-size: v.$font-size-sm;
+}
+
+.p-reviry__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 1.8rem 2rem 2rem;
+}
+
+.p-reviry__type {
+    font-weight: 700;
+    font-size: v.$font-size-sm;
+    letter-spacing: 0.01em;
+    color: color-mix(in srgb, v.$color-secondary 80%, black);
+}
+
+.p-reviry__title {
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-xl;
+    line-height: 1.3;
+    color: v.$color-primary;
+    margin: 0;
+}
+
+.p-reviry__description {
+    color: v.$color-text-muted;
+    font-size: v.$font-size-lg;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.p-reviry__divider {
+    width: 100%;
+    height: 1px;
+    margin: 0.4rem 0 0;
+    border: none;
+    background: v.$color-bg-alt;
+}
+
+.p-reviry__link {
+    margin-top: 0.2rem;
+    font-weight: 600;
+    font-size: v.$font-size-md;
+    color: v.$color-primary;
+}
+
+.p-reviry__modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(20, 22, 26, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    &.is-open {
+        display: flex;
+    }
+}
+
+.p-reviry__modal-frame {
+    position: relative;
+    width: 100%;
+    max-width: 56rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    border-radius: 1.2rem;
+    background: v.$color-bg;
+    box-shadow: 0 24px 60px rgba(20, 22, 26, 0.22), 0 4px 14px rgba(20, 22, 26, 0.1);
+}
+
+.p-reviry__modal-image {
+    display: block;
+    width: 100%;
+    height: 26rem;
+    object-fit: cover;
+    border-radius: 1.2rem 1.2rem 0 0;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+// .p-reviry__modal-close's actual appearance comes from the shared
+// .modal-close-btn class (see _base.scss) — nothing to style here.
+
+.p-reviry__modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 2.8rem 3rem 3.2rem;
+}
+
+.p-reviry__modal-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.p-reviry__modal-type {
+    font-weight: 700;
+    font-size: v.$font-size-sm;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, v.$color-secondary 80%, black);
+}
+
+.p-reviry__modal-registration {
+    padding: 0.5rem 1.4rem;
+    border-radius: 999px;
+    background: v.$color-secondary;
+    color: v.$color-primary;
+    font-size: v.$font-size-sm;
+    font-weight: 700;
+}
+
+.p-reviry__modal-title {
+    margin: 0;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-3xl;
+    font-weight: 700;
+    line-height: 1.25;
+    color: v.$color-primary;
+}
+
+.p-reviry__modal-location {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    color: v.$color-text-muted;
+    font-size: v.$font-size-md;
+    font-weight: 600;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.p-reviry__modal-location-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-shrink: 0;
+    color: v.$color-primary;
+}
+
+.p-reviry__modal-divider {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    border: none;
+    background: v.$color-bg-alt;
+}
+
+.p-reviry__modal-description {
+    margin: 0;
+    color: v.$color-text-muted;
+    font-size: v.$font-size-lg;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-reviry {
+        padding: 2rem 0;
+    }
+
+    .p-reviry__grid {
+        grid-template-columns: 1fr;
+    }
+}
