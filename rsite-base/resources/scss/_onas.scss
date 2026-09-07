@@ -51,6 +51,118 @@
     margin-left: auto;
 }
 
+// "Naše aktivity" timeline — up to 5 admin-picked Events (see
+// Admin\PagesController::editOnas()), always shown oldest-first so it reads
+// left-to-right as a short history rather than a "latest news" list. Full
+// viewport width with its own tinted background, same full-bleed technique
+// used elsewhere (e.g. _reviry.scss's hero sections) to read as a distinct
+// section from the plain-background layout above it.
+.p-onas__timeline-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 4rem 2rem;
+}
+
+.p-onas__timeline-heading {
+    max-width: v.$content-width;
+    margin: 0 auto 3rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-4xl;
+    color: v.$color-primary;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 4rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-secondary;
+    }
+}
+
+.p-onas__timeline {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    max-width: v.$content-width;
+    margin: 0 auto;
+    // The connecting line sits behind the icon circles, spanning the full
+    // row — drawn once here rather than per-item, so it doesn't visually
+    // break at the gaps between items.
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 3rem;
+        left: 3rem;
+        right: 3rem;
+        height: 1px;
+        background: color-mix(in srgb, v.$color-text-muted 40%, transparent);
+    }
+}
+
+// A plain <div> for an activity with no linkable gallery category, or an
+// <a> when its Category has show_in_gallery — see templates/Pages/onas.php.
+// The reset below only matters for the <a> case (a <div> has none of these
+// browser defaults to begin with).
+.p-onas__timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1 1 0;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+
+    &[href] {
+        cursor: pointer;
+
+        &:hover .p-onas__timeline-title,
+        &:focus-visible .p-onas__timeline-title {
+            text-decoration: underline;
+        }
+
+        &:hover .p-onas__timeline-icon,
+        &:focus-visible .p-onas__timeline-icon {
+            border-color: v.$color-primary;
+        }
+    }
+}
+
+.p-onas__timeline-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: v.$color-bg;
+    border: 1px solid color-mix(in srgb, v.$color-text-muted 30%, transparent);
+    color: v.$color-primary;
+
+    svg {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+}
+
+.p-onas__timeline-date {
+    font-weight: 700;
+    font-size: v.$font-size-lg;
+    color: v.$color-primary;
+}
+
+.p-onas__timeline-title {
+    font-size: v.$font-size-md;
+    color: v.$color-text-muted;
+}
+
 @media screen and (max-width: v.$breakpoint-sm) {
     .p-onas__layout {
         grid-template-columns: 1fr;
@@ -59,5 +171,14 @@
     .p-onas__image {
         min-height: 20rem;
         order: -1;
+    }
+
+    .p-onas__timeline {
+        flex-direction: column;
+        align-items: center;
+
+        &::before {
+            display: none;
+        }
     }
 }

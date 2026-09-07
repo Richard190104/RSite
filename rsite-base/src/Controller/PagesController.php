@@ -79,7 +79,25 @@ class PagesController extends AppController
             ->orderBy(['section' => 'ASC', 'name' => 'ASC'])
             ->all();
 
-        $this->set(compact('page', 'mainBanner', 'committeeMembers'));
+        // Up to 5 Events an admin picked in Admin\PagesController::editOnas()
+        // for this page's "Naše aktivity" timeline (templates/Pages/onas.php)
+        // — always shown oldest-first regardless of the order they were
+        // picked in, since the timeline reads left-to-right as a history.
+        // Categories is contained so the template can link a timeline item
+        // to that category's public gallery page when one exists (only
+        // when Category::show_in_gallery — see templates/Pages/onas.php).
+        $featuredActivityIds = array_map('intval', (array)($page->content['featured_activities'] ?? []));
+        $featuredActivities = $featuredActivityIds
+            ? $this->fetchTable('Events')
+                ->find()
+                ->contain(['Categories'])
+                ->where(['Events.id IN' => $featuredActivityIds])
+                ->orderBy(['Events.date' => 'ASC'])
+                ->all()
+                ->toList()
+            : [];
+
+        $this->set(compact('page', 'mainBanner', 'committeeMembers', 'featuredActivities'));
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Model\Entity\Page;
 class PagesController extends AppController
 {
     private const HOME_MAX_QUICK_ACCESS = 6;
+    private const ONAS_MAX_FEATURED_ACTIVITIES = 5;
 
     public function index(): void
     {
@@ -111,15 +112,40 @@ class PagesController extends AppController
      * (see edit()) — the teaser text shown on this page's homepage
      * "quick access" card, if it's ever added there. Losing this field
      * here would silently blank that teaser on save.
+     *
+     * Also picks up to 5 Events shown as the public page's "Naše aktivity"
+     * timeline. Unlike quick_access (a handful of Pages, fine as a plain
+     * checkbox list), Events can number in the hundreds, so the picker
+     * option list is passed to the template as JSON for a type-to-filter
+     * JS widget (see templates/Admin/Pages/edit_onas.php) rather than
+     * rendered as one giant checkbox per row.
      */
     private function editOnas($Pages, Page $page)
     {
         if ($this->request->is(['post', 'put'])) {
             $data = (array)$this->request->getData('content');
             $description = trim((string)($data['description'] ?? ''));
+            $featuredActivities = array_values(array_unique(array_map(
+                'intval',
+                (array)($data['featured_activities'] ?? []),
+            )));
+
+            if (count($featuredActivities) > self::ONAS_MAX_FEATURED_ACTIVITIES) {
+                $this->Flash->error(__(
+                    'Please select at most {0} activities for the timeline.',
+                    self::ONAS_MAX_FEATURED_ACTIVITIES,
+                ));
+
+                $this->set('page', $page);
+                $this->set('events', $this->onasActivityOptions());
+                $this->render('edit_onas');
+
+                return null;
+            }
 
             $content = (array)$page->content;
             $content['about_us_text'] = (string)($data['about_us_text'] ?? '');
+            $content['featured_activities'] = $featuredActivities;
 
             if ($description === '') {
                 unset($content['description']);
@@ -139,8 +165,31 @@ class PagesController extends AppController
         }
 
         $this->set('page', $page);
+        $this->set('events', $this->onasActivityOptions());
         $this->render('edit_onas');
 
         return null;
+    }
+
+    /**
+     * Every Event, newest first, as plain arrays (id/title/date) for the
+     * "Naše aktivity" picker's JS — a single upfront fetch the widget
+     * filters client-side, rather than a checkbox per row (see editOnas()).
+     *
+     * @return array<int, array{id: int, title: string, date: string}>
+     */
+    private function onasActivityOptions(): array
+    {
+        return $this->fetchTable('Events')
+            ->find()
+            ->select(['id', 'title', 'date'])
+            ->orderBy(['date' => 'DESC'])
+            ->all()
+            ->map(fn ($event) => [
+                'id' => $event->id,
+                'title' => $event->title,
+                'date' => $event->date?->i18nFormat('d. MMMM yyyy') ?? '',
+            ])
+            ->toList();
     }
 }
