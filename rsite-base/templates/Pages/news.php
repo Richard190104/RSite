@@ -47,10 +47,11 @@ $this->assign('title', __($page->title));
                     data-category="<?= $article->category ? h(__($article->category->title)) : '' ?>"
                     data-content="<?= h($article->content ?? '') ?>"
                 >
-                    <div
-                        class="p-news__image"
-                        style="background-image: url('<?= h($articleImageUrl) ?>')"
-                    >
+                    <div class="p-news__image-frame">
+                        <div
+                            class="p-news__image"
+                            style="background-image: url('<?= h($articleImageUrl) ?>')"
+                        ></div>
                         <span class="p-news__date"><?= h($article->date->i18nFormat('dd MMM yyyy')) ?></span>
                     </div>
                     <div class="p-news__body">

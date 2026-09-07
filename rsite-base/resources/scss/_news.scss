@@ -59,21 +59,27 @@
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(60, 66, 87, 0.144),
         0 4px 12px rgba(60, 66, 87, 0.089);
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
 
-    &:hover,
-    &:focus-within {
-        box-shadow: 0 2px 4px rgba(60, 66, 87, 0.1),
-            0 10px 20px rgba(60, 66, 87, 0.1);
-    }
+.p-news__image-frame {
+    position: relative;
+    height: 16rem;
+    overflow: hidden;
 }
 
 .p-news__image {
-    position: relative;
-    height: 16rem;
+    position: absolute;
+    inset: 0;
     background-color: v.$color-primary;
     background-size: cover;
     background-position: center;
+    transition: transform 0.3s ease-out;
+
+    .p-news__card:hover &,
+    .p-news__card:focus &,
+    .p-news__card:focus-within & {
+        transform: scale(1.08);
+    }
 }
 
 .p-news__date {

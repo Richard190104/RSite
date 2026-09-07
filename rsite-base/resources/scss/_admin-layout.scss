@@ -340,6 +340,121 @@
         }
     }
 
+    // Type-to-filter picker for O nás's "Naše aktivity" timeline (see
+    // Admin\PagesController::editOnas() and edit_onas.php) — a plain
+    // checkbox list like .admin-multicheckbox works for a handful of pages,
+    // but Events can number in the hundreds, so this filters a client-side
+    // JS array (admin-activity-picker.js) instead of rendering one row per
+    // event server-side.
+    .activity-picker {
+        max-width: 40rem;
+    }
+
+    // The dropdown is positioned relative to this wrapper, not the whole
+    // .activity-picker — that block also contains the selected-items list
+    // below the search field, and positioning against it would push the
+    // dropdown down past however many items are already selected instead
+    // of anchoring it right under the search field itself.
+    .activity-picker__search-wrap {
+        position: relative;
+    }
+
+    .activity-picker__search {
+        margin-bottom: 0;
+    }
+
+    .activity-picker__results {
+        position: absolute;
+        z-index: 5;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 0.4rem 0 0;
+        padding: 0.4rem;
+        list-style: none;
+        max-height: 24rem;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid v.$admin-color-border;
+        border-radius: 0.4rem;
+        box-shadow: 0 4px 12px rgba(20, 22, 26, 0.12);
+    }
+
+    .activity-picker__result {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        font-size: v.$font-size-md;
+        color: v.$admin-color-text;
+
+        &:hover {
+            background: v.$admin-color-border;
+        }
+
+        &--empty {
+            cursor: default;
+            color: v.$color-text-muted;
+
+            &:hover {
+                background: none;
+            }
+        }
+    }
+
+    .activity-picker__result-date,
+    .activity-picker__selected-date {
+        flex-shrink: 0;
+        color: v.$color-text-muted;
+        font-size: v.$font-size-sm;
+    }
+
+    .activity-picker__selected {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .activity-picker__selected-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.7rem 0.8rem;
+        border: 1px solid v.$admin-color-border;
+        border-radius: 0.4rem;
+    }
+
+    .activity-picker__selected-title {
+        flex: 1;
+        font-weight: 600;
+        color: v.$admin-color-text;
+    }
+
+    .activity-picker__remove {
+        flex-shrink: 0;
+        width: 2.4rem;
+        height: 2.4rem;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        color: v.$color-text-muted;
+        font-size: 1.8rem;
+        line-height: 1;
+        cursor: pointer;
+
+        &:hover {
+            background: v.$admin-color-border;
+            color: v.$admin-color-text;
+        }
+    }
+
     @media screen and (max-width: v.$breakpoint-sm) {
         .form-grid {
             grid-template-columns: 1fr;
