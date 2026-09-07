@@ -39,6 +39,7 @@ trait SiteInfoTrait
     private ?string $facebookUrl = null;
     private ?string $instagramUrl = null;
     private ?array $siteColors = null;
+    private ?string $phone = null;
 
     public function organisationName(): string
     {
@@ -97,6 +98,11 @@ trait SiteInfoTrait
     public function instagramUrl(): string
     {
         return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Instagram URL');
+    }
+
+    public function phone(): string
+    {
+        return $this->phone ??= TableRegistry::getTableLocator()->get('Texts')->value('Phone');
     }
 
     /**

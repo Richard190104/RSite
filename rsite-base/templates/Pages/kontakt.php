@@ -8,9 +8,8 @@ $this->assign('title', __($page->title));
 $city = $this->city();
 $address = $this->organisationAddress();
 $email = $this->organisationEmail();
+$phone = $this->phone();
 $ico = $this->organisationIco();
-$facebookUrl = $this->facebookUrl();
-$instagramUrl = $this->instagramUrl();
 $mapQuery = trim($address !== '' ? $address : ($city !== '' ? $city : 'Medzilaborce'));
 $mapEmbedUrl = 'https://www.google.com/maps?q=' . rawurlencode($mapQuery) . '&z=14&output=embed';
 $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($mapQuery);
@@ -33,8 +32,6 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                             <h3 class="p-contact__detail-title"><?= __('Address') ?></h3>
                             <?php if ($address !== ''): ?>
                                 <p class="p-contact__detail-text p-contact__detail-text--multiline"><?= nl2br(h($address)) ?></p>
-                            <?php else: ?>
-                                <p class="p-contact__detail-text p-contact__detail-text--muted"><?= __('Address will appear here once set in admin.') ?></p>
                             <?php endif; ?>
                         </div>
                     </li>
@@ -50,9 +47,20 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                             <h3 class="p-contact__detail-title"><?= __('Email') ?></h3>
                             <?php if ($email !== ''): ?>
                                 <a class="p-contact__detail-link" href="mailto:<?= h($email) ?>"><?= h($email) ?></a>
-                                <a class="p-contact__btn" href="mailto:<?= h($email) ?>"><?= __('Send an email') ?></a>
-                            <?php else: ?>
-                                <p class="p-contact__detail-text p-contact__detail-text--muted"><?= __('Email will appear here once set in admin.') ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </li>
+
+                    <li class="p-contact__detail">
+                        <span class="p-contact__detail-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/>
+                            </svg>
+                        </span>
+                        <div class="p-contact__detail-body">
+                            <h3 class="p-contact__detail-title"><?= __('Phone') ?></h3>
+                            <?php if ($phone !== ''): ?>
+                                <a class="p-contact__detail-link" href="tel:<?= h($phone) ?>"><?= h($phone) ?></a>
                             <?php endif; ?>
                         </div>
                     </li>
@@ -68,36 +76,10 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                             <h3 class="p-contact__detail-title"><?= __('ID No.') ?></h3>
                             <?php if ($ico !== ''): ?>
                                 <p class="p-contact__detail-text"><?= h($ico) ?></p>
-                            <?php else: ?>
-                                <p class="p-contact__detail-text p-contact__detail-text--muted"><?= __('Company ID will appear here once set in admin.') ?></p>
                             <?php endif; ?>
                         </div>
                     </li>
                 </ul>
-
-                <div class="p-contact__social-block">
-                    <h3 class="p-contact__social-heading"><?= __('Social media') ?></h3>
-                    <p class="p-contact__social-lead">
-                        <?= __('Follow our updates, events and catches.') ?>
-                    </p>
-                    <div class="p-contact__socials">
-                        <?php if ($facebookUrl !== ''): ?>
-                            <a class="p-contact__social p-contact__social--facebook" href="<?= h($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">
-                                Facebook
-                            </a>
-                        <?php else: ?>
-                            <span class="p-contact__social p-contact__social--placeholder">Facebook</span>
-                        <?php endif; ?>
-
-                        <?php if ($instagramUrl !== ''): ?>
-                            <a class="p-contact__social p-contact__social--instagram" href="<?= h($instagramUrl) ?>" target="_blank" rel="noopener noreferrer">
-                                Instagram
-                            </a>
-                        <?php else: ?>
-                            <span class="p-contact__social p-contact__social--placeholder">Instagram</span>
-                        <?php endif; ?>
-                    </div>
-                </div>
             </aside>
 
             <div class="p-contact__map-block">
