@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-07 10:32+0000\n"
+"POT-Creation-Date: 2026-09-07 16:31+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -97,33 +97,42 @@ msgid "Events listed on the site."
 msgstr ""
 
 #: ./src/Controller/Admin/AppController.php:101
+#: ./templates/Admin/FishingGrounds/index.php:6
+msgid "Revíry"
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:102
+msgid "The individual fishing grounds/territories (revíry) the organisation manages — each with a title, description, photo, free-text location, and map coordinates. Separate from the \"reviry\" static page text (that's edited under Pages) — this is the actual list of waters."
+msgstr ""
+
+#: ./src/Controller/Admin/AppController.php:111
 #: ./templates/Admin/Galleries/index.php:6
 msgid "Galleries"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:102
+#: ./src/Controller/Admin/AppController.php:112
 msgid "Photo galleries shown on the site, grouped by category."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:106
+#: ./src/Controller/Admin/AppController.php:116
 #: ./templates/Admin/Logos/index.php:6
 msgid "Logos"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:107
+#: ./src/Controller/Admin/AppController.php:117
 msgid "The site's logo images (e.g. the main header logo, footer logo)."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:111
+#: ./src/Controller/Admin/AppController.php:121
 #: ./templates/Admin/Colors/index.php:9
 msgid "Colors"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:112
+#: ./src/Controller/Admin/AppController.php:122
 msgid "The public site's color palette (brand colors, backgrounds/text, flash message colors) — one form saving the whole palette at once, plus a \"Reset to defaults\" that reverts every color at once. Takes effect immediately, no rebuild needed. Does not affect the admin panel's own colors, which are fixed separately."
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:121
+#: ./src/Controller/Admin/AppController.php:131
 #: ./templates/Admin/Notifications/index.php:6
 #: ./templates/element/navbar.php:58
 #: ./templates/element/navbar.php:59
@@ -131,7 +140,7 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: ./src/Controller/Admin/AppController.php:122
+#: ./src/Controller/Admin/AppController.php:132
 msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
 msgstr ""
 
@@ -256,6 +265,24 @@ msgstr ""
 
 #: ./src/Controller/Admin/EventsController.php:126
 msgid "Could not delete the event."
+msgstr ""
+
+#: ./src/Controller/Admin/FishingGroundsController.php:42
+#: ./src/Controller/Admin/FishingGroundsController.php:86
+msgid "Fishing ground saved."
+msgstr ""
+
+#: ./src/Controller/Admin/FishingGroundsController.php:51
+#: ./src/Controller/Admin/FishingGroundsController.php:95
+msgid "Could not save the fishing ground, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/FishingGroundsController.php:115
+msgid "Fishing ground deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/FishingGroundsController.php:117
+msgid "Could not delete the fishing ground."
 msgstr ""
 
 #: ./src/Controller/Admin/GalleriesController.php:53
@@ -410,6 +437,11 @@ msgstr ""
 msgid "Enter a valid hex color, e.g. #143a6b."
 msgstr ""
 
+#: ./src/Model/Table/FishingGroundsTable.php:44
+#: ./src/Model/Table/FishingGroundsTable.php:48
+msgid "Position must be between 0 and 100."
+msgstr ""
+
 #: ./src/Model/Table/NotificationsTable.php:52
 msgid "Must be on or after the start date."
 msgstr ""
@@ -429,6 +461,9 @@ msgstr ""
 #: ./templates/Admin/Events/add.php:19
 #: ./templates/Admin/Events/edit.php:25
 #: ./templates/Admin/Events/index.php:17
+#: ./templates/Admin/FishingGrounds/add.php:11
+#: ./templates/Admin/FishingGrounds/edit.php:16
+#: ./templates/Admin/FishingGrounds/index.php:17
 #: ./templates/Admin/NavbarCategories/add.php:16
 #: ./templates/Admin/NavbarCategories/edit.php:18
 #: ./templates/Admin/NavbarCategories/index.php:18
@@ -454,6 +489,9 @@ msgstr ""
 #: ./templates/Admin/Events/add.php:23
 #: ./templates/Admin/Events/edit.php:29
 #: ./templates/Admin/Events/index.php:19
+#: ./templates/Admin/FishingGrounds/add.php:19
+#: ./templates/Admin/FishingGrounds/edit.php:24
+#: ./templates/Admin/FishingGrounds/index.php:20
 msgid "Location"
 msgstr ""
 
@@ -471,11 +509,13 @@ msgstr ""
 #: ./templates/Admin/Banners/edit.php:27
 #: ./templates/Admin/Categories/add.php:39
 #: ./templates/Admin/Categories/edit.php:42
-#: ./templates/Admin/Colors/index.php:61
+#: ./templates/Admin/Colors/index.php:64
 #: ./templates/Admin/CommitteeMembers/add.php:23
 #: ./templates/Admin/CommitteeMembers/edit.php:32
 #: ./templates/Admin/Events/add.php:47
 #: ./templates/Admin/Events/edit.php:53
+#: ./templates/Admin/FishingGrounds/add.php:43
+#: ./templates/Admin/FishingGrounds/edit.php:48
 #: ./templates/Admin/Galleries/add.php:27
 #: ./templates/Admin/Galleries/edit.php:29
 #: ./templates/Admin/Logos/edit.php:23
@@ -510,6 +550,7 @@ msgstr ""
 #: ./templates/Admin/Categories/index.php:65
 #: ./templates/Admin/CommitteeMembers/index.php:22
 #: ./templates/Admin/Events/index.php:21
+#: ./templates/Admin/FishingGrounds/index.php:21
 #: ./templates/Admin/Galleries/index.php:18
 #: ./templates/Admin/Logos/index.php:15
 #: ./templates/Admin/NavbarCategories/index.php:20
@@ -525,6 +566,7 @@ msgstr ""
 #: ./templates/Admin/Categories/index.php:91
 #: ./templates/Admin/CommitteeMembers/index.php:42
 #: ./templates/Admin/Events/index.php:40
+#: ./templates/Admin/FishingGrounds/index.php:40
 #: ./templates/Admin/NavbarCategories/index.php:45
 #: ./templates/Admin/News/index.php:38
 #: ./templates/Admin/Notifications/index.php:47
@@ -542,6 +584,8 @@ msgstr ""
 #: ./templates/Admin/Categories/edit.php:23
 #: ./templates/Admin/Events/add.php:20
 #: ./templates/Admin/Events/edit.php:26
+#: ./templates/Admin/FishingGrounds/add.php:16
+#: ./templates/Admin/FishingGrounds/edit.php:21
 #: ./templates/Admin/News/add.php:20
 #: ./templates/Admin/News/edit.php:26
 #: ./templates/Admin/Notifications/add.php:17
@@ -572,6 +616,9 @@ msgstr ""
 #: ./templates/Admin/Categories/add.php:34
 #: ./templates/Admin/Categories/edit.php:37
 #: ./templates/Admin/Events/index.php:16
+#: ./templates/Admin/FishingGrounds/add.php:38
+#: ./templates/Admin/FishingGrounds/edit.php:43
+#: ./templates/Admin/FishingGrounds/index.php:16
 #: ./templates/Admin/Galleries/index.php:16
 #: ./templates/Admin/Logos/index.php:14
 #: ./templates/Admin/News/index.php:16
@@ -587,6 +634,7 @@ msgstr ""
 
 #: ./templates/Admin/Categories/edit.php:37
 #: ./templates/Admin/Events/edit.php:36
+#: ./templates/Admin/FishingGrounds/edit.php:43
 #: ./templates/Admin/Galleries/edit.php:15
 #: ./templates/Admin/News/edit.php:49
 #: ./templates/Admin/Notifications/edit.php:23
@@ -706,15 +754,24 @@ msgstr ""
 msgid "Info — border"
 msgstr ""
 
-#: ./templates/Admin/Colors/index.php:73
-msgid "Reset all to defaults"
+#: ./templates/Admin/Colors/index.php:44
+#: ./templates/Pages/reviry.php:57
+msgid "Fishing grounds map"
+msgstr ""
+
+#: ./templates/Admin/Colors/index.php:45
+msgid "Map background"
 msgstr ""
 
 #: ./templates/Admin/Colors/index.php:76
+msgid "Reset all to defaults"
+msgstr ""
+
+#: ./templates/Admin/Colors/index.php:79
 msgid "Reset the whole palette to its original default colors? This cannot be undone."
 msgstr ""
 
-#: ./templates/Admin/Colors/index.php:84
+#: ./templates/Admin/Colors/index.php:87
 msgid "These change the whole public site's look immediately — no rebuild or redeploy needed. The admin panel itself keeps its own separate colors and is not affected."
 msgstr ""
 
@@ -777,11 +834,12 @@ msgid "Role"
 msgstr ""
 
 #: ./templates/Admin/CommitteeMembers/index.php:20
+#: ./templates/Pages/kontakt.php:61
 msgid "Phone"
 msgstr ""
 
 #: ./templates/Admin/CommitteeMembers/index.php:21
-#: ./templates/Pages/kontakt.php:50
+#: ./templates/Pages/kontakt.php:47
 msgid "Email"
 msgstr ""
 
@@ -861,6 +919,47 @@ msgstr ""
 
 #: ./templates/Admin/Events/edit.php:7
 msgid "Edit event"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:6
+#: ./templates/Admin/FishingGrounds/index.php:10
+msgid "Add fishing ground"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:12
+#: ./templates/Admin/FishingGrounds/edit.php:17
+#: ./templates/Admin/FishingGrounds/index.php:18
+msgid "Registration number"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:13
+#: ./templates/Admin/FishingGrounds/edit.php:18
+#: ./templates/Admin/FishingGrounds/index.php:19
+msgid "Type"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:22
+#: ./templates/Admin/FishingGrounds/edit.php:27
+msgid "Map position — X (%)"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:26
+#: ./templates/Admin/FishingGrounds/edit.php:31
+msgid "0 = left edge, 100 = right edge of the fishing grounds map."
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:30
+#: ./templates/Admin/FishingGrounds/edit.php:35
+msgid "Map position — Y (%)"
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/add.php:34
+#: ./templates/Admin/FishingGrounds/edit.php:39
+msgid "0 = top edge, 100 = bottom edge of the fishing grounds map."
+msgstr ""
+
+#: ./templates/Admin/FishingGrounds/edit.php:6
+msgid "Edit fishing ground"
 msgstr ""
 
 #: ./templates/Admin/Galleries/add.php:7
@@ -1045,15 +1144,6 @@ msgstr ""
 msgid "No photos in this category yet."
 msgstr ""
 
-#: ./templates/Gallery/cards.php:116
-#: ./templates/Pages/aktivity.php:158
-#: ./templates/Pages/news.php:81
-#: ./templates/element/Admin/aiChat.php:91
-#: ./templates/element/committee.php:68
-#: ./templates/element/notificationPopup.php:19
-msgid "Close"
-msgstr ""
-
 #: ./templates/Pages/aktivity.php:22
 msgid "Upcoming events"
 msgstr ""
@@ -1142,52 +1232,28 @@ msgstr ""
 msgid "More about the organisation"
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:22
+#: ./templates/Pages/kontakt.php:21
 msgid "Contact details"
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:33
+#: ./templates/Pages/kontakt.php:32
 msgid "Address"
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:37
-msgid "Address will appear here once set in admin."
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:53
-msgid "Send an email"
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:55
-msgid "Email will appear here once set in admin."
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:68
-#: ./templates/element/footer.php:89
+#: ./templates/Pages/kontakt.php:76
+#: ./templates/element/footer.php:90
 msgid "ID No."
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:72
-msgid "Company ID will appear here once set in admin."
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:79
-msgid "Social media"
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:81
-msgid "Follow our updates, events and catches."
-msgstr ""
-
-#: ./templates/Pages/kontakt.php:104
+#: ./templates/Pages/kontakt.php:86
 msgid "Find us"
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:107
+#: ./templates/Pages/kontakt.php:89
 msgid "Location map"
 msgstr ""
 
-#: ./templates/Pages/kontakt.php:119
+#: ./templates/Pages/kontakt.php:101
 msgid "Open in Google Maps"
 msgstr ""
 
@@ -1202,6 +1268,18 @@ msgstr ""
 
 #: ./templates/Pages/onas.php:14
 msgid "About our organisation"
+msgstr ""
+
+#: ./templates/Pages/reviry.php:11
+msgid "Our fishing grounds"
+msgstr ""
+
+#: ./templates/Pages/reviry.php:14
+msgid "No fishing grounds have been added yet."
+msgstr ""
+
+#: ./templates/Pages/reviry.php:48
+msgid "Fishing ground detail"
 msgstr ""
 
 #: ./templates/element/Admin/aiChat.php:51
@@ -1231,6 +1309,12 @@ msgstr ""
 
 #: ./templates/element/Admin/aiChat.php:87
 msgid "Ask me where to find something or how to do it in this admin panel, and I'll point you to the right place."
+msgstr ""
+
+#: ./templates/element/Admin/aiChat.php:91
+#: ./templates/element/modalCloseBtn.php:8
+#: ./templates/element/notificationPopup.php:21
+msgid "Close"
 msgstr ""
 
 #: ./templates/element/Admin/aiChat.php:101
@@ -1295,12 +1379,12 @@ msgstr ""
 msgid "More information"
 msgstr ""
 
-#: ./templates/element/footer.php:58
+#: ./templates/element/footer.php:59
 #: ./templates/element/quickAccess.php:42
 msgid "Quick access"
 msgstr ""
 
-#: ./templates/element/footer.php:72
+#: ./templates/element/footer.php:73
 msgid "Contact"
 msgstr ""
 
@@ -1310,6 +1394,14 @@ msgstr ""
 
 #: ./templates/element/news.php:17
 msgid "Latest news"
+msgstr ""
+
+#: ./templates/element/reviryMap.php:63
+msgid "Stylized map of Medzilaborce showing the position of each fishing ground"
+msgstr ""
+
+#: ./templates/element/reviryMap.php:100
+msgid "No fishing grounds with a map position yet."
 msgstr ""
 
 #: ./templates/layout/error.php:36

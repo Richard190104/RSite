@@ -1778,3 +1778,105 @@ msgstr "Opíšte požadovanú paletu…"
 #: ./templates/Pages/news.php:31
 msgid "No news articles yet."
 msgstr "Zatiaľ žiadne novinky."
+
+#: ./src/Controller/Admin/AppController.php:101
+#: ./templates/Admin/FishingGrounds/index.php:6
+msgid "Revíry"
+msgstr "Revíry"
+
+#: ./src/Controller/Admin/AppController.php:102
+msgid "The individual fishing grounds/territories (revíry) the organisation manages — each with a title, description, photo, free-text location, and map coordinates. Separate from the \"reviry\" static page text (that's edited under Pages) — this is the actual list of waters."
+msgstr "Jednotlivé rybárske revíry, ktoré organizácia spravuje — každý s názvom, popisom, fotografiou, textovým umiestnením a súradnicami na mape. Oddelené od textu statickej stránky \"revíry\" (ktorá sa upravuje v časti Stránky) — toto je skutočný zoznam vôd."
+
+#: ./src/Controller/Admin/FishingGroundsController.php:42
+#: ./src/Controller/Admin/FishingGroundsController.php:86
+msgid "Fishing ground saved."
+msgstr "Rybársky revír bol uložený."
+
+#: ./src/Controller/Admin/FishingGroundsController.php:51
+#: ./src/Controller/Admin/FishingGroundsController.php:95
+msgid "Could not save the fishing ground, check the errors below."
+msgstr "Nepodarilo sa uložiť rybársky revír, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/FishingGroundsController.php:115
+msgid "Fishing ground deleted."
+msgstr "Rybársky revír bol vymazaný."
+
+#: ./src/Controller/Admin/FishingGroundsController.php:117
+msgid "Could not delete the fishing ground."
+msgstr "Nepodarilo sa vymazať rybársky revír."
+
+#: ./src/Model/Table/FishingGroundsTable.php:44
+#: ./src/Model/Table/FishingGroundsTable.php:48
+msgid "Position must be between 0 and 100."
+msgstr "Pozícia musí byť medzi 0 a 100."
+
+#: ./templates/Admin/Colors/index.php:44
+#: ./templates/Pages/reviry.php:57
+msgid "Fishing grounds map"
+msgstr "Mapa rybárskych revírov"
+
+#: ./templates/Admin/Colors/index.php:45
+msgid "Map background"
+msgstr "Pozadie mapy"
+
+#: ./templates/Admin/FishingGrounds/add.php:6
+#: ./templates/Admin/FishingGrounds/index.php:10
+msgid "Add fishing ground"
+msgstr "Pridať rybársky revír"
+
+#: ./templates/Admin/FishingGrounds/add.php:12
+#: ./templates/Admin/FishingGrounds/edit.php:17
+#: ./templates/Admin/FishingGrounds/index.php:18
+msgid "Registration number"
+msgstr "Registračné číslo"
+
+#: ./templates/Admin/FishingGrounds/add.php:13
+#: ./templates/Admin/FishingGrounds/edit.php:18
+#: ./templates/Admin/FishingGrounds/index.php:19
+msgid "Type"
+msgstr "Typ"
+
+#: ./templates/Admin/FishingGrounds/add.php:22
+#: ./templates/Admin/FishingGrounds/edit.php:27
+msgid "Map position — X (%)"
+msgstr "Pozícia na mape — X (%)"
+
+#: ./templates/Admin/FishingGrounds/add.php:26
+#: ./templates/Admin/FishingGrounds/edit.php:31
+msgid "0 = left edge, 100 = right edge of the fishing grounds map."
+msgstr "0 = ľavý okraj, 100 = pravý okraj mapy rybárskych revírov."
+
+#: ./templates/Admin/FishingGrounds/add.php:30
+#: ./templates/Admin/FishingGrounds/edit.php:35
+msgid "Map position — Y (%)"
+msgstr "Pozícia na mape — Y (%)"
+
+#: ./templates/Admin/FishingGrounds/add.php:34
+#: ./templates/Admin/FishingGrounds/edit.php:39
+msgid "0 = top edge, 100 = bottom edge of the fishing grounds map."
+msgstr "0 = horný okraj, 100 = dolný okraj mapy rybárskych revírov."
+
+#: ./templates/Admin/FishingGrounds/edit.php:6
+msgid "Edit fishing ground"
+msgstr "Upraviť rybársky revír"
+
+#: ./templates/Pages/reviry.php:11
+msgid "Our fishing grounds"
+msgstr "Naše rybárske revíry"
+
+#: ./templates/Pages/reviry.php:14
+msgid "No fishing grounds have been added yet."
+msgstr "Zatiaľ neboli pridané žiadne rybárske revíry."
+
+#: ./templates/Pages/reviry.php:48
+msgid "Fishing ground detail"
+msgstr "Detail rybárskeho revíru"
+
+#: ./templates/element/reviryMap.php:63
+msgid "Stylized map of Medzilaborce showing the position of each fishing ground"
+msgstr "Štylizovaná mapa Medzilaborcí zobrazujúca polohu jednotlivých rybárskych revírov"
+
+#: ./templates/element/reviryMap.php:100
+msgid "No fishing grounds with a map position yet."
+msgstr "Zatiaľ žiadne rybárske revíry s polohou na mape."
