@@ -40,6 +40,7 @@ trait SiteInfoTrait
     private ?string $instagramUrl = null;
     private ?array $siteColors = null;
     private ?string $phone = null;
+    private ?string $reviryMapSubtitle = null;
 
     public function organisationName(): string
     {
@@ -103,6 +104,11 @@ trait SiteInfoTrait
     public function phone(): string
     {
         return $this->phone ??= TableRegistry::getTableLocator()->get('Texts')->value('Phone');
+    }
+
+    public function reviryMapSubtitle(): string
+    {
+        return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Texts')->value('Reviry map subtitle');
     }
 
     /**
