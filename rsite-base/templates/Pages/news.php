@@ -32,21 +32,24 @@ $this->assign('title', __($page->title));
     <?php else: ?>
         <div class="p-news__grid">
             <?php foreach ($news as $article): ?>
+                <?php
+                    $articleImageUrl = $this->Url->build($article->image
+                        ? '/img/news/' . $article->image
+                        : $this->randomPlaceholderImage());
+                ?>
                 <article
                     class="p-news__card"
                     data-news-card
                     data-title="<?= h($article->title) ?>"
                     data-description="<?= h($article->description) ?>"
-                    data-image="<?= $article->image ? h($this->Url->build('/img/news/' . $article->image)) : '' ?>"
+                    data-image="<?= h($articleImageUrl) ?>"
                     data-date="<?= h($article->date->i18nFormat('d. MMMM yyyy')) ?>"
                     data-category="<?= $article->category ? h(__($article->category->title)) : '' ?>"
                     data-content="<?= h($article->content ?? '') ?>"
                 >
                     <div
-                        class="p-news__image<?= $article->image ? '' : ' p-news__image--placeholder' ?>"
-                        <?php if ($article->image): ?>
-                            style="background-image: url('<?= h($this->Url->build('/img/news/' . $article->image)) ?>')"
-                        <?php endif; ?>
+                        class="p-news__image"
+                        style="background-image: url('<?= h($articleImageUrl) ?>')"
                     >
                         <span class="p-news__date"><?= h($article->date->i18nFormat('dd MMM yyyy')) ?></span>
                     </div>

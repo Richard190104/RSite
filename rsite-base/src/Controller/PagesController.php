@@ -134,7 +134,16 @@ class PagesController extends AppController
         // (see templates/Pages/aktivity.php) so the calendar's own
         // JS-rendered list items (aktivity-calendar.js) can open the exact
         // same popup (aktivity-event-modal.js) as the upcoming-events cards.
-        $calendarEvents = array_map(static function ($event) {
+        // Not static: needs $this->fetchTable() for the placeholder photo
+        // fallback, one freshly picked per event with no image of its own —
+        // same PlaceholderImagesTable::random() the upcoming-events cards
+        // use (see templates/Pages/aktivity.php).
+        $placeholderImages = $this->fetchTable('PlaceholderImages');
+        $calendarEvents = array_map(function ($event) use ($placeholderImages) {
+            $imagePath = $event->image
+                ? '/img/events/' . $event->image
+                : '/img/placeholders/' . $placeholderImages->random();
+
             return [
                 'id' => $event->id,
                 'title' => $event->title,
@@ -143,7 +152,7 @@ class PagesController extends AppController
                 'displayDate' => $event->date?->i18nFormat('d. MMMM yyyy'),
                 'location' => $event->location,
                 'time' => $event->time,
-                'image' => $event->image ? Router::url('/img/events/' . $event->image) : '',
+                'image' => Router::url($imagePath),
                 'category' => $event->category ? __($event->category->title) : '',
                 'content' => $event->content ?? '',
             ];

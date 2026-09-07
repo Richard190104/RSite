@@ -112,6 +112,21 @@ trait SiteInfoTrait
     }
 
     /**
+     * A random stock nature photo's public URL (webroot/img/placeholders/),
+     * for News/Event/FishingGround cards that have no image of their own —
+     * see PlaceholderImagesTable::random(). Deliberately not memoized like
+     * this trait's other getters: a listing page calls this once per card,
+     * and each one should get its own independent pick rather than the same
+     * photo repeated down the whole page.
+     */
+    public function randomPlaceholderImage(): ?string
+    {
+        $filename = TableRegistry::getTableLocator()->get('PlaceholderImages')->random();
+
+        return $filename === null ? null : '/img/placeholders/' . $filename;
+    }
+
+    /**
      * The site's customizable palette (Admin\ColorsController) as
      * slug => hex, e.g. 'primary' => '#001a3b' — read by
      * templates/element/colorVariables.php to build the :root override the
