@@ -186,6 +186,22 @@ class PagesController extends AppController
         $this->set(compact('page', 'news', 'categories', 'categoryId'));
     }
 
+    public function reviry(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'reviry'])->firstOrFail();
+
+        // ->toList(): the template iterates this twice (the stylized map,
+        // then the card grid) — a bare ResultSet is a single-pass cursor
+        // and would come back empty on the second pass.
+        $fishingGrounds = $this->fetchTable('FishingGrounds')
+            ->find()
+            ->orderBy(['title' => 'ASC'])
+            ->all()
+            ->toList();
+
+        $this->set(compact('page', 'fishingGrounds'));
+    }
+
     /**
      * Displays a view
      *

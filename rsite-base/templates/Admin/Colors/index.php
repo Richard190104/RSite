@@ -41,6 +41,9 @@ $groups = [
         'info_text' => __('Info — text'),
         'info_border' => __('Info — border'),
     ],
+    __('Fishing grounds map') => [
+        'reviry_map_bg' => __('Map background'),
+    ],
 ];
 ?>
 <div class="content form-card">
