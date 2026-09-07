@@ -75,7 +75,7 @@
     width: 4.4rem;
     height: 4.4rem;
     border-radius: 50%;
-    background: rgba(249, 215, 28, 0.18);
+    background: var(--color-secondary);
     color: v.$color-primary;
 
     svg {
@@ -117,7 +117,6 @@
 
 .p-contact__detail-link {
     font-size: v.$font-size-lg;
-    font-weight: 600;
     color: v.$color-primary;
     text-decoration: none;
     word-break: break-word;
