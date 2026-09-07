@@ -152,6 +152,40 @@ class PagesController extends AppController
         $this->set(compact('page', 'upcomingEvents', 'categories', 'calendarEvents'));
     }
 
+    public function news(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'news'])->firstOrFail();
+
+        $News = $this->fetchTable('News');
+        $query = $News->find()->contain(['Categories'])->orderBy(['News.date' => 'DESC']);
+
+        $categoryId = $this->request->getQuery('category');
+        if ($categoryId !== null && $categoryId !== '') {
+            $query->where(['News.category_id' => (int)$categoryId]);
+        }
+
+        $news = $this->paginate($query, ['limit' => 8]);
+
+        $categoryIds = $News->find()
+            ->select(['category_id'])
+            ->where(['category_id IS NOT' => null])
+            ->distinct(['category_id'])
+            ->all()
+            ->extract('category_id')
+            ->toList();
+
+        $categories = $categoryIds
+            ? $this->fetchTable('Categories')
+                ->find()
+                ->where(['id IN' => $categoryIds, 'parent_id IS' => null])
+                ->orderBy(['title' => 'ASC'])
+                ->all()
+                ->toList()
+            : [];
+
+        $this->set(compact('page', 'news', 'categories', 'categoryId'));
+    }
+
     /**
      * Displays a view
      *
