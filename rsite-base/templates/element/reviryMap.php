@@ -95,11 +95,6 @@ foreach ($located as $fishingGround) {
                 </g>
             <?php endforeach; ?>
 
-            <?php if (!$pins): ?>
-                <text x="<?= $canvasWidth / 2 ?>" y="<?= $canvasHeight / 2 ?>" class="p-reviry-map__empty-text" text-anchor="middle">
-                    <?= h(__('No fishing grounds with a map position yet.')) ?>
-                </text>
-            <?php endif; ?>
         </svg>
 
         <?php // HTML overlay, not SVG — a real backdrop-filter blur (the "frosted glass" look) only reliably renders on an HTML element, not an SVG shape. Positioned with left/top percentages so it tracks the SVG's own responsive scaling with no JS/resize listener needed. ?>
