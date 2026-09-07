@@ -8,6 +8,13 @@ $this->assign('title', __($page->title));
 ?>
 <section class="p-reviry">
 
+    <div class="p-reviry__map-section">
+        <div class="p-reviry__map-section-inner">
+            <h1 class="p-reviry__map-heading"><?= __('Fishing grounds map') ?></h1>
+            <?= $this->element('reviryMap', ['fishingGrounds' => $fishingGrounds]) ?>
+        </div>
+    </div>
+
     <h2 class="p-reviry__map-heading"><?= __('Our fishing grounds') ?></h2>
 
     <?php if (!$fishingGrounds): ?>
@@ -52,12 +59,6 @@ $this->assign('title', __($page->title));
         </div>
     <?php endif; ?>
 
-    <div class="p-reviry__map-section">
-        <div class="p-reviry__map-section-inner">
-            <h1 class="p-reviry__map-heading"><?= __('Fishing grounds map') ?></h1>
-            <?= $this->element('reviryMap', ['fishingGrounds' => $fishingGrounds]) ?>
-        </div>
-    </div>
 </section>
 
 <div class="p-reviry__modal" data-reviry-modal>
