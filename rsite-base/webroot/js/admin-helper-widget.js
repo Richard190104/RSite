@@ -68,17 +68,31 @@ document.addEventListener('DOMContentLoaded', function () {
         setOpen(false);
     });
 
-    // The HTML target is a plain textarea holding raw poster markup (see
-    // admin-html-preview.js) rather than a rich-text editor — a poster's
-    // own background/padding/border-radius wouldn't survive being parsed
-    // into a WYSIWYG editor's internal document model, so "Use this" just
-    // writes the string directly and opens the preview modal with it.
-    function findPreviewToggleFor(field) {
-        if (!field) {
-            return null;
-        }
+    // A field target may be a plain textarea, or one TinyMCE has taken over
+    // (see admin-wysiwyg.js — textarea.js-wysiwyg). TinyMCE only syncs its
+    // iframe content back to the textarea's own .value on change/submit, it
+    // never watches for an external .value write, and the textarea itself
+    // sits hidden once TinyMCE has replaced it — so both reading "what's
+    // currently in this field" and writing an AI suggestion into it have to
+    // go through the TinyMCE API when one is active, or they'd silently
+    // desync from what the admin actually sees.
+    function tinymceInstanceFor(field) {
+        return field && window.tinymce ? window.tinymce.get(field.id) : null;
+    }
 
-        return document.querySelector('[data-html-preview-toggle-for="' + field.id + '"]');
+    function getFieldValue(field) {
+        var editor = tinymceInstanceFor(field);
+
+        return editor ? editor.getContent() : field.value;
+    }
+
+    function setFieldValue(field, value) {
+        var editor = tinymceInstanceFor(field);
+        if (editor) {
+            editor.setContent(value);
+        } else {
+            field.value = value;
+        }
     }
 
     // Palette mode has no single target field — a reply's "suggestion" is a
@@ -159,14 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                field.value = suggestion;
-
-                if (targetMode.dataset.modeKind === 'html') {
-                    var previewToggle = findPreviewToggleFor(field);
-                    if (previewToggle && previewToggle.openPreview) {
-                        previewToggle.openPreview();
-                    }
-                }
+                setFieldValue(field, suggestion);
             });
             bubble.appendChild(useButton);
         }
@@ -215,8 +222,8 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({
                 messages: history,
                 title: titleField ? titleField.value : '',
-                existing_text: activeField ? activeField.value : '',
-                description_context: descriptionField ? descriptionField.value : '',
+                existing_text: activeField ? getFieldValue(activeField) : '',
+                description_context: descriptionField ? getFieldValue(descriptionField) : '',
                 image_url: widget.dataset.aiChatImageUrl || '',
                 field_label: activeMode ? (activeMode.dataset.modeFieldLabel || 'description') : '',
                 mode: mode,
