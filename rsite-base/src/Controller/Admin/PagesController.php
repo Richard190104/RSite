@@ -29,6 +29,10 @@ class PagesController extends AppController
             return $this->editOnas($Pages, $page);
         }
 
+        if ($page->slug === 'zarybnenie') {
+            return $this->editZarybnenie($Pages, $page);
+        }
+
         if ($this->request->is(['post', 'put'])) {
             $data = (array)$this->request->getData('content');
             $description = trim((string)($data['description'] ?? ''));
@@ -191,5 +195,57 @@ class PagesController extends AppController
                 'date' => $event->date?->i18nFormat('d. MMMM yyyy') ?? '',
             ])
             ->toList();
+    }
+
+    /**
+     * "Zarybnenie a úlovky" page: the same 'description' field every other
+     * fixed page has (see edit()) — the teaser text shown on this page's
+     * homepage "quick access" card — plus a list of the StockingDocument/
+     * CatchDocument rows (each nothing but a title and a PDF) managed by
+     * their own controllers (Admin\StockingDocumentsController,
+     * Admin\CatchDocumentsController), with links into those controllers'
+     * add/edit/delete actions. Those controllers stay separate (full CRUD,
+     * file uploads) — they're just not their own sidebar entry, since from
+     * an admin's point of view they're "part of" this one page.
+     */
+    private function editZarybnenie($Pages, Page $page)
+    {
+        if ($this->request->is(['post', 'put'])) {
+            $data = (array)$this->request->getData('content');
+            $description = trim((string)($data['description'] ?? ''));
+
+            $content = (array)$page->content;
+
+            if ($description === '') {
+                unset($content['description']);
+            } else {
+                $content['description'] = $description;
+            }
+
+            $page->content = $content;
+
+            if ($Pages->save($page)) {
+                $this->Flash->success(__('Page saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $this->Flash->error(__('Could not save the page.'));
+        }
+
+        $stockingDocuments = $this->fetchTable('StockingDocuments')
+            ->find()
+            ->orderBy(['created' => 'DESC'])
+            ->all();
+
+        $catchDocuments = $this->fetchTable('CatchDocuments')
+            ->find()
+            ->orderBy(['created' => 'DESC'])
+            ->all();
+
+        $this->set(compact('page', 'stockingDocuments', 'catchDocuments'));
+        $this->render('edit_zarybnenie');
+
+        return null;
     }
 }
