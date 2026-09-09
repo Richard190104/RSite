@@ -27,6 +27,8 @@ if ($controller === 'pages' && $action === 'home') {
     $location = 'news';
 } elseif ($controller === 'pages' && $action === 'reviry') {
     $location = 'reviry';
+} elseif ($controller === 'pages' && $action === 'zarybnenie') {
+    $location = 'zarybnenie';
 } elseif ($controller === 'pages' && ($pass[0] ?? null) !== null) {
     $location = (string)$pass[0];
 } else {

@@ -230,6 +230,30 @@ class PagesController extends AppController
     }
 
     /**
+     * Public "Zarybnenie a úlovky" page: fish stocking records
+     * (Admin\StockingsController) and member catch records
+     * (Admin\CatchRecordsController), each newest first.
+     */
+    public function zarybnenie(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'zarybnenie'])->firstOrFail();
+
+        $stockingDocuments = $this->fetchTable('StockingDocuments')
+            ->find()
+            ->orderBy(['created' => 'DESC'])
+            ->all()
+            ->toList();
+
+        $catchDocuments = $this->fetchTable('CatchDocuments')
+            ->find()
+            ->orderBy(['created' => 'DESC'])
+            ->all()
+            ->toList();
+
+        $this->set(compact('page', 'stockingDocuments', 'catchDocuments'));
+    }
+
+    /**
      * Displays a view
      *
      *
