@@ -1,0 +1,18 @@
+@use 'variables' as v;
+
+// TinyMCE's own skin (webroot/js/vendor/tinymce/skins/) supplies the actual
+// editor chrome (toolbar, contenteditable iframe) — this just nudges its
+// outer frame to match the rest of the admin forms' spacing (see
+// _admin-layout.scss's .form-grid/.form-card) instead of leaving TinyMCE's
+// default margin.
+.tox-tinymce {
+    // TinyMCE reads the textarea's own width at init time to size its
+    // iframe; an un-styled <textarea> defaults to ~20 cols wide, and that's
+    // what gets baked in unless this is forced — width:100% on the
+    // .form-grid__full wrapper alone isn't enough since TinyMCE replaces the
+    // textarea with its own absolutely-sized wrapper, not a fluid one.
+    width: 100% !important;
+    margin-bottom: 1.6rem;
+    border-color: v.$admin-color-border !important;
+    border-radius: 0.4rem !important;
+}

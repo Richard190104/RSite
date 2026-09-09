@@ -200,6 +200,11 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0 2rem;
+
+    }
+
+    .c-card__wysiwyg{
+        width: 100%;
     }
 
     .form-grid__full {
