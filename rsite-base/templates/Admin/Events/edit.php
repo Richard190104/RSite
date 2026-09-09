@@ -35,23 +35,18 @@ $this->set('aiChatFields', [
             ]) ?>
             <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)'), 'container' => ['class' => 'form-grid__full']]) ?>
 
-            <div class="form-grid__full">
-                <?= $this->Form->control('content', [
-                    'type' => 'textarea',
-                    'label' => __('Poster (HTML)'),
-                    'id' => 'content',
-                ]) ?>
-                <button
-                    type="button"
-                    class="button admin-html-preview-toggle"
-                    data-html-preview-toggle-for="content"
-                    data-html-preview-title="<?= h(__('Poster preview')) ?>"
-                ><?= __('Show preview') ?></button>
-            </div>
+            <?= $this->Form->control('content', [
+                'type' => 'textarea',
+                'label' => __('Poster (HTML)'),
+                'id' => 'content',
+                'class' => 'js-wysiwyg',
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
         </div>
         <div class="form-card__actions">
             <?= $this->Form->button(__('Save')) ?>
         </div>
     <?= $this->Form->end() ?>
 </div>
-<?= $this->Html->script('admin-html-preview') ?>
+<?= $this->Html->script('vendor/tinymce/tinymce.min') ?>
+<?= $this->Html->script('admin-wysiwyg') ?>

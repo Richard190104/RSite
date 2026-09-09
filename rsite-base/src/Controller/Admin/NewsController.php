@@ -6,7 +6,6 @@ namespace App\Controller\Admin;
 class NewsController extends AppController
 {
     use ImageUploadTrait;
-    use HtmlSanitizeTrait;
 
     public function index(): void
     {
@@ -32,10 +31,6 @@ class NewsController extends AppController
 
             $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
             $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
-
-            if (!empty($data['content'])) {
-                $data['content'] = $this->sanitizeHtml($data['content']);
-            }
 
             $article = $News->patchEntity($article, $data);
 
@@ -76,10 +71,6 @@ class NewsController extends AppController
 
             $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
             $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
-
-            if (!empty($data['content'])) {
-                $data['content'] = $this->sanitizeHtml($data['content']);
-            }
 
             $oldImage = $article->image;
             $article = $News->patchEntity($article, $data);

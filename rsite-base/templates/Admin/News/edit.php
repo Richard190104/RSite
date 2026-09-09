@@ -25,19 +25,13 @@ $this->set('aiChatFields', [
             <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('description', ['type' => 'textarea', 'label' => __('Description'), 'id' => 'description', 'container' => ['class' => 'form-grid__full']]) ?>
 
-            <div class="form-grid__full">
-                <?= $this->Form->control('content', [
-                    'type' => 'textarea',
-                    'label' => __('Poster (HTML)'),
-                    'id' => 'content',
-                ]) ?>
-                <button
-                    type="button"
-                    class="button admin-html-preview-toggle"
-                    data-html-preview-toggle-for="content"
-                    data-html-preview-title="<?= h(__('Poster preview')) ?>"
-                ><?= __('Show preview') ?></button>
-            </div>
+            <?= $this->Form->control('content', [
+                'type' => 'textarea',
+                'label' => __('Poster (HTML)'),
+                'id' => 'content',
+                'class' => 'js-wysiwyg',
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
 
             <?= $this->Form->control('date', ['label' => __('Date')]) ?>
             <?= $this->Form->control('category_id', [
@@ -53,4 +47,5 @@ $this->set('aiChatFields', [
         </div>
     <?= $this->Form->end() ?>
 </div>
-<?= $this->Html->script('admin-html-preview') ?>
+<?= $this->Html->script('vendor/tinymce/tinymce.min') ?>
+<?= $this->Html->script('admin-wysiwyg') ?>

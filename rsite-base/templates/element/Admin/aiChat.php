@@ -11,8 +11,10 @@
  *   with $targetField to enable field mode.
  * @var string|null $fieldLabel Human label sent to the AI describing what kind of text $targetField is (e.g. "news
  *   article summary"). Required together with $targetField to enable field mode.
- * @var string|null $htmlTargetField Optional: DOM id of a plain textarea holding raw poster HTML, with a preview
- *   modal bound to it (see data-html-preview-toggle-for in admin-html-preview.js). Only meaningful in field mode.
+ * @var string|null $htmlTargetField Optional: DOM id of a textarea holding raw poster HTML, rendered as a TinyMCE
+ *   WYSIWYG editor (see textarea.js-wysiwyg in webroot/js/admin-wysiwyg.js) — "Use this" writes into it via the
+ *   TinyMCE API when one is active (see tinymceInstanceFor() in admin-helper-widget.js), not a plain .value write.
+ *   Only meaningful in field mode.
  * @var string|null $htmlFieldLabel Optional: human label sent to the AI describing the poster field (e.g. "HTML
  *   poster"), used only while the HTML mode button is selected. Defaults to "HTML poster" if omitted.
  * @var string|null $descriptionField Optional: DOM id of a plain-text field (usually $targetField itself) whose

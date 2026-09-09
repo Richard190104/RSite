@@ -35,8 +35,6 @@ use Cake\Routing\Router;
  */
 class AssistantController extends AppController
 {
-    use HtmlSanitizeTrait;
-
     // The "-latest" alias is used instead of a pinned version (e.g.
     // gemini-2.0-flash) so this keeps working as Google retires specific
     // model versions — pinned versions have gone stale within months.
@@ -107,10 +105,17 @@ class AssistantController extends AppController
             return null;
         }
 
+        // Not run through sanitizeHtml(): that sanitizer's HTMLPurifier
+        // backend predates flexbox/grid and silently strips any style=""
+        // using them (see Admin\PagesController::editPoplatky()'s docblock
+        // for the full story) — display:flex/grid layouts are exactly what
+        // the 'html' mode prompt asks the model for (see
+        // buildSystemPrompt()), so sanitizing here was breaking every
+        // poster's layout before the admin ever saw it. The suggestion
+        // still lands in a WYSIWYG textarea.js-wysiwyg field (News/Events/
+        // Poplatky 'content'/'notice') the admin explicitly chooses to
+        // save, same trust boundary as anything else typed into that field.
         $suggestion = $reply['suggestion'];
-        if ($suggestion !== null && $mode === 'html') {
-            $suggestion = $this->sanitizeHtml($suggestion);
-        }
 
         $link = $mode === 'nav' ? $this->resolveNavigationLink($reply['target']) : null;
 
@@ -274,6 +279,9 @@ class AssistantController extends AppController
             'You are helping write short website copy in Slovak for a local fishing association (MO SRZ) website.',
             "You are chatting with an admin editing a {$fieldLabel} field.",
             'Reply in Slovak.',
+            'Write Slovak diacritics (á, ä, č, ď, é, í, ĺ, ľ, ň, ó, ô, ŕ, š, ť, ú, ý, ž and their'
+                . ' uppercase forms) as literal UTF-8 characters, never as HTML entities (&aacute; etc.) or numeric'
+                . ' character references (&#225; etc.) — this applies in both "message" and "suggestion".',
             'You must always respond with the two fields in the response schema:',
             '- "message": your natural chat reply — an answer, clarification, or short comment. Always present, plain text, no markdown.',
         ];
@@ -298,21 +306,31 @@ class AssistantController extends AppController
                 . ' description — do not write a vague placeholder that could apply to any article, and do not copy the'
                 . ' description verbatim. If no title/description is given, ask the admin what it should be about instead'
                 . ' of inventing generic filler content.'
-                . ' This renders inside a fixed ~60rem (~1200px) wide popup, not a wide desktop page — design and size'
-                . ' everything for that canvas. The outermost element should not set its own max-width/width — leave that'
-                . ' unset so it fills the popup.'
-                . ' Write a <style> block (put it first, before the rest of the markup) and style elements by class — this'
-                . ' is where flexbox, grid, @media queries, :hover and other pseudo-classes/pseudo-elements, CSS custom'
-                . ' properties, gradients, and object-fit all belong. An inline style="..." attribute also works for'
-                . ' one-off tweaks, but only supports a more limited, older subset of CSS — no flexbox/grid/object-fit'
-                . ' there, those only work via a class styled in the <style> block.'
+                . ' This renders inside a popup around 900px wide on desktop, but the popup itself is responsive and'
+                . ' shrinks on smaller screens — never assume a fixed pixel width, size for "narrow-ish card", not'
+                . ' "wide desktop page". The outermost element should not set its own max-width/width — leave that'
+                . ' unset so it fills the popup. If you lay content out in side-by-side columns (flexbox/grid),'
+                . ' keep each column\'s min-width modest (150-200px, not 280px+) and always include flex-wrap: wrap'
+                . ' (or grid\'s equivalent, minmax()) as a fallback — the columns need to actually fit side by side at'
+                . ' that ~900px width with room for gaps, and gracefully stack on an even narrower viewport instead of'
+                . ' silently collapsing to one column at the intended width too.'
+                . ' Style everything with inline style="..." attributes ONLY — flexbox, grid, gap, border-radius,'
+                . ' gradients, box-shadow, all of it works fine inline, so use whatever layout/visual approach fits'
+                . ' best. Do NOT write a <style> block or any class-based CSS: this gets pasted into a WYSIWYG editor'
+                . ' that renders it live as you write it, and that editor treats a <style> tag as its own chrome, not'
+                . ' page content — it silently disappears (along with everything that depended on it, since classes'
+                . ' with no matching rule left do nothing) the moment it lands in the field, so a <style> block would'
+                . ' leave the poster unstyled instead of styled. class="..." attributes are pointless for the same'
+                . ' reason and should be left out too. No @media queries, :hover, or other pseudo-classes either —'
+                . ' this is a static poster, not an interactive page, so there is nothing for those to respond to.'
                 . ($imageUrl !== ''
                     ? " The article has an uploaded image ({$imageUrl}) — use it however (or however much) you think"
                         . ' improves the result, including not at all.'
                     : '')
                 . ' Allowed tags ONLY: p, br, strong, b, em, i, u, s, a (with href), ul, ol, li, h1, h2, h3, h4, blockquote,'
-                . ' img (with src/alt), span, div — each may carry a class and/or an inline style attribute. No <script>,'
-                . ' no event handler attributes (onclick etc.), no external stylesheet/font <link> tags, no other tags.'
+                . ' img (with src/alt), span, div — each may carry an inline style attribute (no class attribute — see'
+                . ' above). No <script>, no event handler attributes (onclick etc.), no external stylesheet/font <link>'
+                . ' tags, no other tags.'
                 . ' If the admin is instead just'
                 . ' asking a question or the reply is not meant to be dropped into the editor, leave "suggestion" as null.';
         } elseif ($mode === 'palette') {

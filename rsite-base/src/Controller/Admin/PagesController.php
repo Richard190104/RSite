@@ -8,8 +8,6 @@ use App\Model\Table\FeesTable;
 
 class PagesController extends AppController
 {
-    use HtmlSanitizeTrait;
-
     private const HOME_MAX_QUICK_ACCESS = 6;
     private const ONAS_MAX_FEATURED_ACTIVITIES = 5;
 
@@ -266,9 +264,15 @@ class PagesController extends AppController
      * table. 'notice' is a WYSIWYG-edited HTML blob covering everything
      * that used to be hardcoded below the fee tables in
      * templates/Pages/poplatky.php (permit issue dates, fishing licence
-     * exemptions, payment account) — sanitized the same way
-     * Events/News::content is (see HtmlSanitizeTrait), since it's admin
-     * input rendered raw on the public page.
+     * exemptions, payment account) — saved as-is, unsanitized (the app
+     * used to run every admin-authored HTML field through an
+     * HtmlSanitizeTrait/HTMLPurifier pass, but that backend predates
+     * flexbox/grid and stripped any style="" using them, breaking the
+     * multi-column layouts these fields are actually meant for — removed
+     * from every field it touched, not just this one, once that became
+     * clear). Only the admin who can already reach this screen can write
+     * here, so the trade-off (no defense against a script tag typed into
+     * this one field) was accepted deliberately.
      */
     private function editPoplatky(Page $page)
     {
@@ -278,9 +282,6 @@ class PagesController extends AppController
             $data = (array)$this->request->getData('content');
             $description = trim((string)($data['description'] ?? ''));
             $notice = trim((string)($data['notice'] ?? ''));
-            if ($notice !== '') {
-                $notice = $this->sanitizeHtml($notice);
-            }
 
             $content = (array)$page->content;
 
