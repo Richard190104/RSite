@@ -2012,3 +2012,57 @@ msgstr "Zatiaľ neboli pridané žiadne dokumenty."
 #: ./templates/Pages/zarybnenie.php:34
 msgid "Catches"
 msgstr "Úlovky"
+
+#: ./src/Controller/Admin/FeesController.php:26
+#: ./src/Controller/Admin/FeesController.php:48
+msgid "Fee saved."
+msgstr "Poplatok bol uložený."
+
+#: ./src/Controller/Admin/FeesController.php:30
+#: ./src/Controller/Admin/FeesController.php:52
+msgid "Could not save the fee, check the errors below."
+msgstr "Poplatok sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/FeesController.php:69
+msgid "Fee deleted."
+msgstr "Poplatok bol vymazaný."
+
+#: ./src/Controller/Admin/FeesController.php:71
+msgid "Could not delete the fee."
+msgstr "Poplatok sa nepodarilo vymazať."
+
+#: ./templates/Admin/Fees/add.php:7
+#: ./templates/Admin/Pages/edit_poplatky.php:56
+msgid "Add fee"
+msgstr "Pridať poplatok"
+
+#: ./templates/Admin/Fees/add.php:13
+#: ./templates/Admin/Fees/edit.php:13
+#: ./templates/Admin/Pages/edit_poplatky.php:74
+msgid "Price"
+msgstr "Cena"
+
+#: ./templates/Admin/Fees/add.php:17
+#: ./templates/Admin/Fees/edit.php:17
+msgid "— select —"
+msgstr "— vybrať —"
+
+#: ./templates/Admin/Fees/edit.php:7
+msgid "Edit fee"
+msgstr "Upraviť poplatok"
+
+#: ./templates/Admin/Pages/edit_poplatky.php:15
+msgid "Edit \"Poplatky\" page"
+msgstr "Upraviť stránku „Poplatky“"
+
+#: ./templates/Admin/Pages/edit_poplatky.php:42
+msgid "Additional information (shown below the fee tables)"
+msgstr "Ďalšie informácie (zobrazené pod tabuľkami poplatkov)"
+
+#: ./templates/Admin/Pages/edit_poplatky.php:61
+msgid "Drag rows by the handle to reorder — this is the order fees appear within their category on the public page."
+msgstr "Potiahnutím za úchyt zmeníte poradie – v tomto poradí sa poplatky zobrazia vo svojej kategórii na verejnej stránke."
+
+#: ./templates/Admin/Pages/edit_poplatky.php:66
+msgid "No fees in this category yet."
+msgstr "V tejto kategórii zatiaľ nie sú žiadne poplatky."

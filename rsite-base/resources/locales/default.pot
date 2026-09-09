@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-09 07:23+0000\n"
+"POT-Creation-Date: 2026-09-09 09:18+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -291,6 +291,24 @@ msgstr ""
 msgid "Could not delete the event."
 msgstr ""
 
+#: ./src/Controller/Admin/FeesController.php:26
+#: ./src/Controller/Admin/FeesController.php:48
+msgid "Fee saved."
+msgstr ""
+
+#: ./src/Controller/Admin/FeesController.php:30
+#: ./src/Controller/Admin/FeesController.php:52
+msgid "Could not save the fee, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/FeesController.php:69
+msgid "Fee deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/FeesController.php:71
+msgid "Could not delete the fee."
+msgstr ""
+
 #: ./src/Controller/Admin/FileUploadTrait.php:26
 msgid "Please choose a PDF file."
 msgstr ""
@@ -428,31 +446,33 @@ msgstr ""
 msgid "Could not delete the notification."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:51
-#: ./src/Controller/Admin/PagesController.php:163
-#: ./src/Controller/Admin/PagesController.php:228
+#: ./src/Controller/Admin/PagesController.php:58
+#: ./src/Controller/Admin/PagesController.php:170
+#: ./src/Controller/Admin/PagesController.php:235
+#: ./src/Controller/Admin/PagesController.php:302
 msgid "Page saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:56
-#: ./src/Controller/Admin/PagesController.php:168
-#: ./src/Controller/Admin/PagesController.php:233
+#: ./src/Controller/Admin/PagesController.php:63
+#: ./src/Controller/Admin/PagesController.php:175
+#: ./src/Controller/Admin/PagesController.php:240
+#: ./src/Controller/Admin/PagesController.php:307
 msgid "Could not save the page."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:84
+#: ./src/Controller/Admin/PagesController.php:91
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:92
+#: ./src/Controller/Admin/PagesController.php:99
 msgid "Homepage saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:97
+#: ./src/Controller/Admin/PagesController.php:104
 msgid "Could not save the homepage."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:138
+#: ./src/Controller/Admin/PagesController.php:145
 msgid "Please select at most {0} activities for the timeline."
 msgstr ""
 
@@ -506,6 +526,8 @@ msgstr ""
 #: ./templates/Admin/Events/add.php:19
 #: ./templates/Admin/Events/edit.php:25
 #: ./templates/Admin/Events/index.php:17
+#: ./templates/Admin/Fees/add.php:12
+#: ./templates/Admin/Fees/edit.php:12
 #: ./templates/Admin/FishingGrounds/add.php:11
 #: ./templates/Admin/FishingGrounds/edit.php:16
 #: ./templates/Admin/FishingGrounds/index.php:17
@@ -518,6 +540,7 @@ msgstr ""
 #: ./templates/Admin/Notifications/add.php:16
 #: ./templates/Admin/Notifications/edit.php:19
 #: ./templates/Admin/Notifications/index.php:18
+#: ./templates/Admin/Pages/edit_poplatky.php:73
 #: ./templates/Admin/Pages/edit_zarybnenie.php:48
 #: ./templates/Admin/Pages/edit_zarybnenie.php:87
 #: ./templates/Admin/Pages/index.php:13
@@ -565,6 +588,8 @@ msgstr ""
 #: ./templates/Admin/CommitteeMembers/edit.php:32
 #: ./templates/Admin/Events/add.php:47
 #: ./templates/Admin/Events/edit.php:53
+#: ./templates/Admin/Fees/add.php:22
+#: ./templates/Admin/Fees/edit.php:22
 #: ./templates/Admin/FishingGrounds/add.php:43
 #: ./templates/Admin/FishingGrounds/edit.php:48
 #: ./templates/Admin/Galleries/add.php:27
@@ -579,6 +604,8 @@ msgstr ""
 #: ./templates/Admin/Pages/edit.php:29
 #: ./templates/Admin/Pages/edit_home.php:31
 #: ./templates/Admin/Pages/edit_onas.php:70
+#: ./templates/Admin/Pages/edit_poplatky.php:32
+#: ./templates/Admin/Pages/edit_poplatky.php:49
 #: ./templates/Admin/Pages/edit_zarybnenie.php:30
 #: ./templates/Admin/StockingDocuments/add.php:19
 #: ./templates/Admin/StockingDocuments/edit.php:24
@@ -610,6 +637,7 @@ msgstr ""
 #: ./templates/Admin/NavbarCategories/index.php:20
 #: ./templates/Admin/News/index.php:20
 #: ./templates/Admin/Notifications/index.php:21
+#: ./templates/Admin/Pages/edit_poplatky.php:75
 #: ./templates/Admin/Pages/edit_zarybnenie.php:50
 #: ./templates/Admin/Pages/edit_zarybnenie.php:89
 #: ./templates/Admin/Pages/index.php:15
@@ -626,6 +654,7 @@ msgstr ""
 #: ./templates/Admin/NavbarCategories/index.php:45
 #: ./templates/Admin/News/index.php:38
 #: ./templates/Admin/Notifications/index.php:47
+#: ./templates/Admin/Pages/edit_poplatky.php:101
 #: ./templates/Admin/Pages/edit_zarybnenie.php:64
 #: ./templates/Admin/Pages/edit_zarybnenie.php:103
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -673,6 +702,7 @@ msgstr ""
 #: ./templates/Admin/Notifications/edit.php:20
 #: ./templates/Admin/Pages/edit.php:22
 #: ./templates/Admin/Pages/edit_onas.php:28
+#: ./templates/Admin/Pages/edit_poplatky.php:26
 #: ./templates/Admin/Pages/edit_zarybnenie.php:24
 #: ./templates/element/Admin/aiChat.php:111
 msgid "Description"
@@ -731,6 +761,7 @@ msgstr ""
 #: ./templates/Admin/Categories/index.php:75
 #: ./templates/Admin/NavbarCategories/edit.php:26
 #: ./templates/Admin/NavbarCategories/index.php:29
+#: ./templates/Admin/Pages/edit_poplatky.php:85
 msgid "Drag to reorder"
 msgstr ""
 
@@ -964,6 +995,8 @@ msgstr ""
 #: ./templates/Admin/Events/add.php:28
 #: ./templates/Admin/Events/edit.php:34
 #: ./templates/Admin/Events/index.php:20
+#: ./templates/Admin/Fees/add.php:18
+#: ./templates/Admin/Fees/edit.php:18
 #: ./templates/Admin/Galleries/add.php:23
 #: ./templates/Admin/Galleries/edit.php:25
 #: ./templates/Admin/Galleries/index.php:17
@@ -1001,6 +1034,26 @@ msgstr ""
 
 #: ./templates/Admin/Events/edit.php:7
 msgid "Edit event"
+msgstr ""
+
+#: ./templates/Admin/Fees/add.php:7
+#: ./templates/Admin/Pages/edit_poplatky.php:56
+msgid "Add fee"
+msgstr ""
+
+#: ./templates/Admin/Fees/add.php:13
+#: ./templates/Admin/Fees/edit.php:13
+#: ./templates/Admin/Pages/edit_poplatky.php:74
+msgid "Price"
+msgstr ""
+
+#: ./templates/Admin/Fees/add.php:17
+#: ./templates/Admin/Fees/edit.php:17
+msgid "— select —"
+msgstr ""
+
+#: ./templates/Admin/Fees/edit.php:7
+msgid "Edit fee"
 msgstr ""
 
 #: ./templates/Admin/FishingGrounds/add.php:6
@@ -1196,6 +1249,22 @@ msgstr ""
 
 #: ./templates/Admin/Pages/edit_onas.php:80
 msgid "The timeline is shown on the public page ordered by activity date, oldest first — not by the order selected here."
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_poplatky.php:15
+msgid "Edit \"Poplatky\" page"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_poplatky.php:42
+msgid "Additional information (shown below the fee tables)"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_poplatky.php:61
+msgid "Drag rows by the handle to reorder — this is the order fees appear within their category on the public page."
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_poplatky.php:66
+msgid "No fees in this category yet."
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_zarybnenie.php:15
