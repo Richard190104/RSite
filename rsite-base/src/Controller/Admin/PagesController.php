@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Model\Entity\Page;
+use App\Model\Table\FeesTable;
 
 class PagesController extends AppController
 {
+    use HtmlSanitizeTrait;
+
     private const HOME_MAX_QUICK_ACCESS = 6;
     private const ONAS_MAX_FEATURED_ACTIVITIES = 5;
 
@@ -31,6 +34,10 @@ class PagesController extends AppController
 
         if ($page->slug === 'zarybnenie') {
             return $this->editZarybnenie($Pages, $page);
+        }
+
+        if ($page->slug === 'poplatky') {
+            return $this->editPoplatky($page);
         }
 
         if ($this->request->is(['post', 'put'])) {
@@ -245,6 +252,81 @@ class PagesController extends AppController
 
         $this->set(compact('page', 'stockingDocuments', 'catchDocuments'));
         $this->render('edit_zarybnenie');
+
+        return null;
+    }
+
+    /**
+     * "Poplatky" page: the same 'description' field every other fixed page
+     * has (see edit()) — the teaser text shown on this page's homepage
+     * "quick access" card — plus a list of Fee rows (title/price/category),
+     * managed by their own controller (Admin\FeesController), grouped by
+     * category here the same way the public page groups them. Categories
+     * are the fixed set in FeesTable::CATEGORIES, not the shared Categories
+     * table. 'notice' is a WYSIWYG-edited HTML blob covering everything
+     * that used to be hardcoded below the fee tables in
+     * templates/Pages/poplatky.php (permit issue dates, fishing licence
+     * exemptions, payment account) — sanitized the same way
+     * Events/News::content is (see HtmlSanitizeTrait), since it's admin
+     * input rendered raw on the public page.
+     */
+    private function editPoplatky(Page $page)
+    {
+        $Pages = $this->fetchTable('Pages');
+
+        if ($this->request->is(['post', 'put'])) {
+            $data = (array)$this->request->getData('content');
+            $description = trim((string)($data['description'] ?? ''));
+            $notice = trim((string)($data['notice'] ?? ''));
+            if ($notice !== '') {
+                $notice = $this->sanitizeHtml($notice);
+            }
+
+            $content = (array)$page->content;
+
+            if ($description === '') {
+                unset($content['description']);
+            } else {
+                $content['description'] = $description;
+            }
+
+            if ($notice === '') {
+                unset($content['notice']);
+            } else {
+                $content['notice'] = $notice;
+            }
+
+            $page->content = $content;
+
+            if ($Pages->save($page)) {
+                $this->Flash->success(__('Page saved.'));
+
+                return $this->redirect(['prefix' => 'Admin', 'controller' => 'Pages', 'action' => 'edit', 'poplatky']);
+            }
+
+            $this->Flash->error(__('Could not save the page.'));
+        }
+
+        $fees = $this->fetchTable('Fees')
+            ->find()
+            ->orderBy(['position' => 'ASC', 'title' => 'ASC'])
+            ->all();
+
+        $feesByCategory = [];
+        foreach ($fees as $fee) {
+            $feesByCategory[$fee->category][] = $fee;
+        }
+
+        // Ordered by the fixed FeesTable::CATEGORIES list, not alphabetically
+        // or by first-seen — same order the public page groups sections in.
+        $feesByCategory = array_replace(
+            array_fill_keys(array_keys(FeesTable::CATEGORIES), []),
+            $feesByCategory,
+        );
+
+        $this->set('page', $page);
+        $this->set(compact('feesByCategory'));
+        $this->render('edit_poplatky');
 
         return null;
     }

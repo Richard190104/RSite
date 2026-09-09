@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Model\Table\FeesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
@@ -251,6 +252,56 @@ class PagesController extends AppController
             ->toList();
 
         $this->set(compact('page', 'stockingDocuments', 'catchDocuments'));
+    }
+
+    /**
+     * Public "Poplatky" (fees/membership prices) page. Fee rows
+     * (Admin\FeesController, edited via Admin\PagesController::editPoplatky())
+     * are grouped by category into the bento-grid tables the template
+     * renders; the rest of the page (permit issue dates, fishing licence
+     * exemptions, payment account) is still hardcoded in
+     * templates/Pages/poplatky.php — no admin management for that part yet.
+     */
+    public function poplatky(): void
+    {
+        $page = $this->fetchTable('Pages')->find()->where(['slug' => 'poplatky'])->firstOrFail();
+
+        $fees = $this->fetchTable('Fees')
+            ->find()
+            ->orderBy(['position' => 'ASC', 'title' => 'ASC'])
+            ->all();
+
+        $feeSections = [];
+        foreach ($fees as $fee) {
+            $feeSections[$fee->category]['heading'] ??= __(FeesTable::CATEGORIES[$fee->category] ?? $fee->category);
+            $feeSections[$fee->category]['rows'][] = [$fee->title, $fee->price];
+        }
+
+        // Ordered by the fixed FeesTable::CATEGORIES list (empty categories
+        // dropped — no point rendering an empty tile), not by whichever
+        // category happened to have its first fee inserted first.
+        $feeSections = array_filter(array_replace(
+            array_fill_keys(array_keys(FeesTable::CATEGORIES), null),
+            $feeSections,
+        ));
+
+        // Tile width in the bento grid (see _poplatky.scss's
+        // .p-poplatky__table-block--* modifiers) follows each category's
+        // row count — more rows gets more columns — so the layout adapts
+        // automatically as fees are added/removed/re-categorised in admin,
+        // instead of a manual size picked per category.
+        foreach ($feeSections as &$section) {
+            $rowCount = count($section['rows']);
+            $section['size'] = match (true) {
+                $rowCount >= 8 => 'tall',
+                $rowCount >= 5 => 'wide',
+                $rowCount >= 3 => 'regular',
+                default => 'small',
+            };
+        }
+        unset($section);
+
+        $this->set(compact('page', 'feeSections'));
     }
 
     /**

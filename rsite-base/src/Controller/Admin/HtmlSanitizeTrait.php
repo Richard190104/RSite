@@ -32,7 +32,8 @@ trait HtmlSanitizeTrait
             'p[class|style],br[class],strong[class],b[class],em[class],i[class],u[class],s[class],'
                 . 'a[href|class|style],ul[class],ol[class],li[class],h1[class|style],h2[class|style],'
                 . 'h3[class|style],h4[class|style],blockquote[class],img[src|alt|class|style],'
-                . 'span[class|style],div[class|style]',
+                . 'span[class|style],div[class|style],table[class|style],thead[class],tbody[class],'
+                . 'tr[class|style],td[class|style],th[class|style]',
         );
         // border-radius lives behind CSS.Proprietary and display behind
         // CSS.AllowTricky in HTMLPurifier's CSSDefinition — without these,

@@ -1,0 +1,215 @@
+@use 'variables' as v;
+
+.p-poplatky {
+    width: 100%;
+    background: v.$color-bg;
+}
+
+.p-poplatky__body {
+    max-width: v.$content-width;
+    margin: 0 auto;
+    padding: 3.5rem 2rem 5rem;
+}
+
+.p-poplatky__intro {
+    max-width: 70rem;
+    margin: 0 0 3rem;
+    font-size: v.$font-size-lg;
+    line-height: 1.6;
+    color: v.$color-text-muted;
+}
+
+.p-poplatky__section-title {
+    margin: 0 0 1.6rem;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-2xl;
+    font-weight: 700;
+    color: v.$color-primary;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 3rem;
+        height: 0.4rem;
+        margin-top: 0.8rem;
+        background: v.$color-secondary;
+    }
+}
+
+// A bento grid: tiles sit on an explicit column track (see the width
+// modifiers below) but each tile's row height simply follows its content —
+// no fixed row span — so a table gaining/losing a row (as admin-edited
+// content will) just makes that one tile a little taller/shorter instead
+// of leaving dead space or clipping.
+.p-poplatky__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: auto;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    align-items: start;
+}
+
+.p-poplatky__table-block {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2.2rem;
+    border: 1px solid v.$color-bg-alt;
+    border-radius: 1rem;
+}
+
+// tall: the longest table (Fishing permits) — narrow, like the portrait
+// tile in a bento layout.
+.p-poplatky__table-block--tall {
+    grid-column: span 2;
+}
+
+// wide: a landscape tile spanning the remaining width beside the tall tile.
+.p-poplatky__table-block--wide {
+    grid-column: span 4;
+}
+
+.p-poplatky__table-block--regular {
+    grid-column: span 2;
+}
+
+.p-poplatky__table-block--small {
+    grid-column: span 3;
+}
+
+.p-poplatky__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        border-bottom: 1px solid v.$color-bg-alt;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    td {
+        padding: 1rem 0;
+        font-size: v.$font-size-md;
+        color: v.$color-heading;
+        vertical-align: top;
+    }
+}
+
+.p-poplatky__table--compact {
+    max-width: 32rem;
+    margin-bottom: 1.6rem;
+}
+
+.p-poplatky__price {
+    padding-left: 1.6rem;
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 700;
+    color: v.$color-primary;
+}
+
+.p-poplatky__notice {
+    max-width: 70rem;
+    margin-bottom: 3rem;
+
+    p {
+        margin: 0 0 1.2rem;
+        font-size: v.$font-size-md;
+        line-height: 1.7;
+        color: v.$color-text-muted;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.p-poplatky__notice--highlight {
+    padding: 2.4rem;
+    background: v.$color-bg-alt;
+    border-radius: 0.8rem;
+    border-left: 0.4rem solid v.$color-secondary;
+}
+
+// Admin-authored via the WYSIWYG editor (see Admin\PagesController::
+// editPoplatky()) — max-width is dropped in favour of the section's own
+// (70rem, inherited from .p-poplatky__notice) since headings/lists need
+// more room to read comfortably than the short static blurbs this replaced.
+.p-poplatky__notice--wysiwyg {
+    h2,
+    h3 {
+        margin: 2rem 0 1rem;
+        font-family: v.$font-heading;
+        font-weight: 700;
+        color: v.$color-primary;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    h2 {
+        font-size: v.$font-size-xl;
+    }
+
+    h3 {
+        font-size: v.$font-size-lg;
+    }
+
+    ul,
+    ol {
+        margin: 0 0 1.2rem;
+        padding-left: 1.6rem;
+        font-size: v.$font-size-md;
+        line-height: 1.7;
+        color: v.$color-text-muted;
+    }
+
+    a {
+        color: v.$color-primary;
+    }
+}
+
+.p-poplatky__account {
+    display: inline-block;
+    margin: 0 0 1.2rem;
+    padding: 0.8rem 1.4rem;
+    background: v.$color-bg;
+    border-radius: 0.4rem;
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: v.$font-size-lg;
+    letter-spacing: 0.02em;
+    color: v.$color-primary;
+}
+
+@media screen and (max-width: 960px) {
+    .p-poplatky__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .p-poplatky__table-block--tall,
+    .p-poplatky__table-block--wide,
+    .p-poplatky__table-block--regular,
+    .p-poplatky__table-block--small {
+        grid-column: span 2;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-poplatky__body {
+        padding: 2.5rem 1.6rem 3.5rem;
+    }
+
+    .p-poplatky__grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .p-poplatky__table-block {
+        width: 100%;
+        min-width: 0;
+    }
+}
