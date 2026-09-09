@@ -1883,3 +1883,132 @@ msgstr "Zatiaľ žiadne rybárske revíry s polohou na mape."
 
 msgid "Fishing grounds"
 msgstr "Revíry"
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:30
+#: ./src/Controller/Admin/CatchDocumentsController.php:74
+#: ./src/Controller/Admin/StockingDocumentsController.php:30
+#: ./src/Controller/Admin/StockingDocumentsController.php:74
+msgid "Document saved."
+msgstr "Dokument bol uložený."
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:39
+#: ./src/Controller/Admin/CatchDocumentsController.php:83
+#: ./src/Controller/Admin/StockingDocumentsController.php:39
+#: ./src/Controller/Admin/StockingDocumentsController.php:83
+msgid "Could not save the document, check the errors below."
+msgstr "Dokument sa nepodarilo uložiť, skontrolujte chyby nižšie."
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:100
+#: ./src/Controller/Admin/StockingDocumentsController.php:100
+msgid "Document deleted."
+msgstr "Dokument bol vymazaný."
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:102
+#: ./src/Controller/Admin/StockingDocumentsController.php:102
+msgid "Could not delete the document."
+msgstr "Dokument sa nepodarilo vymazat."
+
+#: ./src/Controller/Admin/FileUploadTrait.php:26
+msgid "Please choose a PDF file."
+msgstr "Vyberte súbor PDF."
+
+#: ./src/Controller/Admin/FileUploadTrait.php:34
+msgid "The file must be a PDF."
+msgstr "Súbor musí byť vo formáte PDF."
+
+#: ./src/Controller/Admin/FileUploadTrait.php:38
+msgid "The file must be smaller than 10 MB."
+msgstr "Súbor musí byť menší ako 10 MB."
+
+#: ./src/Controller/Admin/PagesController.php:138
+msgid "Please select at most {0} activities for the timeline."
+msgstr "Pre časovú os vyberte najviac {0} aktivít."
+
+#: ./templates/Admin/CatchDocuments/add.php:6
+msgid "Add catch document"
+msgstr "Pridať záznam o úlovkoch"
+
+#: ./templates/Admin/CatchDocuments/add.php:14
+#: ./templates/Admin/StockingDocuments/add.php:14
+msgid "PDF file"
+msgstr "Súbor PDF"
+
+#: ./templates/Admin/CatchDocuments/edit.php:6
+msgid "Edit catch document"
+msgstr "Upraviť záznam o úlovkoch"
+
+#: ./templates/Admin/CatchDocuments/edit.php:11
+#: ./templates/Admin/StockingDocuments/edit.php:11
+msgid "Current PDF file"
+msgstr "Aktuálny súbor PDF"
+
+#: ./templates/Admin/CatchDocuments/edit.php:19
+#: ./templates/Admin/StockingDocuments/edit.php:19
+msgid "Replace PDF file (optional)"
+msgstr "Nahradiť súbor PDF (voliteľné)"
+
+#: ./templates/Admin/Pages/edit_onas.php:34
+msgid "Naše aktivity timeline (max 5 activities)"
+msgstr "Naše aktivity timeline (max 5 activities)"
+
+#: ./templates/Admin/Pages/edit_onas.php:40
+msgid "No matching activities."
+msgstr "Žiadne zodpovedajúce aktivity."
+
+#: ./templates/Admin/Pages/edit_onas.php:41
+#: ./templates/Admin/Pages/edit_onas.php:60
+msgid "Remove"
+msgstr "Odstrániť"
+
+#: ./templates/Admin/Pages/edit_onas.php:48
+msgid "Search activities by name…"
+msgstr "Vyhľadávať aktivity podľa názvu…"
+
+#: ./templates/Admin/Pages/edit_onas.php:80
+msgid "The timeline is shown on the public page ordered by activity date, oldest first — not by the order selected here."
+msgstr "Časová os sa na verejnej stránke zobrazuje zoradená podľa dátumu aktivity od najstaršej — nie podľa poradia vybraného tu."
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:15
+msgid "Edit \"Zarybnenie a úlovky\" page"
+msgstr "Upraviť stránku „Zarybnenie a úlovky“"
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:36
+#: ./templates/Pages/zarybnenie.php:12
+msgid "Zarybnenie"
+msgstr "Zarybnenie"
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:39
+#: ./templates/Admin/Pages/edit_zarybnenie.php:78
+msgid "Add document"
+msgstr "Pridať dokument"
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:49
+#: ./templates/Admin/Pages/edit_zarybnenie.php:88
+msgid "File"
+msgstr "Súbor"
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:58
+#: ./templates/Admin/Pages/edit_zarybnenie.php:97
+msgid "PDF"
+msgstr "PDF"
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:75
+msgid "Úlovky"
+msgstr "Úlovky"
+
+#: ./templates/Admin/StockingDocuments/add.php:6
+msgid "Add stocking document"
+msgstr "Pridať dokument o zarybnení"
+
+#: ./templates/Admin/StockingDocuments/edit.php:6
+msgid "Edit stocking document"
+msgstr "Upraviť dokument o zarybnení"
+
+#: ./templates/Pages/zarybnenie.php:15
+#: ./templates/Pages/zarybnenie.php:37
+msgid "No documents have been added yet."
+msgstr "Zatiaľ neboli pridané žiadne dokumenty."
+
+#: ./templates/Pages/zarybnenie.php:34
+msgid "Catches"
+msgstr "Úlovky"

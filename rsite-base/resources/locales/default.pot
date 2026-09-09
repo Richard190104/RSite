@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-07 16:31+0000\n"
+"POT-Creation-Date: 2026-09-09 07:23+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -191,6 +191,30 @@ msgstr ""
 msgid "Could not delete the banner."
 msgstr ""
 
+#: ./src/Controller/Admin/CatchDocumentsController.php:30
+#: ./src/Controller/Admin/CatchDocumentsController.php:74
+#: ./src/Controller/Admin/StockingDocumentsController.php:30
+#: ./src/Controller/Admin/StockingDocumentsController.php:74
+msgid "Document saved."
+msgstr ""
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:39
+#: ./src/Controller/Admin/CatchDocumentsController.php:83
+#: ./src/Controller/Admin/StockingDocumentsController.php:39
+#: ./src/Controller/Admin/StockingDocumentsController.php:83
+msgid "Could not save the document, check the errors below."
+msgstr ""
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:100
+#: ./src/Controller/Admin/StockingDocumentsController.php:100
+msgid "Document deleted."
+msgstr ""
+
+#: ./src/Controller/Admin/CatchDocumentsController.php:102
+#: ./src/Controller/Admin/StockingDocumentsController.php:102
+msgid "Could not delete the document."
+msgstr ""
+
 #: ./src/Controller/Admin/CategoriesController.php:81
 #: ./src/Controller/Admin/CategoriesController.php:126
 #: ./src/Controller/Admin/NavbarCategoriesController.php:53
@@ -267,6 +291,23 @@ msgstr ""
 msgid "Could not delete the event."
 msgstr ""
 
+#: ./src/Controller/Admin/FileUploadTrait.php:26
+msgid "Please choose a PDF file."
+msgstr ""
+
+#: ./src/Controller/Admin/FileUploadTrait.php:30
+#: ./src/Controller/Admin/ImageUploadTrait.php:27
+msgid "The uploaded file could not be processed."
+msgstr ""
+
+#: ./src/Controller/Admin/FileUploadTrait.php:34
+msgid "The file must be a PDF."
+msgstr ""
+
+#: ./src/Controller/Admin/FileUploadTrait.php:38
+msgid "The file must be smaller than 10 MB."
+msgstr ""
+
 #: ./src/Controller/Admin/FishingGroundsController.php:42
 #: ./src/Controller/Admin/FishingGroundsController.php:86
 msgid "Fishing ground saved."
@@ -317,10 +358,6 @@ msgstr[1] ""
 
 #: ./src/Controller/Admin/ImageUploadTrait.php:23
 msgid "Please choose an image."
-msgstr ""
-
-#: ./src/Controller/Admin/ImageUploadTrait.php:27
-msgid "The uploaded file could not be processed."
 msgstr ""
 
 #: ./src/Controller/Admin/ImageUploadTrait.php:31
@@ -391,26 +428,32 @@ msgstr ""
 msgid "Could not delete the notification."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:46
-#: ./src/Controller/Admin/PagesController.php:133
+#: ./src/Controller/Admin/PagesController.php:51
+#: ./src/Controller/Admin/PagesController.php:163
+#: ./src/Controller/Admin/PagesController.php:228
 msgid "Page saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:51
-#: ./src/Controller/Admin/PagesController.php:138
+#: ./src/Controller/Admin/PagesController.php:56
+#: ./src/Controller/Admin/PagesController.php:168
+#: ./src/Controller/Admin/PagesController.php:233
 msgid "Could not save the page."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:79
+#: ./src/Controller/Admin/PagesController.php:84
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:87
+#: ./src/Controller/Admin/PagesController.php:92
 msgid "Homepage saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:92
+#: ./src/Controller/Admin/PagesController.php:97
 msgid "Could not save the homepage."
+msgstr ""
+
+#: ./src/Controller/Admin/PagesController.php:138
+msgid "Please select at most {0} activities for the timeline."
 msgstr ""
 
 #: ./src/Controller/Admin/TextsController.php:28
@@ -454,6 +497,8 @@ msgstr ""
 #: ./templates/Admin/Banners/add.php:17
 #: ./templates/Admin/Banners/edit.php:20
 #: ./templates/Admin/Banners/index.php:17
+#: ./templates/Admin/CatchDocuments/add.php:11
+#: ./templates/Admin/CatchDocuments/edit.php:16
 #: ./templates/Admin/Categories/add.php:17
 #: ./templates/Admin/Categories/edit.php:20
 #: ./templates/Admin/Categories/index.php:18
@@ -473,7 +518,11 @@ msgstr ""
 #: ./templates/Admin/Notifications/add.php:16
 #: ./templates/Admin/Notifications/edit.php:19
 #: ./templates/Admin/Notifications/index.php:18
+#: ./templates/Admin/Pages/edit_zarybnenie.php:48
+#: ./templates/Admin/Pages/edit_zarybnenie.php:87
 #: ./templates/Admin/Pages/index.php:13
+#: ./templates/Admin/StockingDocuments/add.php:11
+#: ./templates/Admin/StockingDocuments/edit.php:16
 #: ./templates/element/Admin/aiChat.php:103
 msgid "Title"
 msgstr ""
@@ -507,6 +556,8 @@ msgstr ""
 
 #: ./templates/Admin/Banners/add.php:24
 #: ./templates/Admin/Banners/edit.php:27
+#: ./templates/Admin/CatchDocuments/add.php:19
+#: ./templates/Admin/CatchDocuments/edit.php:24
 #: ./templates/Admin/Categories/add.php:39
 #: ./templates/Admin/Categories/edit.php:42
 #: ./templates/Admin/Colors/index.php:64
@@ -527,7 +578,10 @@ msgstr ""
 #: ./templates/Admin/Notifications/edit.php:36
 #: ./templates/Admin/Pages/edit.php:29
 #: ./templates/Admin/Pages/edit_home.php:31
-#: ./templates/Admin/Pages/edit_onas.php:28
+#: ./templates/Admin/Pages/edit_onas.php:70
+#: ./templates/Admin/Pages/edit_zarybnenie.php:30
+#: ./templates/Admin/StockingDocuments/add.php:19
+#: ./templates/Admin/StockingDocuments/edit.php:24
 #: ./templates/Admin/Texts/edit.php:14
 msgid "Save"
 msgstr ""
@@ -556,6 +610,8 @@ msgstr ""
 #: ./templates/Admin/NavbarCategories/index.php:20
 #: ./templates/Admin/News/index.php:20
 #: ./templates/Admin/Notifications/index.php:21
+#: ./templates/Admin/Pages/edit_zarybnenie.php:50
+#: ./templates/Admin/Pages/edit_zarybnenie.php:89
 #: ./templates/Admin/Pages/index.php:15
 #: ./templates/Admin/Texts/index.php:15
 msgid "Actions"
@@ -570,7 +626,32 @@ msgstr ""
 #: ./templates/Admin/NavbarCategories/index.php:45
 #: ./templates/Admin/News/index.php:38
 #: ./templates/Admin/Notifications/index.php:47
+#: ./templates/Admin/Pages/edit_zarybnenie.php:64
+#: ./templates/Admin/Pages/edit_zarybnenie.php:103
 msgid "Are you sure you want to delete \"{0}\"?"
+msgstr ""
+
+#: ./templates/Admin/CatchDocuments/add.php:6
+msgid "Add catch document"
+msgstr ""
+
+#: ./templates/Admin/CatchDocuments/add.php:14
+#: ./templates/Admin/StockingDocuments/add.php:14
+msgid "PDF file"
+msgstr ""
+
+#: ./templates/Admin/CatchDocuments/edit.php:6
+msgid "Edit catch document"
+msgstr ""
+
+#: ./templates/Admin/CatchDocuments/edit.php:11
+#: ./templates/Admin/StockingDocuments/edit.php:11
+msgid "Current PDF file"
+msgstr ""
+
+#: ./templates/Admin/CatchDocuments/edit.php:19
+#: ./templates/Admin/StockingDocuments/edit.php:19
+msgid "Replace PDF file (optional)"
 msgstr ""
 
 #: ./templates/Admin/Categories/add.php:7
@@ -591,7 +672,8 @@ msgstr ""
 #: ./templates/Admin/Notifications/add.php:17
 #: ./templates/Admin/Notifications/edit.php:20
 #: ./templates/Admin/Pages/edit.php:22
-#: ./templates/Admin/Pages/edit_onas.php:22
+#: ./templates/Admin/Pages/edit_onas.php:28
+#: ./templates/Admin/Pages/edit_zarybnenie.php:24
 #: ./templates/element/Admin/aiChat.php:111
 msgid "Description"
 msgstr ""
@@ -755,7 +837,7 @@ msgid "Info — border"
 msgstr ""
 
 #: ./templates/Admin/Colors/index.php:44
-#: ./templates/Pages/reviry.php:57
+#: ./templates/Pages/reviry.php:62
 msgid "Fishing grounds map"
 msgstr ""
 
@@ -1065,7 +1147,7 @@ msgid "Edit homepage"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:16
-#: ./templates/Admin/Pages/edit_onas.php:15
+#: ./templates/Admin/Pages/edit_onas.php:21
 msgid "About us text"
 msgstr ""
 
@@ -1079,7 +1161,7 @@ msgstr ""
 
 #: ./templates/Admin/Pages/edit_home.php:38
 #: ./templates/Admin/Pages/edit_home.php:42
-#: ./templates/Admin/Pages/edit_onas.php:35
+#: ./templates/Admin/Pages/edit_onas.php:77
 msgid "Manage banners"
 msgstr ""
 
@@ -1087,16 +1169,73 @@ msgstr ""
 msgid "The \"fishing grounds and activities\" section is also managed separately as banners: the main photo uses the \"Home — fishing grounds main image\" location, and its cards use the \"Home — fishing grounds tile\" location."
 msgstr ""
 
-#: ./templates/Admin/Pages/edit_onas.php:6
+#: ./templates/Admin/Pages/edit_onas.php:7
 msgid "Edit \"About us\" page"
 msgstr ""
 
 #: ./templates/Admin/Pages/edit_onas.php:34
+msgid "Naše aktivity timeline (max 5 activities)"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_onas.php:40
+msgid "No matching activities."
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_onas.php:41
+#: ./templates/Admin/Pages/edit_onas.php:60
+msgid "Remove"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_onas.php:48
+msgid "Search activities by name…"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_onas.php:76
 msgid "The image shown next to the \"about us\" text is managed separately as a banner with the \"About us — minibanner\" location."
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_onas.php:80
+msgid "The timeline is shown on the public page ordered by activity date, oldest first — not by the order selected here."
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:15
+msgid "Edit \"Zarybnenie a úlovky\" page"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:36
+#: ./templates/Pages/zarybnenie.php:12
+msgid "Zarybnenie"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:39
+#: ./templates/Admin/Pages/edit_zarybnenie.php:78
+msgid "Add document"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:49
+#: ./templates/Admin/Pages/edit_zarybnenie.php:88
+msgid "File"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:58
+#: ./templates/Admin/Pages/edit_zarybnenie.php:97
+msgid "PDF"
+msgstr ""
+
+#: ./templates/Admin/Pages/edit_zarybnenie.php:75
+msgid "Úlovky"
 msgstr ""
 
 #: ./templates/Admin/Pages/index.php:14
 msgid "Slug"
+msgstr ""
+
+#: ./templates/Admin/StockingDocuments/add.php:6
+msgid "Add stocking document"
+msgstr ""
+
+#: ./templates/Admin/StockingDocuments/edit.php:6
+msgid "Edit stocking document"
 msgstr ""
 
 #: ./templates/Admin/Texts/edit.php:11
@@ -1148,79 +1287,80 @@ msgstr ""
 msgid "Upcoming events"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:63
 #: ./templates/Pages/aktivity.php:66
-#: ./templates/Pages/news.php:59
-#: ./templates/element/news.php:37
+#: ./templates/Pages/aktivity.php:69
+#: ./templates/Pages/news.php:63
+#: ./templates/element/news.php:36
 msgid "Read more"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:64
+#: ./templates/Pages/aktivity.php:67
 msgid "Show less"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:90
+#: ./templates/Pages/aktivity.php:93
 msgid "No upcoming events yet."
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:96
+#: ./templates/Pages/aktivity.php:99
+#: ./templates/Pages/onas.php:42
 msgid "Our activities"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:110
+#: ./templates/Pages/aktivity.php:113
 msgid "Events and activities in this category."
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:119
+#: ./templates/Pages/aktivity.php:122
 msgid "Activities calendar"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:125
+#: ./templates/Pages/aktivity.php:128
 msgid "No events this month."
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:126
+#: ./templates/Pages/aktivity.php:129
 msgid "No events on this day."
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:127
-#: ./templates/Pages/aktivity.php:148
+#: ./templates/Pages/aktivity.php:130
+#: ./templates/Pages/aktivity.php:151
 msgid "Closest events"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:129
+#: ./templates/Pages/aktivity.php:132
 msgid "Mon"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:130
+#: ./templates/Pages/aktivity.php:133
 msgid "Tue"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:131
+#: ./templates/Pages/aktivity.php:134
 msgid "Wed"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:132
+#: ./templates/Pages/aktivity.php:135
 msgid "Thu"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:133
+#: ./templates/Pages/aktivity.php:136
 msgid "Fri"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:134
+#: ./templates/Pages/aktivity.php:137
 msgid "Sat"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:135
+#: ./templates/Pages/aktivity.php:138
 msgid "Sun"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:140
+#: ./templates/Pages/aktivity.php:143
 msgid "Previous month"
 msgstr ""
 
-#: ./templates/Pages/aktivity.php:142
+#: ./templates/Pages/aktivity.php:145
 msgid "Next month"
 msgstr ""
 
@@ -1258,7 +1398,7 @@ msgid "Open in Google Maps"
 msgstr ""
 
 #: ./templates/Pages/news.php:18
-#: ./templates/element/news.php:48
+#: ./templates/element/news.php:47
 msgid "All news"
 msgstr ""
 
@@ -1266,20 +1406,25 @@ msgstr ""
 msgid "No news articles yet."
 msgstr ""
 
-#: ./templates/Pages/onas.php:14
+#: ./templates/Pages/onas.php:27
 msgid "About our organisation"
 msgstr ""
 
-#: ./templates/Pages/reviry.php:11
+#: ./templates/Pages/reviry.php:12
 msgid "Our fishing grounds"
 msgstr ""
 
-#: ./templates/Pages/reviry.php:14
+#: ./templates/Pages/reviry.php:15
 msgid "No fishing grounds have been added yet."
 msgstr ""
 
-#: ./templates/Pages/reviry.php:48
-msgid "Fishing ground detail"
+#: ./templates/Pages/zarybnenie.php:15
+#: ./templates/Pages/zarybnenie.php:37
+msgid "No documents have been added yet."
+msgstr ""
+
+#: ./templates/Pages/zarybnenie.php:34
+msgid "Catches"
 msgstr ""
 
 #: ./templates/element/Admin/aiChat.php:51
@@ -1358,12 +1503,12 @@ msgid "Log out"
 msgstr ""
 
 #: ./templates/element/carouselNav.php:9
-#: ./templates/element/news.php:45
+#: ./templates/element/news.php:44
 msgid "Previous"
 msgstr ""
 
 #: ./templates/element/carouselNav.php:10
-#: ./templates/element/news.php:50
+#: ./templates/element/news.php:49
 msgid "Next"
 msgstr ""
 
@@ -1398,10 +1543,6 @@ msgstr ""
 
 #: ./templates/element/reviryMap.php:63
 msgid "Stylized map of Medzilaborce showing the position of each fishing ground"
-msgstr ""
-
-#: ./templates/element/reviryMap.php:100
-msgid "No fishing grounds with a map position yet."
 msgstr ""
 
 #: ./templates/layout/error.php:36
