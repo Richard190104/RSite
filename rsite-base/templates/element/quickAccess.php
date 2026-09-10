@@ -56,7 +56,7 @@ $iconAliases = [
             ?>
             <a class="quick-access__card" href="/<?= h($page->slug) ?>">
                 <svg class="quick-access__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <?= $icon ?>
                 </svg>
                 <span class="quick-access__title"><?= h(__($page->title)) ?></span>
@@ -64,7 +64,7 @@ $iconAliases = [
                     <span class="quick-access__description"><?= h($description) ?></span>
                 <?php endif; ?>
                 <svg class="quick-access__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M4 12h15M13 6l6 6-6 6"/>
                 </svg>
             </a>
