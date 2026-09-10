@@ -2066,3 +2066,24 @@ msgstr "Potiahnutím za úchyt zmeníte poradie – v tomto poradí sa poplatky 
 #: ./templates/Admin/Pages/edit_poplatky.php:66
 msgid "No fees in this category yet."
 msgstr "V tejto kategórii zatiaľ nie sú žiadne poplatky."
+
+#: ./src/Controller/Admin/AppController.php:121
+#: ./templates/Admin/Configurations/index.php:15
+msgid "Configurations"
+msgstr "Konfigurácie"
+
+#: ./src/Controller/Admin/ConfigurationsController.php:55
+msgid "Could not update the setting."
+msgstr "Nastavenie sa nepodarilo aktualizovať."
+
+#: ./templates/Admin/Configurations/index.php:94
+msgid "Automatic images"
+msgstr "Automatické obrázky"
+
+#: ./templates/Admin/Configurations/index.php:102
+msgid "Fill in a random photo for articles/events/fishing grounds with no image of their own"
+msgstr "Doplniť náhodnú fotku pre články, podujatia alebo revíry bez vlastného obrázka"
+
+#: ./templates/Admin/Configurations/index.php:107
+msgid "When turned off, a record with no image of its own shows a plain \"no image\" graphic instead of a random stock photo."
+msgstr "Keď je táto možnosť vypnutá, záznam bez vlastného obrázka zobrazí namiesto náhodnej fotky jednoduchú grafiku „bez obrázka“."

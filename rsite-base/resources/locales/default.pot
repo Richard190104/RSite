@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-09 09:18+0000\n"
+"POT-Creation-Date: 2026-09-10 13:27+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -124,8 +124,8 @@ msgid "The site's logo images (e.g. the main header logo, footer logo)."
 msgstr ""
 
 #: ./src/Controller/Admin/AppController.php:121
-#: ./templates/Admin/Colors/index.php:9
-msgid "Colors"
+#: ./templates/Admin/Configurations/index.php:15
+msgid "Configurations"
 msgstr ""
 
 #: ./src/Controller/Admin/AppController.php:122
@@ -144,28 +144,28 @@ msgstr ""
 msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:65
+#: ./src/Controller/Admin/AssistantController.php:63
 msgid "The AI assistant is not configured (missing Ai.geminiApiKey in app_local.php)."
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:74
+#: ./src/Controller/Admin/AssistantController.php:72
 msgid "description"
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:81
+#: ./src/Controller/Admin/AssistantController.php:79
 msgid "Say something first."
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:411
+#: ./src/Controller/Admin/AssistantController.php:429
 msgid "The AI model is overloaded right now — try again in a moment."
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:415
+#: ./src/Controller/Admin/AssistantController.php:433
 msgid "The AI assistant could not be reached right now."
 msgstr ""
 
-#: ./src/Controller/Admin/AssistantController.php:422
-#: ./src/Controller/Admin/AssistantController.php:431
+#: ./src/Controller/Admin/AssistantController.php:440
+#: ./src/Controller/Admin/AssistantController.php:449
 msgid "The AI assistant returned an empty suggestion."
 msgstr ""
 
@@ -239,22 +239,6 @@ msgstr ""
 msgid "Could not delete the category."
 msgstr ""
 
-#: ./src/Controller/Admin/ColorsController.php:20
-msgid "Colors saved."
-msgstr ""
-
-#: ./src/Controller/Admin/ColorsController.php:25
-msgid "Could not save: {0}"
-msgstr ""
-
-#: ./src/Controller/Admin/ColorsController.php:47
-msgid "Colors reset to defaults."
-msgstr ""
-
-#: ./src/Controller/Admin/ColorsController.php:49
-msgid "Could not reset: {0}"
-msgstr ""
-
 #: ./src/Controller/Admin/CommitteeMembersController.php:41
 #: ./src/Controller/Admin/CommitteeMembersController.php:85
 msgid "Committee member saved."
@@ -273,21 +257,41 @@ msgstr ""
 msgid "Could not delete the committee member."
 msgstr ""
 
-#: ./src/Controller/Admin/EventsController.php:48
-#: ./src/Controller/Admin/EventsController.php:97
+#: ./src/Controller/Admin/ConfigurationsController.php:20
+msgid "Colors saved."
+msgstr ""
+
+#: ./src/Controller/Admin/ConfigurationsController.php:25
+msgid "Could not save: {0}"
+msgstr ""
+
+#: ./src/Controller/Admin/ConfigurationsController.php:55
+msgid "Could not update the setting."
+msgstr ""
+
+#: ./src/Controller/Admin/ConfigurationsController.php:75
+msgid "Colors reset to defaults."
+msgstr ""
+
+#: ./src/Controller/Admin/ConfigurationsController.php:77
+msgid "Could not reset: {0}"
+msgstr ""
+
+#: ./src/Controller/Admin/EventsController.php:43
+#: ./src/Controller/Admin/EventsController.php:88
 msgid "Event saved."
 msgstr ""
 
-#: ./src/Controller/Admin/EventsController.php:57
-#: ./src/Controller/Admin/EventsController.php:106
+#: ./src/Controller/Admin/EventsController.php:52
+#: ./src/Controller/Admin/EventsController.php:97
 msgid "Could not save the event, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/EventsController.php:124
+#: ./src/Controller/Admin/EventsController.php:115
 msgid "Event deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/EventsController.php:126
+#: ./src/Controller/Admin/EventsController.php:117
 msgid "Could not delete the event."
 msgstr ""
 
@@ -406,21 +410,21 @@ msgstr ""
 msgid "Could not save the logo."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:48
-#: ./src/Controller/Admin/NewsController.php:97
+#: ./src/Controller/Admin/NewsController.php:43
+#: ./src/Controller/Admin/NewsController.php:88
 msgid "News article saved."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:57
-#: ./src/Controller/Admin/NewsController.php:106
+#: ./src/Controller/Admin/NewsController.php:52
+#: ./src/Controller/Admin/NewsController.php:97
 msgid "Could not save the article, check the errors below."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:125
+#: ./src/Controller/Admin/NewsController.php:116
 msgid "News article deleted."
 msgstr ""
 
-#: ./src/Controller/Admin/NewsController.php:127
+#: ./src/Controller/Admin/NewsController.php:118
 msgid "Could not delete the article."
 msgstr ""
 
@@ -446,33 +450,33 @@ msgstr ""
 msgid "Could not delete the notification."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:58
-#: ./src/Controller/Admin/PagesController.php:170
-#: ./src/Controller/Admin/PagesController.php:235
-#: ./src/Controller/Admin/PagesController.php:302
+#: ./src/Controller/Admin/PagesController.php:56
+#: ./src/Controller/Admin/PagesController.php:168
+#: ./src/Controller/Admin/PagesController.php:233
+#: ./src/Controller/Admin/PagesController.php:303
 msgid "Page saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:63
-#: ./src/Controller/Admin/PagesController.php:175
-#: ./src/Controller/Admin/PagesController.php:240
-#: ./src/Controller/Admin/PagesController.php:307
+#: ./src/Controller/Admin/PagesController.php:61
+#: ./src/Controller/Admin/PagesController.php:173
+#: ./src/Controller/Admin/PagesController.php:238
+#: ./src/Controller/Admin/PagesController.php:308
 msgid "Could not save the page."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:91
+#: ./src/Controller/Admin/PagesController.php:89
 msgid "Please select at most {0} pages for quick access."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:99
+#: ./src/Controller/Admin/PagesController.php:97
 msgid "Homepage saved."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:104
+#: ./src/Controller/Admin/PagesController.php:102
 msgid "Could not save the homepage."
 msgstr ""
 
-#: ./src/Controller/Admin/PagesController.php:145
+#: ./src/Controller/Admin/PagesController.php:143
 msgid "Please select at most {0} activities for the timeline."
 msgstr ""
 
@@ -496,7 +500,7 @@ msgstr ""
 msgid "Please select a valid location."
 msgstr ""
 
-#: ./src/Model/Table/ColorsTable.php:40
+#: ./src/Model/Table/ConfigurationsTable.php:52
 msgid "Enter a valid hex color, e.g. #143a6b."
 msgstr ""
 
@@ -546,7 +550,7 @@ msgstr ""
 #: ./templates/Admin/Pages/index.php:13
 #: ./templates/Admin/StockingDocuments/add.php:11
 #: ./templates/Admin/StockingDocuments/edit.php:16
-#: ./templates/element/Admin/aiChat.php:103
+#: ./templates/element/Admin/aiChat.php:105
 msgid "Title"
 msgstr ""
 
@@ -583,11 +587,11 @@ msgstr ""
 #: ./templates/Admin/CatchDocuments/edit.php:24
 #: ./templates/Admin/Categories/add.php:39
 #: ./templates/Admin/Categories/edit.php:42
-#: ./templates/Admin/Colors/index.php:64
 #: ./templates/Admin/CommitteeMembers/add.php:23
 #: ./templates/Admin/CommitteeMembers/edit.php:32
-#: ./templates/Admin/Events/add.php:47
-#: ./templates/Admin/Events/edit.php:53
+#: ./templates/Admin/Configurations/index.php:70
+#: ./templates/Admin/Events/add.php:41
+#: ./templates/Admin/Events/edit.php:47
 #: ./templates/Admin/Fees/add.php:22
 #: ./templates/Admin/Fees/edit.php:22
 #: ./templates/Admin/FishingGrounds/add.php:43
@@ -597,8 +601,8 @@ msgstr ""
 #: ./templates/Admin/Logos/edit.php:23
 #: ./templates/Admin/NavbarCategories/add.php:19
 #: ./templates/Admin/NavbarCategories/edit.php:49
-#: ./templates/Admin/News/add.php:46
-#: ./templates/Admin/News/edit.php:52
+#: ./templates/Admin/News/add.php:40
+#: ./templates/Admin/News/edit.php:46
 #: ./templates/Admin/Notifications/add.php:25
 #: ./templates/Admin/Notifications/edit.php:36
 #: ./templates/Admin/Pages/edit.php:29
@@ -622,7 +626,7 @@ msgid "Replace background image (optional)"
 msgstr ""
 
 #: ./templates/Admin/Banners/index.php:19
-#: ./templates/Admin/Colors/index.php:23
+#: ./templates/Admin/Configurations/index.php:29
 msgid "Background"
 msgstr ""
 
@@ -704,7 +708,7 @@ msgstr ""
 #: ./templates/Admin/Pages/edit_onas.php:28
 #: ./templates/Admin/Pages/edit_poplatky.php:26
 #: ./templates/Admin/Pages/edit_zarybnenie.php:24
-#: ./templates/element/Admin/aiChat.php:111
+#: ./templates/element/Admin/aiChat.php:113
 msgid "Description"
 msgstr ""
 
@@ -748,7 +752,7 @@ msgstr ""
 #: ./templates/Admin/Events/edit.php:36
 #: ./templates/Admin/FishingGrounds/edit.php:43
 #: ./templates/Admin/Galleries/edit.php:15
-#: ./templates/Admin/News/edit.php:49
+#: ./templates/Admin/News/edit.php:43
 #: ./templates/Admin/Notifications/edit.php:23
 msgid "Replace image (optional)"
 msgstr ""
@@ -777,115 +781,6 @@ msgstr ""
 
 #: ./templates/Admin/Categories/index.php:57
 msgid "Subcategories of \"{0}\""
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:18
-msgid "Brand colors"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:19
-msgid "Primary"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:20
-msgid "Secondary"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:22
-msgid "Backgrounds & text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:24
-msgid "Alternate background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:25
-msgid "Muted text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:26
-msgid "Heading text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:27
-msgid "Link"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:28
-msgid "Link (hover)"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:30
-msgid "Flash messages"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:31
-msgid "Success — background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:32
-msgid "Success — text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:33
-msgid "Success — border"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:34
-msgid "Warning — background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:35
-msgid "Warning — text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:36
-msgid "Warning — border"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:37
-msgid "Error — background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:38
-msgid "Error — text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:39
-msgid "Error — border"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:40
-msgid "Info — background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:41
-msgid "Info — text"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:42
-msgid "Info — border"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:44
-#: ./templates/Pages/reviry.php:62
-msgid "Fishing grounds map"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:45
-msgid "Map background"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:76
-msgid "Reset all to defaults"
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:79
-msgid "Reset the whole palette to its original default colors? This cannot be undone."
-msgstr ""
-
-#: ./templates/Admin/Colors/index.php:87
-msgid "These change the whole public site's look immediately — no rebuild or redeploy needed. The admin panel itself keeps its own separate colors and is not affected."
 msgstr ""
 
 #: ./templates/Admin/CommitteeMembers/add.php:6
@@ -956,6 +851,127 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
+#: ./templates/Admin/Configurations/index.php:24
+msgid "Brand colors"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:25
+msgid "Primary"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:26
+msgid "Secondary"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:28
+msgid "Backgrounds & text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:30
+msgid "Alternate background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:31
+msgid "Muted text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:32
+msgid "Heading text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:33
+msgid "Link"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:34
+msgid "Link (hover)"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:36
+msgid "Flash messages"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:37
+msgid "Success — background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:38
+msgid "Success — text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:39
+msgid "Success — border"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:40
+msgid "Warning — background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:41
+msgid "Warning — text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:42
+msgid "Warning — border"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:43
+msgid "Error — background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:44
+msgid "Error — text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:45
+msgid "Error — border"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:46
+msgid "Info — background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:47
+msgid "Info — text"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:48
+msgid "Info — border"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:50
+#: ./templates/Pages/reviry.php:62
+msgid "Fishing grounds map"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:51
+msgid "Map background"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:75
+msgid "Reset all to defaults"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:78
+msgid "Reset the whole palette to its original default colors? This cannot be undone."
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:86
+msgid "These change the whole public site's look immediately — no rebuild or redeploy needed. The admin panel itself keeps its own separate colors and is not affected."
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:94
+msgid "Automatic images"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:102
+msgid "Fill in a random photo for articles/events/fishing grounds with no image of their own"
+msgstr ""
+
+#: ./templates/Admin/Configurations/index.php:107
+msgid "When turned off, a record with no image of its own shows a plain \"no image\" graphic instead of a random stock photo."
+msgstr ""
+
 #: ./templates/Admin/Dashboard/index.php:7
 msgid "Admin dashboard"
 msgstr ""
@@ -972,8 +988,8 @@ msgstr ""
 #: ./templates/Admin/Events/add.php:21
 #: ./templates/Admin/Events/edit.php:27
 #: ./templates/Admin/Events/index.php:18
-#: ./templates/Admin/News/add.php:36
-#: ./templates/Admin/News/edit.php:42
+#: ./templates/Admin/News/add.php:30
+#: ./templates/Admin/News/edit.php:36
 #: ./templates/Admin/News/index.php:19
 msgid "Date"
 msgstr ""
@@ -987,8 +1003,8 @@ msgstr ""
 #: ./templates/Admin/Events/edit.php:33
 #: ./templates/Admin/Galleries/add.php:22
 #: ./templates/Admin/Galleries/edit.php:24
-#: ./templates/Admin/News/add.php:40
-#: ./templates/Admin/News/edit.php:46
+#: ./templates/Admin/News/add.php:34
+#: ./templates/Admin/News/edit.php:40
 msgid "— none —"
 msgstr ""
 
@@ -1000,36 +1016,22 @@ msgstr ""
 #: ./templates/Admin/Galleries/add.php:23
 #: ./templates/Admin/Galleries/edit.php:25
 #: ./templates/Admin/Galleries/index.php:17
-#: ./templates/Admin/News/add.php:41
-#: ./templates/Admin/News/edit.php:47
+#: ./templates/Admin/News/add.php:35
+#: ./templates/Admin/News/edit.php:41
 #: ./templates/Admin/News/index.php:18
 msgid "Category"
 msgstr ""
 
 #: ./templates/Admin/Events/add.php:30
-#: ./templates/Admin/News/add.php:43
+#: ./templates/Admin/News/add.php:37
 msgid "Image (optional)"
 msgstr ""
 
-#: ./templates/Admin/Events/add.php:35
-#: ./templates/Admin/Events/edit.php:41
-#: ./templates/Admin/News/add.php:25
-#: ./templates/Admin/News/edit.php:31
+#: ./templates/Admin/Events/add.php:34
+#: ./templates/Admin/Events/edit.php:40
+#: ./templates/Admin/News/add.php:24
+#: ./templates/Admin/News/edit.php:30
 msgid "Poster (HTML)"
-msgstr ""
-
-#: ./templates/Admin/Events/add.php:42
-#: ./templates/Admin/Events/edit.php:48
-#: ./templates/Admin/News/add.php:32
-#: ./templates/Admin/News/edit.php:38
-msgid "Poster preview"
-msgstr ""
-
-#: ./templates/Admin/Events/add.php:43
-#: ./templates/Admin/Events/edit.php:49
-#: ./templates/Admin/News/add.php:33
-#: ./templates/Admin/News/edit.php:39
-msgid "Show preview"
 msgstr ""
 
 #: ./templates/Admin/Events/edit.php:7
@@ -1496,66 +1498,66 @@ msgstr ""
 msgid "Catches"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:51
-#: ./templates/element/Admin/aiChat.php:120
+#: ./templates/element/Admin/aiChat.php:53
+#: ./templates/element/Admin/aiChat.php:122
 msgid "HTML poster"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:64
+#: ./templates/element/Admin/aiChat.php:66
 msgid "Use this"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:66
+#: ./templates/element/Admin/aiChat.php:68
 msgid "Open Rybárik, the AI assistant"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:80
+#: ./templates/element/Admin/aiChat.php:82
 msgid "Rybárik"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:83
+#: ./templates/element/Admin/aiChat.php:85
 msgid "Ask me to draft or rewrite the text on this page — pick a field above and I'll write a ready-to-use suggestion for it."
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:85
+#: ./templates/element/Admin/aiChat.php:87
 msgid "Ask me to suggest a color palette (a mood, a season, \"make it warmer\"...) and I'll fill it in and save it right away."
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:87
+#: ./templates/element/Admin/aiChat.php:89
 msgid "Ask me where to find something or how to do it in this admin panel, and I'll point you to the right place."
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:91
+#: ./templates/element/Admin/aiChat.php:93
 #: ./templates/element/modalCloseBtn.php:8
 #: ./templates/element/notificationPopup.php:21
 msgid "Close"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:101
+#: ./templates/element/Admin/aiChat.php:103
 msgid "title"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:127
+#: ./templates/element/Admin/aiChat.php:129
 msgid "palette"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:129
+#: ./templates/element/Admin/aiChat.php:131
 msgid "Suggest a palette"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:142
+#: ./templates/element/Admin/aiChat.php:144
 msgid "Ask the assistant to draft or edit this text…"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:144
+#: ./templates/element/Admin/aiChat.php:146
 msgid "Describe the palette you want…"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:146
+#: ./templates/element/Admin/aiChat.php:148
 msgid "Ask where to find or how to do something…"
 msgstr ""
 
-#: ./templates/element/Admin/aiChat.php:150
+#: ./templates/element/Admin/aiChat.php:152
 msgid "Send"
 msgstr ""
 
