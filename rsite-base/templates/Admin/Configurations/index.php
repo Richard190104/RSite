@@ -1,12 +1,18 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<string, \App\Model\Entity\Color> $colors
+ * @var iterable<string, \App\Model\Entity\Configuration> $colors
+ * @var bool $automaticImages
  *
- * One form for the whole palette (see Admin\ColorsController::index()) —
- * grouped into sections purely for readability, all saved together.
+ * One form for the whole palette (see Admin\ConfigurationsController::index()) —
+ * grouped into sections purely for readability, all saved together. The
+ * "Automatic images" toggle below is unrelated to the palette (it decides
+ * whether a record with no image of its own gets a random stock photo or a
+ * plain "no image" graphic — see PlaceholderImagesTable::random()) and
+ * saves itself immediately on click via its own tiny form, same pattern as
+ * Admin\BannersController::toggleEnabled().
  */
-$this->assign('title', __('Colors'));
+$this->assign('title', __('Configurations'));
 
 // See Admin\AssistantController's 'palette' mode and
 // webroot/js/admin-helper-widget.js's applyPalette() — a reply there fills
@@ -64,13 +70,6 @@ $groups = [
             <?= $this->Form->button(__('Save')) ?>
         </div>
     <?= $this->Form->end() ?>
-
-    <?php
-        // A separate <form> on purpose (postLink can't live inside the main
-        // #colors-form above without producing invalid nested <form> tags) —
-        // resets every color in one action, never one at a time, so the
-        // palette can't end up half-default/half-custom.
-    ?>
     <div class="form-card__actions">
         <?= $this->Form->postLink(
             __('Reset all to defaults'),
@@ -88,6 +87,25 @@ $groups = [
                 'These change the whole public site\'s look immediately — no rebuild or redeploy needed. The admin'
                     . ' panel itself keeps its own separate colors and is not affected.',
             ) ?>
+        </p>
+    </div>
+
+    <div class="form-card__hints">
+        <h3><?= __('Automatic images') ?></h3>
+        <?= $this->Form->create(null, ['url' => ['action' => 'toggleAutomaticImages']]) ?>
+            <div class="input checkbox">
+                <label>
+                    <?= $this->Form->checkbox('automatic_images', [
+                        'checked' => $automaticImages,
+                        'class' => 'js-toggle-checkbox',
+                    ]) ?>
+                    <?= __('Fill in a random photo for articles/events/fishing grounds with no image of their own') ?>
+                </label>
+            </div>
+        <?= $this->Form->end() ?>
+        <p class="form-card__hint">
+            <?= __('When turned off, a record with no image of its own shows a plain "no image" graphic instead of a'
+                . ' random stock photo.') ?>
         </p>
     </div>
 </div>

@@ -112,31 +112,34 @@ trait SiteInfoTrait
     }
 
     /**
-     * A random stock nature photo's public URL (webroot/img/placeholders/),
-     * for News/Event/FishingGround cards that have no image of their own —
-     * see PlaceholderImagesTable::random(). Deliberately not memoized like
-     * this trait's other getters: a listing page calls this once per card,
-     * and each one should get its own independent pick rather than the same
-     * photo repeated down the whole page.
+     * A stock nature photo's public URL (webroot/img/placeholders/), for
+     * News/Event/FishingGround cards that have no image of their own — or,
+     * if the "Automatic Images" setting is off, a neutral "no image"
+     * graphic instead of a random photo (same filename every time in that
+     * case; see PlaceholderImagesTable::random()). Deliberately not
+     * memoized like this trait's other getters: a listing page calls this
+     * once per card, and each one should get its own independent pick
+     * rather than the same photo repeated down the whole page.
      */
-    public function randomPlaceholderImage(): ?string
+    public function randomPlaceholderImage(): string
     {
-        $filename = TableRegistry::getTableLocator()->get('PlaceholderImages')->random();
-
-        return $filename === null ? null : '/img/placeholders/' . $filename;
+        return '/img/placeholders/' . TableRegistry::getTableLocator()->get('PlaceholderImages')->random();
     }
 
     /**
-     * The site's customizable palette (Admin\ColorsController) as
+     * The site's customizable palette (Admin\ConfigurationsController) as
      * slug => hex, e.g. 'primary' => '#001a3b' — read by
      * templates/element/colorVariables.php to build the :root override the
-     * public layout injects after the compiled stylesheet.
+     * public layout injects after the compiled stylesheet. Excludes any
+     * non-color settings that share the same table (see
+     * ConfigurationsTable::SETTING_SLUGS) — allAsSlugMap() already filters
+     * those out, this just passes its result through.
      *
      * @return array<string, string>
      */
     public function siteColors(): array
     {
-        return $this->siteColors ??= TableRegistry::getTableLocator()->get('Colors')->allAsSlugMap();
+        return $this->siteColors ??= TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
     }
 
     /**
