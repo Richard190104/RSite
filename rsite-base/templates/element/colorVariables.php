@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  *
  * Overrides the :root custom properties resources/scss/_base.scss compiles
- * in as defaults, with whatever an admin has set via Admin\ColorsController
+ * in as defaults, with whatever an admin has set via Admin\ConfigurationsController
  * — later same-specificity rules win in CSS, so this only needs to
  * redeclare the properties, not diff them against the defaults. Rendered
  * only in the public layout (see templates/layout/default.php) — the admin

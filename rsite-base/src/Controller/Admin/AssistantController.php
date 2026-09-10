@@ -82,7 +82,7 @@ class AssistantController extends AppController
         }
 
         $organisationName = (string)TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
-        $colors = TableRegistry::getTableLocator()->get('Colors')->allAsSlugMap();
+        $colors = TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
 
         $systemPrompt = $mode === 'nav'
             ? $this->buildNavigationPrompt()
@@ -261,7 +261,7 @@ class AssistantController extends AppController
 
     /**
      * @param array<string, string> $colors The site's current live palette
-     *   (Admin\ColorsController, slug => hex) — always the actual values an
+     *   (Admin\ConfigurationsController, slug => hex) — always the actual values an
      *   admin has set, never a fixed default, so the assistant's output
      *   stays on-brand even after someone changes the palette.
      */

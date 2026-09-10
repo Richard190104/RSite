@@ -24,7 +24,7 @@
  * @var string|null $imageUrl Optional: the public URL of an already-uploaded image for this record (e.g. News::image).
  *   When set, Admin\AssistantController::chat() can offer to use it as a full photo background (with a dark overlay) for
  *   an HTML-mode poster instead of the plain white/light-gray card.
- * @var bool|null $paletteMode Optional: enables a "Suggest a palette" mode button (see Admin\Colors\index.php)
+ * @var bool|null $paletteMode Optional: enables a "Suggest a palette" mode button (see Admin\Configurations\index.php)
  *   instead of the usual field-drafting ones — has no single target field, since a reply here fills every color
  *   input on the page at once and immediately submits the form (see webroot/js/admin-helper-widget.js applyPalette),
  *   rather than waiting for a "Use this" click.

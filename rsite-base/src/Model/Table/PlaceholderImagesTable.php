@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 
 /**
  * A fixed pool of stock nature photos (webroot/img/placeholders/), each row
@@ -13,6 +14,8 @@ use Cake\ORM\Table;
  */
 class PlaceholderImagesTable extends Table
 {
+    private const NO_IMAGE_FILENAME = 'no-image.svg';
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -23,15 +26,27 @@ class PlaceholderImagesTable extends Table
     }
 
     /**
-     * One random filename from the pool (e.g. 'placeholder-03.jpg'), for a
-     * template to build a URL under /img/placeholders/ from. Null only if
-     * the table is empty, which never happens outside of a broken seed.
+     * A filename from the pool (e.g. 'placeholder-03.jpg') for a template to
+     * build a URL under /img/placeholders/ from — random unless "Automatic
+     * Images" is off, in which case it's always the same neutral "no image"
+     * graphic instead of a random stock photo. Never null: even the "off"
+     * case still returns a real filename, so nothing calling this needs to
+     * handle an empty path.
      */
-    public function random(): ?string
+    public function random(): string
     {
+        if (!$this->automaticImagesEnabled()) {
+            return self::NO_IMAGE_FILENAME;
+        }
+
         return $this->find()
             ->select(['filename'])
             ->orderBy(['rand()'])
-            ->first()?->filename;
+            ->first()?->filename ?? self::NO_IMAGE_FILENAME;
+    }
+
+    private function automaticImagesEnabled(): bool
+    {
+        return TableRegistry::getTableLocator()->get('Configurations')->automaticImagesEnabled();
     }
 }
