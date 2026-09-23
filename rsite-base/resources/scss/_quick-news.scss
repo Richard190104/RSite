@@ -155,8 +155,12 @@
     }
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .quick-news {
-        padding: 2rem 0;
+        padding: 2.4rem 1.6rem;
+    }
+
+    .quick-news__heading {
+        font-size: v.$font-size-4xl;
     }
 }

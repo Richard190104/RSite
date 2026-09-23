@@ -582,7 +582,7 @@
     font-size: v.$font-size-md;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: v.$breakpoint-lg) {
     .p-aktivity__upcoming {
         grid-template-columns: 1fr 1fr;
     }
@@ -592,7 +592,7 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-aktivity__calendar {
         grid-template-columns: 1fr;
         gap: 1.4rem;

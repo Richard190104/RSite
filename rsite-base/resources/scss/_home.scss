@@ -119,7 +119,7 @@
     }
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-home__about-us {
         flex-direction: column;
         gap: 2rem;
@@ -130,6 +130,12 @@
         max-width: 100%;
     }
 
+    .p-home__about-us-right {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 32rem), 1fr));
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
     .p-home__about-us-right {
         grid-template-columns: 1fr;
         gap: 0;

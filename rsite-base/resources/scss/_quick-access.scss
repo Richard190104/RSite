@@ -84,8 +84,22 @@
     box-sizing: content-box;
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .quick-access {
-        padding: 2rem 0;
+        padding: 2.4rem 1.6rem;
+    }
+
+    .quick-access__heading {
+        font-size: v.$font-size-4xl;
+    }
+
+    .quick-access__grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .quick-access__grid {
+        grid-template-columns: 1fr;
     }
 }

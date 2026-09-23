@@ -91,10 +91,14 @@ $activeNotifications = $this->activeNotifications();
                     <?php endif; ?>
                 </div>
             </div>
+
+            <button type="button" class="site-nav__burger" aria-label="<?= __('Menu') ?>" aria-expanded="false" aria-controls="site-nav-menu">
+                <span></span>
+            </button>
         </div>
     </div>
 
-    <div class="site-nav__menubar">
+    <div class="site-nav__menubar" id="site-nav-menu">
         <div class="site-nav__menubar-inner">
             <ul class="site-nav__categories">
                 <?php foreach ($navbarCategories as $category): ?>

@@ -108,7 +108,7 @@
     color: rgba(255, 255, 255, 0.85);
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .page-banner,
     .page-banner__slide {
         min-height: 30rem;
@@ -126,5 +126,9 @@
 
     .page-banner__subtitle {
         font-size: v.$font-size-md;
+    }
+
+    .page-banner__content {
+        padding: 2.4rem 1.6rem;
     }
 }

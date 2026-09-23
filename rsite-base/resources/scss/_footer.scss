@@ -11,18 +11,20 @@
 
 .site-footer__inner {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: stretch;
     max-width: v.$content-width;
     margin: 0 auto;
-    gap: 10rem;
-    padding: 1.6rem 2rem;
+    gap: 2.4rem;
+    padding: 2.4rem 1.6rem 3rem;
 }
 
 .site-footer__brand {
     display: flex;
-    align-items: center;
-    gap: 0.9rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    max-width: 100%;
     text-decoration: none;
 }
 
@@ -51,6 +53,8 @@
 .site-footer__text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .site-footer__org {
@@ -77,10 +81,10 @@
 .site-footer__left,
 .site-footer__center,
 .site-footer__right {
-    // Three even columns, no fixed widths — they grow/shrink together so
-    // the row always fills the full 100% with no leftover side gaps.
-    flex: 1 1 0;
+    flex: 0 0 auto;
+    width: 100%;
     min-width: 0;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -105,10 +109,8 @@
 
 .site-footer__links {
     display: flex;
-    flex-flow: column wrap;
-    align-content: flex-start;
-    max-height: calc(4 * (v.$font-size-base * 1.4 + 0.8rem));
-    column-gap: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -117,12 +119,13 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
+        max-width: 100%;
         font-size: v.$font-size-md;
         font-weight: 400;
         line-height: 1.4;
         color: v.$color-bg;
         text-decoration: none;
-        white-space: nowrap;
+        overflow-wrap: anywhere;
 
         &::before {
             content: '';
@@ -154,12 +157,18 @@
 
 .site-footer__contact-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.7rem;
+    max-width: 100%;
     font-size: v.$font-size-md;
     font-weight: 400;
     line-height: 1.4;
     color: v.$color-bg;
+
+    span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
 
     & + & {
         margin-top: 0.6rem;
@@ -170,6 +179,39 @@
         width: 1.6rem;
         height: 1.6rem;
         color: v.$color-secondary;
+    }
+}
+
+@media screen and (min-width: v.$breakpoint-lg) {
+    .site-footer__inner {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 6rem;
+        padding: 1.6rem 2rem;
+    }
+
+    .site-footer__brand {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .site-footer__left,
+    .site-footer__center,
+    .site-footer__right {
+        flex: 1 1 0;
+        width: auto;
+    }
+
+    .site-footer__links {
+        flex-flow: column wrap;
+        align-content: flex-start;
+        max-height: calc(4 * (v.$font-size-base * 1.4 + 0.8rem));
+        column-gap: 2rem;
+
+        a {
+            white-space: nowrap;
+            overflow-wrap: normal;
+        }
     }
 }
 

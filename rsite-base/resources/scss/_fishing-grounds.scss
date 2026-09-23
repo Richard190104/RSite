@@ -123,7 +123,7 @@
     color: v.$color-primary;
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .fishing-grounds {
         padding: 2rem 1.5rem 3rem;
     }
@@ -131,7 +131,9 @@
     .fishing-grounds__layout {
         flex-direction: column;
     }
+}
 
+@media screen and (max-width: v.$breakpoint-sm) {
     .fishing-grounds__grid {
         grid-template-columns: 1fr;
     }
