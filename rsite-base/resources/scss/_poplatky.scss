@@ -184,7 +184,7 @@
     color: v.$color-primary;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-poplatky__grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -210,5 +210,6 @@
     .p-poplatky__table-block {
         width: 100%;
         min-width: 0;
+        overflow-x: auto;
     }
 }

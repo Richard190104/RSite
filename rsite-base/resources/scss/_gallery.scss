@@ -289,7 +289,7 @@
 // .p-gallery__lightbox-close's actual appearance comes from the shared
 // .modal-close-btn class (see _base.scss) — nothing to style here.
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-gallery__body {
         padding: 2rem 1.6rem 3.5rem;
     }
@@ -300,11 +300,18 @@
 
     .p-gallery__cards,
     .p-gallery__grid {
-        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-        gap: 2rem 1.2rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.6rem;
     }
 
     .p-gallery__subcats-carousel .swiper-slide.p-gallery__card--sub {
         width: 11.5rem;
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+    .p-gallery__cards,
+    .p-gallery__grid {
+        grid-template-columns: 1fr;
     }
 }

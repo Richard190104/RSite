@@ -57,6 +57,13 @@
     color: v.$color-text-muted;
 }
 
+@media screen and (max-width: v.$breakpoint-md) {
+    // Two-up grid: a line only between the pair, not on the outer edge.
+    .mini-banner:not(:nth-child(odd))::after {
+        content: none;
+    }
+}
+
 @media screen and (max-width: v.$breakpoint-sm) {
     .mini-banner {
         padding: 1.8rem 1rem;

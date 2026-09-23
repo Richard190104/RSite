@@ -93,7 +93,7 @@
     word-break: break-word;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-zarybnenie__list {
         grid-template-columns: repeat(2, 1fr);
     }

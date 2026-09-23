@@ -331,11 +331,17 @@
     white-space: pre-line;
 }
 
-@media screen and (max-width: v.$breakpoint-sm) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-news {
-        padding: 2rem 0;
+        padding: 2.4rem 1.6rem 3.5rem;
     }
 
+    .p-news__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
     .p-news__grid {
         grid-template-columns: 1fr;
     }

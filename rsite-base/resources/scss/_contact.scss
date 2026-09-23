@@ -241,7 +241,7 @@
     }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: v.$breakpoint-md) {
     .p-contact__layout {
         grid-template-columns: 1fr;
     }

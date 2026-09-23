@@ -58,10 +58,8 @@
 // used elsewhere (e.g. _reviry.scss's hero sections) to read as a distinct
 // section from the plain-background layout above it.
 .p-onas__timeline-section {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: 4rem 2rem;
+    width: 100%;
+    padding: 4rem 1.6rem;
 }
 
 .p-onas__timeline-heading {
@@ -161,6 +159,13 @@
 .p-onas__timeline-title {
     font-size: v.$font-size-md;
     color: v.$color-text-muted;
+}
+
+@media screen and (max-width: v.$breakpoint-md) {
+    .p-onas__layout {
+        padding: 3rem 1.6rem;
+        gap: 2.4rem;
+    }
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {

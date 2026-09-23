@@ -78,7 +78,10 @@ $font-size-4xl: 2.3rem;
 $font-size-5xl: 2.7rem;
 $font-size-6xl: 3.9rem;
 
+// Phone, tablet, wide layout. Media queries use these — not raw widths.
 $breakpoint-sm: 640px;
+$breakpoint-md: 960px;
+$breakpoint-lg: 1100px;
 
 // Shared content width cap for every full-width section (navbar, hero,
 // homepage sections, footer, contact page) — keep them all on this one
