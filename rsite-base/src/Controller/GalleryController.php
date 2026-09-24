@@ -62,12 +62,14 @@ class GalleryController extends AppController
         // available in the template — a photo belonging to one of $parent's
         // subcategories gets a badge naming that subcategory (see
         // templates/Gallery/cards.php), which needs $photo->category->title.
-        $photos = $this->fetchTable('Galleries')
-            ->find()
-            ->contain(['Categories'])
-            ->where(['Galleries.category_id IN' => $categoryIds])
-            ->orderBy(['Galleries.created' => 'DESC'])
-            ->all();
+        $photos = $this->paginate(
+            $this->fetchTable('Galleries')
+                ->find()
+                ->contain(['Categories'])
+                ->where(['Galleries.category_id IN' => $categoryIds])
+                ->orderBy(['Galleries.created' => 'DESC']),
+            ['limit' => 16],
+        );
 
         $this->set(compact('parent', 'subcategories', 'photos'));
         $this->render('cards');

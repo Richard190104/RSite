@@ -4,8 +4,9 @@
  * @var \Cake\ORM\ResultSet<\App\Model\Entity\Category>|null $categories Top-level categories — root view only.
  * @var \App\Model\Entity\Category|null $parent Category being viewed — category detail view only.
  * @var \Cake\ORM\ResultSet<\App\Model\Entity\Category>|null $subcategories Direct children of $parent — category detail view only.
- * @var \Cake\ORM\ResultSet<\App\Model\Entity\Gallery>|null $photos Photos of $parent and its subcategories combined — category detail view only.
+ * @var \Cake\Datasource\Paging\PaginatedInterface<\App\Model\Entity\Gallery>|null $photos Photos of $parent and its subcategories combined — category detail view only.
  */
+$this->loadHelper('Paginator');
 $parent ??= null;
 $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery categories'));
 ?>
@@ -109,6 +110,18 @@ $this->assign('title', $parent !== null ? h($parent->title) : __('Gallery catego
                         </div>
                     <?php endforeach; ?>
                 </div>
+
+                <?php
+                $chevronLeft = '<svg class="p-gallery__pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>';
+                $chevronRight = '<svg class="p-gallery__pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>';
+                ?>
+                <?php if ($photos->pageCount() > 1): ?>
+                    <ul class="pagination p-gallery__pagination">
+                        <?= $this->Paginator->prev($chevronLeft, ['escape' => false]) ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next($chevronRight, ['escape' => false]) ?>
+                    </ul>
+                <?php endif; ?>
 
                 <div class="p-gallery__lightbox" data-gallery-lightbox-modal>
                     <div class="p-gallery__lightbox-frame">
