@@ -14,8 +14,9 @@ $this->assign('title', __('Add photo'));
                 'multiple' => true,
                 'name' => 'image[]',
                 'label' => __('Images'),
+                'container' => ['class' => 'form-grid__full'],
             ]) ?>
-            <p><?= __('Select multiple files to add several photos at once — they will all be saved under the category picked below.') ?></p>
+            <p class="form-grid__full"><?= __('Select multiple files to add several photos at once — they will all be saved under the category picked below.') ?></p>
             <?= $this->Form->control('category_id', [
                 'type' => 'select',
                 'options' => $categories,

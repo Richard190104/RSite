@@ -207,7 +207,11 @@
         width: 100%;
     }
 
-    .form-grid__full {
+    // Cake renders `'container' => ['class' => 'form-grid__full']` as an
+    // attribute on the input, not a class on the grid cell — :has() is what
+    // actually makes those fields span the row.
+    .form-grid__full,
+    .form-grid .input:has([container="form-grid__full"]) {
         grid-column: 1 / -1;
     }
 
