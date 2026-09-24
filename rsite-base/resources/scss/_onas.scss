@@ -120,11 +120,6 @@
     &[href] {
         cursor: pointer;
 
-        &:hover .p-onas__timeline-title,
-        &:focus-visible .p-onas__timeline-title {
-            text-decoration: underline;
-        }
-
         &:hover .p-onas__timeline-icon,
         &:focus-visible .p-onas__timeline-icon {
             border-color: v.$color-primary;
