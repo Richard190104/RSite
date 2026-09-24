@@ -16,6 +16,10 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
     gap: 2rem;
     align-items: stretch;
+
+    &:not(:has(.p-contact__info)) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .p-contact__info,
