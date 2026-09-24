@@ -17,10 +17,12 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
 <section class="p-contact">
     <div class="p-contact__body">
         <div class="p-contact__layout">
+            <?php if ($address !== '' || $email !== '' || $phone !== '' || $ico !== ''): ?>
             <aside class="p-contact__info">
                 <h2 class="p-contact__section-title"><?= __('Contact details') ?></h2>
 
                 <ul class="p-contact__details">
+                    <?php if ($address !== ''): ?>
                     <li class="p-contact__detail">
                         <span class="p-contact__detail-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -30,12 +32,12 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                         </span>
                         <div class="p-contact__detail-body">
                             <h3 class="p-contact__detail-title"><?= __('Address') ?></h3>
-                            <?php if ($address !== ''): ?>
-                                <p class="p-contact__detail-text p-contact__detail-text--multiline"><?= nl2br(h($address)) ?></p>
-                            <?php endif; ?>
+                            <p class="p-contact__detail-text p-contact__detail-text--multiline"><?= nl2br(h($address)) ?></p>
                         </div>
                     </li>
+                    <?php endif; ?>
 
+                    <?php if ($email !== ''): ?>
                     <li class="p-contact__detail">
                         <span class="p-contact__detail-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -45,12 +47,12 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                         </span>
                         <div class="p-contact__detail-body">
                             <h3 class="p-contact__detail-title"><?= __('Email') ?></h3>
-                            <?php if ($email !== ''): ?>
-                                <a class="p-contact__detail-link" href="mailto:<?= h($email) ?>"><?= h($email) ?></a>
-                            <?php endif; ?>
+                            <a class="p-contact__detail-link" href="mailto:<?= h($email) ?>"><?= h($email) ?></a>
                         </div>
                     </li>
+                    <?php endif; ?>
 
+                    <?php if ($phone !== ''): ?>
                     <li class="p-contact__detail">
                         <span class="p-contact__detail-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -59,12 +61,12 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                         </span>
                         <div class="p-contact__detail-body">
                             <h3 class="p-contact__detail-title"><?= __('Phone') ?></h3>
-                            <?php if ($phone !== ''): ?>
-                                <a class="p-contact__detail-link" href="tel:<?= h($phone) ?>"><?= h($phone) ?></a>
-                            <?php endif; ?>
+                            <a class="p-contact__detail-link" href="tel:<?= h($phone) ?>"><?= h($phone) ?></a>
                         </div>
                     </li>
+                    <?php endif; ?>
 
+                    <?php if ($ico !== ''): ?>
                     <li class="p-contact__detail">
                         <span class="p-contact__detail-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -74,13 +76,13 @@ $mapLinkUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(
                         </span>
                         <div class="p-contact__detail-body">
                             <h3 class="p-contact__detail-title"><?= __('ID No.') ?></h3>
-                            <?php if ($ico !== ''): ?>
-                                <p class="p-contact__detail-text"><?= h($ico) ?></p>
-                            <?php endif; ?>
+                            <p class="p-contact__detail-text"><?= h($ico) ?></p>
                         </div>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </aside>
+            <?php endif; ?>
 
             <div class="p-contact__map-block">
                 <h2 class="p-contact__section-title"><?= __('Find us') ?></h2>
