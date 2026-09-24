@@ -207,7 +207,8 @@
         width: 100%;
     }
 
-    .form-grid__full {
+    .form-grid__full,
+    .form-grid .input:has(.js-wysiwyg) {
         grid-column: 1 / -1;
     }
 
