@@ -139,7 +139,8 @@
     color: v.$color-primary;
 }
 
-.p-news__pagination {
+.p-news__pagination,
+.p-gallery__pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -189,7 +190,8 @@
     }
 }
 
-.p-news__pagination-icon {
+.p-news__pagination-icon,
+.p-gallery__pagination-icon {
     width: 1.6rem;
     height: 1.6rem;
     flex-shrink: 0;
