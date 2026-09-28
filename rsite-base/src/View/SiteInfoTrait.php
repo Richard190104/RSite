@@ -54,7 +54,7 @@ trait SiteInfoTrait
 
     public function logoPath(): string
     {
-        return $this->logoPath ??= TableRegistry::getTableLocator()->get('Logos')->path('Main logo');
+        return $this->logoPath ??= TableRegistry::getTableLocator()->get('Logos')->mainPath();
     }
 
     public function contactPage(): ?Page

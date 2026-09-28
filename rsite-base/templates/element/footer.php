@@ -30,6 +30,7 @@ $quickAccessPages = $quickAccessPageIds
         ->indexBy('id')
         ->toArray()
     : [];
+$partners = TableRegistry::getTableLocator()->get('Logos')->partners();
 ?>
 <div class="site-footer">
     <div class="site-footer__inner">
@@ -112,5 +113,17 @@ $quickAccessPages = $quickAccessPageIds
         <?php endif; ?>
 
     </div>
+    <?php if ($partners): ?>
+        <div class="site-footer__partners">
+            <span class="site-footer__heading"><?= __('Partners') ?></span>
+            <ul class="site-footer__partners-list">
+                <?php foreach ($partners as $partner): ?>
+                    <li class="site-footer__partner">
+                        <img src="<?= h($this->Url->build('/img/logos/' . $partner->path)) ?>" alt="<?= h($partner->name) ?>">
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
     </div>
 </div>

@@ -3,7 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Logo $logo
  */
-$this->assign('title', __($logo->name));
+$this->assign('title', $logo->isNew() ? __('Add logo') : __('Edit logo'));
+$kind = $logo->options['type'] ?? 'partner';
 ?>
 <div class="content form-card">
     <?php if (!empty($logo->path)): ?>
@@ -13,6 +14,20 @@ $this->assign('title', __($logo->name));
     <?php endif; ?>
     <?= $this->Form->create($logo, ['type' => 'file']) ?>
         <div class="form-grid">
+            <?= $this->Form->control('name', [
+                'label' => __('Name'),
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
+            <?= $this->Form->control('type', [
+                'type' => 'select',
+                'label' => __('Kind'),
+                'options' => [
+                    'main' => __('Main'),
+                    'partner' => __('Partner'),
+                ],
+                'value' => $kind,
+                'container' => ['class' => 'form-grid__full'],
+            ]) ?>
             <?= $this->Form->control('path', [
                 'type' => 'file',
                 'label' => empty($logo->path) ? __('Upload image') : __('Replace image'),
