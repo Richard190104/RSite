@@ -207,8 +207,13 @@
         width: 100%;
     }
 
+    // Cake renders `'container' => ['class' => 'form-grid__full']` as an
+    // attribute on the input, not a class on the grid cell — :has() is what
+    // actually makes those fields span the row. The wysiwyg selector covers
+    // editors that were already marked full-width that way.
     .form-grid__full,
-    .form-grid .input:has(.js-wysiwyg) {
+    .form-grid .input:has(.js-wysiwyg),
+    .form-grid .input:has([container="form-grid__full"]) {
         grid-column: 1 / -1;
     }
 

@@ -15,9 +15,9 @@ $this->set('aiChatFields', [
 <div class="content form-card">
     <?= $this->Form->create($category) ?>
         <div class="form-grid">
-            <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title']) ?>
+            <?= $this->Form->control('title', ['label' => __('Title'), 'id' => 'title', 'container' => ['class' => 'form-grid__full']]) ?>
 
-            <div class="admin-page-picker-field">
+            <div class="admin-page-picker-field form-grid__full">
                 <label><?= __('Pages in this category') ?></label>
                 <p class="admin-drag-hint"><?= __('Toggle a page on to include it into category, drag by the handle to reorder') ?></p>
                 <ul class="js-drag-reorder-list admin-page-picker" data-page-picker-field="page_ids">

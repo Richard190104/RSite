@@ -12,7 +12,7 @@ $this->assign('title', __('Edit photo'));
     </div>
     <?= $this->Form->create($photo, ['type' => 'file']) ?>
         <div class="form-grid">
-            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)')]) ?>
+            <?= $this->Form->control('image', ['type' => 'file', 'label' => __('Replace image (optional)'), 'container' => ['class' => 'form-grid__full']]) ?>
             <?= $this->Form->control('text', [
                 'label' => __('Caption'),
                 'maxlength' => 80,
