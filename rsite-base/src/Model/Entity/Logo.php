@@ -9,18 +9,16 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $name
  * @property string $path
+ * @property array|null $options Fixed kind: {"type": "main"|"partner"}.
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  */
 class Logo extends Entity
 {
-    /**
-     * 'name' identifies the logo slot the templates look up, so it is not
-     * mass assignable — it only ever changes in a migration.
-     */
     protected array $_accessible = [
-        'name' => false,
+        'name' => true,
         'path' => true,
+        'options' => true,
         'created' => true,
         'modified' => true,
     ];

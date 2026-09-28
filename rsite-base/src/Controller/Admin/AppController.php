@@ -114,8 +114,8 @@ class AppController extends BaseController
             ],
             'Logos' => [
                 'label' => __('Logos'),
-                'description' => __('The site\'s logo images (e.g. the main header logo, footer logo).'),
-                'actions' => ['index', 'edit'],
+                'description' => __('The site\'s logo images: the header logo, plus partner logos in the footer once an image is uploaded.'),
+                'actions' => ['index', 'add', 'edit', 'delete'],
             ],
             'Configurations' => [
                 'label' => __('Configurations'),

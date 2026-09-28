@@ -23,6 +23,7 @@ $cards = $Banners->find()
     ->limit(4)
     ->all();
 ?>
+<?php if ($mainBanner !== null || $cards->count()): ?>
 <section class="fishing-grounds">
     <h2 class="fishing-grounds__heading"><?= __('Fishing grounds and activities') ?></h2>
 
@@ -53,3 +54,4 @@ $cards = $Banners->find()
         <?php endif; ?>
     </div>
 </section>
+<?php endif; ?>

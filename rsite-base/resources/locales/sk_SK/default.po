@@ -1110,6 +1110,39 @@ msgstr "Hodnota"
 msgid "Logos"
 msgstr "Logá"
 
+msgid "Add logo"
+msgstr "Pridať logo"
+
+msgid "Edit logo"
+msgstr "Upraviť logo"
+
+msgid "Kind"
+msgstr "Druh"
+
+msgid "Main"
+msgstr "Hlavné"
+
+msgid "Partner"
+msgstr "Partner"
+
+msgid "Logo deleted."
+msgstr "Logo bolo zmazané."
+
+msgid "Could not delete the logo."
+msgstr "Logo sa nepodarilo zmazať."
+
+msgid "Partner — local organisation"
+msgstr "Partner — miestna organizácia"
+
+msgid "Partner — Slovak Fishing Association"
+msgstr "Partner — Slovenský rybársky zväz"
+
+msgid "Partner — city"
+msgstr "Partner — mesto"
+
+msgid "Partners"
+msgstr "Partneri"
+
 #: ./templates/Admin/Logos/index.php
 msgid "Logo"
 msgstr "Logo"
@@ -1357,8 +1390,8 @@ msgid "Photo galleries shown on the site, grouped by category."
 msgstr "Fotogalérie zobrazené na stránke, zoskupené podľa kategórie."
 
 #: ./src/Controller/Admin/AppController.php
-msgid "The site's logo images (e.g. the main header logo, footer logo)."
-msgstr "Logá stránky (napr. hlavné logo v hlavičke, logo v pätičke)."
+msgid "The site's logo images: the header logo, plus partner logos in the footer once an image is uploaded."
+msgstr "Logá stránky: logo v hlavičke a logá partnerov v pätičke, keď sa nahrá obrázok."
 
 #: ./src/Controller/Admin/AppController.php
 msgid "Site-wide notifications shown in the navbar's bell dropdown when active and within their valid_from/valid_to date range. A notification can also be flagged to show as a one-off popup in the corner of the page on load."
