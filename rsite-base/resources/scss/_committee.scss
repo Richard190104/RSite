@@ -35,7 +35,8 @@
 
 .committee__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 28rem));
+    justify-content: start;
     gap: 1.6rem;
 }
 
