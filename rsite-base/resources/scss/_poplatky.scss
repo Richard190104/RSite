@@ -36,45 +36,27 @@
     }
 }
 
-// A bento grid: tiles sit on an explicit column track (see the width
-// modifiers below) but each tile's row height simply follows its content —
-// no fixed row span — so a table gaining/losing a row (as admin-edited
-// content will) just makes that one tile a little taller/shorter instead
-// of leaving dead space or clipping.
+// Two columns packed by table length (see PagesController::poplatky()).
+// A single grid row would be as tall as the longest table and leave a hole
+// under the shorter ones.
 .p-poplatky__grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: auto;
+    display: flex;
     gap: 2rem;
-    margin-bottom: 4rem;
-    align-items: start;
+    margin-bottom: 2rem;
+}
+
+.p-poplatky__column {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .p-poplatky__table-block {
-    display: flex;
-    flex-direction: column;
     padding: 2rem 2.2rem;
     border: 1px solid v.$color-bg-alt;
     border-radius: 1rem;
-}
-
-// tall: the longest table (Fishing permits) — narrow, like the portrait
-// tile in a bento layout.
-.p-poplatky__table-block--tall {
-    grid-column: span 2;
-}
-
-// wide: a landscape tile spanning the remaining width beside the tall tile.
-.p-poplatky__table-block--wide {
-    grid-column: span 4;
-}
-
-.p-poplatky__table-block--regular {
-    grid-column: span 2;
-}
-
-.p-poplatky__table-block--small {
-    grid-column: span 3;
 }
 
 .p-poplatky__table {
@@ -186,14 +168,12 @@
 
 @media screen and (max-width: v.$breakpoint-md) {
     .p-poplatky__grid {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: column;
     }
 
-    .p-poplatky__table-block--tall,
-    .p-poplatky__table-block--wide,
-    .p-poplatky__table-block--regular,
-    .p-poplatky__table-block--small {
-        grid-column: span 2;
+    .p-poplatky__column {
+        flex: none;
+        width: 100%;
     }
 }
 
@@ -202,13 +182,7 @@
         padding: 2.5rem 1.6rem 3.5rem;
     }
 
-    .p-poplatky__grid {
-        display: flex;
-        flex-direction: column;
-    }
-
     .p-poplatky__table-block {
-        width: 100%;
         min-width: 0;
         overflow-x: auto;
     }

@@ -285,23 +285,18 @@ class PagesController extends AppController
             $feeSections,
         ));
 
-        // Tile width in the bento grid (see _poplatky.scss's
-        // .p-poplatky__table-block--* modifiers) follows each category's
-        // row count — more rows gets more columns — so the layout adapts
-        // automatically as fees are added/removed/re-categorised in admin,
-        // instead of a manual size picked per category.
-        foreach ($feeSections as &$section) {
-            $rowCount = count($section['rows']);
-            $section['size'] = match (true) {
-                $rowCount >= 8 => 'tall',
-                $rowCount >= 5 => 'wide',
-                $rowCount >= 3 => 'regular',
-                default => 'small',
-            };
+        // Pack into two columns by row count. A single grid row would grow
+        // to the longest table and leave a hole under every shorter one.
+        $feeColumns = [[], []];
+        $columnHeight = [0, 0];
+        foreach ($feeSections as $section) {
+            $index = $columnHeight[0] <= $columnHeight[1] ? 0 : 1;
+            $feeColumns[$index][] = $section;
+            $columnHeight[$index] += count($section['rows']);
         }
-        unset($section);
+        $feeColumns = array_values(array_filter($feeColumns));
 
-        $this->set(compact('page', 'feeSections'));
+        $this->set(compact('page', 'feeColumns'));
     }
 
     /**
