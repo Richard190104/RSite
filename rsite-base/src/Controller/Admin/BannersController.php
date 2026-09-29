@@ -145,6 +145,14 @@ class BannersController extends AppController
             ->combine('slug', 'title')
             ->toArray();
 
-        return $pages + BannersTable::VIRTUAL_LOCATIONS;
+        $options = [];
+        foreach ($pages as $slug => $title) {
+            $options[$slug] = __($title);
+        }
+        foreach (BannersTable::VIRTUAL_LOCATIONS as $key => $label) {
+            $options[$key] = __($label);
+        }
+
+        return $options;
     }
 }

@@ -61,7 +61,7 @@ $categoryLabels = \App\Model\Table\FeesTable::CATEGORIES;
     <p class="admin-drag-hint"><?= __('Drag rows by the handle to reorder — this is the order fees appear within their category on the public page.') ?></p>
 
     <?php foreach ($feesByCategory as $categoryKey => $fees): ?>
-        <h2 class="admin-subsection-title"><?= h($categoryLabels[$categoryKey] ?? $categoryKey) ?></h2>
+        <h2 class="admin-subsection-title"><?= h(__($categoryLabels[$categoryKey] ?? $categoryKey)) ?></h2>
         <?php if (!$fees): ?>
             <p><?= __('No fees in this category yet.') ?></p>
         <?php else: ?>

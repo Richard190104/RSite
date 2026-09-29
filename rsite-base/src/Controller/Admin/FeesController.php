@@ -31,7 +31,7 @@ class FeesController extends AppController
         }
 
         $this->set(compact('fee'));
-        $this->set('categoryOptions', FeesTable::CATEGORIES);
+        $this->set('categoryOptions', $this->categoryOptions());
 
         return null;
     }
@@ -53,7 +53,7 @@ class FeesController extends AppController
         }
 
         $this->set(compact('fee'));
-        $this->set('categoryOptions', FeesTable::CATEGORIES);
+        $this->set('categoryOptions', $this->categoryOptions());
 
         return null;
     }
@@ -102,5 +102,20 @@ class FeesController extends AppController
         $this->set('success', true);
 
         return null;
+    }
+
+    /**
+     * Fixed fee categories, labels translated. Keys stay the stored values.
+     *
+     * @return array<string, string>
+     */
+    private function categoryOptions(): array
+    {
+        $options = [];
+        foreach (FeesTable::CATEGORIES as $key => $label) {
+            $options[$key] = __($label);
+        }
+
+        return $options;
     }
 }
