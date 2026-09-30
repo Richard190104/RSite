@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Rcore\Controller\Admin\ImageUploadTrait;
+
 class FishingGroundsController extends AppController
 {
     use ImageUploadTrait;

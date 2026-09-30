@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "922e89399ca5c7472ea1faf047f0c451",
+    "content-hash": "aaafda8943e90d71e225f2b01431dbbe",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -1385,6 +1385,41 @@
                 "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
             "time": "2021-10-29T13:26:27+00:00"
+        },
+        {
+            "name": "richard190104/rcore",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:Richard190104/rcore.git",
+                "reference": "36dcd7f335afec6bdee973dc1e038834c91f9177"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Richard190104/rcore/zipball/36dcd7f335afec6bdee973dc1e038834c91f9177",
+                "reference": "36dcd7f335afec6bdee973dc1e038834c91f9177",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^5.0",
+                "php": ">=8.1"
+            },
+            "default-branch": true,
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Rcore\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Shared admin/site infrastructure for client projects built on the rsite-base CakePHP app.",
+            "support": {
+                "source": "https://github.com/Richard190104/rcore/tree/main",
+                "issues": "https://github.com/Richard190104/rcore/issues"
+            },
+            "time": "2026-09-30T14:32:25+00:00"
         }
     ],
     "packages-dev": [
@@ -6154,7 +6189,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "richard190104/rcore": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

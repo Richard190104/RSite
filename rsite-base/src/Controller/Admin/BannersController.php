@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Table\BannersTable;
 use Psr\Http\Message\UploadedFileInterface;
+use Rcore\Controller\Admin\ImageUploadTrait;
 
 class BannersController extends AppController
 {

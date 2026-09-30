@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 use App\Model\Entity\Logo;
 use App\Model\Table\LogosTable;
 use Cake\Http\Response;
+use Rcore\Controller\Admin\ImageUploadTrait;
 
 class LogosController extends AppController
 {

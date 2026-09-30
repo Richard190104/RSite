@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Rcore\Controller\Admin\ImageUploadTrait;
+
 class GalleriesController extends AppController
 {
     // ImageUploadTrait is used only for its imageUploadError() validation

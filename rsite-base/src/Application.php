@@ -73,7 +73,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         $this->addPlugin('Authentication');
 
-        // Load more plugins here
+        // Shared admin/site infrastructure reused across client projects —
+        // starts minimal (no bootstrap/routes of its own yet), see
+        // vendor/richard190104/rcore's README for what's in it so far.
+        $this->addPlugin('Rcore');
     }
 
     /**
