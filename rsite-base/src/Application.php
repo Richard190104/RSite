@@ -137,11 +137,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // this list (not sidebar.php, which now lives in the plugin) when
         // adding a section.
         Configure::write('Rcore.extraAdminCategories', [
-            'Dashboard' => [
-                'label' => __('Dashboard'),
-                'description' => __('The admin landing page — a short overview, no editable content here.'),
-                'actions' => ['index'],
-            ],
             'Banners' => [
                 'label' => __('Banners'),
                 'description' => __(
@@ -157,15 +152,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'The dropdown categories shown in the site\'s top navigation menu, each grouping a set of pages.',
                 ),
                 'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
-            'Pages' => [
-                'label' => __('Pages'),
-                'description' => __(
-                    'The site\'s static content pages (e.g. kontakt, homepage content) — edits an existing page\'s'
-                        . ' text/content; the homepage specifically also has its quick-access shortcuts configured'
-                        . ' here.',
-                ),
-                'actions' => ['index', 'edit'],
             ],
             'CommitteeMembers' => [
                 'label' => __('Committee'),
