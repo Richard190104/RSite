@@ -196,15 +196,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'description' => __('Photo galleries shown on the site, grouped by category.'),
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
-            'Notifications' => [
-                'label' => __('Notifications'),
-                'description' => __(
-                    'Site-wide notifications shown in the navbar\'s bell dropdown when active and within their'
-                        . ' valid_from/valid_to date range. A notification can also be flagged to show as a one-off'
-                        . ' popup in the corner of the page on load.',
-                ),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
         ]);
     }
 
