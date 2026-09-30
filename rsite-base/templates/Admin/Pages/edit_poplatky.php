@@ -110,5 +110,5 @@ $categoryLabels = \App\Model\Table\FeesTable::CATEGORIES;
     <?php endforeach; ?>
 </div>
 <?= $this->Html->script('admin-drag-reorder') ?>
-<?= $this->Html->script('vendor/tinymce/tinymce.min') ?>
-<?= $this->Html->script('admin-wysiwyg') ?>
+<?= $this->Html->script('Rcore.vendor/tinymce/tinymce.min') ?>
+<?= $this->Html->script('Rcore.admin-wysiwyg') ?>

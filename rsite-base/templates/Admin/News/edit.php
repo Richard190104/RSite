@@ -47,5 +47,5 @@ $this->set('aiChatFields', [
         </div>
     <?= $this->Form->end() ?>
 </div>
-<?= $this->Html->script('vendor/tinymce/tinymce.min') ?>
-<?= $this->Html->script('admin-wysiwyg') ?>
+<?= $this->Html->script('Rcore.vendor/tinymce/tinymce.min') ?>
+<?= $this->Html->script('Rcore.admin-wysiwyg') ?>

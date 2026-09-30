@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "sass:build": "sass resources/scss:webroot/css --style=compressed --no-source-map",
-    "sass:watch": "sass --watch resources/scss:webroot/css --style=expanded",
+    "sass:build": "sass --load-path=plugins/Rcore/resources/scss resources/scss:webroot/css --style=compressed --no-source-map",
+    "sass:watch": "sass --load-path=plugins/Rcore/resources/scss --watch resources/scss:webroot/css --style=expanded",
     "deploy": "node bin/deploy.mjs",
     "deploy:translations": "node bin/deploy-translations.mjs"
   },
