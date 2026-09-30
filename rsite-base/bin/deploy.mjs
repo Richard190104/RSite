@@ -368,11 +368,17 @@ async function main() {
 
     // sass:build writes into SOURCE_DIR's webroot/css, using ROOT's own
     // node_modules (sass is only a devDependency, so it's never installed
-    // into SOURCE_DIR, which is deliberately --no-dev). --load-path points
-    // at the just-installed plugin's own SCSS (see package.json's
-    // sass:build/sass:watch, which need the same flag for local dev).
+    // into SOURCE_DIR, which is deliberately --no-dev). Two --load-paths:
+    // the plugin's own SCSS (so admin.scss's @use 'admin-wysiwyg' resolves),
+    // and the app's own resources/scss (so that plugin partial's own
+    // @use 'variables' resolves back to it in turn — a partial loaded via
+    // one --load-path does NOT automatically see any other load path,
+    // including the compiled-from input directory, so both must be listed
+    // explicitly). See package.json's sass:build/sass:watch, which need the
+    // same two flags for local dev.
     run('npx', [
         'sass',
+        `--load-path=${relative(ROOT, join(SOURCE_DIR, 'resources', 'scss'))}`,
         `--load-path=${relative(ROOT, join(SOURCE_DIR, 'vendor', 'richard190104', 'rcore', 'resources', 'scss'))}`,
         `${relative(ROOT, join(SOURCE_DIR, 'resources', 'scss'))}:${relative(ROOT, join(SOURCE_DIR, 'webroot', 'css'))}`,
         '--style=compressed',

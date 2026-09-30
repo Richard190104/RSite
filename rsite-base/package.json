@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "sass:build": "sass --load-path=vendor/richard190104/rcore/resources/scss resources/scss:webroot/css --style=compressed --no-source-map",
-    "sass:watch": "sass --load-path=vendor/richard190104/rcore/resources/scss --watch resources/scss:webroot/css --style=expanded",
+    "sass:build": "sass --load-path=resources/scss --load-path=vendor/richard190104/rcore/resources/scss resources/scss:webroot/css --style=compressed --no-source-map",
+    "sass:watch": "sass --load-path=resources/scss --load-path=vendor/richard190104/rcore/resources/scss --watch resources/scss:webroot/css --style=expanded",
     "deploy": "node bin/deploy.mjs",
     "deploy:translations": "node bin/deploy-translations.mjs"
   },
