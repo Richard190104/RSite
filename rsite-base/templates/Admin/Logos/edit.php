@@ -39,3 +39,5 @@ $kind = $logo->options['type'] ?? 'partner';
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

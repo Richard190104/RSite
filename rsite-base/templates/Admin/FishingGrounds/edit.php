@@ -49,3 +49,5 @@ $this->assign('title', __('Edit fishing ground'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

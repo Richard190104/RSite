@@ -83,3 +83,5 @@ foreach ($events as $event) {
 </div>
 
 <?= $this->Html->script('admin-activity-picker') ?>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

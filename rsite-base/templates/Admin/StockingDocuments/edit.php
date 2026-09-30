@@ -25,3 +25,5 @@ $this->assign('title', __('Edit stocking document'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

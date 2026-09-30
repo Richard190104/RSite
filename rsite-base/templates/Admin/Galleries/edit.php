@@ -30,3 +30,4 @@ $this->assign('title', __('Edit photo'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

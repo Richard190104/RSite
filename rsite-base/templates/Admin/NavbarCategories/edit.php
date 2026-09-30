@@ -52,3 +52,4 @@ $this->set('aiChatFields', [
 </div>
 <?= $this->Html->script('admin-drag-reorder') ?>
 <?= $this->Html->script('admin-page-picker') ?>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

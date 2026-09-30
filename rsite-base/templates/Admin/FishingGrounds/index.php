@@ -46,3 +46,5 @@ $this->assign('title', __('Revíry'));
         </table>
     </div>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

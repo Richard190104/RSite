@@ -44,3 +44,5 @@ $this->set('aiChatFields', [
 </div>
 <?= $this->Html->script('Rcore.vendor/tinymce/tinymce.min') ?>
 <?= $this->Html->script('Rcore.admin-wysiwyg') ?>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

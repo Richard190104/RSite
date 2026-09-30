@@ -51,3 +51,4 @@ $this->assign('title', __('Banners'));
         </table>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

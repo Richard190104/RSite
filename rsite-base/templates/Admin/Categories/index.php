@@ -100,3 +100,5 @@ $this->assign('title', __('Categories'));
     <?php endforeach; ?>
 </div>
 <?= $this->Html->script('admin-drag-reorder') ?>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

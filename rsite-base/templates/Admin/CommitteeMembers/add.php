@@ -24,3 +24,5 @@ $this->assign('title', __('Add committee member'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

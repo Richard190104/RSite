@@ -36,3 +36,4 @@ $this->assign('title', __('Galleries'));
         </table>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

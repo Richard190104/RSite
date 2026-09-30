@@ -112,3 +112,5 @@ $categoryLabels = \App\Model\Table\FeesTable::CATEGORIES;
 <?= $this->Html->script('admin-drag-reorder') ?>
 <?= $this->Html->script('Rcore.vendor/tinymce/tinymce.min') ?>
 <?= $this->Html->script('Rcore.admin-wysiwyg') ?>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

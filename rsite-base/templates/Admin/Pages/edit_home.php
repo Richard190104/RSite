@@ -43,3 +43,4 @@ $quickAccess = $page->content['quick_access'] ?? [];
         </p>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

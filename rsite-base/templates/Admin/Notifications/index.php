@@ -53,3 +53,5 @@ $this->assign('title', __('Notifications'));
         </table>
     </div>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

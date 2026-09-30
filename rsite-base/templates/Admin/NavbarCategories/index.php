@@ -52,3 +52,4 @@ $this->assign('title', __('Navbar categories'));
     </div>
 </div>
 <?= $this->Html->script('admin-drag-reorder') ?>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

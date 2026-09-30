@@ -109,3 +109,5 @@ $description = $page->content['description'] ?? '';
         </table>
     </div>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

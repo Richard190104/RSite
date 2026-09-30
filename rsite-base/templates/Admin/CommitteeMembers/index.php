@@ -48,3 +48,5 @@ $this->assign('title', __('Committee'));
         </table>
     </div>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

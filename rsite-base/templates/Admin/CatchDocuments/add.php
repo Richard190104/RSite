@@ -20,3 +20,5 @@ $this->assign('title', __('Add catch document'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

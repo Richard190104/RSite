@@ -28,3 +28,4 @@ $this->set('aiChatFields', [
         </div>
     <?= $this->Form->end() ?>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

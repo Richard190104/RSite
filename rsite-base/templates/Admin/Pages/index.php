@@ -31,3 +31,4 @@ $this->assign('title', __('Pages'));
         </table>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>
