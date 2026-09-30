@@ -81,7 +81,7 @@ class AssistantController extends AppController
             return null;
         }
 
-        $organisationName = (string)TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
+        $organisationName = (string)TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Name');
         $colors = TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
 
         $systemPrompt = $mode === 'nav'
@@ -175,7 +175,7 @@ class AssistantController extends AppController
                 . " {$category['description']}";
         }
 
-        $textRows = TableRegistry::getTableLocator()->get('Texts')
+        $textRows = TableRegistry::getTableLocator()->get('Rcore.Texts')
             ->find()
             ->select(['id', 'slug'])
             ->orderBy(['slug' => 'ASC'])
@@ -469,11 +469,11 @@ class AssistantController extends AppController
         }
 
         if (str_starts_with($target, 'text:')) {
-            return $this->resolveRowLink($target, 'text:', 'Texts');
+            return $this->resolveRowLink($target, 'text:', 'Rcore.Texts', 'Texts');
         }
 
         if (str_starts_with($target, 'news:')) {
-            return $this->resolveRowLink($target, 'news:', 'News');
+            return $this->resolveRowLink($target, 'news:', 'News', 'News');
         }
 
         $categories = AppController::adminCategories();
@@ -482,33 +482,34 @@ class AssistantController extends AppController
             $controller = substr($target, 0, -strlen(':add'));
             $supportsAdd = isset($categories[$controller]) && in_array('add', $categories[$controller]['actions'], true);
 
-            return $supportsAdd ? Router::url(['prefix' => 'Admin', 'controller' => $controller, 'action' => 'add']) : null;
+            return $supportsAdd ? Router::url(AppController::adminUrl($controller, ['action' => 'add'])) : null;
         }
 
         if (!array_key_exists($target, $categories)) {
             return null;
         }
 
-        return Router::url(['prefix' => 'Admin', 'controller' => $target, 'action' => 'index']);
+        return Router::url(AppController::adminUrl($target, ['action' => 'index']));
     }
 
     /**
      * Shared "id:<n> for table <Controller>" resolution used by both the
      * text: and news: target shapes — checks the row actually exists before
      * building the edit link, same reasoning as resolveNavigationLink()'s
-     * class comment.
+     * class comment. $tableAlias and $controller differ for a plugin-provided
+     * table (e.g. 'Rcore.Texts' vs plain 'Texts' — see AppController::adminUrl()).
      */
-    private function resolveRowLink(string $target, string $prefix, string $tableAndController): ?string
+    private function resolveRowLink(string $target, string $prefix, string $tableAlias, string $controller): ?string
     {
         $id = substr($target, strlen($prefix));
         if (!ctype_digit($id)) {
             return null;
         }
 
-        $exists = TableRegistry::getTableLocator()->get($tableAndController)->exists(['id' => (int)$id]);
+        $exists = TableRegistry::getTableLocator()->get($tableAlias)->exists(['id' => (int)$id]);
 
         return $exists
-            ? Router::url(['prefix' => 'Admin', 'controller' => $tableAndController, 'action' => 'edit', $id])
+            ? Router::url(AppController::adminUrl($controller, ['action' => 'edit', $id]))
             : null;
     }
 }

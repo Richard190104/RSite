@@ -44,12 +44,12 @@ trait SiteInfoTrait
 
     public function organisationName(): string
     {
-        return $this->organisationName ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
+        return $this->organisationName ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Name');
     }
 
     public function city(): string
     {
-        return $this->city ??= TableRegistry::getTableLocator()->get('Texts')->value('City');
+        return $this->city ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('City');
     }
 
     public function logoPath(): string
@@ -73,42 +73,42 @@ trait SiteInfoTrait
 
     public function description(): string
     {
-        return $this->description ??= TableRegistry::getTableLocator()->get('Texts')->value('Footer Description');
+        return $this->description ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Footer Description');
     }
 
     public function organisationAddress(): string
     {
-        return $this->organisationAddress ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Address');
+        return $this->organisationAddress ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Address');
     }
 
     public function organisationEmail(): string
     {
-        return $this->organisationEmail ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Gmail');
+        return $this->organisationEmail ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Gmail');
     }
 
     public function organisationIco(): string
     {
-        return $this->organisationIco ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation ICO');
+        return $this->organisationIco ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation ICO');
     }
 
     public function facebookUrl(): string
     {
-        return $this->facebookUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Facebook URL');
+        return $this->facebookUrl ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Facebook URL');
     }
 
     public function instagramUrl(): string
     {
-        return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Instagram URL');
+        return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Instagram URL');
     }
 
     public function phone(): string
     {
-        return $this->phone ??= TableRegistry::getTableLocator()->get('Texts')->value('Phone');
+        return $this->phone ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Phone');
     }
 
     public function reviryMapSubtitle(): string
     {
-        return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Texts')->value('Reviry map subtitle');
+        return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Reviry map subtitle');
     }
 
     /**

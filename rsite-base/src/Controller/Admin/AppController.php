@@ -25,7 +25,7 @@ class AppController extends BaseController
      * sidebar.php directly, and not by duplicating it elsewhere) when
      * adding a section.
      *
-     * @return array<string, array{label: string, description: string, actions: array<int, string>}>
+     * @return array<string, array{label: string, description: string, actions: array<int, string>, plugin?: string}>
      */
     public static function adminCategories(): array
     {
@@ -43,6 +43,10 @@ class AppController extends BaseController
                         . ' this section only edits existing values, it does not create new ones.',
                 ),
                 'actions' => ['index', 'edit'],
+                // Provided by the shared Rcore plugin (see config/routes.php's
+                // explicit /admin/texts routes) — adminUrl() below and
+                // sidebar.php read this to build a correctly-routed URL.
+                'plugin' => 'Rcore',
             ],
             'Banners' => [
                 'label' => __('Banners'),
@@ -137,6 +141,26 @@ class AppController extends BaseController
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
         ];
+    }
+
+    /**
+     * URL params for an admin controller by name, plugin-aware — most
+     * sections are plain app controllers (no 'plugin' key needed), but one
+     * provided by the shared Rcore plugin (see adminCategories() above)
+     * needs its route array to say so, or the router won't match the
+     * explicit plugin route connected for it in config/routes.php. The
+     * single place that knows this, used by both sidebar.php (rendering the
+     * nav) and Admin\AssistantController (building a nav-mode reply's link)
+     * instead of each hand-rolling the same lookup.
+     *
+     * @param array<string, mixed> $extra Additional route params (e.g. ['action' => 'edit', $id]).
+     * @return array<string, mixed>
+     */
+    public static function adminUrl(string $controller, array $extra = []): array
+    {
+        $plugin = self::adminCategories()[$controller]['plugin'] ?? null;
+
+        return ['prefix' => 'Admin', 'plugin' => $plugin, 'controller' => $controller] + $extra;
     }
 
     public function initialize(): void

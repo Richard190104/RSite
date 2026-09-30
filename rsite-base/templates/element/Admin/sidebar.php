@@ -19,7 +19,7 @@ $currentController = $this->getRequest()->getParam('controller');
     <nav class="admin-sidebar__nav">
         <?php foreach ($adminCategories as $controller => $category): ?>
             <a
-                href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => $controller, 'action' => 'index']) ?>"
+                href="<?= $this->Url->build(AppController::adminUrl($controller, ['action' => 'index'])) ?>"
                 class="admin-sidebar__category<?= $currentController === $controller ? ' is-active' : '' ?>"
             ><?= $category['label'] ?></a>
         <?php endforeach; ?>
