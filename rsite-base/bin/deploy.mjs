@@ -55,11 +55,9 @@ const REPO_ROOT = join(ROOT, '..');
 // This is what actually gets uploaded; ROOT's own working tree never is.
 const SOURCE_DIR = join(ROOT, '.deploy-build');
 
-// Tracks the composer.lock hash from the last deploy that uploaded
-// vendor/+plugins/, so a deploy with no dependency changes can skip
-// re-uploading them — both are large and almost never change between
-// deploys (plugins/ is pinned by composer.lock the same way vendor/ is,
-// since it's where a Composer-installed cakephp-plugin package lives).
+// Tracks the composer.lock hash from the last deploy that uploaded vendor/,
+// so a deploy with no dependency changes can skip re-uploading it — vendor/
+// is large and almost never changes between deploys.
 //
 // Tracked in git, NOT gitignored — with two people deploying from
 // different machines, a local-only marker would just be wrong half the
@@ -190,19 +188,22 @@ function* walkDir(dir, base, { exclude = () => false } = {}) {
 }
 
 // Everything from SOURCE_DIR (main's exported HEAD; excludes its own
-// vendor/ and plugins/, which don't exist until buildVendor()/
-// runPluginAssetsCopy() run, plus whatever's in EXCLUDE) plus, unless
-// skipVendor, vendor/ and plugins/ themselves. plugins/ gets the same
-// skip-if-unchanged treatment as vendor/ — both are pinned by
-// composer.lock, so the same hash comparison covers either changing.
+// vendor/, which doesn't exist until buildVendor() runs, plus whatever's
+// in EXCLUDE) plus, unless skipVendor, vendor/ itself. The Rcore plugin
+// isn't special-cased here: cakephp/plugin-installer hasn't relocated
+// cakephp-plugin packages out of vendor/ since v1.3 (the plugins/ folder
+// convention is a leftover from older CakePHP versions) — Rcore just lives
+// at vendor/richard190104/rcore/ like any other Composer package, already
+// covered by the vendor/ pass below. webroot/rcore/ (copyPluginAssets()'s
+// output) isn't vendor/ either, so it's always included in the first pass
+// — small enough that skipping its upload isn't worth the complexity.
 function* walk({ skipVendor }) {
     yield* walkDir(SOURCE_DIR, SOURCE_DIR, {
-        exclude: (rel) => isExcluded(rel) || rel === 'vendor' || rel === 'plugins',
+        exclude: (rel) => isExcluded(rel) || rel === 'vendor',
     });
 
     if (!skipVendor) {
         yield* walkDir(join(SOURCE_DIR, 'vendor'), SOURCE_DIR);
-        yield* walkDir(join(SOURCE_DIR, 'plugins'), SOURCE_DIR);
     }
 }
 
@@ -238,13 +239,12 @@ function buildVendor() {
 }
 
 // Copies the Rcore plugin's own webroot/ (JS/vendor assets it owns, e.g.
-// the self-hosted TinyMCE build) into SOURCE_DIR's webroot/rcore/ — the
-// same thing `bin/cake plugin assets copy Rcore --overwrite` does for
-// local dev, just run here against the fresh deploy export instead of the
-// working tree. --overwrite so a changed plugin version's assets actually
-// replace whatever composer installed under plugins/Rcore/webroot/ last
-// time (irrelevant here since SOURCE_DIR is fresh every run, but keeps
-// this in sync with the local-dev command so both behave identically).
+// the self-hosted TinyMCE build — physically at
+// vendor/richard190104/rcore/webroot/, resolved dynamically by this
+// command via Plugin::path(), not hardcoded here) into SOURCE_DIR's
+// webroot/rcore/ — the same thing `bin/cake plugin assets copy Rcore
+// --overwrite` does for local dev, just run here against the fresh deploy
+// export instead of the working tree.
 function copyPluginAssets() {
     run('php', ['bin/cake.php', 'plugin', 'assets', 'copy', 'Rcore', '--overwrite'], SOURCE_DIR);
 }
@@ -353,13 +353,16 @@ async function main() {
 
     console.log('\n=== Building ===');
     // Always run, regardless of needsVendor: SOURCE_DIR is a fresh export
-    // every deploy (see exportMainToSourceDir()), so vendor/ and
-    // plugins/Rcore/ don't exist yet on ANY run, needsVendor or not —
-    // needsVendor only controls whether the (large, slow-to-FTP) result
-    // gets uploaded below, never whether it gets built locally. Skipping
-    // this when !needsVendor would leave plugins/Rcore/resources/scss
-    // missing, breaking the sass build just below (admin.scss's
-    // @use 'admin-wysiwyg' resolves through it).
+    // every deploy (see exportMainToSourceDir()), so vendor/ (including the
+    // Rcore plugin, an ordinary Composer package under
+    // vendor/richard190104/rcore/) doesn't exist yet on ANY run, needsVendor
+    // or not — needsVendor only controls whether the (large, slow-to-FTP)
+    // vendor/ upload happens below, never whether it gets built locally.
+    // Skipping this when !needsVendor would leave
+    // vendor/richard190104/rcore/resources/scss missing, breaking the sass
+    // build just below (admin.scss's @use 'admin-wysiwyg' resolves through
+    // it). copyPluginAssets() also needs vendor/ to exist first, since it
+    // reads the plugin's webroot/ from wherever Composer put it.
     buildVendor();
     copyPluginAssets();
 
@@ -370,15 +373,15 @@ async function main() {
     // sass:build/sass:watch, which need the same flag for local dev).
     run('npx', [
         'sass',
-        `--load-path=${relative(ROOT, join(SOURCE_DIR, 'plugins', 'Rcore', 'resources', 'scss'))}`,
+        `--load-path=${relative(ROOT, join(SOURCE_DIR, 'vendor', 'richard190104', 'rcore', 'resources', 'scss'))}`,
         `${relative(ROOT, join(SOURCE_DIR, 'resources', 'scss'))}:${relative(ROOT, join(SOURCE_DIR, 'webroot', 'css'))}`,
         '--style=compressed',
         '--no-source-map',
     ]);
 
     if (!needsVendor) {
-        console.log('\ncomposer.lock unchanged since last deploy — skipping vendor/plugins upload.');
-        console.log('(pass --force-vendor to upload them anyway, e.g. if the server copy was ever wiped)');
+        console.log('\ncomposer.lock unchanged since last deploy — skipping vendor/ upload.');
+        console.log('(pass --force-vendor to upload it anyway, e.g. if the server copy was ever wiped)');
     }
 
     console.log('\n=== Uploading over FTP ===');

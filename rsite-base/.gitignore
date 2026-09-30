@@ -5,10 +5,9 @@
 /logs/*
 /tmp/*
 /vendor/*
-/plugins/*
-!/plugins/.gitkeep
-# Copied from plugins/Rcore/webroot/ by `bin/cake plugin assets copy Rcore`
-# (see bin/deploy.mjs) — generated, never committed, same as vendor/plugins.
+# Copied from vendor/richard190104/rcore/webroot/ by
+# `bin/cake plugin assets copy Rcore` (see bin/deploy.mjs) — generated,
+# never committed, same as vendor/.
 /webroot/rcore/
 
 # CakePHP Migrations plugin's local schema cache — regenerated
