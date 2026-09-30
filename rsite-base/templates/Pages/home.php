@@ -37,3 +37,4 @@ $miniBanners = TableRegistry::getTableLocator()->get('Banners')
         <?= $this->element('fishing-grounds') ?>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>
