@@ -59,7 +59,7 @@ $hasFieldMode = $targetField !== null && $titleField !== null && $fieldLabel !==
 ?>
 <div
     class="admin-ai-chat"
-    data-ai-chat-url="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Assistant', 'action' => 'chat']) ?>"
+    data-ai-chat-url="<?= $this->Url->build(['prefix' => 'Admin', 'plugin' => null, 'controller' => 'Assistant', 'action' => 'chat']) ?>"
     data-ai-chat-title-from="<?= h((string)$titleField) ?>"
     data-ai-chat-description-from="<?= h((string)$descriptionField) ?>"
     data-ai-chat-image-url="<?= h((string)$imageUrl) ?>"

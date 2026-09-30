@@ -26,7 +26,7 @@ $currentController = $this->getRequest()->getParam('controller');
     </nav>
     <nav class="admin-sidebar__nav admin-sidebar__nav--bottom">
         <a
-            href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'logout']) ?>"
+            href="<?= $this->Url->build(['prefix' => 'Admin', 'plugin' => null, 'controller' => 'Users', 'action' => 'logout']) ?>"
             class="admin-sidebar__category"
         ><?= __('Log out') ?></a>
     </nav>
