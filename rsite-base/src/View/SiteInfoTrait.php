@@ -10,47 +10,30 @@ use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 /**
- * Shared site-wide lookups (organisation name, logo, contact page...) for
- * elements that need them — navbar, banner, footer. Mixed into AppView so
- * any template/element can call $this->organisationName() etc. directly.
+ * Domain-specific site-wide lookups (logo, contact page, news, notifications,
+ * the reviry map subtitle, placeholder images, homepage quick-access) for
+ * elements that need them — navbar, banner, footer. Mixed into AppView
+ * alongside Rcore\View\SiteInfoTrait, which covers the generic
+ * organisation-name/contact/social/palette accessors this app used to also
+ * define here before that table's code moved into the shared Rcore plugin.
  *
  * Deliberately NOT eager-loaded in a controller's initialize() — a method
  * here only runs its query when an element actually calls it, and AppView
  * is shared by the admin layout too, so an admin page that never calls
  * these never pays for them. Memoized per-request either way, so a page
- * with both navbar and footer calling organisationName() only queries once.
+ * with both navbar and footer calling the same accessor only queries once.
  */
 trait SiteInfoTrait
 {
-    private ?string $organisationName = null;
-    private ?string $city = null;
     private ?string $logoPath = null;
-    private ?string $description = null;
     private bool $contactPageLoaded = false;
     private ?Page $contactPage = null;
+    private ?string $reviryMapSubtitle = null;
     private ?array $quickAccessPageIds = null;
     private ?array $news = null;
     private ?array $activeNotifications = null;
     private bool $popupNotificationLoaded = false;
     private ?Notification $popupNotification = null;
-    private ?string $organisationAddress = null;
-    private ?string $organisationEmail = null;
-    private ?string $organisationIco = null;
-    private ?string $facebookUrl = null;
-    private ?string $instagramUrl = null;
-    private ?array $siteColors = null;
-    private ?string $phone = null;
-    private ?string $reviryMapSubtitle = null;
-
-    public function organisationName(): string
-    {
-        return $this->organisationName ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Name');
-    }
-
-    public function city(): string
-    {
-        return $this->city ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('City');
-    }
 
     public function logoPath(): string
     {
@@ -71,41 +54,6 @@ trait SiteInfoTrait
         return $this->contactPage;
     }
 
-    public function description(): string
-    {
-        return $this->description ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Footer Description');
-    }
-
-    public function organisationAddress(): string
-    {
-        return $this->organisationAddress ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Address');
-    }
-
-    public function organisationEmail(): string
-    {
-        return $this->organisationEmail ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Gmail');
-    }
-
-    public function organisationIco(): string
-    {
-        return $this->organisationIco ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation ICO');
-    }
-
-    public function facebookUrl(): string
-    {
-        return $this->facebookUrl ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Facebook URL');
-    }
-
-    public function instagramUrl(): string
-    {
-        return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Instagram URL');
-    }
-
-    public function phone(): string
-    {
-        return $this->phone ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Phone');
-    }
-
     public function reviryMapSubtitle(): string
     {
         return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Reviry map subtitle');
@@ -124,31 +72,6 @@ trait SiteInfoTrait
     public function randomPlaceholderImage(): string
     {
         return '/img/placeholders/' . TableRegistry::getTableLocator()->get('PlaceholderImages')->random();
-    }
-
-    /**
-     * The site's customizable palette (Rcore\Controller\Admin\
-     * ConfigurationsController) as slug => hex, e.g. 'primary' => '#001a3b'
-     * — read by templates/element/colorVariables.php to build the :root
-     * override the public layout injects after the compiled stylesheet.
-     * 'automatic_images' isn't a color (see Admin\PlaceholderImagesController)
-     * — it just happens to still live in the same `configurations` table
-     * from before this table's code moved into the shared Rcore plugin, so
-     * it's filtered out here rather than in the plugin, which has no
-     * knowledge of it.
-     *
-     * @return array<string, string>
-     */
-    public function siteColors(): array
-    {
-        if ($this->siteColors !== null) {
-            return $this->siteColors;
-        }
-
-        $colors = TableRegistry::getTableLocator()->get('Rcore.Configurations')->allAsSlugMap();
-        unset($colors['automatic_images']);
-
-        return $this->siteColors = $colors;
     }
 
     /**

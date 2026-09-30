@@ -26,6 +26,7 @@ use Cake\View\View;
  */
 class AppView extends View
 {
+    use \Rcore\View\SiteInfoTrait;
     use SiteInfoTrait;
 
     /**

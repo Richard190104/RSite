@@ -85,6 +85,101 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'Fishing grounds map' => ['reviry_map_bg' => __('Map background')],
         ]);
         Configure::write('Rcore.configurationsExtraElements', ['Admin/automaticImagesToggle']);
+
+        // This app's own admin sidebar sections, merged onto the shared
+        // Rcore plugin's own (Texts, Configurations) by
+        // Rcore\Controller\Admin\AppController::adminCategories(). Update
+        // this list (not sidebar.php, which now lives in the plugin) when
+        // adding a section.
+        Configure::write('Rcore.extraAdminCategories', [
+            'Dashboard' => [
+                'label' => __('Dashboard'),
+                'description' => __('The admin landing page — a short overview, no editable content here.'),
+                'actions' => ['index'],
+            ],
+            'Banners' => [
+                'label' => __('Banners'),
+                'description' => __(
+                    'Images shown on the site: the homepage/page hero carousel, the "about us" mini-banner tiles,'
+                        . ' and the "fishing grounds" section image + tiles. Each banner has a location that decides'
+                        . ' where it appears, and a title/subtitle.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'NavbarCategories' => [
+                'label' => __('Navbar categories'),
+                'description' => __(
+                    'The dropdown categories shown in the site\'s top navigation menu, each grouping a set of pages.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Pages' => [
+                'label' => __('Pages'),
+                'description' => __(
+                    'The site\'s static content pages (e.g. kontakt, homepage content) — edits an existing page\'s'
+                        . ' text/content; the homepage specifically also has its quick-access shortcuts configured'
+                        . ' here.',
+                ),
+                'actions' => ['index', 'edit'],
+            ],
+            'CommitteeMembers' => [
+                'label' => __('Committee'),
+                'description' => __(
+                    'The organisation\'s committee (výbor) — name (required), plus optional phone, email, and a'
+                        . ' photo. Not shown on the public site yet, admin-managed data only for now.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'News' => [
+                'label' => __('News'),
+                'description' => __(
+                    'News articles shown in the "Latest news" section on the homepage. Each article has a title, a'
+                        . ' short plain-text description (shown on the homepage card), an image, a date, an optional'
+                        . ' category, and an HTML poster field with an AI assistant that can generate a'
+                        . ' notice-board-style graphic from the title/description.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Categories' => [
+                'label' => __('Categories'),
+                'description' => __('Categories used to group news articles and gallery items.'),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Events' => [
+                'label' => __('Events'),
+                'description' => __('Events listed on the site.'),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'FishingGrounds' => [
+                'label' => __('Revíry'),
+                'description' => __(
+                    'The individual fishing grounds/territories (revíry) the organisation manages — each with a'
+                        . ' title, description, photo, free-text location, and map coordinates. Separate from the'
+                        . ' "reviry" static page text (that\'s edited under Pages) — this is the actual list of'
+                        . ' waters.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Galleries' => [
+                'label' => __('Galleries'),
+                'description' => __('Photo galleries shown on the site, grouped by category.'),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Logos' => [
+                'label' => __('Logos'),
+                'description' => __('The site\'s logo images: the header logo, plus partner logos in the footer once an image is uploaded.'),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+            'Notifications' => [
+                'label' => __('Notifications'),
+                'description' => __(
+                    'Site-wide notifications shown in the navbar\'s bell dropdown when active and within their'
+                        . ' valid_from/valid_to date range. A notification can also be flagged to show as a one-off'
+                        . ' popup in the corner of the page on load.',
+                ),
+                'actions' => ['index', 'add', 'edit', 'delete'],
+            ],
+        ]);
     }
 
     /**

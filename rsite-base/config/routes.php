@@ -118,8 +118,9 @@ return function (RouteBuilder $routes): void {
      */
     $routes->prefix('Admin', function (RouteBuilder $routes): void {
         $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
-        $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-        $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+        // Users (login/logout) is provided by the shared Rcore plugin now too.
+        $routes->connect('/login', ['plugin' => 'Rcore', 'controller' => 'Users', 'action' => 'login']);
+        $routes->connect('/logout', ['plugin' => 'Rcore', 'controller' => 'Users', 'action' => 'logout']);
         // Texts is provided by the shared Rcore plugin, not an app-local
         // controller — $routes->fallbacks() below only resolves controllers
         // in this app's own namespace by convention, so a plugin-provided
