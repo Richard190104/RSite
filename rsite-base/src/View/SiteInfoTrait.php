@@ -127,19 +127,28 @@ trait SiteInfoTrait
     }
 
     /**
-     * The site's customizable palette (Admin\ConfigurationsController) as
-     * slug => hex, e.g. 'primary' => '#001a3b' — read by
-     * templates/element/colorVariables.php to build the :root override the
-     * public layout injects after the compiled stylesheet. Excludes any
-     * non-color settings that share the same table (see
-     * ConfigurationsTable::SETTING_SLUGS) — allAsSlugMap() already filters
-     * those out, this just passes its result through.
+     * The site's customizable palette (Rcore\Controller\Admin\
+     * ConfigurationsController) as slug => hex, e.g. 'primary' => '#001a3b'
+     * — read by templates/element/colorVariables.php to build the :root
+     * override the public layout injects after the compiled stylesheet.
+     * 'automatic_images' isn't a color (see Admin\PlaceholderImagesController)
+     * — it just happens to still live in the same `configurations` table
+     * from before this table's code moved into the shared Rcore plugin, so
+     * it's filtered out here rather than in the plugin, which has no
+     * knowledge of it.
      *
      * @return array<string, string>
      */
     public function siteColors(): array
     {
-        return $this->siteColors ??= TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
+        if ($this->siteColors !== null) {
+            return $this->siteColors;
+        }
+
+        $colors = TableRegistry::getTableLocator()->get('Rcore.Configurations')->allAsSlugMap();
+        unset($colors['automatic_images']);
+
+        return $this->siteColors = $colors;
     }
 
     /**

@@ -77,6 +77,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // starts minimal (no bootstrap/routes of its own yet), see
         // vendor/richard190104/rcore's README for what's in it so far.
         $this->addPlugin('Rcore');
+
+        // Extends the shared Rcore Configurations (color palette) admin
+        // screen with this app's own bits, without patching plugin code —
+        // see vendor/richard190104/rcore's README for what these do.
+        Configure::write('Rcore.extraColorGroups', [
+            'Fishing grounds map' => ['reviry_map_bg' => __('Map background')],
+        ]);
+        Configure::write('Rcore.configurationsExtraElements', ['Admin/automaticImagesToggle']);
     }
 
     /**

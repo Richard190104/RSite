@@ -127,6 +127,10 @@ return function (RouteBuilder $routes): void {
         // which builds URLs matching these).
         $routes->connect('/texts', ['plugin' => 'Rcore', 'controller' => 'Texts', 'action' => 'index']);
         $routes->connect('/texts/edit/*', ['plugin' => 'Rcore', 'controller' => 'Texts', 'action' => 'edit']);
+        // Same reasoning as Texts above — Configurations is also
+        // plugin-provided.
+        $routes->connect('/configurations', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'index']);
+        $routes->connect('/configurations/reset', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'reset']);
         $routes->fallbacks();
     });
 };

@@ -130,6 +130,9 @@ class AppController extends BaseController
                         . ' panel\'s own colors, which are fixed separately.',
                 ),
                 'actions' => ['index', 'reset'],
+                // Provided by the shared Rcore plugin — see config/routes.php's
+                // explicit /admin/configurations routes and adminUrl() below.
+                'plugin' => 'Rcore',
             ],
             'Notifications' => [
                 'label' => __('Notifications'),

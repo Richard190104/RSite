@@ -82,7 +82,7 @@ class AssistantController extends AppController
         }
 
         $organisationName = (string)TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Organisation Name');
-        $colors = TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
+        $colors = TableRegistry::getTableLocator()->get('Rcore.Configurations')->allAsSlugMap();
 
         $systemPrompt = $mode === 'nav'
             ? $this->buildNavigationPrompt()
@@ -261,9 +261,9 @@ class AssistantController extends AppController
 
     /**
      * @param array<string, string> $colors The site's current live palette
-     *   (Admin\ConfigurationsController, slug => hex) — always the actual values an
-     *   admin has set, never a fixed default, so the assistant's output
-     *   stays on-brand even after someone changes the palette.
+     *   (Rcore\Controller\Admin\ConfigurationsController, slug => hex) — always the
+     *   actual values an admin has set, never a fixed default, so the assistant's
+     *   output stays on-brand even after someone changes the palette.
      */
     private function buildSystemPrompt(
         string $fieldLabel,
