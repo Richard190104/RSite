@@ -29,6 +29,7 @@ use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use App\Http\Middleware\RejectOversizedUploadMiddleware;
@@ -85,6 +86,51 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'Fishing grounds map' => ['reviry_map_bg' => __('Map background')],
         ]);
         Configure::write('Rcore.configurationsExtraElements', ['Admin/automaticImagesToggle']);
+
+        // Domain wording substituted into the shared AI assistant's
+        // prompts — see vendor/richard190104/rcore's README for the other
+        // usages of these two keys.
+        Configure::write('Rcore.aiOrganisationDescription', 'a local fishing association (MO SRZ)');
+        Configure::write('Rcore.aiAssistantName', 'Rybárik');
+
+        // Lets the AI assistant's navigation-helper mode resolve "where's
+        // the article about X" questions into a News edit link, the same
+        // way it already resolves Rcore.Texts rows — without the plugin
+        // itself ever needing to know this app has a News table. Capped at
+        // 20 rows so the prompt's token cost doesn't grow with the site's
+        // article count; an admin asking about an older article not in
+        // this list gets an honest "couldn't find it" (see notFoundHint)
+        // instead of a wrong answer.
+        Configure::write('Rcore.aiNavigationContextProviders', [
+            [
+                'prefix' => 'news',
+                'tableAlias' => 'News',
+                'controller' => 'News',
+                'targetHint' => 'ONLY when the admin is asking about one specific existing News article (by title'
+                    . ' or by something mentioned in its description) and you can identify exactly which one from'
+                    . ' the News list below.',
+                'promptIntro' => 'Here is a list of the 20 most recent News articles (id, title, description) — NOT'
+                    . ' the complete list, older articles may exist that aren\'t shown here. Use these ids for'
+                    . ' "target" when the question is about one of these specific articles:',
+                'lines' => function (): array {
+                    $rows = TableRegistry::getTableLocator()->get('News')
+                        ->find()
+                        ->select(['id', 'title', 'description'])
+                        ->orderBy(['date' => 'DESC'])
+                        ->limit(20)
+                        ->all();
+                    $lines = [];
+                    foreach ($rows as $article) {
+                        $lines[] = "- news:{$article->id} — \"{$article->title}\": {$article->description}";
+                    }
+
+                    return $lines;
+                },
+                'notFoundHint' => 'If a question is about a News article you can\'t find in that list, it may simply'
+                    . ' be older than what\'s shown — say so honestly (e.g. suggest checking the News section\'s full'
+                    . ' list) instead of guessing an id or claiming the article doesn\'t exist at all.',
+            ],
+        ]);
 
         // This app's own admin sidebar sections, merged onto the shared
         // Rcore plugin's own (Texts, Configurations) by

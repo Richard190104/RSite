@@ -132,6 +132,9 @@ return function (RouteBuilder $routes): void {
         // plugin-provided.
         $routes->connect('/configurations', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'index']);
         $routes->connect('/configurations/reset', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'reset']);
+        // The AI assistant is provided by the shared Rcore plugin now too —
+        // same reasoning as Texts/Configurations/Users above.
+        $routes->connect('/assistant/chat', ['plugin' => 'Rcore', 'controller' => 'Assistant', 'action' => 'chat']);
         $routes->fallbacks();
     });
 };
