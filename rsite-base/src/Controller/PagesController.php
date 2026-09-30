@@ -62,7 +62,7 @@ class PagesController extends AppController
      * page.content['about_us_text'] (Admin\PagesController::editOnas()),
      * the feature image is a regular Banner under the reserved 'onas-main'
      * virtual location (same pattern as the homepage/fishing-grounds
-     * images, see BannersTable::VIRTUAL_LOCATIONS). Also lists the
+     * images, see Rcore.bannerVirtualLocations in Application.php). Also lists the
      * organisation's committee (Admin\CommitteeMembersController).
      */
     public function onas(): void

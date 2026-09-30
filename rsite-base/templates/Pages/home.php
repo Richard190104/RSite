@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  */
 use Cake\ORM\TableRegistry;
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var array<int, array{id: int, title: string, date: string}> $events
  */
 $this->assign('title', __('Edit "About us" page'));

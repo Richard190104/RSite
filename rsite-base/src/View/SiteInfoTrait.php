@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Model\Entity\News;
-use App\Model\Entity\Page;
+use Rcore\Model\Entity\Page;
 use Cake\ORM\TableRegistry;
 
 /**

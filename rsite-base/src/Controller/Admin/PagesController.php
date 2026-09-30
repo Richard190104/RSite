@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Entity\Page;
 use App\Model\Table\FeesTable;
+use Rcore\Model\Entity\Page;
 
 /**
  * Extends the shared plugin's generic Pages CRUD (listing + a plain

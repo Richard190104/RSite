@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var array<string, array{heading: string, rows: array<int, array{0: string, 1: string}>, size: string}> $feeSections
  *
  * Fee tables are admin-managed (Admin\FeesController, edited via

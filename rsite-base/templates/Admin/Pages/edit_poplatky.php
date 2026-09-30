@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var array<string, \App\Model\Entity\Fee[]> $feesByCategory Fee rows keyed by FeesTable::CATEGORIES key, one entry per category (possibly empty) in that fixed order.
  *
  * "Poplatky" is managed entirely from here rather than as its own sidebar

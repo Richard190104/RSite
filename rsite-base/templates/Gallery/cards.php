@@ -4,7 +4,7 @@
  * @var \Cake\ORM\ResultSet<\App\Model\Entity\Category>|null $categories Top-level categories — root view only.
  * @var \App\Model\Entity\Category|null $parent Category being viewed — category detail view only.
  * @var \Cake\ORM\ResultSet<\App\Model\Entity\Category>|null $subcategories Direct children of $parent — category detail view only.
- * @var \Cake\Datasource\Paging\PaginatedInterface<\App\Model\Entity\Gallery>|null $photos Photos of $parent and its subcategories combined — category detail view only.
+ * @var \Cake\Datasource\Paging\PaginatedInterface<\Rcore\Model\Entity\Gallery>|null $photos Photos of $parent and its subcategories combined — category detail view only.
  */
 $this->loadHelper('Paginator');
 $parent ??= null;

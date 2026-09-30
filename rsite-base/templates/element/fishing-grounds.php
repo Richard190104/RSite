@@ -4,7 +4,7 @@
  *
  * Homepage "Revíry a aktivity" section. Both the left photo and the right
  * feature cards are Banners rows under their own virtual locations (see
- * BannersTable::VIRTUAL_LOCATIONS), same pattern as the "about us" mini
+ * Rcore.bannerVirtualLocations, see Application.php), same pattern as the "about us" mini
  * banners: 'grounds-mini-main' is the single large image, 'grounds-mini'
  * are the up-to-4 cards (title + settings.subtitle + background as icon).
  */

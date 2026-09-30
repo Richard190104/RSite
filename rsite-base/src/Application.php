@@ -137,22 +137,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // this list (not sidebar.php, which now lives in the plugin) when
         // adding a section.
         Configure::write('Rcore.extraAdminCategories', [
-            'Banners' => [
-                'label' => __('Banners'),
-                'description' => __(
-                    'Images shown on the site: the homepage/page hero carousel, the "about us" mini-banner tiles,'
-                        . ' and the "fishing grounds" section image + tiles. Each banner has a location that decides'
-                        . ' where it appears, and a title/subtitle.',
-                ),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
-            'NavbarCategories' => [
-                'label' => __('Navbar categories'),
-                'description' => __(
-                    'The dropdown categories shown in the site\'s top navigation menu, each grouping a set of pages.',
-                ),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
             'CommitteeMembers' => [
                 'label' => __('Committee'),
                 'description' => __(
@@ -171,11 +155,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 ),
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
-            'Categories' => [
-                'label' => __('Categories'),
-                'description' => __('Categories used to group news articles and gallery items.'),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
             'Events' => [
                 'label' => __('Events'),
                 'description' => __('Events listed on the site.'),
@@ -191,11 +170,16 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 ),
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
-            'Galleries' => [
-                'label' => __('Galleries'),
-                'description' => __('Photo galleries shown on the site, grouped by category.'),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
+        ]);
+
+        // Reserved, non-page banner placements (e.g. a homepage feature tile
+        // group) — this plugin has no fixed set of its own, see Rcore\Model\
+        // Table\BannersTable.
+        Configure::write('Rcore.bannerVirtualLocations', [
+            'home_mini' => 'Home — mini banner (about us tile)',
+            'grounds-mini' => 'Home — fishing grounds tile',
+            'grounds-mini-main' => 'Home — fishing grounds main image',
+            'onas-main' => 'About us — minibanner',
         ]);
     }
 

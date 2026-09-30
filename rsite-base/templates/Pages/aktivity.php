@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var array<\App\Model\Entity\Event> $upcomingEvents
  * @var array<\App\Model\Entity\Category> $categories
  * @var array<int, array<string, mixed>> $calendarEvents

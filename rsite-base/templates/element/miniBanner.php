@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Banner $banner
+ * @var \Rcore\Model\Entity\Banner $banner
  *
  * One homepage "about us" feature tile — see Admin\BannersController for how
  * these are managed (location = 'home_mini'). The banner's own 'background'
