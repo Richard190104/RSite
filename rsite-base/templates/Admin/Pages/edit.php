@@ -6,9 +6,10 @@
 $this->assign('title', h(__($page->title)));
 $description = $page->content['description'] ?? '';
 $this->set('aiChatFields', [
-    'targetField' => 'content-description',
     'titleField' => 'page-title',
-    'fieldLabel' => 'short page teaser description',
+    'fields' => [
+        ['target' => 'content-description', 'label' => 'short page teaser description'],
+    ],
 ]);
 ?>
 <div class="content form-card">

@@ -6,9 +6,10 @@
  */
 $this->assign('title', __('Edit category'));
 $this->set('aiChatFields', [
-    'targetField' => 'description',
     'titleField' => 'title',
-    'fieldLabel' => 'short category description',
+    'fields' => [
+        ['target' => 'description', 'label' => 'short category description'],
+    ],
 ]);
 ?>
 <div class="content form-card">

@@ -7,9 +7,7 @@
  */
 $this->assign('title', __('Edit category'));
 $this->set('aiChatFields', [
-    'targetField' => 'title',
     'titleField' => 'title',
-    'fieldLabel' => 'short navbar category title',
 ]);
 ?>
 <div class="content form-card">

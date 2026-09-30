@@ -6,9 +6,10 @@
  */
 $this->assign('title', __('Add banner'));
 $this->set('aiChatFields', [
-    'targetField' => 'settings-subtitle',
     'titleField' => 'title',
-    'fieldLabel' => 'short banner subtitle',
+    'fields' => [
+        ['target' => 'settings-subtitle', 'label' => 'short banner subtitle'],
+    ],
 ]);
 ?>
 <div class="content form-card">

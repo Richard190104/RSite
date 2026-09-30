@@ -6,11 +6,11 @@
  */
 $this->assign('title', __('Add article'));
 $this->set('aiChatFields', [
-    'targetField' => 'description',
     'titleField' => 'title',
-    'fieldLabel' => 'short news article summary',
-    'htmlTargetField' => 'content',
-    'htmlFieldLabel' => 'HTML poster for the news article',
+    'fields' => [
+        ['target' => 'description', 'label' => 'short news article summary'],
+        ['target' => 'content', 'label' => 'HTML poster for the news article', 'kind' => 'html'],
+    ],
 ]);
 ?>
 <div class="content form-card">

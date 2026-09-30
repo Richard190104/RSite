@@ -5,9 +5,10 @@
  */
 $this->assign('title', __('Edit notification'));
 $this->set('aiChatFields', [
-    'targetField' => 'description',
     'titleField' => 'title',
-    'fieldLabel' => 'short site notification message',
+    'fields' => [
+        ['target' => 'description', 'label' => 'short site notification message'],
+    ],
 ]);
 ?>
 <div class="content form-card">
