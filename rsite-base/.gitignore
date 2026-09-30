@@ -5,6 +5,8 @@
 /logs/*
 /tmp/*
 /vendor/*
+/plugins/*
+!/plugins/.gitkeep
 
 # CakePHP Migrations plugin's local schema cache — regenerated
 # automatically on every `bin/cake migrations` run, reflects whatever DB
