@@ -19,7 +19,7 @@ $automaticImages = TableRegistry::getTableLocator()->get('Rcore.Configurations')
 ?>
 <div class="form-card__hints">
     <h3><?= __('Automatic images') ?></h3>
-    <?= $this->Form->create(null, ['url' => ['prefix' => 'Admin', 'controller' => 'PlaceholderImages', 'action' => 'toggleAutomatic']]) ?>
+    <?= $this->Form->create(null, ['url' => ['prefix' => 'Admin', 'plugin' => null, 'controller' => 'PlaceholderImages', 'action' => 'toggleAutomatic']]) ?>
         <div class="input checkbox">
             <label>
                 <?= $this->Form->checkbox('automatic_images', [
