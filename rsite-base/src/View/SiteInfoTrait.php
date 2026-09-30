@@ -10,12 +10,13 @@ use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 /**
- * Domain-specific site-wide lookups (logo, contact page, news, notifications,
+ * Domain-specific site-wide lookups (contact page, news, notifications,
  * the reviry map subtitle, placeholder images, homepage quick-access) for
  * elements that need them — navbar, banner, footer. Mixed into AppView
  * alongside Rcore\View\SiteInfoTrait, which covers the generic
- * organisation-name/contact/social/palette accessors this app used to also
- * define here before that table's code moved into the shared Rcore plugin.
+ * organisation-name/contact/social/palette/logo accessors this app used to
+ * also define here before those tables' code moved into the shared Rcore
+ * plugin.
  *
  * Deliberately NOT eager-loaded in a controller's initialize() — a method
  * here only runs its query when an element actually calls it, and AppView
@@ -25,7 +26,6 @@ use Cake\ORM\TableRegistry;
  */
 trait SiteInfoTrait
 {
-    private ?string $logoPath = null;
     private bool $contactPageLoaded = false;
     private ?Page $contactPage = null;
     private ?string $reviryMapSubtitle = null;
@@ -34,11 +34,6 @@ trait SiteInfoTrait
     private ?array $activeNotifications = null;
     private bool $popupNotificationLoaded = false;
     private ?Notification $popupNotification = null;
-
-    public function logoPath(): string
-    {
-        return $this->logoPath ??= TableRegistry::getTableLocator()->get('Logos')->mainPath();
-    }
 
     public function contactPage(): ?Page
     {

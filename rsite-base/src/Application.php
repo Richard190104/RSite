@@ -196,11 +196,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'description' => __('Photo galleries shown on the site, grouped by category.'),
                 'actions' => ['index', 'add', 'edit', 'delete'],
             ],
-            'Logos' => [
-                'label' => __('Logos'),
-                'description' => __('The site\'s logo images: the header logo, plus partner logos in the footer once an image is uploaded.'),
-                'actions' => ['index', 'add', 'edit', 'delete'],
-            ],
             'Notifications' => [
                 'label' => __('Notifications'),
                 'description' => __(
