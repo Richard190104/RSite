@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace App;
 
-use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
@@ -281,37 +280,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * @return \Authentication\AuthenticationServiceInterface
      */
     
-    // zisti, ako je nastavena autentifikacia, ci je nastavena na admin alebo user
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        $service = new AuthenticationService([
-            'unauthenticatedRedirect' => '/admin/login',
-            'queryParam' => 'redirect',
-        ]);
-
-        $identifier = [
-            'className' => 'Authentication.Password',
-            'fields' => [
-                'username' => 'username',
-                'password' => 'password',
-            ],
-            'resolver' => [
-                'className' => 'Authentication.Orm',
-                'userModel' => 'AdminUsers',
-            ],
-        ];
-
-        $service->loadAuthenticator('Authentication.Session');
-        $service->loadAuthenticator('Authentication.Form', [
-            'fields' => [
-                'username' => 'username',
-                'password' => 'password',
-            ],
-            'loginUrl' => '/admin/login',
-            'identifier' => $identifier,
-        ]);
-
-        return $service;
+        return \Rcore\Auth\AdminAuthenticationServiceFactory::build();
     }
 
     /**
