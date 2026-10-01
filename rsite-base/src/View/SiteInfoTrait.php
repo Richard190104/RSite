@@ -12,9 +12,11 @@ use Cake\ORM\TableRegistry;
  * subtitle, placeholder images, homepage quick-access) for elements that
  * need them — navbar, banner, footer. Mixed into AppView alongside
  * Rcore\View\SiteInfoTrait, which covers the generic organisation-name/
- * contact/social/palette/logo/notifications accessors this app used to
- * also define here before those tables' code moved into the shared Rcore
- * plugin.
+ * contact/social/palette/logo/notifications accessors — this trait used to
+ * also define logoPath()/activeNotifications()/popupNotification() before
+ * the admin extraction's Logos/Notifications slice moved their backing
+ * tables into the plugin; redefining them here again would be a fatal
+ * trait method collision in AppView.
  *
  * Deliberately NOT eager-loaded in a controller's initialize() — a method
  * here only runs its query when an element actually calls it, and AppView

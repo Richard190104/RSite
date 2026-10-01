@@ -61,6 +61,7 @@ class Installer
 
         static::createAppLocalConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
+        static::createNavbarStyles($rootDir, $io);
 
         static::setFolderPermissions($rootDir, $io);
         static::setSecuritySalt($rootDir, $io);
@@ -102,6 +103,39 @@ class Installer
                 mkdir($path);
                 $io->write('Created `' . $path . '` directory');
             }
+        }
+    }
+
+    /**
+     * Create resources/scss/_navbar.scss from the Rcore plugin's starter
+     * (vendor/richard190104/rcore/resources/scaffolds/navbar.scss) if it
+     * doesn't exist yet — same "copy once, only if missing" shape as
+     * createAppLocalConfig() above. From that point on it's this app's own
+     * file: a project restyles its navbar by editing it directly, and
+     * nothing here ever overwrites it again on a later composer
+     * install/update. The markup it styles comes from the plugin's
+     * Navbar/logo.php, Navbar/categoryMenu.php and Navbar/notifications.php
+     * elements (templates/element/navbar.php composes them) — those stay
+     * shared, only their styling is scaffolded per project.
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function createNavbarStyles(string $dir, IOInterface $io): void
+    {
+        $navbarStyles = $dir . '/resources/scss/_navbar.scss';
+        $navbarStylesTemplate = $dir . '/vendor/richard190104/rcore/resources/scaffolds/navbar.scss';
+
+        if (!file_exists($navbarStylesTemplate)) {
+            // Older Rcore version without this slice yet, or the plugin isn't
+            // installed in this app at all — nothing to scaffold.
+            return;
+        }
+
+        if (!file_exists($navbarStyles)) {
+            copy($navbarStylesTemplate, $navbarStyles);
+            $io->write('Created `resources/scss/_navbar.scss` file');
         }
     }
 
