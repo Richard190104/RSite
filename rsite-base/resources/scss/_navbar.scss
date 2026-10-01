@@ -1,5 +1,14 @@
 @use 'variables' as v;
 
+// Scaffolded once from vendor/richard190104/rcore/resources/scaffolds/navbar.scss
+// by App\Console\Installer::createNavbarStyles() (composer install/update, only
+// if this file didn't exist yet) — from here on it's this app's own file to edit
+// freely; nothing re-copies over it. The markup these classes style comes from
+// the plugin's Navbar/logo.php, Navbar/categoryMenu.php and
+// Navbar/notifications.php elements (composed together in
+// templates/element/navbar.php), so renaming a class here means updating
+// whichever of those three it belongs to as well.
+//
 // Two-tier navbar: a navy top row (brand + notifications) sized like a
 // real header instead of a thin strip, and a white bottom row for the
 // category menu — bigger, more breathing room than the old single-row
@@ -43,6 +52,10 @@
     place-items: center;
     border-radius: 50%;
     background: v.$color-secondary;
+    // Only visible behind the built-in placeholder mark (an inline SVG using
+    // stroke="currentColor") — once a project uploads its own logo image,
+    // this has nothing left to apply to.
+    color: v.$color-primary;
     box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.4);
 
     img {
@@ -131,11 +144,13 @@
     background: none;
     padding: 0;
     cursor: pointer;
+    // The bell is an inline SVG using stroke="currentColor" — this is the
+    // only place its color comes from.
+    color: v.$color-bg;
 
-    img {
+    svg {
         width: 2.6rem;
         height: 2.6rem;
-        filter: brightness(0) invert(1);
     }
 
     &:hover,
