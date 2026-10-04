@@ -2,11 +2,13 @@
 /**
  * @var \App\View\AppView $this
  *
- * Footer shell: owns the column layout and this app's own data (homepage
- * quick-access page ids — not a Rcore table). Brand/contact/partners come
- * straight from Rcore\View\SiteInfoTrait / Rcore.Logos inside their own
- * elements, no params needed — see this plugin's README for the shape of
- * each.
+ * Builds each slot's content as its own variable (usually by calling one of
+ * this plugin's other Footer/* elements, but any app-specific markup works
+ * just as well), then hands all four to Rcore.Footer/layout, which owns the
+ * actual column shell/arrangement. This app's only genuinely own data here
+ * is the homepage's quick-access page ids (not a Rcore table) — brand/
+ * contact/partners pull everything they need from Rcore\View\SiteInfoTrait/
+ * Rcore.Logos themselves.
  */
 use Cake\ORM\TableRegistry;
 
@@ -28,21 +30,15 @@ foreach ($quickAccessPageIds as $pageId) {
         $quickAccessItems[] = ['url' => '/' . $page->slug, 'label' => __($page->title)];
     }
 }
+
+$left = $this->element('Rcore.Footer/brand');
+$center = $this->element('Rcore.Footer/linkList', ['heading' => __('Quick access'), 'items' => $quickAccessItems]);
+$right = $this->element('Rcore.Footer/contactList');
+$partners = $this->element('Rcore.Footer/partners');
 ?>
-<div class="site-footer">
-    <div class="site-footer__inner">
-        <div class="site-footer__left">
-            <?= $this->element('Rcore.Footer/brand') ?>
-        </div>
-
-        <div class="site-footer__center">
-            <?= $this->element('Rcore.Footer/linkList', ['heading' => __('Quick access'), 'items' => $quickAccessItems]) ?>
-        </div>
-
-        <div class="site-footer__right">
-            <?= $this->element('Rcore.Footer/contactList') ?>
-        </div>
-
-        <?= $this->element('Rcore.Footer/partners') ?>
-    </div>
-</div>
+<?= $this->element('Rcore.Footer/layout', [
+    'left' => $left,
+    'center' => $center,
+    'right' => $right,
+    'partners' => $partners,
+]) ?>
