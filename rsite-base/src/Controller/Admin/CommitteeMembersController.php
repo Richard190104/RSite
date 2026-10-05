@@ -3,121 +3,36 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use Rcore\Controller\Admin\ImageUploadTrait;
+use Cake\Datasource\EntityInterface;
 
-class CommitteeMembersController extends AppController
+class CommitteeMembersController extends \Rcore\Controller\Admin\ResourceController
 {
-    use ImageUploadTrait;
-
-    public function index(): void
+    protected function resourceConfig(?EntityInterface $item = null): array
     {
-        $committeeMembers = $this->fetchTable('CommitteeMembers')
-            ->find()
-            ->orderBy(['section' => 'ASC', 'name' => 'ASC'])
-            ->all();
-
-        $this->set(compact('committeeMembers'));
-    }
-
-    public function add()
-    {
-        $CommitteeMembers = $this->fetchTable('CommitteeMembers');
-        $committeeMember = $CommitteeMembers->newEmptyEntity();
-
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
-            $upload = $data['photo'] ?? null;
-            unset($data['photo']);
-
-            $committeeMember = $CommitteeMembers->patchEntity($committeeMember, $data);
-            $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
-            $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
-
-            if (!$committeeMember->getErrors() && $uploadError === null) {
-                if ($hasFile) {
-                    $committeeMember->photo = $this->storeImageUpload($upload, 'committee');
-                }
-
-                if ($CommitteeMembers->save($committeeMember)) {
-                    $this->Flash->success(__('Committee member saved.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-            }
-
-            if ($uploadError !== null) {
-                $this->Flash->error($uploadError);
-            }
-            $this->Flash->error(__('Could not save the committee member, check the errors below.'));
-        }
-
-        $this->set('committeeMember', $committeeMember);
-
-        return null;
-    }
-
-    public function edit(?string $id = null)
-    {
-        $CommitteeMembers = $this->fetchTable('CommitteeMembers');
-        $committeeMember = $CommitteeMembers->get($id);
-
-        if ($this->request->is(['post', 'put'])) {
-            $data = $this->request->getData();
-            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
-            $upload = $data['photo'] ?? null;
-            unset($data['photo']);
-
-            $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
-            $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
-
-            $oldPhoto = $committeeMember->photo;
-            $committeeMember = $CommitteeMembers->patchEntity($committeeMember, $data);
-
-            if (!$committeeMember->getErrors() && $uploadError === null) {
-                if ($hasNewFile) {
-                    $committeeMember->photo = $this->storeImageUpload($upload, 'committee');
-                }
-
-                if ($CommitteeMembers->save($committeeMember)) {
-                    if ($hasNewFile && $oldPhoto) {
-                        $this->deleteImageUpload('committee', $oldPhoto);
-                    }
-
-                    $this->Flash->success(__('Committee member saved.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-            }
-
-            if ($uploadError !== null) {
-                $this->Flash->error($uploadError);
-            }
-            $this->Flash->error(__('Could not save the committee member, check the errors below.'));
-        }
-
-        $this->set('committeeMember', $committeeMember);
-
-        return null;
-    }
-
-    public function delete(?string $id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-
-        $CommitteeMembers = $this->fetchTable('CommitteeMembers');
-        $committeeMember = $CommitteeMembers->get($id);
-
-        if ($CommitteeMembers->delete($committeeMember)) {
-            if ($committeeMember->photo) {
-                $this->deleteImageUpload('committee', $committeeMember->photo);
-            }
-
-            $this->Flash->success(__('Committee member deleted.'));
-        } else {
-            $this->Flash->error(__('Could not delete the committee member.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
+        return [
+            'table' => 'CommitteeMembers',
+            'title' => __('Committee members'),
+            'list' => [
+                'order' => ['section' => 'ASC', 'name' => 'ASC'],
+                'columns' => [
+                    ['field' => 'photo', 'label' => __('Photo'), 'type' => 'image', 'subdir' => 'committee'],
+                    ['field' => 'name', 'label' => __('Name')],
+                    ['field' => 'role', 'label' => __('Role')],
+                    ['field' => 'section', 'label' => __('Section')],
+                    ['field' => 'phone', 'label' => __('Phone')],
+                    ['field' => 'email', 'label' => __('Email')],
+                ],
+            ],
+            'form' => [
+                'fields' => [
+                    ['name' => 'name', 'type' => 'text', 'label' => __('Name')],
+                    ['name' => 'role', 'type' => 'text', 'label' => __('Role')],
+                    ['name' => 'section', 'type' => 'text', 'label' => __('Section')],
+                    ['name' => 'phone', 'type' => 'text', 'label' => __('Phone')],
+                    ['name' => 'email', 'type' => 'text', 'label' => __('Email')],
+                    ['name' => 'photo', 'type' => 'image', 'label' => __('Photo'), 'subdir' => 'committee'],
+                ],
+            ],
+        ];
     }
 }
