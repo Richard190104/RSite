@@ -2,15 +2,12 @@
 /**
  * @var \App\View\AppView $this
  *
- * Site-wide navbar shell: fetches this app's own data (NavbarCategories/Pages,
- * logo, contact page, notifications — none of these tables live in Rcore)
- * and composes the three shared Rcore\templates\element\Navbar\* elements
- * into it. Organisation name/city come from Rcore\View\SiteInfoTrait inside
- * those elements themselves, not from here.
- *
- * Two-row layout: a navy top row (brand + notifications) and a white
- * bottom row (category menu) — styling lives in resources/scss/_navbar.scss,
- * scaffolded from the Rcore plugin (see that file's own header comment).
+ * Builds each slot's content as its own variable (usually by calling one of
+ * this plugin's other Navbar/* elements, but any app-specific markup works
+ * just as well), then hands all three to Rcore.Navbar/layout, which owns
+ * the actual two-row shell/arrangement. This app's own data here
+ * (NavbarCategories/Pages, Logos, contact page, Notifications — none of
+ * these tables live in Rcore) only ever feeds into building those slots.
  */
 use Cake\ORM\TableRegistry;
 
@@ -40,23 +37,13 @@ $notifications = array_map(function ($notification) {
 
     return $notification;
 }, $this->activeNotifications());
+
+$brand = $this->element('Rcore.Navbar/logo', ['logoPath' => $logoPath]);
+$notificationsHtml = $this->element('Rcore.Navbar/notifications', ['notifications' => $notifications]);
+$categoryMenu = $this->element('Rcore.Navbar/categoryMenu', ['categories' => $navbarCategories, 'endItem' => $endItem]);
 ?>
-<nav class="site-nav">
-    <div class="site-nav__top">
-        <div class="site-nav__top-inner">
-            <?= $this->element('Rcore.Navbar/logo', ['logoPath' => $logoPath]) ?>
-            <?= $this->element('Rcore.Navbar/notifications', ['notifications' => $notifications]) ?>
-
-            <button type="button" class="site-nav__burger" aria-label="<?= __('Menu') ?>" aria-expanded="false" aria-controls="site-nav-menu">
-                <span></span>
-            </button>
-        </div>
-    </div>
-
-    <div class="site-nav__menubar" id="site-nav-menu">
-        <div class="site-nav__menubar-inner">
-            <?= $this->element('Rcore.Navbar/categoryMenu', ['categories' => $navbarCategories, 'endItem' => $endItem]) ?>
-        </div>
-    </div>
-</nav>
-<?= $this->Html->script('Rcore.navbar') ?>
+<?= $this->element('Rcore.Navbar/layout', [
+    'brand' => $brand,
+    'notifications' => $notificationsHtml,
+    'categoryMenu' => $categoryMenu,
+]) ?>

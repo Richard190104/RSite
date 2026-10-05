@@ -62,6 +62,7 @@ class Installer
         static::createAppLocalConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
         static::createNavbarStyles($rootDir, $io);
+        static::createFooterStyles($rootDir, $io);
 
         static::setFolderPermissions($rootDir, $io);
         static::setSecuritySalt($rootDir, $io);
@@ -136,6 +137,33 @@ class Installer
         if (!file_exists($navbarStyles)) {
             copy($navbarStylesTemplate, $navbarStyles);
             $io->write('Created `resources/scss/_navbar.scss` file');
+        }
+    }
+
+    /**
+     * Create resources/scss/_footer.scss from the Rcore plugin's starter
+     * (vendor/richard190104/rcore/resources/scaffolds/footer.scss) if it
+     * doesn't exist yet — same shape as createNavbarStyles() above. The
+     * markup it styles comes from the plugin's Footer/brand.php,
+     * Footer/linkList.php, Footer/contactList.php and Footer/partners.php
+     * elements (templates/element/footer.php composes them).
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function createFooterStyles(string $dir, IOInterface $io): void
+    {
+        $footerStyles = $dir . '/resources/scss/_footer.scss';
+        $footerStylesTemplate = $dir . '/vendor/richard190104/rcore/resources/scaffolds/footer.scss';
+
+        if (!file_exists($footerStylesTemplate)) {
+            return;
+        }
+
+        if (!file_exists($footerStyles)) {
+            copy($footerStylesTemplate, $footerStyles);
+            $io->write('Created `resources/scss/_footer.scss` file');
         }
     }
 

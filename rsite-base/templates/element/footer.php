@@ -2,24 +2,16 @@
 /**
  * @var \App\View\AppView $this
  *
- * Organisation name/city/logo come from AppView::SiteInfoTrait — same
- * source navbar.php uses, so both stay in sync from one place.
+ * Builds each slot's content as its own variable (usually by calling one of
+ * this plugin's other Footer/* elements, but any app-specific markup works
+ * just as well), then hands all four to Rcore.Footer/layout, which owns the
+ * actual column shell/arrangement. This app's only genuinely own data here
+ * is the homepage's quick-access page ids (not a Rcore table) — brand/
+ * contact/partners pull everything they need from Rcore\View\SiteInfoTrait/
+ * Rcore.Logos themselves.
  */
 use Cake\ORM\TableRegistry;
 
-$organisationName = $this->organisationName();
-$city = $this->city();
-$logoPath = $this->logoPath();
-$description = $this->description();
-$organisationAddress = $this->organisationAddress();
-$organisationEmail = $this->organisationEmail();
-$organisationIco = $this->organisationIco();
-$phone = $this->phone();
-
-// Same page ids as the homepage's own quick-access grid (set via
-// Admin\PagesController::editHome()) — plain text links here rather than
-// reusing the quickAccess element's icon/card markup, which is sized for
-// the homepage, not a footer column.
 $quickAccessPageIds = $this->quickAccessPageIds();
 $quickAccessPages = $quickAccessPageIds
     ? TableRegistry::getTableLocator()->get('Pages')
@@ -30,100 +22,23 @@ $quickAccessPages = $quickAccessPageIds
         ->indexBy('id')
         ->toArray()
     : [];
-$partners = TableRegistry::getTableLocator()->get('Logos')->partners();
+
+$quickAccessItems = [];
+foreach ($quickAccessPageIds as $pageId) {
+    $page = $quickAccessPages[$pageId] ?? null;
+    if ($page !== null) {
+        $quickAccessItems[] = ['url' => '/' . $page->slug, 'label' => __($page->title)];
+    }
+}
+
+$left = $this->element('Rcore.Footer/brand');
+$center = $this->element('Rcore.Footer/linkList', ['heading' => __('Quick access'), 'items' => $quickAccessItems]);
+$right = $this->element('Rcore.Footer/contactList');
+$partners = $this->element('Rcore.Footer/partners');
 ?>
-<div class="site-footer">
-    <div class="site-footer__inner">
-    <div class="site-footer__left">
-        <a class="site-footer__brand" href="<?= $this->Url->build('/') ?>">
-            <span class="site-footer__logo">
-                <?php if ($logoPath !== ''): ?>
-                    <img src="<?= h($this->Url->build('/img/logos/' . $logoPath)) ?>" alt="<?= h($organisationName) ?>">
-                <?php else: ?>
-                    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                        <path d="M4 16c3.5-5 8-7.5 13-7.5 3.6 0 6.6 1.4 8.8 3.4l3.2-2.4v13l-3.2-2.4c-2.2 2-5.2 3.4-8.8 3.4-5 0-9.5-2.5-13-7.5Z" fill="#143a6b"/>
-                        <circle cx="12" cy="14.4" r="1.3" fill="#f9d71c"/>
-                    </svg>
-                <?php endif; ?>
-            </span>
-            <span class="site-footer__text">
-
-                <span class="site-footer__org">Slovenský rybársky zväz</span>
-                <span class="site-footer__city"><?= h($city) ?></span>
-                <span class="site-footer__description"><?= h($description) ?></span>
-            </span>
-        </a>
-    </div>
-
-    <div class="site-footer__center">
-        <?php if ($quickAccessPages): ?>
-            <span class="site-footer__heading"><?= __('Quick access') ?></span>
-            <ul class="site-footer__links">
-                <?php foreach ($quickAccessPageIds as $pageId): ?>
-                    <?php $page = $quickAccessPages[$pageId] ?? null; ?>
-                    <?php if ($page !== null): ?>
-                        <li><a href="/<?= h($page->slug) ?>"><?= h(__($page->title)) ?></a></li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </div>
-
-    <div class="site-footer__right">
-        <?php if ($organisationAddress !== '' || $organisationEmail !== '' || $organisationIco !== ''): ?>
-            <span class="site-footer__heading"><?= __('Contact') ?></span>
-            <ul class="site-footer__contact">
-                <?php if ($organisationAddress !== ''): ?>
-                    <li class="site-footer__contact-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/>
-                            <circle cx="12" cy="10" r="2.5"/>
-                        </svg>
-                        <span><?= h($organisationAddress) ?></span>
-                    </li>
-                <?php endif; ?>
-                <?php if ($organisationIco !== ''): ?>
-                    <li class="site-footer__contact-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="3" y="5" width="18" height="14" rx="2"/>
-                            <path d="M3 9h18M8 13h4"/>
-                        </svg>
-                        <span><?= __('ID No.') ?> <?= h($organisationIco) ?></span>
-                    </li>
-                <?php endif; ?>
-                <?php if ($organisationEmail !== ''): ?>
-                    <li class="site-footer__contact-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="3" y="5" width="18" height="14" rx="2"/>
-                            <path d="m3 7 9 6 9-6"/>
-                        </svg>
-                        <span><?= h($organisationEmail) ?></span>
-                    </li>
-                <?php endif; ?>
-                <?php if ($phone !== ''): ?>
-                    <li class="site-footer__contact-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/>
-                        </svg>
-                        <span><?= h($phone) ?></span>
-                    </li>
-                <?php endif; ?>
-
-            </ul>
-        <?php endif; ?>
-
-    </div>
-    <?php if ($partners): ?>
-        <div class="site-footer__partners">
-            <span class="site-footer__heading"><?= __('Partners') ?></span>
-            <ul class="site-footer__partners-list">
-                <?php foreach ($partners as $partner): ?>
-                    <li class="site-footer__partner">
-                        <img src="<?= h($this->Url->build('/img/logos/' . $partner->path)) ?>" alt="<?= h($partner->name) ?>">
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-    </div>
-</div>
+<?= $this->element('Rcore.Footer/layout', [
+    'left' => $left,
+    'center' => $center,
+    'right' => $right,
+    'partners' => $partners,
+]) ?>
