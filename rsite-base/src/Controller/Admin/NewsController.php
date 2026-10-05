@@ -3,136 +3,66 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use Rcore\Controller\Admin\ImageUploadTrait;
+use Cake\Datasource\EntityInterface;
+use Cake\Routing\Router;
 
-class NewsController extends AppController
+/**
+ * First app-owned section migrated onto the generic Resource pattern (see
+ * Rcore\Controller\Admin\ResourceController) — NewsTable/News entity are
+ * untouched, only the admin controller/templates are replaced.
+ */
+class NewsController extends \Rcore\Controller\Admin\ResourceController
 {
-    use ImageUploadTrait;
-
-    public function index(): void
+    protected function resourceConfig(?EntityInterface $item = null): array
     {
-        $news = $this->fetchTable('News')
-            ->find()
-            ->contain(['Categories'])
-            ->orderBy(['date' => 'DESC'])
-            ->all();
-
-        $this->set(compact('news'));
-    }
-
-    public function add()
-    {
-        $News = $this->fetchTable('News');
-        $article = $News->newEmptyEntity();
-
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
-            $upload = $data['image'] ?? null;
-            unset($data['image']);
-
-            $hasFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
-            $uploadError = $hasFile ? $this->imageUploadError($upload, false) : null;
-
-            $article = $News->patchEntity($article, $data);
-
-            if (!$article->getErrors() && $uploadError === null) {
-                if ($hasFile) {
-                    $article->image = $this->storeImageUpload($upload, 'news');
-                }
-
-                if ($News->save($article)) {
-                    $this->Flash->success(__('News article saved.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-            }
-
-            if ($uploadError !== null) {
-                $this->Flash->error($uploadError);
-            }
-            $this->Flash->error(__('Could not save the article, check the errors below.'));
-        }
-
-        $this->set('article', $article);
-        $this->set('categories', $this->categoryOptions());
-
-        return null;
-    }
-
-    public function edit(?string $id = null)
-    {
-        $News = $this->fetchTable('News');
-        $article = $News->get($id);
-
-        if ($this->request->is(['post', 'put'])) {
-            $data = $this->request->getData();
-            /** @var \Psr\Http\Message\UploadedFileInterface|null $upload */
-            $upload = $data['image'] ?? null;
-            unset($data['image']);
-
-            $hasNewFile = $upload !== null && $upload->getError() !== UPLOAD_ERR_NO_FILE;
-            $uploadError = $hasNewFile ? $this->imageUploadError($upload, false) : null;
-
-            $oldImage = $article->image;
-            $article = $News->patchEntity($article, $data);
-
-            if (!$article->getErrors() && $uploadError === null) {
-                if ($hasNewFile) {
-                    $article->image = $this->storeImageUpload($upload, 'news');
-                }
-
-                if ($News->save($article)) {
-                    if ($hasNewFile) {
-                        $this->deleteImageUpload('news', $oldImage);
-                    }
-
-                    $this->Flash->success(__('News article saved.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-            }
-
-            if ($uploadError !== null) {
-                $this->Flash->error($uploadError);
-            }
-            $this->Flash->error(__('Could not save the article, check the errors below.'));
-        }
-
-        $this->set('article', $article);
-        $this->set('categories', $this->categoryOptions());
-
-        return null;
-    }
-
-    public function delete(?string $id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-
-        $News = $this->fetchTable('News');
-        $article = $News->get($id);
-
-        if ($News->delete($article)) {
-            $this->deleteImageUpload('news', $article->image);
-
-            $this->Flash->success(__('News article deleted.'));
-        } else {
-            $this->Flash->error(__('Could not delete the article.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function categoryOptions(): array
-    {
-        return $this->fetchTable('Categories')
+        $categories = $this->fetchTable('Categories')
             ->find()
             ->orderBy(['title' => 'ASC'])
             ->all()
             ->combine('id', 'title')
             ->toArray();
+
+        $imageUrl = '';
+        if ($item !== null && $item->image) {
+            $imageUrl = Router::url('/img/news/' . $item->image, true);
+        }
+
+        return [
+            'table' => 'News',
+            'title' => __('News'),
+            'list' => [
+                'contain' => ['Categories'],
+                'columns' => [
+                    ['field' => 'image', 'label' => __('Image'), 'type' => 'image', 'subdir' => 'news'],
+                    ['field' => 'title', 'label' => __('Title')],
+                    ['field' => 'category.title', 'label' => __('Category')],
+                    ['field' => 'date', 'label' => __('Date')],
+                ],
+            ],
+            'form' => [
+                'fields' => [
+                    ['name' => 'title', 'type' => 'text', 'label' => __('Title')],
+                    ['name' => 'description', 'type' => 'textarea', 'label' => __('Description')],
+                    ['name' => 'content', 'type' => 'wysiwyg', 'label' => __('Poster (HTML)')],
+                    ['name' => 'date', 'type' => 'date', 'label' => __('Date')],
+                    [
+                        'name' => 'category_id',
+                        'type' => 'select',
+                        'label' => __('Category'),
+                        'options' => $categories,
+                        'empty' => __('— none —'),
+                    ],
+                    ['name' => 'image', 'type' => 'image', 'label' => __('Image'), 'subdir' => 'news'],
+                ],
+                'aiChatFields' => [
+                    'titleField' => 'title',
+                    'fields' => [
+                        ['target' => 'description', 'label' => 'short news article summary'],
+                        ['target' => 'content', 'label' => 'HTML poster for the news article', 'kind' => 'html'],
+                    ],
+                    'imageUrl' => $imageUrl,
+                ],
+            ],
+        ];
     }
 }
