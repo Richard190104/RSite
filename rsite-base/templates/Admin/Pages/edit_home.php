@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var array<int, string> $otherPages
  */
 $this->assign('title', __('Edit homepage'));
@@ -43,3 +43,4 @@ $quickAccess = $page->content['quick_access'] ?? [];
         </p>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

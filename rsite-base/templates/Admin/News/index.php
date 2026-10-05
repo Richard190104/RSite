@@ -44,3 +44,4 @@ $this->assign('title', __('News'));
         </table>
     </div>
 </div>
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

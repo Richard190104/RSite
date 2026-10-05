@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Rcore\Controller\Admin\FileUploadTrait;
+
 class CatchDocumentsController extends AppController
 {
     use FileUploadTrait;

@@ -48,7 +48,7 @@ $partners = TableRegistry::getTableLocator()->get('Logos')->partners();
             </span>
             <span class="site-footer__text">
 
-                <span class="site-footer__org">Slovenský rybársky zväz</span>
+                <span class="site-footer__org"><?= h($organisationName) ?></span>
                 <span class="site-footer__city"><?= h($city) ?></span>
                 <span class="site-footer__description"><?= h($description) ?></span>
             </span>

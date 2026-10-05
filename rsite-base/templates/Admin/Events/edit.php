@@ -6,11 +6,11 @@
  */
 $this->assign('title', __('Edit event'));
 $this->set('aiChatFields', [
-    'targetField' => 'description',
     'titleField' => 'title',
-    'fieldLabel' => 'short event description',
-    'htmlTargetField' => 'content',
-    'htmlFieldLabel' => 'HTML poster for the event',
+    'fields' => [
+        ['target' => 'description', 'label' => 'short event description'],
+        ['target' => 'content', 'label' => 'HTML poster for the event', 'kind' => 'html'],
+    ],
     'imageUrl' => $event->image ? $this->Url->build('/img/events/' . $event->image, ['fullBase' => true]) : '',
 ]);
 ?>
@@ -48,5 +48,7 @@ $this->set('aiChatFields', [
         </div>
     <?= $this->Form->end() ?>
 </div>
-<?= $this->Html->script('vendor/tinymce/tinymce.min') ?>
-<?= $this->Html->script('admin-wysiwyg') ?>
+<?= $this->Html->script('Rcore.vendor/tinymce/tinymce.min') ?>
+<?= $this->Html->script('Rcore.admin-wysiwyg') ?>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

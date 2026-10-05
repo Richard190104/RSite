@@ -116,6 +116,21 @@ return [
         ],
 
         /*
+         * Configure the cache for translation caches. Since CakePHP 5.1,
+         * translations use their own '_cake_translations_' cache config
+         * instead of '_cake_core_' — without this, every __() call
+         * triggers a deprecation notice.
+         */
+        '_cake_translations_' => [
+            'className' => FileEngine::class,
+            'prefix' => 'myapp_cake_translations_',
+            'path' => CACHE . 'persistent' . DS,
+            'serialize' => true,
+            'duration' => '+1 years',
+            'url' => env('CACHE_CAKECORE_URL', null),
+        ],
+
+        /*
          * Configure the cache for model and datasource caches. This cache
          * configuration is used to store schema descriptions, and table listings
          * in connections.

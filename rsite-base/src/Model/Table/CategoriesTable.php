@@ -3,27 +3,21 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Table;
-use Cake\Validation\Validator;
-
-class CategoriesTable extends Table
+/**
+ * No app-specific columns — this pass-through exists so the bare
+ * 'Categories' alias (still used directly by News/Events/Galleries) keeps
+ * resolving to a real class and hands out the plugin's own entity, plus the
+ * reverse associations back onto this app's own domain tables that the core
+ * table deliberately doesn't know about.
+ */
+class CategoriesTable extends \Rcore\Model\Table\CategoriesTable
 {
     public function initialize(array $config): void
     {
         parent::initialize($config);
 
-        $this->setTable('categories');
-        $this->setPrimaryKey('id');
-        $this->addBehavior('Timestamp');
+        $this->setEntityClass(\Rcore\Model\Entity\Category::class);
 
-        $this->belongsTo('ParentCategories', [
-            'className' => 'Categories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('ChildCategories', [
-            'className' => 'Categories',
-            'foreignKey' => 'parent_id',
-        ]);
         $this->hasMany('News', [
             'foreignKey' => 'category_id',
         ]);
@@ -33,27 +27,5 @@ class CategoriesTable extends Table
         $this->hasMany('Galleries', [
             'foreignKey' => 'category_id',
         ]);
-    }
-
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->scalar('title')
-            ->maxLength('title', 255)
-            ->requirePresence('title', 'create')
-            ->notEmptyString('title')
-
-            ->allowEmptyString('parent_id')
-
-            ->boolean('show_in_gallery')
-            ->allowEmptyString('show_in_gallery')
-
-            // 'image' is handled entirely in the controller, same as
-            // Banners::background / Galleries::image.
-            ->allowEmptyString('image')
-
-            ->allowEmptyString('description');
-
-        return $validator;
     }
 }

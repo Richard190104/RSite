@@ -72,7 +72,7 @@ Migrácie v `config/Migrations/` (chronologicky, `bin/cake migrations status` uk
 
 `location` stĺpec určuje, kde sa banner zobrazí:
 - reálny `pages.slug` (napr. `home`) → hlavný hero banner na tej stránke
-- `home_mini` (virtuálna lokácia, `BannersTable::VIRTUAL_LOCATIONS`) → "o nás" dlaždice na homepage, nie sú to reálne stránky
+- `home_mini` (virtuálna lokácia, `Configure::read('Rcore.bannerVirtualLocations')` v `Application.php`) → "o nás" dlaždice na homepage, nie sú to reálne stránky
 
 `is_enabled` (bool) — per-banner zapnutie/vypnutie zobrazenia (nie globálny switch).
 `settings` (JSON) — voľné banner-špecifické nastavenia (momentálne len `subtitle`), rozšíriteľné bez migrácie na nové klúče podľa potreby.

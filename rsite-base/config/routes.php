@@ -118,8 +118,23 @@ return function (RouteBuilder $routes): void {
      */
     $routes->prefix('Admin', function (RouteBuilder $routes): void {
         $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
-        $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-        $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+        // Users (login/logout) is provided by the shared Rcore plugin now too.
+        $routes->connect('/login', ['plugin' => 'Rcore', 'controller' => 'Users', 'action' => 'login']);
+        $routes->connect('/logout', ['plugin' => 'Rcore', 'controller' => 'Users', 'action' => 'logout']);
+        // Texts is provided by the shared Rcore plugin, not an app-local
+        // controller — $routes->fallbacks() below only resolves controllers
+        // in this app's own namespace by convention, so a plugin-provided
+        // one needs its own explicit route (see AppController::adminUrl(),
+        // which builds URLs matching these).
+        $routes->connect('/texts', ['plugin' => 'Rcore', 'controller' => 'Texts', 'action' => 'index']);
+        $routes->connect('/texts/edit/*', ['plugin' => 'Rcore', 'controller' => 'Texts', 'action' => 'edit']);
+        // Same reasoning as Texts above — Configurations is also
+        // plugin-provided.
+        $routes->connect('/configurations', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'index']);
+        $routes->connect('/configurations/reset', ['plugin' => 'Rcore', 'controller' => 'Configurations', 'action' => 'reset']);
+        // The AI assistant is provided by the shared Rcore plugin now too —
+        // same reasoning as Texts/Configurations/Users above.
+        $routes->connect('/assistant/chat', ['plugin' => 'Rcore', 'controller' => 'Assistant', 'action' => 'chat']);
         $routes->fallbacks();
     });
 };

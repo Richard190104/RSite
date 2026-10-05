@@ -4,58 +4,33 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Model\Entity\News;
-use App\Model\Entity\Notification;
-use App\Model\Entity\Page;
-use Cake\I18n\Date;
+use Rcore\Model\Entity\Page;
 use Cake\ORM\TableRegistry;
 
 /**
- * Shared site-wide lookups (organisation name, logo, contact page...) for
- * elements that need them — navbar, banner, footer. Mixed into AppView so
- * any template/element can call $this->organisationName() etc. directly.
+ * Domain-specific site-wide lookups (contact page, news, the reviry map
+ * subtitle, placeholder images, homepage quick-access) for elements that
+ * need them — navbar, banner, footer. Mixed into AppView alongside
+ * Rcore\View\SiteInfoTrait, which covers the generic organisation-name/
+ * contact/social/palette/logo/notifications accessors — this trait used to
+ * also define logoPath()/activeNotifications()/popupNotification() before
+ * the admin extraction's Logos/Notifications slice moved their backing
+ * tables into the plugin; redefining them here again would be a fatal
+ * trait method collision in AppView.
  *
  * Deliberately NOT eager-loaded in a controller's initialize() — a method
  * here only runs its query when an element actually calls it, and AppView
  * is shared by the admin layout too, so an admin page that never calls
  * these never pays for them. Memoized per-request either way, so a page
- * with both navbar and footer calling organisationName() only queries once.
+ * with both navbar and footer calling the same accessor only queries once.
  */
 trait SiteInfoTrait
 {
-    private ?string $organisationName = null;
-    private ?string $city = null;
-    private ?string $logoPath = null;
-    private ?string $description = null;
     private bool $contactPageLoaded = false;
     private ?Page $contactPage = null;
+    private ?string $reviryMapSubtitle = null;
     private ?array $quickAccessPageIds = null;
     private ?array $news = null;
-    private ?array $activeNotifications = null;
-    private bool $popupNotificationLoaded = false;
-    private ?Notification $popupNotification = null;
-    private ?string $organisationAddress = null;
-    private ?string $organisationEmail = null;
-    private ?string $organisationIco = null;
-    private ?string $facebookUrl = null;
-    private ?string $instagramUrl = null;
-    private ?array $siteColors = null;
-    private ?string $phone = null;
-    private ?string $reviryMapSubtitle = null;
-
-    public function organisationName(): string
-    {
-        return $this->organisationName ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Name');
-    }
-
-    public function city(): string
-    {
-        return $this->city ??= TableRegistry::getTableLocator()->get('Texts')->value('City');
-    }
-
-    public function logoPath(): string
-    {
-        return $this->logoPath ??= TableRegistry::getTableLocator()->get('Logos')->mainPath();
-    }
 
     public function contactPage(): ?Page
     {
@@ -71,44 +46,9 @@ trait SiteInfoTrait
         return $this->contactPage;
     }
 
-    public function description(): string
-    {
-        return $this->description ??= TableRegistry::getTableLocator()->get('Texts')->value('Footer Description');
-    }
-
-    public function organisationAddress(): string
-    {
-        return $this->organisationAddress ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Address');
-    }
-
-    public function organisationEmail(): string
-    {
-        return $this->organisationEmail ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation Gmail');
-    }
-
-    public function organisationIco(): string
-    {
-        return $this->organisationIco ??= TableRegistry::getTableLocator()->get('Texts')->value('Organisation ICO');
-    }
-
-    public function facebookUrl(): string
-    {
-        return $this->facebookUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Facebook URL');
-    }
-
-    public function instagramUrl(): string
-    {
-        return $this->instagramUrl ??= TableRegistry::getTableLocator()->get('Texts')->value('Instagram URL');
-    }
-
-    public function phone(): string
-    {
-        return $this->phone ??= TableRegistry::getTableLocator()->get('Texts')->value('Phone');
-    }
-
     public function reviryMapSubtitle(): string
     {
-        return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Texts')->value('Reviry map subtitle');
+        return $this->reviryMapSubtitle ??= TableRegistry::getTableLocator()->get('Rcore.Texts')->value('Reviry map subtitle');
     }
 
     /**
@@ -124,22 +64,6 @@ trait SiteInfoTrait
     public function randomPlaceholderImage(): string
     {
         return '/img/placeholders/' . TableRegistry::getTableLocator()->get('PlaceholderImages')->random();
-    }
-
-    /**
-     * The site's customizable palette (Admin\ConfigurationsController) as
-     * slug => hex, e.g. 'primary' => '#001a3b' — read by
-     * templates/element/colorVariables.php to build the :root override the
-     * public layout injects after the compiled stylesheet. Excludes any
-     * non-color settings that share the same table (see
-     * ConfigurationsTable::SETTING_SLUGS) — allAsSlugMap() already filters
-     * those out, this just passes its result through.
-     *
-     * @return array<string, string>
-     */
-    public function siteColors(): array
-    {
-        return $this->siteColors ??= TableRegistry::getTableLocator()->get('Configurations')->allAsSlugMap();
     }
 
     /**
@@ -184,59 +108,5 @@ trait SiteInfoTrait
             ->limit($limit)
             ->all()
             ->toList();
-    }
-
-    /**
-     * Notifications currently shown in the navbar's bell dropdown: only
-     * those marked active (settings.is_active — a free-form JSON flag, not
-     * its own column, see NotificationsTable) whose valid_from/valid_to
-     * window includes today. is_active can't be filtered in SQL since it
-     * lives inside the JSON settings column, so it's checked in PHP after
-     * the date range has already narrowed the query.
-     *
-     * @return array<int, \App\Model\Entity\Notification>
-     */
-    public function activeNotifications(): array
-    {
-        if ($this->activeNotifications !== null) {
-            return $this->activeNotifications;
-        }
-
-        $today = Date::now();
-
-        $notifications = TableRegistry::getTableLocator()->get('Notifications')
-            ->find()
-            ->where(['valid_from <=' => $today, 'valid_to >=' => $today])
-            ->orderBy(['valid_from' => 'DESC'])
-            ->all()
-            ->filter(fn ($notification) => (bool)($notification->settings['is_active'] ?? true))
-            ->toList();
-
-        return $this->activeNotifications = $notifications;
-    }
-
-    /**
-     * One random active notification flagged settings.show_as_popup, shown
-     * as a small popup on page load — a different one may be picked on
-     * each request/page since the choice isn't sticky across requests.
-     * Null when no active notification has the flag set.
-     */
-    public function popupNotification(): ?Notification
-    {
-        if ($this->popupNotificationLoaded) {
-            return $this->popupNotification;
-        }
-        $this->popupNotificationLoaded = true;
-
-        $candidates = array_values(array_filter(
-            $this->activeNotifications(),
-            fn ($notification) => (bool)($notification->settings['show_as_popup'] ?? false),
-        ));
-
-        if (!$candidates) {
-            return $this->popupNotification = null;
-        }
-
-        return $this->popupNotification = $candidates[array_rand($candidates)];
     }
 }

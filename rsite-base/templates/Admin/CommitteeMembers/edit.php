@@ -33,3 +33,5 @@ $this->assign('title', __('Edit committee member'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

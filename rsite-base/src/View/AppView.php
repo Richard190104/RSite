@@ -26,6 +26,7 @@ use Cake\View\View;
  */
 class AppView extends View
 {
+    use \Rcore\View\SiteInfoTrait;
     use SiteInfoTrait;
 
     /**
@@ -39,5 +40,9 @@ class AppView extends View
      */
     public function initialize(): void
     {
+        // Makes $this->AiAssistant->widget(...) available from any template
+        // without a per-page loadHelper() call — see vendor/richard190104/rcore's
+        // README for how to drop the widget onto a specific page.
+        $this->addHelper('Rcore.AiAssistant');
     }
 }

@@ -47,6 +47,12 @@ class PlaceholderImagesTable extends Table
 
     private function automaticImagesEnabled(): bool
     {
-        return TableRegistry::getTableLocator()->get('Configurations')->automaticImagesEnabled();
+        $value = TableRegistry::getTableLocator()->get('Rcore.Configurations')
+            ->find()
+            ->select(['value'])
+            ->where(['slug' => 'automatic_images'])
+            ->first()?->value;
+
+        return $value !== '0';
     }
 }

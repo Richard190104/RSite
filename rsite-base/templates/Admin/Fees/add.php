@@ -23,3 +23,5 @@ $this->assign('title', __('Add fee'));
         </div>
     <?= $this->Form->end() ?>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

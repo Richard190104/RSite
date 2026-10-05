@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var \Cake\Datasource\Paging\PaginatedInterface<\App\Model\Entity\News> $news
  * @var array<\App\Model\Entity\Category> $categories
  * @var int|string|null $categoryId

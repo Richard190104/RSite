@@ -1,5 +1,13 @@
 @use 'fonts';
 @use 'base';
+// Resolved from vendor/richard190104/rcore/resources/scss via sass:build's
+// --load-path (see package.json) — the generic admin-shell chrome
+// (sidebar/topbar/login). admin-layout below keeps everything else
+// (form-card, toggle-switch look, pickers, drag-reorder...).
+@use 'admin-shell';
 @use 'admin-layout';
-@use 'admin-ai-chat';
 @use 'admin-wysiwyg';
+// admin-ai-chat is NOT @use'd here — it's a precompiled, fixed-design
+// standalone stylesheet (webroot/css/admin-ai-chat.css) loaded automatically
+// by View\Helper\AiAssistantHelper wherever the widget is actually used,
+// not baked into admin.css.

@@ -3,67 +3,36 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Entity\Page;
 use App\Model\Table\FeesTable;
+use Rcore\Model\Entity\Page;
 
-class PagesController extends AppController
+/**
+ * Extends the shared plugin's generic Pages CRUD (listing + a plain
+ * "description" field per page) with this site's 4 bespoke, on-brand page
+ * editors — the plugin has no business knowing about quick-access tiles,
+ * fee tables, or fish-stocking documents. Any slug not listed here falls
+ * back to the plugin's own generic editor.
+ */
+class PagesController extends \Rcore\Controller\Admin\PagesController
 {
     private const HOME_MAX_QUICK_ACCESS = 6;
     private const ONAS_MAX_FEATURED_ACTIVITIES = 5;
 
-    public function index(): void
-    {
-        $pages = $this->fetchTable('Pages')->find()->orderBy(['title' => 'ASC'])->all();
-        $this->set(compact('pages'));
-    }
-
     public function edit(?string $slug = null)
     {
-        $Pages = $this->fetchTable('Pages');
-        $page = $Pages->find()->where(['slug' => $slug])->firstOrFail();
+        if (in_array($slug, ['home', 'o-nas', 'zarybnenie', 'poplatky'], true)) {
+            $Pages = $this->fetchTable('Pages');
+            $page = $Pages->find()->where(['slug' => $slug])->firstOrFail();
 
-        if ($page->slug === 'home') {
-            return $this->editHome($Pages, $page);
+            return match ($slug) {
+                'home' => $this->editHome($Pages, $page),
+                'o-nas' => $this->editOnas($Pages, $page),
+                'zarybnenie' => $this->editZarybnenie($Pages, $page),
+                'poplatky' => $this->editPoplatky($page),
+            };
         }
 
-        if ($page->slug === 'o-nas') {
-            return $this->editOnas($Pages, $page);
-        }
-
-        if ($page->slug === 'zarybnenie') {
-            return $this->editZarybnenie($Pages, $page);
-        }
-
-        if ($page->slug === 'poplatky') {
-            return $this->editPoplatky($page);
-        }
-
-        if ($this->request->is(['post', 'put'])) {
-            $data = (array)$this->request->getData('content');
-            $description = trim((string)($data['description'] ?? ''));
-
-            $content = (array)$page->content;
-
-            if ($description === '') {
-                unset($content['description']);
-            } else {
-                $content['description'] = $description;
-            }
-
-            $page->content = $content;
-
-            if ($Pages->save($page)) {
-                $this->Flash->success(__('Page saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-
-            $this->Flash->error(__('Could not save the page.'));
-        }
-
-        $this->set(compact('page'));
-
-        return null;
+        return parent::edit($slug);
     }
 
     /**

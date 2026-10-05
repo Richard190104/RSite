@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Page $page
  * @var iterable<\App\Model\Entity\StockingDocument> $stockingDocuments
  * @var iterable<\App\Model\Entity\CatchDocument> $catchDocuments
  *
@@ -109,3 +109,5 @@ $description = $page->content['description'] ?? '';
         </table>
     </div>
 </div>
+
+<?= $this->AiAssistant->widget($this->get('aiChatFields', [])) ?>

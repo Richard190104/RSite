@@ -1,8 +1,8 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Page $page
- * @var \App\Model\Entity\Banner|null $mainBanner
+ * @var \Rcore\Model\Entity\Page $page
+ * @var \Rcore\Model\Entity\Banner|null $mainBanner
  * @var iterable<\App\Model\Entity\CommitteeMember> $committeeMembers
  * @var array<\App\Model\Entity\Event> $featuredActivities
  */
