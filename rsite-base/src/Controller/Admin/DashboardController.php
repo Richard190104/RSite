@@ -5,4 +5,5 @@ namespace App\Controller\Admin;
 
 class DashboardController extends \Rcore\Controller\Admin\DashboardController
 {
+    use RcoreTemplateOverrideTrait;
 }
