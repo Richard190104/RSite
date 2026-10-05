@@ -90,6 +90,17 @@ jobs:
           # rcore repo is enough — see rcore's docs/SETUP.md for how to
           # generate one.
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+          # copyPluginAssets() boots the full app (bin/cake.php plugin assets
+          # copy) against this ephemeral git-archive export, which has no
+          # config/app_local.php (deliberately — see buildVendor()'s own
+          # comment on --no-scripts). config/app.php reads Security.salt from
+          # env('SECURITY_SALT') with no fallback, so bootstrap fatals on a
+          # null salt without this. The value itself is never used for
+          # anything cryptographic here — this step only copies webroot
+          # files — so a literal placeholder is fine, not a secret; the real
+          # production salt lives in app_local.php on the server, untouched
+          # by this.
+          SECURITY_SALT: deploy-build-dummy-salt-unused-for-anything-real
         run: node bin/deploy.mjs
 
       # bin/deploy.mjs writes an updated .vendor-deployed-hash locally
