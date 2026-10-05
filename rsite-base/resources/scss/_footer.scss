@@ -1,14 +1,5 @@
 @use 'variables' as v;
 
-// Scaffolded once from vendor/richard190104/rcore/resources/scaffolds/footer.scss
-// by App\Console\Installer::createFooterStyles() (composer install/update, only
-// if this file didn't exist yet) — from here on it's this app's own file to edit
-// freely; nothing re-copies over it. The markup these classes style comes from
-// the plugin's Footer/brand.php, Footer/linkList.php, Footer/contactList.php and
-// Footer/partners.php elements (composed together in
-// templates/element/footer.php), so renaming a class here means updating
-// whichever of those four it belongs to as well.
-//
 // Background spans the full width; the content inside is capped to the
 // same max-width as the rest of the page (navbar, quick-access, home) so
 // the footer's columns line up with everything above them instead of
@@ -44,10 +35,6 @@
     border-radius: 50%;
     overflow: hidden;
     background: v.$color-secondary;
-    // Only visible behind the built-in placeholder mark (an inline SVG using
-    // stroke="currentColor") — once a project uploads its own logo image,
-    // this has nothing left to apply to.
-    color: v.$color-primary;
     display: grid;
     place-items: center;
 

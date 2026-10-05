@@ -1392,12 +1392,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Richard190104/rcore.git",
-                "reference": "bbd18c8a22267dd2cdd4cf7f8693f937d7145b1e"
+                "reference": "e3f540e545fe6292b30807559e72b94a20d379a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Richard190104/rcore/zipball/bbd18c8a22267dd2cdd4cf7f8693f937d7145b1e",
-                "reference": "bbd18c8a22267dd2cdd4cf7f8693f937d7145b1e",
+                "url": "https://api.github.com/repos/Richard190104/rcore/zipball/e3f540e545fe6292b30807559e72b94a20d379a6",
+                "reference": "e3f540e545fe6292b30807559e72b94a20d379a6",
                 "shasum": ""
             },
             "require": {
@@ -1419,7 +1419,7 @@
                 "source": "https://github.com/Richard190104/rcore/tree/main",
                 "issues": "https://github.com/Richard190104/rcore/issues"
             },
-            "time": "2026-09-30T20:44:20+00:00"
+            "time": "2026-10-05T16:16:33+00:00"
         }
     ],
     "packages-dev": [
