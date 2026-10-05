@@ -76,6 +76,20 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           MIGRATION_TOKEN: ${{ secrets.MIGRATION_TOKEN }}
           CACHE_TOKEN: ${{ secrets.CACHE_TOKEN }}
+          # composer install (inside bin/deploy.mjs's buildVendor()) needs
+          # to authenticate to GitHub to pull the private richard190104/rcore
+          # repo — unlike rsite-base itself (checked out via the built-in
+          # GITHUB_TOKEN above), composer has no credentials for THIS other
+          # private repo unless given some explicitly. Composer reads this
+          # env var natively (same schema as auth.json's "github-oauth"
+          # key) — no extra `composer config` step needed. The secret's
+          # value is the whole JSON string below with a real token in place
+          # of the placeholder, e.g.:
+          # {"github-oauth":{"github.com":"ghp_xxxxxxxxxxxxxxxxxxxx"}}
+          # A fine-grained PAT scoped to read-only Contents on just the
+          # rcore repo is enough — see rcore's docs/SETUP.md for how to
+          # generate one.
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         run: node bin/deploy.mjs
 
       # bin/deploy.mjs writes an updated .vendor-deployed-hash locally
