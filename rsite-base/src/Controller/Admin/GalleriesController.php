@@ -5,4 +5,5 @@ namespace App\Controller\Admin;
 
 class GalleriesController extends \Rcore\Controller\Admin\GalleriesController
 {
+    use RcoreTemplateOverrideTrait;
 }

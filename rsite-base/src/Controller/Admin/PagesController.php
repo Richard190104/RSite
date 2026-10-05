@@ -15,6 +15,8 @@ use Rcore\Model\Entity\Page;
  */
 class PagesController extends \Rcore\Controller\Admin\PagesController
 {
+    use RcoreTemplateOverrideTrait;
+
     private const HOME_MAX_QUICK_ACCESS = 6;
     private const ONAS_MAX_FEATURED_ACTIVITIES = 5;
 
